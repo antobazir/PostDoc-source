@@ -1,0 +1,282 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+
+
+\begin{document}
+\tableofcontents
+
+\section*{Introduction}
+This document compiles literature and assorted notes on the subject and the use of simulations in order to better understand the dynamics of nutrients for different cell line of pediatrical glioma.
+
+\section*{L’art de la guerre appliqué aux DIPG, Q. Bailleul et al., \textit{EDP Sciences}, 2021}
+\subsection*{Notes}
+\begin{itemize}
+\item DIPG =  Diffuse Intrinsic Pontine Glioma : Located near brain stem with a infiltrating morphology which are included in the larger class of the DMG : Diffuse Midline Gliomas
+\item Glioma = A glioma is a type of tumor that starts in the glial cells of the brain or the spine.
+\item Review on the recent biology advances of DIPG
+\item Since around 2016 a lot of data has been discovered on the molecular characteristics of pediatrical gliomas
+\item promising pre-clinical trials did not transpose into successful clinical treatments
+\item Molecular differences between adult and pediatrical gliomas can explain the difference in evolution.
+\item For DIPGs main differences are observed for histone coding genes
+\item In biology, histones are highly basic proteins abundant in lysine and arginine residues that are found in eukaryotic cell nuclei. They act as spools around which DNA winds to create structural units called nucleosomes.
+\item This mutation depending on the affected histone determines the phenotype (mesenchymal or oligodendroglial) and metastatic progression
+\item Mesenchymal = (roughly) that can differentiate into other cell types
+\item Oligodendrogliomas are a type of glioma that starts in glial cells called oligodendrocytes. Oligodendrocytes are cells that cover and protect nerves.
+\item H3.XK27M are now classified as sepecific  tumour types and a lot of mutants have been studied
+\item Reminder :  Transcription = from DNA to RNAm | Translation =  from RNAm to Protein
+\item Loss of methylation on both histones (on the 27 Lysine) and DNA for K27M type-mutations and higher acetylation
+\item Reminder : Methyl : terminaison de type CH3
+\item DNA methylation is a biological process by which methyl groups are added to the DNA molecule. Methylation can change the activity of a DNA segment without changing the sequence. When located in a gene promoter, DNA methylation typically acts to repress gene transcription.
+\item PRC2 enzyme inhibition $\rightarrow$ Loss of methylation $\rightarrow$ bad prognosis (but not necessarily from K27M mutation)
+\item Patient derived xenograft were used by are so far limited to rapid growth tumours
+\item Studies were also performed on the Hematoencephalic barrier
+\item \textbf{MRI contrast behaviour has been linked to hypoxia observed in high grade pediatrical glioma}
+\item epidrugs gave promising results on in vitro samples and xenograft
+\item Reminder : In biochemistry, a kinase [2] is an enzyme that catalyzes the transfer of phosphate groups from high-energy, phosphate-donating molecules to specific substrates.
+\end{itemize}
+
+\section*{The out-­of-­field dose in radiation therapy induces delayed tumorigenesis by senescence evasion, E. Goy et al., \textit{elife sciences}}
+\subsection*{Abstract}
+A rare but severe complication of curative-­intent radiation therapy is the induction of
+second primary cancers. These cancers preferentially develop not inside the planning target volume
+(PTV) but around, over several centimeters, after a latency period of 1–40 years. We show here that
+normal human or mouse dermal fibroblasts submitted to the out-­of-­field dose scattering at the
+margin of a PTV receiving a mimicked patient’s treatment do not die but enter in a long-­lived senes-
+cent state resulting from the accumulation of unrepaired DNA single-­strand breaks, in the almost
+absence of double-­strand breaks. Importantly, a few of these senescent cells systematically and
+spontaneously escape from the cell cycle arrest after a while to generate daughter cells harboring
+mutations and invasive capacities. These findings highlight single-­strand break-­induced senescence
+as the mechanism of second primary cancer initiation, with clinically relevant spatiotemporal speci-
+ficities. Senescence being pharmacologically targetable, they open the avenue for second primary
+cancer prevention.
+
+\section*{Agent-based model of multicellular tumor spheroid evolution including cell metabolism, F. Cleri , \textit{European Physical Journal E}, 2019}
+\subsection*{Abstract}
+Computational models aiming at the spatio-temporal description of cancer evolution are a suit-
+able framework for testing biological hypotheses from experimental data, and generating new ones. Build-
+ing on our recent work [J Theor Biol 389, 146-158 (2016)] we develop a 3D agent-based model, capable of
+tracking hundreds of thousands of interacting cells, over time scales ranging from seconds to years. Cell
+dynamics is driven by a Monte Carlo solver, incorporating partial differential equations to describe chem-
+ical pathways and the activation/repression of ”genes”, leading to the up- or down-regulation of specific
+cell markers. Each cell-agent of different kind (stem, cancer, stromal etc.) runs through its cycle, under-
+goes division, can exit to a dormant, senescent, necrotic state, or apoptosis, according to the inputs from
+their systemic network. The basic network at this stage describes glucose/oxygen/ATP cycling, and can
+be readily extended to cancer-cell specific markers. Eventual accumulation of chemical/radiation damage
+to each cell’s DNA is described by a Markov chain of internal states, and by a damage-repair network,
+whose evolution is linked to the cell systemic network. Aimed at a direct comparison with experiments
+of tumorsphere growth from stem cells, the present model will allow to quantitatively study the role of
+transcription factors involved in the reprogramming and variable radio-resistance of simulated cancer-stem
+cells, evolving in a realistic computer simulation of a growing multicellular tumorsphere.
+
+\subsection*{Notes}
+\begin{itemize}
+\item "It is worth noting that, while the effects of ionizing radiation have been studied in multicellular tumor spheroids already from the earliest applications of this method in the late ’70s [6], nothing seems to have been published yet concerning irradiation of scaffold-grown cancer stem-cell spheroids, and very little on tumor-explanted organotypic spheroids [5]."
+\item  "a rapid phase of avascular growth (logistic or Gompertz equation)"
+\item Gompertz equation: $\frac{L}{1+ e^{k(x-x_{0})}}$
+\item Logistic equation: $a \cdot e^{-bt^{-ct}}$
+\item "the phase of angiogenesis, characterized by the diffusion and degradation of the TAF factors, as well as the
+mobility of the cells attracted by chemo-taxis to the growth region;"
+\item TAF Factors: The TBP-associated factors (TAF) are proteins that associate with the TATA-binding protein in transcription initiation.
+\item and the metastatic phase, characterized (mathematically) by the spatial heterogeneity of cell growth.
+\item \textbf{it is worth noting that the coupling of agent-based models with ionizing radiation and radiotherapy to simulate the action of external agents on cancer growth and/or arrest, is not much developed}
+\item ref 21 and 22 for more details on radiation damage and 24 for the 2D version of the model
+\item "Spatio-temporal modeling of chemical concentration evolution by partial differential equations."
+\item Neoplasm :" An abnormal mass of tissue that forms when cells grow and divide more than they should or do not die when they should."
+\item The lattice (Voronoi Polyhedra) in which cell evolve is considered of fixed size and structure
+\item \textbf{"it is still unclear how best to model cell-to-cell communication networks."}
+\item nutrients consumption vs oxygen concentration
+\item oxygen/nutrients consumption vs ATP/ADP ratios for normal and cancer cells
+\item \textbf{Other potential cancer markers...}
+\item extended model vs reduced model. Main difference : "the ”reduced” model does not explicitly track the pH of the cell, which may be a considerable over-simplification in some problems."
+\item Extended model : Glycolysis + krebs' cycle + respiratory cycle and their interactions (in short, in the aerobic version, respiration and glycolysis feed the krebs' cycle which in turns feed the respiratory cycle as well)
+\item "[...]the PDE system is quite unstable; the range of parameters for which a physically motivated result appears is extremely narrow, and sensitive to the smallest variations." $\rightarrow$ simplified model
+\item "The ATP/ADP ratio is one of the key parameters in identifying the response of healthy vs. cancerous cells [35, 36],the latter being often characterized by a reduced mitochondrial metabolism and lower ATP/ADP ratio that favors enhanced glycolysis"
+\item the reduced PDE system is explictly integrated
+\item Even the reduced system is really hard to stablise 
+\item "Tumorspheres are easily distinguishable from single or aggregated cells [2], as the cells appear to become fused together and individual cells cannot be identified."
+\item  "other modes of active transport will be subsquently introduced in the model"
+\item "Note that such diffusion coefficients do not refer just to the permeability of the cell membrane, but to some effective combination of cell properties and cell density, which overall determine the ability of nutrients to penetrate the volume of interest."
+\item First study : time dependence of the spheroid radius as a function of basic parameters
+\item The glucose viability is a parameter that is set
+\item "Hypoxia is a major hallmark of cancer cells, increasing the radioresistance compared to well oxygenated tissues."
+\item After growth for small spheroids, bigger one are simulated up to the saturation phase.
+\item Rim thickness is not directly measured but obtained from substraction of the necortic core which is more easily labelled 
+\item "inclusion of cell differentiation (normal, quiescent, necrotic) is a necessary but not sufficient condition to induce saturation of the growth."
+\item active rim too large in the attempt at the  saturated model
+\item ith cell shedding saturation is achieved but very sensitive to numerical parameters, may not be for the right reasons.
+\item "A further possibility that could be considered adding to the model is the role of mechanical stress originating from the external matrix, which is reported to be among the possible factors inhibiting growth when the matrix is made increasingly rigid, e.g. by controlled addition of agarose gel [54]."
+\item \textbf{"At this stage, we did not yet attempt a strict comparison with experimental data on real cell lines."}
+\item Check : R. Heinrich, S. Schuster, The regulation of cellular systems
+\end{itemize}
+
+\subsection*{Open questions}
+\begin{itemize}
+\item How close is the ABM from the actual tumor-on-chip system
+\item equation 2a assumes that diffusion is a source term. If the cell is in state where it does not consume glucose, then it can only loose glucose by diffusion towards other cells. Is that coded in the model ?
+\item why is the model unstable ? too many equations ? Or not enough ?
+\item Why/how are the cells in tumorspheres fused ?
+\end{itemize}
+
+\section*{Mathematical models converge on PGC1$\alpha$ as the key metabolic integrator of SIRT1 and AMPK regulation of the circadian clock}
+\subsection*{Abstract}
+None.
+\subsection*{Notes}
+\begin{itemize}
+\item Mathematical modelling of the circadian clock
+\item "Foteinou et al. (1) conclude that SIRT1 acts on the clock not only via the well-known clock protein PER2, but also through PGC1$\alpha$, a transcriptional coactivator of the BMAL1 clock gene with key metabolic functions."
+\item This is a more "system biology" than the one we use that really focuses on one loop
+\end{itemize}
+
+\section*{Hypoxia in Solid Tumors: How Low Oxygenation Impacts the “Six Rs” of Radiotherapy, A. Rakotomalala et al., frontiers in endocrinology, 2021}
+\subsection*{abstract}
+Radiotherapy is an important component of cancer treatment, with approximately 50\% of all cancer patients receiving radiation therapy during their course of illness. Nevertheless,solid tumors frequently exhibit hypoxic areas, which can hinder therapies efficacy, especially radiotherapy one. Indeed, hypoxia impacts the six parameters governing the radiotherapy response, called the " six Rs of radiation biology " (for Radiosensitivity, Repair, Repopulation, Redistribution, Reoxygenation, and Reactivation of anti-tumor immune response), by inducing pleiotropic cellular adaptions, such as cell metabolism rewiring, epigenetic landscape remodeling, and cell death weakening, with significant clinical repercussions. In this review, according to the six Rs, we detail how hypoxia, and associated mechanisms and pathways, impact the radiotherapy response of solid tumors and the resulting clinical implications. We finally illustrate it in hypoxic endocrine cancers through a focus on anaplastic thyroid carcinomas.
+
+%\subsection*{notes}
+
+\section*{H3.3K27M Mutation Controls Cell Growth and Resistance to Therapies in Pediatric Glioma Cell Lines, A. Rakotomalala et al.,Cancers, 2021}
+\subsection*{Abstract}
+High‐grade gliomas represent the most lethal class of pediatric tumors, and their resistance
+to both radio‐ and chemotherapy is associated with a poor prognosis. Recurrent mutations affecting
+histone genes drive the tumorigenesis of some pediatric high‐grade gliomas, and H3K27M mutations
+are notably characteristic of a subtype of gliomas called DMG (Diffuse Midline Gliomas). This dominant negative mutation impairs H3K27 trimethylation, leading to profound epigenetic modifications
+of genes expression. Even though this mutation was described as a driver event in tumorigenesis, its
+role in tumor cell resistance to treatments has not been deciphered so far. To tackle this issue, we expressed the H3.3K27M mutated histone in three initially H3K27‐unmutated pediatric glioma cell lines,
+Res259, SF188, and KNS42. First, we validated these new H3.3K27M‐expressing models at the molec‐
+ular level and showed that K27M expression is associated with pleiotropic effects on the transcriptomic signature, largely dependent on cell context. We observed that the mutation triggered an
+increase in cell growth in Res259 and SF188 cells, associated with higher clonogenic capacities. Inter‐
+estingly, we evidenced that the mutation confers an increased resistance to ionizing radiations in
+Res259 and KNS42 cells. Moreover, we showed that H3.3K27M mutation impacts the sensitivity of
+Res259 cells to specific drugs among a library of 80 anticancerous compounds. Altogether, these data highlight that, beyond its tumorigenic role, H3.3K27M mutation is strongly involved in pediatric glioma cells’ resistance to therapies, likely through transcriptomic reprogramming.
+
+\subsection*{notes}
+\begin{itemize}
+\item  \underline{Tumorigenesis} : Carcinogenesis, also called oncogenesis or tumorigenesis, is the formation of a cancer, whereby normal cells are transformed into cancer cells. The process is characterized by changes at the cellular, genetic, and epigenetic levels and abnormal cell division. (wikipedia)
+\item \underline{Pleiotropy:} (from Greek pleion, 'more', and tropos, 'way') occurs when one gene influences two or more seemingly unrelated phenotypic traits. Such a gene that exhibits multiple phenotypic expression is called a pleiotropic gene.
+\item \underline{transcriptome} : The transcriptome is the set of all RNA transcripts, including coding and non-coding, in an individual or a population of cells. The term can also sometimes be used to refer to all RNAs, or just mRNA, depending on the particular experiment.
+\item The resistance to ionizing radiation is once again shown here
+\end{itemize}
+
+\section*{In Silico Analysis of Cell Cycle Synchronisation Effects in Radiotherapy of Tumour Spheroids, H. Kempf et al., PLoS Comput Biol, 2013}
+\subsection*{Abstract}
+Tumour cells show a varying susceptibility to radiation damage as a function of the current cell cycle phase. While this sensitivity is averaged out in an unperturbed tumour due to unsynchronised cell cycle progression, external stimuli such as radiation or drug doses can induce a resynchronisation of the cell cycle and consequently induce a collective development of radiosensitivity in tumours. Although this effect has been regularly described in experiments it is currently not exploited in clinical practice and thus a large potential for optimisation is missed. We present an agent-based model for three-dimensional tumour spheroid growth which has been combined with an irradiation damage and kinetics model. We predict the dynamic response of the overall tumour radiosensitivity to delivered radiation doses and describe corresponding time windows of increased or decreased radiation sensitivity. The degree of cell cycle resynchronisation in response to radiation delivery was identified as a main determinant of the transient periods of low and high radiosensitivity enhancement. A range of selected clinical fractionation schemes is examined and new triggered schedules are tested which aim to maximise the effect of the radiation-induced sensitivity enhancement. We find that the cell cycle resynchronisation can yield a strong increase in therapy effectiveness, if employed correctly. While the individual timing of sensitive periods will depend on the exact cell and radiation types, enhancement is a universal effect which is present in every tumour and accordingly should be the target of experimental investigation. Experimental observables which can be assessed non-invasively and with high spatio-temporal resolution have to be connected to the radiosensitivity enhancement in order to allow for a possible tumour-specific design of highly efficient treatment schedules based on induced cell cycle synchronisation.
+
+\subsection*{Notes}
+\begin{itemize}
+\item Fractionation : in the context of radiotherapy, it is the process of dividing a dose of radiation into multiple “fractions”. 
+\item in this case, there are only 4 Rs, and not 6
+\item '[...]the advent of modern imaging technologies has delivered a variety of suitable tools which could assess not only oxygenation but also cell cycle status in vivo"
+\item " all parameters used within the simulation are physically accessible and thus can be obtained from experimental measurements"
+\item \textbf{Check 25 for model validation}
+\item "interaction between cells is adhesive-repulsive and performed using the Johnson-Kendal-Roberts model" check ref 39
+\item "an integral pressure on the cell above 200 Pa will induce quiescence at the G1/S-checkpoint as a result of contact inhibition [35,41],"
+\item "Availability of glucose and oxygen is modelled using a cubic reaction diffusion solver system of 1.4 mm edge length." check that.
+\item The cubic reaction diffusion solver was applied for genetics
+\item In silico : Computational model
+\item The zero dimensional model does not seem to include the multiple equations used by Fabrizio
+\item Interesting but very focused on radiosensitivity in the results, so I won't learn much about models here
+\end{itemize}
+
+\section*{Spatio-temporal cell dynamics in tumour spheroid irradiation, H. Kempf et al., \textit{European Physical Journal  D}, 2010}
+\subsection*{Abstract}
+Multicellular tumour spheroids are realistic in vitro systems in radiation research that integrate cell-cell interaction and cell cycle control by factors in the medium. The dynamic reaction inside a tumour spheroid triggered by radiation is not well understood. Of special interest is the amount of cell cycle synchronisation which could be triggered by irradiation, since this would allow follow-up irradiations to exploit the increased sensitivity of certain cell cycle phases. In order to investigate these questions we need to support irradiation experiments with mathematical models. In this article a new model is introduced combining the dynamics of tumour growth and irradiation treatments. The tumour spheroid growth is modelled using an agent-based Delaunay/Voronoi hybrid model in which the cells are represented by weighted dynamic vertices. Cell properties like full cell cycle dynamics are included. In order to be able to distinguish between different cell reactions in response to irradiation quality we introduce a probabilistic model for damage dynamics. The overall cell survival from this model is in agreement with predictions from the linear-quadratic model. Our model can describe the growth of avascular tumour spheroids in agreement to experimental results. Using the probabilistic model for irradiation damage dynamics the classic ‘four Rs’ of radiotherapy can be studied in silico. We found a pronounced reactivation of the tumour spheroid in response to irradiation. A majority of the surviving cells is synchronized in their cell cycle progression after irradiation. The cell synchronisation could be actively triggered and should be exploited in an advanced fractionation scheme. Thus it has been demonstrated that our model could be used to understand the dynamics of tumour growth after irradiation and to propose optimized fractionation schemes in cooperation with experimental investigations.  
+
+\subsection*{Notes}
+\begin{itemize}
+\item "While initially an exponential growth is possible the diffusive nutrient influx through the spheroid surface cannot support this growth indefinitely"
+\item "for a comprehensive overview about the field see [12,13]"
+\item  reading of section 19.2 of ref 19 "Diffusive initial value problems" p.847 implicit method seem more stable and it is basic diffusion.
+\item Models cell interactions and forces while Fabrizio does not describe in the more recent paper or the previous one $\rightarrow$  Simply assumes that confluent cells will eventually go quiescent
+\item \textbf{"The Dynamic Object Delaunay package in use and the concept of simulation object representation in Delaunay triangulations is described in full detail in [21,22]"}
+\item "If the pressure on a cell exceeds the critical threshold value it will be sent into quiescence as described in nutrient-induced quiescence before"
+\item Mitosis is also thoroughly modelled which complexifies implementation of the JKR model
+\item This model seems more elaborate than the one chosen by Fabrizio which seems to simplify some terms/phenomena
+\item use of first order scheme is more efficient (especially since the system needs to retriangulated). Does \textbf{Fabrizio retriangulate ?}
+\item "In order to balance between these two (speed and convergence) requirements a global adaptive step- size algorithm (GAS) is used to determine the integration timestep."
+\item "We use both mechanisms in our simulations in a combined approach: while the global integration timestep is determined by the GAS algorithm the mavericks in the velocity distribution are treated with the LAS (local) algorithm."
+\item for "fast" cells which can be orders of magnitude faster than average, their dynamics is calculated separately in smaller steps with the rest of the system frozen (adiabatic?) before resuming the normal calculation
+\item linear quadratic model : "phenomenological model which is closely linked to experimental observations[6]" 
+\item "Unfortunately most experiments and theoretical predictions just account for the survival probability of cells in monolayers.[...] Still this change can be accounted for by data from experiments in which multilayers and spheroids were irradiated"
+\item "Combined with the distinct histology of MCTSs and in vivo tumors where local areas can consist of synchronized cells (such as the quiescent interlayer) the cell phase dependence of radiosensitivity can make a huge difference in regards to the irradiation results."
+\item "Sinclair et al. measured these change of radiosensitivity in different kinds of mammalian cells in vitro [43]. He found a pronounced increase of radiosensitivity in late G 1 phase, all of G 2 phase and M phase while at the same time radiosensitivity is decreased in early G 1 and S phase."
+\item "In fact the effect mediated by the OER can be as big as the variability of survival within the different cell cycle phases."
+\item "Effectively the OER can also be integrated by changing the radiosensitivity parameters in the linear quadratic (LQ) model depending on the local oxygen concentration."
+\item  in short, high linear energy transfer radiation results in tumor response less sensitive to hypoxia and/or cell cycle thant low linear energy  transfer
+\item "This [saturated growth] state marks the typical size to which a tumour spheroid can grow without the recruitment of new blood vessels (avascular growth)"
+\item "the cell cycle duration underlies natural fluctuations taken into account by a Gaussian random distribution of the cell cycle phase lengths.
+\item Fig9 : While the saturation phase compares well with experiments, the initial phase is slighlty too rapid. Actually it's the experimental cell whose exponential growth is too slow
+\item "The mechanism which is used for the induction of quiescence is of importance especially for the initial growth phase of the spheroid (contact inhibition vs. nutrient limitation)." $\rightarrow$ cell pressure, nutrient, or both
+\item \textbf{\underline{Note to self} : focus on mechanism that can arrest cell growth or change cell phases}
+\item \underline{Reoxygenation:} Death of cell $\rightarrow$ more space and nutrients $\rightarrow$ less hypoxia $\rightarrow$ less radioresistance
+\item "As a consequence of cells entering and leaving quiescence at the G 1 /S restriction point we see an amazing amount of resynchronisation of the cell cycle distribution in the tumour in response to radiation treatment (see Fig. 14)."
+\item \underline{Redistribution:} in short, cells synchronise because of 1) how quiescence work (always happens at the same phase), 2) how non quiescent cells die anyway (they do not get the hypoxia radioresistance boost) 3) The cells repair mechanism
+\item  \underline{Regrowth \& repair:} New cells (cancer and healthy) come to replace the dead ones
+\item "While the overall tumour volume is still decreased during fractionated irradiation the regrowth is problematic."
+\item "An interesting extension would be a network of key-genes within each cell which could also further advance the cell reaction to irradiation."
+\item \textbf{"Mutation and selection within the tumour system under the pressure of nutrient limitations, varied density of the extracellular matrix or irradiation therapy could be studied in this way."}
+\item \textbf{Cell movement while possible with the model was not modelled in this study}
+\item "Another addition would be the study of the cells capability to withstand multiple sub-lethal hits over time."
+\item \textbf{"In response to hypoxia in the tumour a model for anaerobic cell respiration and the according effects of acidity would be interesting." $\rightarrow$ that seems to be what Fabrizio went for in its second paper}
+\item \textbf{"The model could benefit largely from a clearer distinction between apoptosis and necrosis."}
+\item Immune response does play a role but would need in vivo models
+\item Alternating high and low doses could help
+\end{itemize}
+
+\subsection*{Open questions}
+\begin{itemize}
+\item What does the difference in parameters between 2D and 3D look like in the linear quadratic model ? And experimentally ?
+\end{itemize}
+
+\section*{A biophysical model of cell evolution after cytotoxic treatments:Damage, repair and cell response, Tomezak et al., Journal of Theoretical Biology, 2016}
+\subsection*{Abstract}
+We present a theoretical agent-based model of cell evolution under the action of cytotoxic treatments,
+such as radiotherapy or chemotherapy. The major features of cell cycle and proliferation, cell damage and
+repair, and chemical diffusion are included. Cell evolution is based on a discrete Markov chain, with cells
+stepping along a sequence of discrete internal states from ‘normal’ to ‘inactive’. Probabilistic laws are
+introduced for each type of event a cell can undergo during its life: duplication, arrest, senescence,
+damage, reparation, or death. We adjust the model parameters on a series of cell irradiation experiments,
+carried out in a clinical LINAC, in which the damage and repair kinetics of single- and double-strand
+breaks are followed. Two showcase applications of the model are then presented. In the first one, we
+reconstruct the cell survival curves from a number of published low- and high-dose irradiation experi-
+ments. We reobtain a very good description of the data without assuming the well-known linear-
+quadratic model, but instead including a variable DSB repair probability. The repair capability of the
+model spontaneously saturates to an exponential decay at increasingly high doses. As a second test, we
+attempt to simulate the two extreme possibilities of the so-called ‘bystander’ effect in radiotherapy: the
+‘local’ effect versus a ‘global’ effect, respectively activated by the short-range or long-range diffusion of
+some factor, presumably secreted by the irradiated cells. Even with an oversimplified simulation, we
+could demonstrate a sizeable difference in the proliferation rate of non-irradiated cells, the proliferation
+acceleration being much larger for the global than the local effect, for relatively small fractions of irra-
+diated cells in the colony.
+
+\subsection*{Notes}
+\begin{itemize}
+\item "In this first paper we model only radiation-induced DNA damage in the form of single-strand and double-strand
+breaks. However, other DNA lesions, such as base excision, cross-linking, clustered defects, could be included by extending the model, as well as damage to other vital cell components, such as mitochondria."
+\item "In the present work, in order to calibrate the probability of inducing a SSB or a DSB, we performed photon-beam irradiation experiments in a clinical LINAC, on cultures of normal human dermal fibroblasts."
+\item "An original contribution of the present simulation model is the introduction of explicit damage accumulation and repair, at the single-cell level."
+\item \textbf{"In our model, agents live on a fixed lattice (in the present study simply two-dimensional (2D) with fourfold symmetry), and can move on the lattice sites, carrying all the information about their state."}
+\item "The cell membrane represents a semi-permeable barrier to almost all molecules and ions, with permeability coefficients much smaller than the diffusion in the surrounding fluid phase. Except special cases, therefore, diffusion on empty sites is considered instantaneous." Sadly, no values or reference...
+\item Radiation events are thought to follow a Poisson process (Kellerer, 1985), therefore it may be justified to describe the induced damage (both direct and indirect) as a Markov chain (Albright,1989; Sachs et al., 1990).
+\item "In the present work we adopt a minimal (also called ‘Von Neumann’) neighbourhood relationship, namely each site i interacts with the four neighbours (empty or occupied) located immediately above, below, left and right, in the 2D square topology."
+\item \textbf{Cell-cell communication was in fact implemented in both short and long-range version with a concentration term.}
+\item "The system is simulated with a time-forward explicit algorithm, with a Monte Carlo sampling of the various probability distributions."
+\end{itemize}
+
+
+\textbf{READ ON THE HEMATOENCEPHALIC BARRIER}
+
+\section*{Conclusions \& Upcoming work}
+This document aimed at gaining knowledge within the scope of the collaboration and therefore remained focus on establishing somewhat broadly what agent-base models were and gaining some insights on how they can be used to answer biological questions. \newline
+
+From the biological standpoint it was understood that DIPG represent a class of tumor that are extremely difficult to treat because of radioresistance and therapies that worked in vitro, but not in vivo. Understanding the inner dynamics of tumors exposed to these kind of stimuli through modelling could help in developing more efficient therapies.\newline 
+
+From a modelling point of view, the agent-based model structure was detailed and some of the future working points were uncovered. There will obviously be two axis of work. One will be the numerical aspect, i.e understanding and justifying the numerical conception choices in order to assess their potential impacts on results but most importantly separating numerical artifacts from biological aspects.
+
+As a follow-up to this are planned, a second bibliography study dedicated to recent agent-based model developments in cancer and tumor modelling (but possibly outside of it too) and a synthesis outlining the first steps of works considered for those studies
+
+
+
+
+\end{document}
+
