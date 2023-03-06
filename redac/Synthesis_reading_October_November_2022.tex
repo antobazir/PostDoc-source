@@ -228,16 +228,21 @@ In the model of Arrebola, Necrotic state is only encoded by the cell position in
 
 \subsection{Nutrients \& short-range \& long range signalling}
 %introduction on cell respiration
-An extensive description of the metabolic pathway is beyond the scope of this review. This subsection will thus focus mainly on glucose and oxygen as they are the most commonly modelled nutrients. ATP can also be included in certain models with a more complexe reprensatioin of metabolism.  Adenosine Triphosphate (ATP) can be produced through glycolysis in aerobic conditions and through fermentation in anaerobic conditions which leads to the production of lactate. The production of ATP and ADP from oxygen and glucose is called the glucose-oxygen network. It is the most commonly modelled metabolic system in agent-based modelling applied to tumors. 
+An extensive description of the metabolic pathway is beyond the scope of this review. This subsection will nonetheless attempt to provide a broad view of the existing modelling choices in the recent literature. Adenosine Triphosphate (ATP), dubbed the energy currency of the cell, can  be included in certain models with a more complex representation of metabolism.  ATP can be produced through glycolysis in aerobic conditions and through fermentation in anaerobic conditions which leads to the production of lactate. The conversion of glucose into ATP involves several mechanisms involving multiple chemical reactions such as, but not limited to, the Krebs' cycle. In agent-based model applied to tumor growth, metabolism modelling can vary in complexity as will be demonstrated in the following.  
 %modelled nutrients& dynamics
 %single nutrient model
-An important feature of any model related to tumor growth is the nutrient concentration. An extended representation of the cell energy consumption cycle or cell respiration was provided by Cleri and intended to be used in its model \textbf{extend later}.\cite{Cleri2019} However, most models opt for simpler representation of nutrients.  In the model of Arrebola, the only modelled nutrient is oxygen and it is not explicitly modelled.\cite{Arrebola2020} The nutrient concentration in this case is linked to the distance between the rim of the spheroid and the cell. A more widespread approach is to couple a reaction-diffusion equation to the agent-based model in order to represent nutrient and/or other chemical species. In the model of Bull, only the oxygen is represented and its concentration follows a standard diffusion-reaction equation with the cell-centers acting as point sinks.\cite{Bull2020} In their study, Ghaffarizadeh and collaborators also focused on oxygen which was handled by the BioFVM tool coupled to PhysiCell and which encodes a full reaction-diffusion equation with decay, sources and sinks.\cite{Ghaffarizadeh2017}
+
+An important feature of any model related to tumor growth is the dynamics of nutrients. An extended representation of the cell energy consumption cycle or cell respiration was provided by Cleri and intended to be used in its model. However, the number of equations involved led to two major roadblocks. First, most parameters could not be determined, and second, it was a difficult to find range of value leading to a stable system and even more to connect them to any physical observation.\cite{Cleri2019} Most models opt for simpler representation of nutrients.  In the model of Arrebola, the only modelled nutrient is oxygen and it is not explicitly modelled.\cite{Arrebola2020} The nutrient concentration in this case is linked to the distance between the rim of the spheroid and the cell. A more widespread approach is to couple a reaction-diffusion equation to the agent-based model in order to represent nutrients and/or other chemical species. In the model of Bull, only the oxygen is represented and its concentration follows a standard diffusion-reaction equation with the cell-centers acting as point sinks.\cite{Bull2020} In their study, Ghaffarizadeh and collaborators also focused on oxygen which was handled by the BioFVM tool coupled to PhysiCell and which encodes a full reaction-diffusion equation with decay, sources and sinks.\cite{Ghaffarizadeh2017}
 
 %multi nutrients models
-In their first model, Kempf and collaborators use 2 diffusion-reaction equations to describe the dynamics of glucose and oxygen in the system.\cite{Kempf2005}. In their more recent publication they included a refined modelling of diffusion which accounts for the tissue properties impact on diffusion.\cite{Kempf2015} In the model of Hamis and collaborators, diffusion-reaction eqautions are used to represent both the oxygen and the hypoxia-activated prodrugs.\cite{Hamis2020} For oxygen, the rim of the spheroid is treated as an ensemble of source points and cells are treated as sink with a specific consumption rate. In that case, the diffusion coefficient depends on whether the lattice is occupied by a cell or not. The equation is almost the same for prodrugs except they have an additional term for activation and decay of the compounds. Mao and collaborators also studied the effects of hypoxia-activated prodrugs on spheroid growth with an-on lattice hybrid model. In their case however the oxygen source is the gaseous environment above the culture medium which is completely represented. An equation of diffusion gives the oxygen concentration in the medium and a diffusion-reaction sets the concentration within the spheroid. As explained above in order to recapitulate all the imaging data they acquired, Jagiella and collaborators needed to included glucose, oxygen but also lactate into their model.\cite{Jagiella2016}
+In their first model, Kempf and collaborators use 2 diffusion-reaction equations to describe the dynamics of glucose and oxygen in the system.\cite{Kempf2005}. In their more recent publication they included a refined modelling of diffusion which accounts for the impact of tissue properties  on diffusion.\cite{Kempf2015} In the model of Hamis and collaborators, diffusion-reaction eqautions are used to represent both the oxygen and the hypoxia-activated prodrugs.\cite{Hamis2020} For oxygen, the rim of the spheroid is treated as an ensemble of source points and cells are treated as sink with a specific consumption rate. In that case, the diffusion coefficient depends on whether the lattice is occupied by a cell or not. The equation is almost the same for prodrugs except they have an additional term for activation and decay of the compounds. Mao and collaborators also studied the effects of hypoxia-activated prodrugs on spheroid growth with an-on lattice hybrid model. In their case however the oxygen source is the gaseous environment above the culture medium which is completely represented. An equation of diffusion gives the oxygen concentration in the medium and a diffusion-reaction sets the concentration within the spheroid. As explained above in order to recapitulate all the experimental observations, Jagiella and collaborators needed to included glucose, oxygen but also, ATP, and cellular waste lactate into their model.\cite{Jagiella2016} it should be noted that they opted for a condensed modelling of the mechanism of conversion of oxygen and glucose into ATP.
 
 %Cleri 
-In his model, Cleri gave the equation system for the entire glucose/oxygen system.\cite{Cleri2019} This includes reaction-diffusion equations for glucose and oxygen and Michaelis-Menten and ordinary differential equations for the intermediary compounds. However, this extended system gave results that were difficult to analyse and interpret. Therefore a reduced metabolic equation system was proposed keeping only glucose, oxygen, ATP and ADP as variables. The resulting equations system was then succesfully calibrated and tested in growth simulation. But contrary to Jagiella, cellular waste is not represented.
+In his model, Cleri gave the equation system for the entire glucose/oxygen system.\cite{Cleri2019} This includes reaction-diffusion equations for glucose and oxygen and Michaelis-Menten and ordinary differential equations for the intermediary compounds. However, this extended system gave results that were difficult to analyse and interpret, notably because of the stability of the 7 ODEs and the lack of access to values for their parameters. Therefore, a reduced metabolic equation system was proposed keeping only glucose, oxygen, ATP, ADP and a fictitious bound state of glucose as variables . The resulting equation system was then succesfully calibrated and tested in growth simulation. 
+
+The author wants to stress here that qualitatively, here most models seem to leave out growth factors entirely.  This choice is not intuitive considering how these chemicals are included in most cultures, either directly or through fetal bovine serum (FBS). They are necessary to proper proliferation and can induce significant changes in phenotype for cells. They are peptide complexes and their size is often in the range of 10 000 Da, which is two orders of magnitude above glucose (180 Da). One could be led to think that this could impact their diffusion in tissue and that they might be less available in spheroids than glucose for example. This point will be discussed further in subsequent sections. \textbf{[ajouter refs]}
+
+This section aimed more at discussing the different strategies qualitatively. A more quantitative discussion is attempted later but first, other strategy used in conjunction with agent-based model will be discussed.
 
 \subsubsection{Petri Nets, boolean networks and other regulatory network representations}
 The end goal of hybrid models and their representation of nutrients is ultimately to capture at least partially the complex regulatory machinery of the intracellular signalling pathways. As exemplified above, this tends to be achieved with system of ordinary differential equations solve numerically. One of the main problem with this method is that the coefficients of these equations tend to be difficult to retrieve in physiological condition. This means that in order to find values for those parameters, the most commonly used is to sweep the parameters in range of values until the simulation fits the experimental observations. In the following two of the existing method used to replace the ordinary differential equations will be presented.
@@ -351,14 +356,14 @@ In this section the authors will take a step backwards and attempt to provide a 
 As can be seen in the previous sections, models studying the growth of tumor spheroids tend to focus either on glucose, oxygen or both. In order to build this section, information from the nutrients,  necrosis and quiescence subsections will be reorganised and expanded. In this section, the goal will be less a thorough description of how each models works and more a comparison of the impact of the chosen mechanism on the dynamics. For different model we will answer the following question : what are the conditions for proliferation ? what are the conditions for cell death ?
 
 \subsubsection{Different strategies}
-As explained before, Arrebola and Bull only modelled the concentration of oxygen.\cite{Arrebola2020}\cite{Bull2020}. Bull and collaborators encoded both proliferation and cell death on oxygen concentration thresholds.\cite{Bull2020} Interestingly, variation of those thresholds did not impact the growth dynamics significantly and in all cases, the saturation was observed. It is explained by the balance between cell shrinking and removal at the center, and growth/proliferation at the rim. An interesting pursuit to this study would be to investigate the mechanical side of the model as the forces seems to depend on the concentration of oxygen (through cell size). So in this model the growth is purely oxygen-driven. It should be noted that most of their modelling was conducted on a 2D slice of a 3D spheroid. Moreover no quantitative comparison was made outside of the radius of the simulated aggregates. Lastly, the wrinkles and cracks observed in large aggregate could not be obtained in their model without losing the saturation, which thus seems to also be mediated by the surface tension. Quiescence however was purely mediated through oxygen concentratioin
+As explained before, Arrebola and Bull only modelled the concentration of oxygen.\cite{Arrebola2020}\cite{Bull2020}. Bull and collaborators encoded both proliferation and cell death on oxygen concentration thresholds.\cite{Bull2020} Interestingly, variation of those thresholds did not impact the growth dynamics significantly and in all cases, the saturation was observed. It is explained by the balance between cell shrinking and removal at the center, and growth/proliferation at the rim. An interesting pursuit to this study would be to investigate the mechanical side of the model as the forces seems to depend on the concentration of oxygen (through cell size). So, in this model, the growth is purely oxygen-driven. It should be noted that most of their modelling was conducted on a 2D slice of a 3D spheroid. Moreover, no quantitative comparison was made outside of the radius of the simulated aggregates. Lastly, the wrinkles and cracks observed in large aggregates could not be obtained in their model without losing the saturation, which thus seems to also be mediated by the surface tension. Quiescenc,e however, was purely mediated through oxygen concentratioin
 
-Hamis and collaborators also used an oxygen-based model but the only impact of hypoxia was to lengthen to  G1-phase of the cell cycle.\cite{Hamis2020} Division itself is not conditioned by oxygen concentration either as it depends only on the proximity on a free site. This condition can be understood as a mechanical condition : "no division at confluence". What results from this is the absence of growth saturation in their spheroids. This does not penalise their study that focuses mostly on the interactions between cell-cycle and radiation. Only the initial exponential phase of growth needs to be recapitulated, which is the case in their model. 
+Hamis and collaborators also used an oxygen-based model, but the only impact of hypoxia was to lengthen the G1-phase of the cell cycle.\cite{Hamis2020} Division itself is not conditioned by oxygen concentration either as it depends only on the proximity of a free site. This condition can be understood as a mechanical condition : "no division at confluence". What results from this is the absence of growth saturation in their spheroids. This does not penalise their study that focuses mostly on the interactions between cell-cycle and radiation during the initial exponential phase. Therefore, only the initial exponential phase of growth needs to be recapitulated, which is the case in their model. 
 
-In the model of Mao and collaborators, both glucose and oxygen are included.\cite{Mao2018} Interestingly, cells in this model are either growing or dying, and divide once they reached a certain threshold. Cell are tagged for death if they spend enough time below a threshold concentration of glucose or oxygen.  it should be noted that if a combination of glucose and oxygen may favour growth, a combined scarcity of oxygen and glucose does not favour cell death. In short, abundance of one nutrient and scarcity of another can lead to cell death but scarcity of both will only slow growth, possibly more than in the former situation, without ever leading to cell death. However, unlike EMT6/Ro, a experimental reference for this choice was not given. With them being the same physical processes the only difference between the two nutrients come from the value of the parameters. The represented cell line (HCT116) dies quicker without oxygen than without glucose. There is no mechanistic aspect influencing growth in this model. With this dynamics the simulated spheroids seem to slow down, however it does not seem to really saturates as observed in the model of Bull over similar time scales and despite the fact that the necrotic core is present in both cases.
+In the model of Mao and collaborators, both glucose and oxygen are included.\cite{Mao2018} Interestingly, cells in this model are either growing or dying, and divide once they reached a certain threshold. Cells are tagged for death if they spend enough time below a threshold concentration of glucose or oxygen.  It should be noted that if a combination of glucose and oxygen may favour growth, a combined scarcity of oxygen and glucose does not lead to cell death. In short, abundance of one nutrient and scarcity of another can lead to cell death but scarcity of both will only slow growth, possibly more than in the former situation, without ever leading to cell death. However, unlike Kempf and collaborators for the EMT6/Ro cells, an experimental reference for this choice was not given. Since the follow the same physical processes, the only difference between the two nutrients come from the value of the parameters. The represented cell line (HCT116) dies quicker without oxygen than without glucose. There is no mechanistic aspect influencing growth in this model. With this dynamics, the simulated spheroids seem to slow down, however it does not seem to really saturates as observed in the model of Bull over similar time scales and despite the fact that the necrotic core is present in both cases.
 
-Adding in complexity to the whole picture is the model of Kempf and collaborators in their 2015 study. where they model both glucose oxygen AND a mechanical modulation of growth leading to saturation. AS stated in their 2015 article:"Quiescence of cells is by default triggered if a cell is subject to a critically high
-pressure $P_{crit}$ of more than 200 Pa from neighbouring cells at the G1/S-checkpoint." Cell cannot go into necrosis due to hypoxia but only due to glucose deprivation. In that model, the oxygen concentration is modelled in order to account for its impact on cell-cycle and response to radiation. These data are valid for EMT6 anv V79 spheroids. Interestingly, their model is based on the model of Schaller,\cite{Kempf2005} which included glucose and oxygen, and found by comparison with EMT6/Ro data that the condition for the onset of necrosis that should be set in order to reproduce experimental data is depending on the product of glucose and oxygen. Quiescence in their model is only induced by contact inhibition which is supported by experimental evidence for the cell line they are studying.
+Adding in complexity to the whole picture is the model of Kempf and collaborators in their 2015 study, where they model both glucose oxygen AND a mechanical modulation of growth leading to saturation. As stated in their 2015 article:"Quiescence of cells is by default triggered if a cell is subject to a critically high
+pressure $P_{crit}$ of more than 200 Pa from neighbouring cells at the G1/S-checkpoint." Cells cannot go into necrosis due to hypoxia but only due to glucose deprivation. In that model, the oxygen concentration is modelled in order to account for its impact on cell-cycle and response to radiation. These data are valid for EMT6 and V79 spheroids. Interestingly, their model is based on the model of Schaller,\cite{Kempf2005} which included glucose and oxygen, and found by comparison with EMT6/Ro data that the condition for the onset of necrosis that should be set in order to reproduce experimental data is depending on the product of glucose and oxygen. Quiescence in their model is only induced by contact inhibition which is supported by experimental evidence for the cell line they are studying.
 
 Jagiella and collaborators provide a more complete view of the same phenomenon studying non-small cell lung cancer (NSCLC) cell line SK-MES-1.\cite{Jagiella2016} They also found that neither glucose nor oxygen alone could lead to representative cell death dynamics when compared to experimental data. However, the "physiological" concentration of glucose and oxygen, when fed into the model lead to underestimation of size and overestimation of necrotic core. They also find that proliferation in their cell-line seemed to be mostly controlled by contact inhibition which was also verified on the EMT6/Ro line. If it recapitulates rather well the growth dynamics it does not explain the observed drop in proliferation near the rim. A more complete modelling of metabolism including ATP improved the agreement but failed to fully capture the observation in terms of necrotic core size. They were only able to reproduce data in all the condition by adding a mediation of cell death and a mediation of cell quiescence by cellular waste and hypoxia. Moreover, in their study, saturation compatible with observations in all configuration was obtained by modelling waste concentration due to cell lysis. Such a conclusion was also formulated in Cleri's model, though not verified.\cite{Cleri2019}
 
@@ -414,7 +419,7 @@ Hamis et al., 2020 & 100 & 10 & 1670 & variable. & HEMC-SS \\
 \hline
 Mao et al., 2018 & 75* & 0.07/0.47** &  2000 & 63 & HCT116  \\
 \hline
-Cleri, 2019 & 280/1400 & 140 & 15 & N.S & EMT6/Ro \\
+Cleri, 2019 & 280/1400 & 140 & 0.0015 & 0-10 & EMT6/Ro \\
 \hline
 Kempf et al., 2015 & 61 & 6.6 & 1750 & 83 (active) \ 49(quiescent) & EMT6/Ro + DS carcinosarcoma \\
 \hline
@@ -443,7 +448,7 @@ The model of Kempf and collaborators in their article of 2015 is also set at the
 
 In terms of nutrients, in the model of Jagiella, the use of several nutrients concentration led to the conclusion that an oxygen/glucose threshold could not recapitulate experimental observations. Therefore, cell cycle progression and cell death were conditioned on ATP production which was linked to glucose and oxygen concentration. It should be noted that in there case in order to recapitulate data about necrotic core sizes in different conditions, they had to account for lactate production. The external concentrations of glucose modelled were : 1 mM, 5 mM and 25 mM Of course, the indirect link between glucose and ATP makes quantitative comparison more difficult. But if figure 8 from the article is followed the threshold above which ATP is sufficiently produced to prevent cell death (900 mM/h) regardless of the (studied) oxygen concentration [1 \textmu M - 1 mM] is 50 \textmu M. But if oxygen concentration is sufficient it can be as low 10 \textmu M. This is still two orders of magnitude above what was used by Mao and collaborators on HCT116 cells and more than the zero value chosen by Kempf and collaborators in their model. The oxygen diffusion coefficient in the tissue is taken to be the same as Kempf and collaborators at 105 \textmu m/s
 
-In the same vein, Cleri proposes a simplified model linking glucose and oxygen concentration to ATP concentration. It is a bit more complex than the simplfied equilibrium equation of Jagiella. It includes the dynamics of ADP as well. However, the threshold on viability is set neither on glucose or ATP, but oxygen. ATP is also not given in terms of production rate but in terms of ATP/ADP concentration ratio which prevents any direct comparison on those quantities. The chosen glucose threshold for proliferation in 5 mM with an external concentration either just above the threshold (5.7 mM) or 5 times the threshold (25 mM) Obviously the two results in very different growth dynamics with an initial plateau for the poorly fed spheroid. Such an initial plateau phase was however not observed for experimental spheroids.\cite{Freyer1986}\cite{Freyer1988} The glucose diffusion coefficient in tissue is chosen to be 375 \textmu m$^2$/s. As for oxygen, the glucose uptake rate is harder to determine due to the equation system used instead of the diffusion reaction equation.
+In the same vein, Cleri proposes a simplified model linking glucose and oxygen concentration to ATP concentration. It is a bit more complex than the simplfied equilibrium equation of Jagiella. It includes the dynamics of ADP as well. However, the threshold on viability is set neither on glucose or ATP, but oxygen. ATP is also not given in terms of production rate but in terms of ATP/ADP concentration ratio which prevents any direct comparison on those quantities. The chosen glucose threshold for proliferation in 5 mM with an external concentration either just above the threshold (5.7 mM) or 5 times the threshold (25 mM) Obviously the two results in very different growth dynamics with an initial plateau for the poorly fed spheroid. Such an initial plateau phase was however not observed for experimental spheroids.\cite{Freyer1986}\cite{Freyer1988} The glucose diffusion coefficient in tissue is chosen to be 0.0375 \textmu m$^2$/s. The glucose uptake is also variable with a maximal value of 250 amol/cell/s
 
 \begin{table}[h]
 \begin{center}
@@ -454,7 +459,7 @@ In the same vein, Cleri proposes a simplified model linking glucose and oxygen c
 \hline
 Mao et al., 2018 & 5 & 0.15 $\cdot$ 10$^{-3}$  &  20.8 & 71 & HCT116  \\
 \hline
-Cleri, 2019 & 5.7/25 & 5 & 375 & N.S & EMT6/Ro \\
+Cleri, 2019 & 5.7/25 & 5 & 0.0375 & 0-250 & EMT6/Ro \\
 \hline
 Kempf et al., 2015 & 5 & 0 & 105 & 180 (active) \ 130(quiescent) & EMT6/Ro + DS carcinosarcoma \\
 \hline
@@ -524,14 +529,22 @@ An interesting question concerning the DIP2G project is :Have spheroids been use
 
 A quick literature review showed that immortalising DIPG cells lines can be challenging, which does not favour the monoclonal spheroid experiments that are mentioned earlier in this document.\cite{Sun2019}\cite{Meel2018} that there existing more profuse literature on sphere-forming assay on DIPG cells with stem cells/progenitor cells rather than immortalised cell lines.
 
-In the DIPG project, the cell line used will be mainly the DIPG7 cell line. This cell line presents the histone mutation H3K27(?). In terms of culture conditions, when outside of the chip they are typically grown in non-adhesive condition in serum-free medium with growth factors and form spheroids. They are then dissolved and filtered of dead cells and waste material in order to seed them within the tumor-on-chip system that will be presented in the next section. These cells are primary tumor cells that forms rather homogeneous population of spheroids made of olidodendrocyte-type cells. \textbf{check with Alessandro} 
+In the DIPG project, the cell line used will be mainly the DIPG7 cell line. This cell line presents the histone mutation H3K27(?). In terms of culture conditions, when outside of the chip they are typically grown in non-adhesive condition in serum-free medium with growth factors and form spheroids. They are then dissolved and filtered of dead cells and waste material in order to seed them within the tumor-on-chip system that will be presented in the next section. These cells are primary tumor cells that forms rather homogeneous population of spheroids made of oligodendrocyte-type cells. \textbf{check with Alessandro} 
+
+\paragraph{Open questions ?}
+\begin{itemize}
+\item If no matrix, progenitor cells divide and adhere to one another to form the spheroids ?
+\item If so, intercellular space in spheroids contains next to no matrix ? and therefore the cells do not migrate ? 
+\end{itemize}
+
+It is also important to note that contrary to glucose and oxygen who are internalised and metabolised by cells, growth factors are interacting with receptors present on the cell membrane and are therefore more likely to be subjected to  a ligand-receptor interaction than a reaction diffusion type of behavior
 
 \subsection{DIP2G tumor-on-chip system}
 The DIP2G project focuses on understanding the processes at play in the response of brain tumors, more specifically diffuse intrinsic pontine gliomae. For that purpose, a system was designed and is currently development in order to better reproduce the tumor microenvironment in order to better assess the response of tumor cells to treatments based on drugs, radiation therapy or a combination of both. The impetus for the establishment of such a system is that reproducing cancer tissue at a scale comparable to those found in patient is necessary in order to study the impact of hypoxia in realistic physical configuration.
 
 The system is made of cylindrical well with a diameter of 1.5 cm and a height of 750 \textmu m. This well is connected to a microfluidic system which enables the supply of fresh culture medium ensuring proper supply of nutrients, oxygen and possibly drugs. Another component of the system is an insert constituted by a grid with endothelial cells on top and pericytes at the bottom. In a configuration analog to that used by Mao and collaborators to evaluate diffusion coefficient in spheroids \cite{Mao2018}, this insert is used to represent the blood brain barrier, which is thought to play an important role in the response DIPGs to pharmaceutical treatments. \textbf{[mettre la ref d'Alessandro (Deligne)]} A dialogue between a 2D layer of brain (DIPG7 ?) cells and the barrier has been demonstrated in the study of Deligne and collaborators.
 
-The cells are seeded within a mixture of hyaluronic acid and matrigel (80/20) used to reproduce the microenvironment of DIPG cells. Indeed Hyaluronic acid has been identified as the major component of brain matrix. Matrigel is then used both to "complete" the recreated microenvironment but also for practical reason as it decreases the reticulation time of the mixture. The resulting cell pellet is left to grow for up to 5 days before imaging is performed on the system in order to study quantities of interest. The system is considered to be homogeneous in the vertical direction. Indeed the presence of the upper and lower plate ensures that cells has no contact on with the culture medium on the top and bottom of the pellet. This ensures the establishement of a radial pattern of nutrients and oxgyen.
+The cells are seeded within a mixture of hyaluronic acid and matrigel (80/20) used to reproduce the microenvironment of DIPG cells. Indeed, Hyaluronic acid has been identified as the major component of brain matrix. Matrigel is then used both to "complete" the recreated microenvironment but also for practical reason as it decreases the reticulation time of the mixture. The resulting cell pellet is left to grow for up to 5 days before imaging is performed on the system in order to study quantities of interest. The system is considered to be homogeneous in the vertical direction. Indeed, the presence of the upper and lower plate ensures that cells has no contact on with the culture medium on the top and bottom of the pellet. This ensures the establishement of a radial pattern of nutrients and oxgyen. Current observations on the system show that the nature of the matrix can impact the phenotype of cells significantly ranging from invasive to non-invasive phenotype.\textbf{[check and expand?]}
 
 The system can be described as tumor-on-chip as the microfluidic system is used to control tumor microenvironment. Microfluidic systems have already been used to study gliomae, but not specifically on DIPGs or with consideration of the blood brain barrier.\cite{Liu2021} 
 
@@ -556,14 +569,15 @@ Studies using agent-based model can either explore a given model design by sweep
 
 Experimental data that may be reproduced by our model is typically acquired through fluorescence microscopy. This is the most versatile and practical way of acquiring such data while keeping the spatial information which this project seeks to focus on. Data processing and comparison to the model is non-trivial. The most straightforward example is that of fluorescent marker that is not 100\% in its binding. If it binds to the matrix instead of the cell component it was intended for, then matrix signal must either be removed in post-processing, or another marker should be used to help discriminate between relevant data and background noise.
 
+An important question is also that of the physical parameters of nutirents and growth factors. A measured value for the diffusion of epidermal growth factor in rat cortex was 50 \textmu $^2$/s and 150  \textmu $^2$/s in an agarose gel. These values are similar to those presented above for glucose suggesting that diffusion in the intercellular space may be of the same order. Measurements of VEGF diffusion in matrigel yielded results around 270 \textmu m$^2$/s 
 
 \subsubsection{Cell death and viability}
-The evolution of the population will be followed by a two markers : Caspase for cell death and calcein for cell viability. This should allow quantification of live cell within a cross section of the system. DAPI can also be used to mark viable cells.
+The evolution of the population will be followed by two markers : Caspase for cell death and calcein for cell viability. This should allow quantification of live cell within a cross section of the system. DAPI can also be used to mark viable cells.
 Necrotic cells can be marked with Propidium Iodide (PI)  and apoptotic cells with Annexin-V FITC.\cite{Khaitan2006}\textbf{[other refs]} Interestingly, Khaitan and collaborators note that necrotic cells were "not confined to the centre of the spheroid, but distributed at certain discrete foci."\cite{Khaitan2006} The study of Khaian and collaborators on human glioma cell line shows that both apoptosis and necrosis are occuring until at least 20 days of growth even though necrosis tends to prevail as the spheroid ages. 
 
 \subsubsection{Proliferation}
 Proliferation can be stained with Ki67 \cite{Grimes2014}\cite{Ghaffarizadeh2017} or with equivalent of Thymidine such as 5-ethynyl-20-deoxyuridine(EdU) or  5-bromo-2'-deoxyuridine (BrdU) can be used to stain DNA-synthesis acitivity within nuclei, and generally identify S-phase cells. It should be noted however that (tumor?) cells may be in S-phase and exhibit a behaviour akin to quiescence in certain conditions, such as low pH oxygen concentration, or glucose concetration. \cite{Zolzer1999}\cite{Khaitan2006} In order to detect these cells, Zolzer and collaborators use a double-parameters approach where S0-quiescent cells needs to be BrdU-negative. Ki67 can also be a way of assessing the actual proliferation rather than DNA content. The proportion of these quiescent S-phase cells seems to increase in harsh environments.
-
+ 
 \subsubsection{Hypoxia}
 As stated by Raza and collaborators "Efficient cellular uptake can be problematic with porphyrins, due to their large size."\cite{Raza2017} Strategies using counterstaining of Ki67 and EF5 allowed to roughly estimates a circular line where the concentration is supposed to be 10\textmu M (or 10 mmHg)\cite{Grimes2014}\cite{Mao2018}. Other strategies have included the use of electron spin resonance\cite{Hashem2015}, which can give a more quantitative picture of $pO_2$ or the use of nanoparticles, sucha as the NanO$_2^{TM}$ probes which also give quantitative spatial imaging of the partial pressure of O$_2$.\cite{Dmitriev2014} \textbf{[talk about the limits]}. Pimonidazole can also be used  as an hypoxia marker. \cite{Onozato2017}
 
@@ -574,6 +588,116 @@ The question of metabolism for DIPG cells does not seem trivial. According to Gr
 
 
 \subsubsection{Oxydative stress} 
+
+\subsubsection{Growth factors \& nutrients availability}
+The question of growth factors will be adressed here. The following growth factors are used in cell cultures of the DIPG7 cell line. human Epidermal Growth factor (hEGF), human basic Fibroblast Growth Factor (h-bFGF), Platelet-Derived Growth Factor AA and BB (PDGF-AA and PDGF-BB). The difficult question here is to understand the diffusion of these growth factors. Their molecular weight is high several tens or hundred kDa in bound form.\cite{Taylor1970}
+
+These factors, when absent, can significantly slow down growth through impact on metabolism \cite{Heiden2001} and there is a loss of migration capability in migrating model systems. 
+
+The main question that can be raised is the availability of those factors within the tumor tissue and the subsequent impact of said availability on cell metabolism, and therefore, tumor growth. 
+
+The availability of any given molecule within the tissue is determined by the conjunction of the consumption rate and diffusion of said molecule within the tissue. For glucose and oxygen as shown in previous sections said data is available for different tissues. However, diffusion coefficients for the larger growth factors in bound form is scarce. 
+
+The consumption rate is taken to be equivalent to an association rate of the growth factor and its receptor. In a model of Filion et al. from 2004 experimental measurement of association and dissociation rate of FGF and its associated membrane receptor FGFR are reported with values of 420 \textmu M$^{-1} \cdot $ min$^{-1}$ and 0.8 min$^{-1}$. In terms of diffusion, data was not found for all growth factors either. However, it can be informative to compare the available data to glucose in order  to draw a trend.
+
+%\begin{table}[t]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{18mm}|p{28mm}|p{19mm}|p{15mm}|p{10mm}| }
+ \hline
+
+ \textbf{Molecule} & \textbf{Mol. wght}(kDa) & \textbf{Diffusion medium} & \textbf{Diffusion coeff.} \textmu m$^2$/min & Tortuosity & Ref. \\
+ \hline
+  \hline
+      Oxygen & 0.03 & water & 120000 & N.D & \cite{Hober1947}\\
+ \hline
+    Oxygen & 0.03 & 6\% agarose & 120000 & N.D & \cite{McCabe1975}\\
+ \hline
+   Oxygen & 0.03 & 5\% agarose & 120000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+      Oxygen & 0.03 & 6\% agarose 0.3\% hyaluronate & 114000 & N.D & \cite{McCabe1975}\\
+ \hline
+   Oxygen & 0.03 & Si-HPMC 1\%+HEPES+NaCl & 18000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+    Oxygen & 0.03 & Coll I 0.1\% & 150000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+     Oxygen & 0.03 & agarose 2\% & 120000 & N.D & \cite{Hulst1987}\\
+ \hline
+      Oxygen & 0.03 & HCT116 & 120000 & N.D & \cite{Mao2018}\\
+ \hline
+ Glucose & 0.18 & Water & 36000 & & \cite{Weng2005}\\
+ \hline
+ Glucose & 0.18 & 0.5\% agarose & 36000 & & \cite{Hober1947}\\
+ \hline
+ Glucose & 0.18 & HCT116 tissue & 1200 & N.D & \cite{Mao2018}\\
+ \hline
+ Glucose & 0.18 & EMT6/Ro tissue & 6000 & N.D & \cite{Grote1977}\\
+ \hline
+ Glucose & 0.18 & 2.16 mg /mL(0.21\%) type I \ Coll. gel & 7800 & N.D & \cite{Rong2006}\\
+ \hline
+  Glucose & 0.18 & 0.5-2.5\% agarose/PBS & 36000-48000 & N.D & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.18 & 0.5-1\% HA/PBS & 40000-42000 & N.D & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.18 & 2.5\% HA/PBS & 120000 & N.D & \cite{Hadler1980}\\
+ \hline
+    Oxygen & 0.03 & Si-HPMC 1\%+HEPES+NaCl & 18000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+ EGF & 6.6 & 0.3 \% agarose & 10200 & 1.8 & \cite{Thorne2005}\\
+ \hline
+ EGF & 6.6 & Rat cortex & 3000 & 1.8 & \cite{Thorne2005}\\
+ \hline
+ Dextran & 70 & 0.3 \% agarose & 2400 & 2.25 & \cite{Nicholson1994}\\ 
+ \hline
+ Dextran & 70 & Rat cortex & 450  & 2.25 & \cite{Nicholson1994}\\
+ \hline
+ Dextran & 40 & 0.3 \% agarose & 2520 & 2.16 & \cite{Nicholson1994}\\
+ \hline
+ Dextran & 40 & Rat cortex & 546 & 2.16 & \cite{Nicholson1994}\\
+ \hline
+ Dextran & 40 & 2.1mg/mL coll. gel w/ cells & 2700 & N.D & \cite{Kihara2013} \\
+ \hline
+  Dextran & 69 & 30 mg/mL HA gel & 942 & N.D & \cite{Shenoy1995} \\
+ \hline
+   Dextran & 71 & 5 mg/mL HA gel & 2000 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 71 & 10 mg/mL HA gel & 1500 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 71 & 15 mg/mL HA gel & 1200 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 148 & 5 mg/mL HA gel & 900 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 148 & 10 mg/mL HA gel & 600 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 148 & 15 mg/mL HA gel & 480 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 487 & 5 mg/mL HA gel & 420 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 487 & 10 mg/mL HA gel & 300 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 487 & 15 mg/mL HA gel & 180 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Albumin & 66 & 0.5 \% HA gel & 3420 & N.D & \cite{Winlove1984} \\
+ \hline
+\end{tabular}
+%\caption{Available data on the diffusion of growth factors, glucose, and other large molecules in tissues and gels}   
+\end{center}
+%\end{table}
+
+The tortuosity value is defined by the quare root of the ratio between the diffusion in the "free" gel and the diffusion in the Extracellular space which includes additional path length due to the presence of cells.\cite{Nicholson1994} Its value is generally between 1.5 and 2.5 for the measured tissues meaning the diffusion coefficient may varie between two and six times between pure matrix measurements and tissue measurement for a given molecule. This is roughly the relationship that is found between the value reported for HCT116 tissue and a type I collagen gel for glucose.
+
+As stated before, the main type of matrix polymer present in the brain in the vicinity of the DIPG is Hyaluronic acid. A concentration gel that has been used for hyaluronic acid-based 3D cell culture is 0.5\% (5 mg/mL) \cite{Xiao2018}. The first reassuring fact is that the glucose diffusion reported by Hadler and collaborators occurs only at 2\% concentrations.\cite{Hadler1980} Below, the value is close to the one they found in agarose gel.
+
+A general trend can be observed in the different values for glucose. The value in agarose is very close to that found in water. The value found for Collagen gel is significantly lower. The value measured in HCT116 is 6 times lower. A possible interpretation is that difference comes from the tortuosity induced by the presence of cells. If the same principle is applied with the results for Hyaluronic Acid or agarose (both polysaccharide), an estimate for the value of diffusion in brain tissue (with a hyaluronic acid matrix) would be between 6200  \textmu m$^2$/min (high tortuosity) and 18000  \textmu m$^2$/min (low tortuosity)
+
+In terms of Oxygen, The value in water or in gels are close. Most importantly oxygen being able to cross bilipid membrane, there is no reason to consider tortuosity in that case.\cite{NatureMembrane} The value reported by Figueiredo for HPMC is a value correspond to a polymer closer to cellulose. However, for agarose which is a polysaccharide, closer to Hyaluronic acid, the value is 120000 \textmu m$^2$/min. 
+
+Growth factors are peptidic complexes that are often in the range of tens of kDa of molecular weight. They also can be bound to preoteglycans, the whole complex can end up being in the range of 100 kDa in terms of molecular weight \cite{Taylor1970}. Values for diffusion of specific complexes are not necessarily available. However, the diffusion of epidermal growth factor (EGF), presumably in his low molecular weight form was measured in rat cortex and in agarose gel. 
+
+The same relationship was found between pure matrix and tissue as with HCT116 and the collagen gel. Dextran diffusion was also measured and gives a hint about the values that may be relevant for complexes between 50 and 100 kDa of molecular weight. The value for  70 kDa dextran was found to 2400 \textmu m$^2$/min and 450 \textmu m$^2$/min in rat cortex.
+
+Knowing this, we can conclude on values that should be relevant in modelling nutrient diffusion for DIPG spheroids without matrix and the tumor-on-chip system with matrix. For oxygen, diffusion values are similar in water and in low concentrations agarose gel. 100000 \textmu m$^2$/min is a reasonable estimate of the diffusion coefficient. As explained before this value also holds for tissues since cell membranes are permeable to oxygen. This value will be used for both situations as the values in water and matrix are the same. For Glucose, the value in water, agarose gel and hyaluronic acid gel are similar (30000-40000 \textmu m$^2$/min). 40000 \textmu m$^2$/min is thus retained for the diffusion in medium and matrix. Adding cell tortuosity the value for glucose in tissue should be between 6000 \textmu m$^2$/min and 16000 \textmu m$^2$/min. Therefore a glucose tissue diffusion value  of 10000 \textmu m$^2$/min seems a good choice. For growth factors depending on the molecular weight of the complex, value in matrix/water are in the range of 1000-10000 \textmu m$^2$/min. Values found in tissue are expectedly lower by a factor ranging between 2 and 6 due to tortuosity. Therefore, if a low molecular weight ($\approx$ 10 kDa) is assumed, then the values are 10000 \textmu m$^2$/min for water/matrix and 3000 \textmu m$^2$/min for tissue. If a high molecular weight ($\approx$ 100 kDa)  is assumed then the values are 3000 \textmu m$^2$/min for water/matrix and 500-1000 \textmu m$^2$/min for tissue.
+
+Another question that needs to be adressed in order to fully understand nutrient availability in the tissue is the consumption rate of cells. For oxygen reported values are in the range of 50-100 amol/cell/s or 3000-6000 amol/cell/min.\cite{Nelson2017}\cite{Kempf2005}\cite{Mao2018}. For Glucose consumption, the range of values used and measured is 100-500 amol/cell/s which is equivalent to 6000 to 30000 amol/cell/min\cite{Mao2018}\cite{Kempf2005}\cite{Cleri2019}\cite{Jagiella2016}. Unfortunately data on growth factor consumption is scarce. One value was found for humain fibroblast growth factor in the study of Filion which comes from the work of Sperinde and Nugent.\cite{Filion2004}\cite{Sperinde2000} \textbf{[read Sperinde and expand]} The value that was found was 4.2 \textmu M $\cdot$ min$^{-1}$ which, assuming a cellular volume of 2000 \textmu m$^3$ translates into a consumption rate of approximately 10 amol/cell/s or 600 amol/cell/min. With all this information a rough model estimation of the availability of nutrients in tissue can be performed. In terms of initial concentration a typical concentration of 10 ng/mL is used for growth factors \cite{Meel2018}. For a molecule of 50 kDa this corresponds to a concentration of 2$\cdot 10^{-7}$ mM
 
 \subsubsection{"Zero-dimensional" data}
 Of course expression gene determined through PCR or cytometry of cell cultures may also prove very relevant but they lack the spatial aspect that may be necessary in order to correctly formulate the model. However, "zero-dimensional" may be used "blindly" while encoding cell-level rules of the model, which could lead to insight on the spatial repartition of said gene activation provided the signalling pathway is included in the model. 
@@ -669,6 +793,13 @@ hill equation is a  generalised form of Monod equation which was used on bacteri
 07/02/2023: "Mathematical modeling of the proliferation gradient in multicellular tumor spheroids" for comparison to results of models could be interesting
 
 20/02/2023:  add meele and the other paper on DIPG to bibliography
+
+28/02/2023: "Furthermore, glioma cells cultured as neurospheres were found to display a different metabolic profile compared to identical cell lines grown as monolayers in serum-containing
+media. [37]" in Meel
+
+03/03/2023 : checkout murtrey diffusion 
+
+
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{biblio_synthese}
