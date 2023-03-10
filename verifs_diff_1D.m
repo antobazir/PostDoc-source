@@ -32,23 +32,23 @@ F_m(n_space) = F_m(1);
 fO = figure;
 aO = axes(fO);
 hold(aO);
-xlabel(aO,'position (µm)')
-ylabel(aO, 'concentration (mM)')
+xlabel(aO,'position (µm)''fontsize',25)
+ylabel(aO, 'concentration (mM)''fontsize',25)
 
 %figure glucose
 fG = figure;
 aG = axes(fG);
 hold(aG);
-xlabel(aG,'position (µm)')
-ylabel(aG, 'concentration (mM)')
+xlabel(aG,'position (µm)''fontsize',25)
+ylabel(aG, 'concentration (mM)''fontsize',25)
 
 
 %figure facteur
 fF = figure;
 aF = axes(fF);
 hold(aF);
-xlabel(aF,'position (µm)')
-ylabel(aF, 'concentration (mM)')
+xlabel(aF,'position (µm)''fontsize',25)
+ylabel(aF, 'concentration (mM)''fontsize',25)
 
 
 
@@ -56,8 +56,8 @@ ylabel(aF, 'concentration (mM)')
 fB = figure;
 aB = axes(fB);
 hold(aB);
-xlabel(aB,'position (µm)')
-ylabel(aB, 'concentration (mM)')
+xlabel(aB,'position (µm)''fontsize',25)
+ylabel(aB, 'concentration (mM)''fontsize',25)
 
 
 
@@ -88,4 +88,5 @@ plot(aB,(1:n_space)*dx,Ox_m/max(Ox_m),'.','color','red')
 plot(aB,(1:n_space)*dx,Gl_m/max(Gl_m),'-','color','red')
 plot(aB,(1:n_space)*dx,F_m/max(F_m),'--','color','red')
 legend(aB,'[O] 2mn','[G] 2mn','[F] 2 mn','[O] 6hr','[G] 6hr','[F] 6hr')
+set(aB,'fontsize',15)
 toc();

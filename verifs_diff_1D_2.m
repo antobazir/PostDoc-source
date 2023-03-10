@@ -44,23 +44,23 @@ F_m(1:n_space) = 2e-7; %concentration in mM
 fO = figure;
 aO = axes(fO);
 hold(aO);
-xlabel(aO,'position (µm)')
-ylabel(aO, 'concentration (mM)')
+xlabel(aO,'position (µm)','fontsize',25)
+ylabel(aO, 'concentration (mM)','fontsize',25)
 
 %figure glucose
 fG = figure;
 aG = axes(fG);
 hold(aG);
-xlabel(aG,'position (µm)')
-ylabel(aG, 'concentration (mM)')
+xlabel(aG,'position (µm)','fontsize',25)
+ylabel(aG, 'concentration (mM)','fontsize',25)
 
 
 %figure facteur
 fF = figure;
 aF = axes(fF);
 hold(aF);
-xlabel(aF,'position (µm)')
-ylabel(aF, 'concentration (mM)')
+xlabel(aF,'position (µm)','fontsize',25)
+ylabel(aF, 'concentration (mM)','fontsize',25)
 
 
 
@@ -102,5 +102,6 @@ legend(aF,'0.001 mn','0.01 mn','0.1 mn','1 mn','2 mn','10 mn','6hr')
 plot(aB,(1:n_space)*dx,Ox_m/max(Ox_m),'.','color','red')
 plot(aB,(1:n_space)*dx,Gl_m/max(Gl_m),'-','color','red')
 plot(aB,(1:n_space)*dx,F_m/max(F_m),'--','color','red')
+set(aB,'fontsize',15)
 legend(aB,'[O] 2mn','[G] 2mn','[F] 2 mn','[O] 6hr','[G] 6hr','[F] 6hr')
 toc();

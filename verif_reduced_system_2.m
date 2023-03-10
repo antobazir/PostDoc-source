@@ -1,6 +1,6 @@
 close all;
 n_space = 330
-n_time = 1000000
+n_time = 10000000
 
 %Concentraion fields
 O = zeros(1,n_space);
@@ -22,8 +22,8 @@ sph_size = 300; %spheroid size in µm
 lim_inf= floor(n_space/2)-floor(0.5*sph_size/dx);
 lim_sup = floor(n_space/2)+floor(0.5*sph_size/dx);
 
-DOx = 120000; %diffusion of oxygen
-DG = 40000; %diffusion of glucose
+DOx = 100000; %diffusion of oxygen
+DG = 10000; %diffusion of glucose
 
 %NOTE in most cases the uptake is considered a constant. But here the uptake depends on concentration so we have to divide by concentration
 %kO(lim_inf:lim_sup) = 1;
@@ -35,11 +35,11 @@ DG = 40000; %diffusion of glucose
 
 %essai avec d'autres constantes pour avoir la bonne dynamique
 kO(lim_inf:lim_sup) = 1;
-kO = 4*kO;
+kO = 4e-2*kO;
 kG(lim_inf:lim_sup) = 1;
-kG = 6*kG;
+kG = 6e-2*kG;
 kT(lim_inf:lim_sup) = 1;
-kT = 0.3*kT;
+kT = 0.3e-2*kT;
 
 
 O(1:n_space) = 0.6; %concentration in mM
@@ -77,34 +77,23 @@ hold(aTD);
 xlabel(aTD,'position (µm)','fontsize',20)
 ylabel(aTD, 'concentration (mM)','fontsize',20)
 
-%figure G(t)
-fGt = figure;
-aGt = axes(fGt);
-hold(aGt);
-xlabel(aGt,'temps(step)','fontsize',20)
-ylabel(aGt, 'variation (mM)','fontsize',20)
-
-
 tic();
 for j=2:n_time-1
     %kG(lim_inf:lim_sup) = 4*exp(-0.1*T(lim_inf:lim_sup)./ D(lim_inf:lim_sup));
     %kO(lim_inf:lim_sup) = 6- D(lim_inf:lim_sup) ;
     %kT(lim_inf:lim_sup) = 0.1;
-    delta = DG*dt/dx^2.*(G(3:n_space) -2*(G(2:n_space-1)) + G(1:n_space-2)) -kG(2:n_space-1).*dt.*G(2:n_space-1).*D(2:n_space-1);
     O(2:n_space-1) =  O(2:n_space-1) + DOx*dt/dx^2.*(O(3:n_space) -2*(O(2:n_space-1)) + O(1:n_space-2)) -kO(2:n_space-1).*dt.*O(2:n_space-1).*GD(2:n_space-1);
-    G(2:n_space-1) =  G(2:n_space-1) + delta;
+    G(2:n_space-1) =  G(2:n_space-1) + DG*dt/dx^2.*(G(3:n_space) -2*(G(2:n_space-1)) + G(1:n_space-2)) -kG(2:n_space-1).*dt.*G(2:n_space-1).*D(2:n_space-1);
     D(2:n_space-1) =  D(2:n_space-1) -kG(2:n_space-1).*dt.*D(2:n_space-1).*GD(2:n_space-1) + kT(2:n_space-1).*dt.*T(2:n_space-1);
     GD(2:n_space-1) =  GD(2:n_space-1) +kG(2:n_space-1).*dt.*D(2:n_space-1).*G(2:n_space-1) - kO(2:n_space-1).*dt.*GD(2:n_space-1).*O(2:n_space-1);
     T(2:n_space-1) =  T(2:n_space-1) +kO(2:n_space-1).*dt.*O(2:n_space-1).*GD(2:n_space-1) - kT(2:n_space-1).*dt.*T(2:n_space-1);
-    if(mod(j,10000)==0)
-      plot(aGt,j,delta(n_space/2),'x')
-    endif
     if(j==1/(1000*dt)||j==1/(100*dt)||j==1/(10*dt)||j==1/dt||j==2/(dt)||j==10/(dt))%||j==5/(dt)||j==10/(dt))
       plot(aO,(1:n_space)*dx,O)
       plot(aG,(1:n_space)*dx,G)
       plot(aT,(1:n_space)*dx,T)
       plot(aTD,(1:n_space)*dx,T./D)
     endif
+
 
 ##    if(j==2/dt)
 ##      plot(aB,(1:n_space)*dx,Ox_m/max(Ox_m),'.','color','blue')
@@ -127,6 +116,5 @@ set(aO,'fontsize',15)
 set(aG,'fontsize',15)
 set(aT,'fontsize',15)
 set(aTD,'fontsize',15)
-set(aGt,'fontsize',15)
 
 toc();
