@@ -1,0 +1,399 @@
+
+
+\chapter{Analyse de Sphéroïdes Multicellulaires}
+
+Dans cette partie, nous allons présenter en premier les sphéroïdes multicellulaires tumoraux utilisés pour cette étude. On exposera les points communs et les différences entre les deux lignées que nous avons étudiées et on discutera de  leur structure et des potentielles implications de cette dernière sur le comportement mécanique des sphéroïdes.  On présentera ensuite les résultats des mesures réalisées avec le montage présenté dans le chapitre précédent. Nous allons ensuite présenter les résultats des mesures de vitesses du son réalisées sur un sphéroïde. Afin d'analyser l'impact de la variabilité biologique des échantillons sur la précision des mesures, nous considèrerons des résultats obtenus sur un sphéroïde puis sur la moyenne de nombreuses mesures.  Afin de valider notre approche, nous analyserons l'impact potentiel du taux de compression sur la vitesse. Pour cela nous évaluerons également le volume des sphéroïdes lors de la compression. Nous présenterons enfin des images enregistrées en vue de dessus afin de suivre  l'évolution du diamètre des agrégats lors de la compression et lors de la décompression. Pour finir nous présenterons les résultats d'atténuation acoustique dans les sphéroïdes.
+
+\section{Sphéroïdes Multicellulaires Tumoraux}
+Dans cette section, on présentera d'abord les deux types d'échantillons élaborés à partir des lignées cellulaires étudiées. Leurs propriétés générales seront abordées et les différences existant entre les deux types cellulaires seront présentées. On présentera ensuite la méthode de culture cellulaire utilisée pour la préparation des échantillons.
+
+\subsection{Structure des sphéroïdes et des lignées cellulaires étudiées}
+Nous avons réalisé nos mesures sur des sphéroïdes fabriqués à partir des lignées cellulaires HCT116 et HT29. Ce sont deux lignées épithéliales d'adénocarcinomes issues de l'être humain et impliquées dans le développement du cancer colorectal.\cite{Rajput2008}\cite{Forgue1990} Dans notre étude on s'intéressera principalement aux différences  de comportement mécanique entre les deux lignées. On va donc présenter les différences physiologiques et structurelles trouvées dans la littérature afin d'expliquer les choix de modélisation mécanique qui seront faits par la suite.
+
+\subsection{Structure des sphéroïdes}
+\begin{figure}[ht!]
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{sphero_3.pdf}
+\caption{\label{spheroid}}
+\end{subfigure}
+~~
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{cell2.pdf}
+\caption{\label{cell}}
+\end{subfigure}
+\caption{illustration de la structure globale de (a)un sphéroïde  et (b)une cellule.}
+\end{figure}
+Si on souhaite comprendre les choix de modélisations des sphéroïdes multicellulaires tumoraux, il est important de connaître leur structure afin de déterminer les éléments pouvant influer sur leur réponse mécanique. Les sphéroïdes ont deux composants principaux : les cellules et la matrice extracellulaire. Les cellules peuvent être vues comme des poches de fluides contenant des protéines, des organelles et des biopolymères formant le cytosquelette. Dans ces poches beaucoup de composants cellulaires peuvent participer à une réponse mécanique complexe. Certaines protéines, telles que l'actine et la tubuline, forment des structures filamenteuses pour créer le cytosquelette. Ainsi, les filaments d'actine, les filaments intermédiaires et les microtubules vont jouer un rôle prépondérant dans la réponse mécanique de la cellule individuelle.\cite{Pachenari2014} La matrice extracellulaire est également un réseau issu de l'assemblage de différents polymères dans lequel les cellules évoluent. Le composant principal de la matrice extracellulaire est le collagène qui constitue la base de sa structure. Les Glycosaminoglycans (GAGs) jouent également un rôle majoritaire dans la matrice extracellulaire. Ces larges chaînes carbonées négativement chargées vont absorber de grandes quantités d'eau et leur dilatation va occuper l'espace tout en offrant à la structure globale une résistance aux efforts et en régulant les processus de diffusion des molécules dans le fluide interstitiel.\cite{Alberts2002}\cite{Hamilton1998} La fibrilline et l'élastine sont également des composants de la matrice extracellulaire qui confèrent aux tissus leur elasticité. Ce sont grâce à ces protéines que les tissus retrouvent leur forme après une déformation.\cite{Alberts2002}  Pour les agrégats, on considèrera en première approche la matrice extracellulaire comme une matrice de collagène saturée de fluide interstitiel.
+
+ Maintenant qu'on a listé les composants principaux des sphéroïdes il faut se poser la question de la relation entre ces composants. Les cellules sont réliées entre elle par des jonctions cellules-cellules formées principalement par les protéines d'adhésion cellulaires, les cadhérines, les intégrines et les sélectines.\cite{Alberts2002} Les cellules sont également reliées à la matrice extracellulaire par un complexe de protéines qui relie le cytosquelette des cellules au réseau de collagène. La plus connue de ces protéines est la fibronectine qui joue un rôle primordial dans l'adhésion des cellules individuelles au microenvironnement. Donc pour résumer leur structure globale, les sphéroïdes sont constitués de cellules qui peuvent être vues comme des sacs de fluides plus ou moins visqueux. Ces sacs de fluide sont reliés entre eux de façon plus ou moins compactes par des jonctions cellules-cellules. Les cellules sont également connectées à la matrice extracellulaire qu'on considèrera ici comme un réseau de collagène relié aux cellules par des complexes de protéines et saturée par du fluide interstitiel.
+ 
+ Cette structure en réseau de biopolymères connectés par des jonctions et baignant dans du fluide est assez semblable à un gel. C'est pour cette raison que les cellules et les tissus sont souvent décrits comme des systèmes viscoélastiques, c'est-à-dire ayant une réponse partiellement visqueuse et partiellement élastique. Le fait que le fluide interstitiel puisse s'écouler hors du tissu et l'effet de cet écoulement sur la réponse mécanique de l'ensemble a aussi donné lieu à des modèles poroélastiques qui décrivent la réponse d'un système constitué d'un squelette élastique baignant dans un fluide. Ces modèles seront présentés plus loin dans ce chapitre.
+
+\subsection{Différences entre les lignées HCT116 et HT29}
+Une des différences importantes entre les deux lignées de cellules sur le plan fonctionnel est l'invasivité des tumeurs formées par ces dernières, c'est à dire la propension des cellules individuelles à se détacher de l'ensemble pour former des métastases. On quantifie ce comportement en affectant un grade de potentiel métastatique aux cellules. Les cellules HCT116 forment des tumeurs à fort potentiel métastatique (grade IV) alors que les HT29 ont un potentiel métastatique plus faible (grade I).\cite{Pachenari2014} Les cellules HT29 forment plus de jonctions cellules-cellules que les cellules HCT116, ce qui résulte en une structure plus compacte des sphéroïdes HT29.\cite{El-Bahrawy2004} Une expérience pour illustrer cela consiste à poser les agrégats sur une plaque recouverte de collagène,\cite{Carlotta2017} très présent dans l'environnement \textit{in vivo} des tumeurs. La mise en contact des tumeurs avec cette couche de collagène simule la configuration des tumeurs \textit{in vivo}. Si la tumeur est très invasive alors les cellules vont s'étaler rapidement sur la surface recouverte de collagène. Les cellules provenant de tumeurs peu invasives auront tendance à rester groupées. Dans cette situation les sphéroïdes HT29 s'étalent beaucoup moins vite que les sphéroïdes HCT116, ce qui illustre la plus grande cohésivité des cellules. Ces deux lignées présentent également une réponse différente aux traitements thérapeutiques.\cite{Carlotta2017} Par ailleurs, on sait que si on bloque ou dégrade les jonctions cellules-cellules dans les sphéroïdes, l'efficacité des traitements anticancéreux augmente car les molécules pénètrent  mieux dans l'agrégat de cellules.\cite{Green149} Cela suggère que la cohésivité des sphéroïdes joue un rôle primordial dans la réponse aux agents thérapeutiques et de manière plus générale dans la détermination de l'évolution biologique des tumeurs.
+
+ La différence entre les deux lignées n'intervient pas seulement lors de leur organisation en sphéroïdes. Les cellules uniques présentent également des différences. Une étude comparative des propriétés mécaniques des cellules HT29 et SW480 (une lignée de grade IV, proche des HCT116) a montré grâce à des expériences de microaspiration que les cellules de grade IV (SW480) étaient jusqu'à 5 fois plus déformables que les cellules HT29.\cite{Pachenari2014} Cette différence de comportement mécanique est lié au fait que le rapport entre la densité d'actine et la  densité de microtubulez est plus élevé chez les cellules HT29.\cite{Pachenari2014}. En résumé, les cellules HT29 forment des agrégats plus compacts constitués de cellules moins déformables que la lignée HCT116. 
+
+
+\subsection{Protocole de préparation et de mise en place sur le montage expérimental} 
+\label{Protocole}
+\begin{figure}[ht!]
+\includegraphics[scale=1]{cell_culture_full.pdf}
+\caption{Illustation de la préparation des échantillons. a) Cellules  en culture en envrionnement contrôlé (37 \textdegree C, 5\% CO$_2$ b)  Récupération dans une éprouvette après trypsinisation et rinçage. c) Répartition dans des puits individuels à fond anti adhésif à une concentration de 2400 cellules/mL d) Agrégation des cellules en sphéroïdes après 3 à 7 jours d'incubation en environnement contrôlé \label{prepa_sphero} }
+\end{figure}
+
+Le point de départ de la préparation des échantillons est une flasque de culture dans laquelle on cultive les cellules en incubateur à une température de 37\textdegree C. Cette flasque contient 5 mL de milieu de culture DMEM complémenté avec 10\% sérum de veau foetal (FBS) et  1\% de Pénicilline/streptomycine. Les cellules se divisent et adhèrent au fond de la flasque. Lorsqu'on souhaite utiliser les cellules pour fabriquer des sphéroïdes, on utilise alors de la trypsine pour les décoller de la flasque. Après plusieurs rinçages au tampon phosphate salin (PBS), on obtient une solution de cellules concentrée. On va alors  diluer cette solution pour obtenir une concentration de 2400 cellules/mL. On répartit ensuite cette solution dans des plaques 96-puits à fonds ronds. Ces fonds sont recouverts d'une couche empêchant l'adhésion des cellules. Chaque puits contient 200 \textmu L  de solution de cellules à 2400 cellules/mL. Les cellules vont se regrouper au fond du puits et la couche anti-adhésive va favoriser leur organisation en agrégats. Une fois la solution de cellules répartie dans les différents puits, la plaque est placée à l'incubateur pendant 3 à 7 jours. Les sphéroïdes grandissent dans un environnement à 37\textdegree C avec une concentration de CO$_2$ de 5\%.\cite{Carlotta2017} Les différentes étapes de ce processus sont illustrées en figure \ref{prepa_sphero}.
+
+Une fois que les sphéroïdes font au minimum 200 \textmu m de diamètre, on transfert des échantillons de la plaque de culture vers la cuve où on va réaliser les expériences. Étant donné qu'on ne peut pas contrôler la concentration de CO$_2$, on  utilise un milieu  de culture contenant de l'acide 4-(2-hydroxyéthyl)-1-pipérazine éthane sulfonique (HEPES) qui permet de s'affranchir de cette contrainte. Pour cette raison, doit attendre 30 minutes après le transfert des sphéroïdes dans la cuve avant de commencer les mesures afin que les cellules puissent s'adapter au changement de milieu.\cite{Taylor1962} 
+
+Maintenant que les deux lignées, leur structure et leur mode de préparation ont été présentés, on va pouvoir présenter les résultats de mesures de vitesses du son sur des sphéroïdes de ces deux lignées.
+
+\section{Estimation de la vitesse du son dans les sphéroïdes}
+Dans cette partie nous allons d'abord analyser qualitativement les signaux ultrasonores mesurés à travers les sphéroïdes cellulaires formés à partir des lignées HCT116 et HT29. On va ensuite présenter les résultats de mesures de vitesse du son en utilisant la méthode basée sur la décomposition sur une famille d'ondelette de Morlet et l'extraction du temps de vol.  On commencera d'abord par présenter les résultats de vitesse du son pour un seul agrégat. On présentera ensuite des mesures de vitesses sur les deux lignées pour des fréquences allant de 20 à 120 MHz, ce qui correspond à la bande passante à $1/e^2$ du contenu fréquentiel de nos signaux. Notre mesure de vitesse étant basée sur une compression des sphéroïdes on présentera également des résultats de vitesses du  son sur des cycles compression/décompression et de mesures de diamètres équatoriaux des agrégats afin de justifier notre approche en démontrant que le volume des agrégats ne varie pas et que la compression ne modifie pas les propriétés acoustiques des sphéroïdes. 
+
+\subsection{Analyse des signaux acoustiques} 
+ \begin{figure}[ht!]
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics [scale = 0.5]{sig_sphero_full.pdf}
+	\caption{\label{sig_sphero_full}}
+\end{subfigure}
+~~ 
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics [scale = 0.5]{sig_sphero_zoom.pdf}
+	\caption{ \label{sig_sphero_zoom}}
+\end{subfigure}
+\caption{Signal acoustique enregistré dans un sphéroïde:  (a) Signal complet et (b) Zoom sur les 2.5 premières microsecondes.}
+ \end{figure}
+Sur les figures \ref{sig_sphero_full} et \ref{sig_sphero_zoom}, on a tracé un signal acoustique enregistré dans un sphéroïde tumoral. On peut voir que le signal acoustique est très proche de ceux enregistrés dans l'eau et présentés dans le chapitre précédent. On peut y retrouver les composantes qu'on avait identifiées dans les signaux enregistrés dans l'eau : $L$, $3L_{verre}$,$3L_{metal}$ et $3L_{sphero}$ qui correspond cette fois à  3 trajets dans le sphéroïde. On voit également que les oscillations avec une période de l'ordre de 1 \textmu s sont aussi présentes  dans les signaux enregistrés  à travers les sphéroïdes. Comme pour les signaux enregistrés dans les couches d'eau, la fréquence de ces oscillations et leur amplitude augmente au fur et à mesure que l'espacement entre les plaques diminue.
+Comparons les structures visibles entre les signaux enregistrés à travers une couche d'eau et ceux enregistrés à travers des sphéroïdes, tracés en figures \ref{sig_eau} et \ref{sig_sphero} respectivement. On constate que les pics  ont une forme similaire dans les deux cas mais que dans le cas du sphéroïde le rapport signal sur bruit est plus faible.
+\begin{figure}[tb!]% vérifier s'il y pas d'autre diff à épaisseur égale.
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[scale = 0.5]{sig_eau.pdf}
+\caption{\label{sig_eau}}
+\end{subfigure}
+~~
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[scale = 0.5]{sig_sphero.pdf}
+\caption{\label{sig_sphero}}
+\end{subfigure}
+	\caption{Comparaison entre un signal acoustique enregistré à travers (a) une couche d'eau et (b) à travers un sphéroïde.\label{eau_v_sphero}}
+\end{figure}
+Ainsi dans l'eau on peut  distinguer 5 pics nets alors que dans le sphéroïdes le quatrième pic a déjà une amplitude proche de celle celle du bruit.  On constate également que les pics s'élargisse dans le cas du sphéroïde. On va donc  analyser le contenu fréquentiel du pic $L$ et du pic $3L$ afin d'étudier cet effet sur un ensemble d'échantillons et savoir s'il s'agit d'un artefact ou d'une tendance générale.
+
+Pour analyser cela, comparons les modules des transformées de Fourier d'un signal typique enregistré dans un sphéroïde avec le spectre du signal enregistré dans l'eau.
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{spectrum_sphero_pk.pdf}
+	\caption{ \label{spectrum_peaks1}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+	\includegraphics[scale=0.5]{spectrum_sphero_pk2.pdf}
+	\caption{ \label{spectrum_peaks2}}
+	\end{subfigure}
+	\caption{(a)Spectre de la composante $L$ du signal acoustique enregistré dans le sphéroïde (bleu)
+	et de la composante $L$ du signal acoustique enregistré dans le sphéroïde (rouge). (b)Spectre de la composante $3L_{verre}$ du signal acoustique enregistré dans le sphéroïde (bleu)
+	et de la composante $3L_{verre}$ du signal acoustique enregistré dans le sphéroïde (rouge).}
+\end{figure}
+On trace en figure \ref{spectrum_peaks1} le module de la transformée de Fourier des composantes $L$ pour un signal dans l'eau et dans un sphéroïde. On peut voir que le signal enregistré sur le sphéroïde a un spectre légèrement différent de celui du signal de l'eau, avec un contenu un peu plus basse fréquence. En figure \ref{spectrum_peaks2}, on trace le module de transformée de Fourier du deuxième pic dans les deux signaux présentés en figure \ref{eau_v_sphero} (voir flèches). On peut constater que la bande passante à  $1/e^2$ diminue de  100 à 60 MHz pour le second pic après un 3 trajet dans la lamelle de verre. Cela signifie que lors de la réflexion une partie du contenu haute fréquence du signal est perdu, ce qui est probablement dû à la nature irrégulière de l'interface entre la lamelle de verre et le sphéroïde.
+
+ On souhaite savoir si cette différence observée entre ces deux signaux est significative statistiquement. Pour cela on fait la moyenne des modules des transformées de Fourier du pic $L$ pour l'ensemble des sphéroïdes HCT116 et HT29. On compare ces spectres moyens pour les deux lignées à ceux enregistrés dans l'eau à 37\textdegree C. On trace l'ensemble de ces spectres moyens en figure \ref{fft_comp}.
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{fft_comp.pdf}
+	\caption{ \label{fft_comp}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[scale=0.5]{fft_comp2.pdf}
+		\caption{ \label{fft_comp2}}
+	\end{subfigure}
+	\caption{(a) moyenne du module des transformées de Fourier du pic $L$ pour de l'eau à 37 \textdegree C et pour des sphéroïdes des lignées HCT116 et HT29. (b)moyenne du module des transformées de Fourier du pic $L$  pour des sphéroïdes des lignées HCT116 et HT29, comprimés.}
+\end{figure}
+On ne constate aucune différence  entre les spectres  moyens de l'eau à 37 \textdegree C et ceux des deux lignées. Cela nous indique que  pour des fréquences allant jusqu'à 100 MHz  il n'y a pas de différence d'atténuation significative entre une 
+couche d'eau et de sphéroïde cet que la rugosité de la surface des sphéroïdes participera à réduire la précision.
+
+En figure \ref{fft_comp2}, on compare  cette fois les spectres moyens du pic  $L$  pour des sphéroïdes HCT116 et HT29  comprimés de 100 $\mu$m. On peut voir que les spectres moyens pour les sphéroïdes comprimés et non comprimés sont similaires ce qui  suggère que la compression  n'a pas d'effet sur le contenu fréquentiel de la composante $L$ dans les sphéroïdes.
+
+\begin{figure}[ht!]
+\centering
+	\includegraphics[scale=0.5]{fft_comp_pk2.pdf}
+	\caption{moyenne du module des transformées de Fourier du pic $3L_{verre}$  pour des sphéroïdes des lignées HCT116 et HT29.\label{fft_comp_pk2}}
+\end{figure}
+En figure  \ref{fft_comp_pk2}, on trace les spectres moyens pour le pic $3L_{verre}$ sur des échantillons d'eau et des sphéroïdes HCT116 et HT29. On peut constater que pour les deux lignées le contenu fréquentiel du second pic diminue  à haute fréquence. En revanche, on ne constate pas de différence entre les deux lignées. Cela confirme la tendance observée en figure \ref{spectrum_peaks2}. 
+
+On a  montré dans cette sous-section que les échos dûs aux réflexions multiples dans la lamelle de verre voyaient le contenu fréquentiel varier par rapport au pic initial dans les sphéroïdes. On a cependant aussi montré que le contenu fréquentiel des différents échos dans la lamelle de verre ne variait pas avec la position. Notre algorithme d'ondelette reste donc applicable aux signaux enregistrés dans les sphéroïdes. Dans la sous-section suivante nous allons appliquer notre routine  de traitement du signal à un signal typique enregistré sur un sphéroïde tumoral.
+
+
+\subsection{Traitement du signal acoustique enregistré dans un sphéroïde multicellulaire tumoral} 
+Nous allons d'abord étudier l'évolution d'un spectre en énergie pour un signal typique en fonction de la fréquence utilisée dans l'algorithme de décomposition en ondelette. Nous allons ensuite présenter les résultats d'extraction du temps de vol pour des signaux enregistrés sur un sphéroïde
+
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\includegraphics[scale=0.45]{spectrum_wr.pdf}
+\caption{\label{spectrum_tvol_eau}}
+\end{subfigure}
+~
+\begin{subfigure}[t]{0.45\textwidth}
+\includegraphics[scale=0.45]{spectrum_sphero_pos.pdf}
+\caption{\label{spectrum_tvol_sphero}}
+\end{subfigure}
+\caption{ Spectres en énergie pour un signal enregistré (a) dans l'eau  et (b) dans un sphéroïde  \label{spectrum_tvol} Les croix bleues indiquent le temps de vol de la composante $L$ du signal acoustique.}
+\end{figure}
+En figures \ref{spectrum_tvol_eau} et \ref{spectrum_tvol_sphero} respectivement,  on trace  une carte du spectre en énergie du signal dans l'eau (a) et du signal enregistré dans un sphéroïde entre 20 et 120 MHz (b).  On a également représenté par des croix bleues le temps de vol de la composante $L$ du signal à chaque fréquence. On peut voir que le temps de vol de la composante $L$ suit la même tendance en fréquence dans les deux cas. 
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.5]{tof_eau_sphero.pdf}
+\caption{Temps de vol recalés pour l'eau (bleu) et le sphéroïde (rouge) en fonction de la fréquence.\label{tvol_freq}}
+\end{figure}
+En figure \ref{tvol_freq} on trace les temps de vol recalés des pics $L$  en fonction de la fréquence pour l'eau et pour le sphéroïde. On recale en soustrayant le temps de vol moyen sur l'ensemble des fréquences étudiées pour pouvoir comparer les deux tendances obtenues. En dessous de  40 MHz les lobes dans les spectres changent de forme et le maximum détecté pour le premier pic varie en conséquence. Mais la tendance est globalement la même pour le sphéroïde et pour l'eau. L'ensemble des signaux obtenus suit globalement cette tendance et  comme on a pu le voir sur l'eau cela n'affecte que peu la valeur moyenne sur plusieurs mesures cela veut dire que cet artefact dû au traitement du signal ne nous empêche pas d'extraire une vitesse du son mais diminue un peu sa précision aux fréquences inférieures à 50 MHz.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.5]{scalo_sphero_2pos.pdf}
+\caption{Spectre de répartition temporelle de l'énergie dans le signal à 90 MHz à une épaisseur $d_0$ (bleu et  à une épaisseur $d_1$ (rouge) \label{scalo_sphero_2pos}}
+\end{figure}
+
+En figure \ref{scalo_sphero_2pos} on a tracé le spectre de répartition temporelle en énergie des signaux acoustiques enregistrés dans le même sphéroïde à 2 positions différentes. On peut isoler les mêmes composantes $L$, $3L_{verre}$ et $3L_{sphero}$ aux 2 positions.  On peut donc extraire une vitesse du son pour chaque composante en reliant l'évolution du temps de vol de chaque composante  à la distance entre les deux positions d'enregistrement des signaux, comme expliqué précédemment. 
+\begin{figure}[ht!]
+\begin{subfigure}{0.5\textwidth}
+\centering
+\includegraphics[scale=0.5]{spectrumap_sn90.pdf}
+\caption{\label{pic_t_sphero}}
+\end{subfigure}
+~~
+\begin{subfigure}{0.5\textwidth}
+\includegraphics[scale=0.5]{pic_t_sphero2.pdf}
+\caption{\label{pic_t_sphero2}}
+\end{subfigure}
+\caption{(a)Présentation des spectres en énergie  pour un échantillon et extraction du temps de vol des différents pics à 90 MHz à chaque épaisseur sur un sphéroïde HT29 avec  en rouge le temps de vol  de la composante  $L$ du signal acoustique aux différentes positions.(b) Tracé des temps de vol en fonction de la position $L$}
+\end{figure}
+
+En figure \ref{pic_t_sphero}, on trace les spectres d'énergie pour une fréquence de 90 MHz à toutes les positions pour le sphéroïde étudié. On a  également mis en évidence les temps de vol $t_{i,L}$ de la composante $L$ aux différentes positions (lignes). En figure \ref{pic_t_sphero2} trace uniquement les temps de vol en fonction de la position. On peut voir dans cette figure que la pente de la droite  formée par les temps de vol en fonction de la position ne change pas significativement avec la position ce qui  signifie qu'on peut  extraire les vitesses du son dans les sphéroïdes comme on l'a fait dans l'eau au chapitre précédent.  La vitesse du son du sphéroïde est alors prise comme la moyenne des $V_j$ suivant la méthode déjà présentée au chapitre 2. 
+
+On a tracé en figure \ref{vj_sphero_sn} la médiane et les quartiles des vitesses sur les différentes $V_j$ aux différentes fréquences sur un sphéroïde donné.
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.5]{pic_v_eau_bx.pdf}
+\caption{Tracé des valeurs de vitesses du son extraites pour les différents pics sur la gamme de fréquence 20-120 MHz pour un sphéroïde (bleu) et de l'eau à 37\textdegree C (noir). \label{vj_sphero_sn}}
+\end{figure}
+On voit que la médiane des vitesses extraites varie autour de 1600 m/s pour le sphéroïde. La médiane pour la mesure dans l'eau à 37 \textdegree C est proche de 1520 m/s, ce qui est la valeur usuelle dans la littérature.\cite{Greenspan1957} On constate que les $V_j$ pour le sphéroïde donnent une plus grande dispersion que les mesures effectuées dans l'eau. En dessous de 60 MHz l'écart type augmente fortement  ce qui est dû au fait qu'aux basses fréquences le changement de forme des pics rend les courbes de temps de vol plus bruitées.  De façon à limiter cet effet, on sélectionne les courbes de temps de vol  en fixant un seuil pour la somme des erreurs quadratiques pour  chaque composante $V_j$. \`A  20 MHz, l'absence de boîte indique que l'algorithme n'a pu extraire qu'une seule vitesse du son. Aucun écho n'a donc rempli le critère de sélection de l'algorithme ce qui indique le changement forme des pics à basse fréquence réduit la précision de l'algorithme. Nous allons maintenant extraire la vitesse du son en fonction de la fréquence pour l'ensemble des échantillons que nous avons mesurés.
+
+\subsection{Mesure de vitesse du son sur les sphéroïdes multicellulaires  tumoraux}
+Dans cette partie nous allons présenter les mesures du vitesses du son sur des sphéroïdes des lignées HT29 et HCT116. Nous avons mesuré la vitesse du son de 42 sphéroïdes HT29 et 31 sphéroïdes HCT116. Pour toutes ces mesures, on mesure la vitesse $V_j$ de chaque pic en utilisant les temps de vol $t_{i,j}$  associées à 10 positions espacées de 10 \textmu m ou 20 positions espacées de 5 \textmu m. Ces valeurs sont choisies pour limiter la durée des expériences, puisque chaque position de mesure demande 40 secondes. Une autre raison est que si la distance entre deux positions est trop faible la variation de temps de vol entre deux positions va devenir proche l'incertitude sur la mesure du temps de vol. Toutes les mesures ont été réalisées sur des sphéroïdes placés dans du milieu DMEM (HEPES) comme détaillé dans la partie \ref{Protocole}. Le choix de ce milieu de culture nous permet de ne pas avoir à réguler la concentration  à CO$_2$ dans la cuve utilisée pour réaliser les mesures. Ce milieu est maintenu à  37\textdegree C durant les mesures. Le diamètre des sphéroïdes pour les deux lignées varie entre 200 et 600 \textmu m. Les sphéroïdes de taille inférieure à 200 \textmu m sont trop difficiles à manipuler pour qu'on puisse les utiliser sur le montage. On fixe la limite supérieure à 600 \textmu m  pour limiter la taille du cœur nécrotique au centre de l'agrégat.\cite{Hamilton1998}
+\begin{figure} [ht!]
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[scale=0.5]{freqspeed_spheros_ht2.pdf}
+\caption{ \label{freqspeed_spheros_ht}}
+\end{subfigure}
+~~
+\begin{subfigure}[t]{0.49\textwidth}
+\includegraphics[scale=0.5]{freqspeed_spheros_hct2.pdf}
+\caption{ \label{freqspeed_spheros_hct}}
+\end{subfigure}
+\caption{Distribution des vitesses du son mesurée à différentes fréquences  pour (a) la lignée HT29 et (b) la lignée HCT116 comparée à  l'eau à 37\textdegree C. }
+\end{figure}
+
+Dans les figures \ref{freqspeed_spheros_ht} et \ref{freqspeed_spheros_hct}, on représente pour plusieurs fréquences  la distribution des vitesses du son mesurées sur l'ensemble des échantillons pour les deux lignées cellulaires étudiées et on trace également les résultats pour les mesures dans l'eau. On peut voir que les deux lignées présentent une vitesse moyenne de l'ordre de 1600 m/s et que dans les deux cas, la vitesse ne dépend pas significativement de la fréquence. Cela signifie que la tendance observée sur un sphéroïde unique en figure \ref{vj_sphero_sn} n'est pas significative. 
+\begin{figure}[tb!]
+\centering
+\includegraphics[scale=0.5]{speed_spheros2.pdf}
+\caption{Moyenne et écart des vitesses du son mesurées dans l'eau à 37 \textdegree C et les sphéroïdes HCT116 et HT29. Le couple eau-HT29 donne une p-valeur de $p=0.0001$.  Le couple eau-HCT116 donne une p-valeur de $p=0.005$\label{speed_spheros}}
+\end{figure}
+Puisqu'il n'y a pas de dépendance claire en fréquence entre 20 et 120 MHz, on trace les moyennes et les écarts types des vitesses du son mesurées sur l'ensemble des échantillons pour de l'eau à 37\textdegree C et pour les deux lignées de sphéroïdes en figure \ref{speed_spheros}. On constate que l'écart type pour les mesures sur les sphéroïdes est plus élevé que pour les mesures dans l'eau ce qu'on interprète comme la variabilité entre échantillons. On calcule les p-valeurs des distributions pour un test de Student de façon à comparer leurs statistiques. La p-valeur pour le couple HCT116 et HT29 donne 0.3 ce qui signifie que les deux lignées ne sont pas significativement différentes. Pour le couple eau-HCT116 et le couple  eau-HT29  on trouve respectivement $p = 0.005$ et $p = 0.0001$ ce qui signifie que les moyennes sont significativement différentes dans les deux cas. On observe donc l'absence de différence entre les  deux lignées et leur différence avec l'eau à 37 \textdegree C. 
+
+
+
+\subsection{Vitesse du son dans les sphéroïdes multicellulaires tumoraux lors de cycles compression/décompression}
+\label{velocity_comp_decomp}
+Nous avons choisi de comprimer sur 100 \textmu m en enregistrant un signal tout les 10 \textmu m afin de vérifier que la vitesse du son ne dépend pas de la compression. Une fois la compression effectuée on a remonté la lamelle en suivant les mêmes positions jusqu'à revenir au point de départ. Nous avons réalisé un cycle compression/décompression sur les deux lignées.
+\begin{figure}[tb!]
+
+	\begin{subfigure}[t]{0.49\textwidth}
+	\includegraphics[scale=0.50]{comp_decomp_hct.pdf}
+	\caption{\label{compression_decompression_hct}}
+	\end{subfigure}
+	~~
+		\begin{subfigure}[t]{0.49\textwidth}
+	\includegraphics[scale=0.50]{comp_decomp_ht.pdf}
+	\caption{\label{compression_decompression_ht}}
+	\end{subfigure}
+	\caption{ Rapport  entre la vitesse mesurée lors de la compression sur la vitesse mesurée lors de la décompression pour un cycle de compression/décompression  sur des sphéroïdes des lignées (a) HCT116  ($N=15$)  et (b) HT29  ($N=22$) }
+\end{figure}
+On présente les résultats des expériences compression/décompression pour les deux lignées en figures \ref{compression_decompression_hct} et \ref{compression_decompression_ht}. Dans ces figures on trace pour chaque sphéroïde le rapport entre la vitesse mesurée lors de la décompression $V_{decomp}$ et celle mesurée lors de la compression initiale $V_{comp}$. On constate que la vitesse mesurée reste constante lors du cycle pour les HT29 et les HCT116. On observe donc pas d'effet d'un cycle compression/décompression sur la vitesse du son mesurée dans les sphéroïdes des deux lignées ce qui confirme la validité de notre approche pour la mesure de vitesse du son.
+
+\subsection{Effet du diamètre sur la vitesse du son mesurée dans les sphéroïdes}
+\begin{figure}[tb!]
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\includegraphics[scale=0.25]{sm0_full.png}
+\caption{\label{diameter}}
+\end{subfigure}
+~~
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+	\includegraphics[scale=0.5]{diamspeed.pdf}
+	\caption{\label{diamspeed}}
+ \end{subfigure}
+ \caption{(a) Image en contraste de phase d'un sphéroïde avec l'ajustement d'une ellipse utilisé pour la mesure de diamètre (barre d'échelle : 100 $\mu$m). (b)Répartition de la vitesse des sphéroïdes en fonction de leur diamètre initial.}
+\end{figure}
+Dans cette partie, nous étudions l'effet du diamètre initial du sphéroïde sur la vitesse du son mesurée lors de la compression initiale afin de déterminer si l'écart type obtenu sur les mesures de vitesse dans les sphéroïdes provient de la distribution des tailles. Dans leur étude de 2019, Guillaume\textit{ et al.} ont mis en évidence que pour des sphéroïdes HCT116, l'état de surface de l'agrégat et son module d'Young mesuré par AFM dépendait des conditions de croissance du sphéroïde. Ils ont montré qu'à diamètre égal, un sphéroïde ensemencé avec 500 cellules qu'on laisse grandir 6 jours est plus "lisse" et a un module d'Young plus élevé qu'un agrégat qu'un agrégat ensemencé avec 5000 cellules qu'on laisse grandir 2 jours\cite{Guillaume2019}. Le fait que dans cette étude la durée de croissance du sphéroïde ait un impact sur les propriétés mécaniques mesurées nous a poussé à nous interroger sur l'impact du temps de croissance des sphéroïdes. Dans notre cas, puisqu'on utilise la même concentration de cellules pour tous les agrégats, on affiche les résultats en fonction du diamètre lié au temps de croissance de l'agrégat (plus le temps de culture est long, plus le diamètre est élevé).
+Le diamètre des sphéroïdes a été mesuré à l'aide d'images de contraste de phase prises en vue de dessus à l'aide d'une caméra fixée au bâti du microscope.
+Afin de déterminer le diamètre on ajuste une ellipse. Le diamètre est alors pris comme étant la moyenne du grand axe et du petit axe de l'ellipse.
+
+On trace sur la figure \ref{diamspeed} la vitesse du son mesurée précédemment en fonction du diamètre initial du sphéroïde. On peut voir une plus grande dispersion des valeurs pour les faibles diamètres. Ceci étant probablement dû au fait que la compression de 100 \textmu m impacte davantage les sphéroïdes de faible diamètre. On peut également supposer que les sphéroïdes plus jeune ont une structure plus variable en terme de quantité de matrice et de liaison cellules-cellules et cellules-matrice, ce qui donne lieu à une plus grande hétérogénéité des valeurs de vitesse du son mesurées. Cependant la vitesse moyenne ne semble pas influencée par le diamètre initial dans les deux lignées. Nous pouvons donc comparer les données issues des différents sphéroïdes ayant différentes tailles initiales, au prix d'une augmentation de l'écart type dû à la contribution des petits diamètres.
+
+\subsection{Conclusions sur les mesures de vitesse du son dans les sphéroïdes}
+ Dans la partie précédente nous avons présenté les résultats de vitesses du son mesurés sur les sphéroïdes HCT116 et HT29 à l'aide de la décomposition en ondelettes de Morlet. Nous avons pu mesurer la vitesse du son d'un ensemble d'échantillons sur une bande de fréquences entre 20 et 120 MHz. On a  montré que la vitesse du son mesurée ne dépend pas significativement du diamètre initial des agrégats ou de leur niveau de compression. Cependant, une réponse éventuelle des agrégats à la compression comme une expulsion de fluide, qui traduirait une perte de volume, reste à vérifier. C'est cette étude qui va être l'objet de la partie suivante.
+
+
+\section[Mesures diamètres et volume pendant compression]{Mesures de  diamètres et estimation de volume pendant la compression%
+              \sectionmark{Mesures de  diamètres et estimation de volume pendant la compression}}
+\sectionmark{Mesures diamètres et volume pendant compression}%fout la merde partout
+
+ On va maintenant étudier l'évolution du diamètre équatorial du sphéroïde en fonction du niveau de compression appliqué au sphéroïde. On comparera les résultats à des cas simples de solides déformables sous compression et on s'intéressera à la réponse des sphéroïdes lors de cycles compression/décompression.
+
+\subsection{Évolution du diamètre en fonction de la compression}
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+	\includegraphics[scale=01.7]{sm0.png}
+	\caption{}
+\end{subfigure}
+~~
+\begin{subfigure}[t]{0.45\textwidth}
+	\includegraphics[scale=0.23]{sm15_full.png}
+	\caption{}
+\end{subfigure}
+\caption{Images en transmission d'un sphéroïde (a) avant compression et (b) sphéroïde après 150 \textmu m de compression Les pointillés indiquent le périmètre initial.\label{compression_pictures}}
+\end{figure}
+En figure \ref{compression_pictures}, on peut voir deux images capturées en vue de dessus d'un sphéroïde à deux étapes de compression. On peut observer le changement de diamètre  sur ces images au fur et à mesure de la compression. On va donc utiliser ces images pour étudier l'évolution du diamètre en fonction de la compression.
+Le diamètre des sphéroïdes a été mesuré en ajustant une ellipse dans les images enregistrées avec la caméra. Puisqu'on ne connait pas l'épaisseur absolue, l'estimation de la hauteur du sphéroïde s'effectue en analysant les signaux acoustiques. En effet, dans les signaux on peut repérer le pic $L$ et le pic $3L_{sphero}$. On peut donc remonter directement à l'épaisseur absolue en extrayant dans un signal la différence de temps de vol en le pic $L$ et le pic $3L$ et la vitesse.
+%Dans le cas des compression, on rappelle que les mesures ont duré au total 400 à 800 secondes pour avoir l'ensemble des diamètres et que les sphéroïdes ont été comprimés par pas de 5 à 10 \textmu m toutes les 40 secondes.
+\begin{figure}[ht!]
+\begin{subfigure}[t]{0.49\textwidth}
+	\includegraphics[scale=0.5]{comp_hct20.pdf}
+	\caption{\label{compression_diameter_hct}}
+\end{subfigure}
+~~
+\begin{subfigure}[t]{0.49\textwidth}
+	\includegraphics[scale=0.5]{comp_ht10.pdf}
+	\caption{\label{compression_diameter_ht}}
+\end{subfigure}
+\caption{Evolution du diamètre équatorial normalisé en fonction de la hauteur normalisée de la couche.}
+\end{figure}
+
+Pour faciliter l'analyse des résultats nous allons normaliser la hauteur et le diamètre des sphéroïdes de la façon suivante. Soit $h_i$  l'épaisseur correspondant à une mesure de diamètre équatorial $d_i$  à la position $i$, et $h_0$ et $d_0$ la première position et le premier diamètre mesuré. On pose pour chaque position de chaque échantillon :
+\begin{align} 
+\bar{h} = \frac{h_i}{h_0} \hspace{0.5cm}  \bar{d} = \frac{d_i}{d_0}
+\end{align}
+On va alors tracer $\bar{d}$ en fonction de $\bar{h}$ ce qui permettra de superposer les courbes d'évolution du diamètre pour des sphéroïdes de différents diamètres. En figures \ref{compression_diameter_hct} et \ref{compression_diameter_ht} on trace pour les deux lignées étudiées le diamètre normalisé en fonction de la hauteur normalisée pour l'ensemble des échantillons. On observe une  croissance du diamètre normalisé avec la compression. Afin d'extraire un comportement statistique, on a tracé des courbes moyennes de la relation hauteur-diamètre des deux lignées en gras. Pour obtenir cette courbe moyenne, on échantillonne les données de hauteur normalisée par intervalle d'une largeur de 0.1. 
+ 
+  Puisqu'on ne connait pas l'angle de contact du sphéroïde avec les plaques, on va considérer 2 profils extrêmes dans le plain perpendiculaire à la lamelle, un cylindre et un ellipsoïde. Le cas de l'ellipsoïde est illustré en figure \ref{sphère}, on part d'une sphère de diamètre équatorial $d_0$ et de hauteur $h_0$. On peut démontrer que pour un ellipsoïde de volume constant $V_0$ on a : 
+\begin{align}
+\bar{d}_{sphere}  = \sqrt{\frac{1}{\bar{h}_{sphere}}}\label{eq:sphere}
+\end{align}
+où $\bar{d}_{sphere}$ est le diamètre normalisé de la  sphère et $\bar{h}_{sphere}$ sa hauteur normalisée. On sait cependant que les cellules et les tissus peuvent adhérer au surface avec lesquelles ils sont en contact. Pour cette raison le modèle d'ellipsoïde peut ne pas être une bonne description. On propose un cas extrême de ce changement de forme dû à l'adhésion. Ainsi la deuxième loi diamètre-hauteur à laquelle on va comparer nos mesures sera celle d'une sphère de volume $V_0$ qui lorsqu'on la comprime se transforme en cylindre de même volume. Ce cas de figure est illustré en figure \ref{cylindre}.  La relation hauteur-diamètre pour un tel solide sera alors :
+\begin{align}
+ \bar{d}_{cylindre}  = \sqrt{\frac{4}{3\bar{h}_{cylindre}}}\label{eq:cylindre}
+ \end{align}
+\begin{figure}[ht!]
+\begin{subfigure}[t]{0.49\textwidth}
+	\includegraphics[scale=0.5]{diam_schema1.pdf}
+	\caption{ \label{sphère}}
+\end{subfigure}
+\begin{subfigure}[t]{0.49\textwidth}
+	\includegraphics[scale=0.5]{diam_schema2.pdf}
+	\caption{\label{cylindre}}
+\end{subfigure}
+\caption{illustration des deux sphères déformables qui lorsqu'on les compriment deviennent (a) un ellipsoïde (b) un cylindre. }
+\end{figure}
+On trace les deux lois diamètre-hauteur, illustrées en figure \ref{sphère} et \ref{cylindre}, sur la figure \ref{comp_sphero}. On y reproduit les courbes expérimentales obtenues pour les deux lignées.
+
+\begin{figure}[ht!]
+\centering
+	\includegraphics[scale=0.5]{comp_sphero.pdf}
+	\caption{courbe moyenne pour les sphéroïdes HCT116 (rouge) et  HT29 (bleu)  comparées au loi hauteur diamètre pour un ellispoïde à volume constant (bleu) et un cylindre à volume constant (rouge). \label{comp_sphero}}
+\end{figure}
+Les courbes "cylindre" et "ellipsoïde" sont très proches suggérant que l'angle de contact ne peut avoir qu'une influence faible sur nos mesures.  Aux faibles compressions  les courbes moyennes suivent les courbes théoriques. Au delà de 50 \% ($\bar{h}$ >0.5), le diamètre augmente plus rapidement que sur la courbe du solide à volume constant, ce qui veut dire que le volume des agrégats augmente aux fortes compressions. Aux faibles compressions, on ne voit aucune différence entre le comportement moyen des deux lignées.
+
+Cette apparente augmentation du volume est surprenante car aucune expérience de compression sur des sphéroïdes n'a à ce jour donné de résultats similaires.\cite{Marmottant2009} \cite{Delarue2014} On se pose alors la question de l'erreur de mesure potentielle. L'hypothèse privilégiée est celle d'une perte de focus qui induit une imprécision sur le diamètre. % En effet on utilise un objectif 4X (N.A. 0.10). Le paramètre qui nous intéresse ici est la profondeur de champ. Pour un faisceau laser gaussien cette dernière se calcule avec la formule suivante \textbf{ref}:
+%\begin{align}
+%		z_0 = \frac{\pi w_0^2}{\lambda}
+%\end{align}
+%$w_0^2$ est la largeur du faisceau au point focal et $\lambda$ sa longueur d'onde. Notre faisceau laser focalisé a un diamètre de 70 \textmu pour un longueur d'onde de 633 nm. Avec ce critère sa profondeur de champ vaut 24 \textmu m. Donc avec une compression de 200 \textmu, l'équateur du sphéroïde sort clairement du plan focal initial ce qui peut impacter grande la précision de notre mesure de diamètre. 
+ Une solution pour palier à ce problème  serait d'avoir accès à une vue de côté comme dans l'expérience de Marmottant et al. On conclut donc qu'on observe pas de pertes ou de gain de volume pour les faibles compressions et qu'aux fortes compressions le système n'est pas adapté à la mesure de diamètre. 
+
+
+\subsection{Conclusions sur les mesures de diamètre}
+En mesurant le diamètre des sphéroïdes à différents stades de compression et comparant les résultats à des cas simples de solides déformables à volumes constants, on a constaté qu'aux faibles compressions les sphéroïdes ne perdaient pas de volume. Aux fortes compressions on a observé un comportement qui traduiraient un gain de volume. Or nous n'avons pas vu précédemment d'influence de la compression sur la vitesse, notre conclusion est donc que le déplacement vertical important a eu un impact sur la mesure optique du diamètre aux fortes compressions et que la mesure devient trop imprécise pour qu'on puisse extraire des informations fiables. Ces résultats, en confirmant qu'il n'y pas de pertes de volumes des sphéroïdes lors de la compression, nous permettent de valider une nouvelle fois notre approche. Dans la partie suivante, afin de compléter l'étude, nous allons présenter l'application de notre algorithme d'extraction des amplitudes et de mesures de l'atténuation acoustique aux deux lignées de sphéroïdes tumoraux. 
+
+\newpage
+%\section{Résultats en amplitude obtenus sur les sphéroïdes tumoraux}
+\section[Résultats amplitude obtenus sur sphéroïdes tumoraux]{Résultats en amplitude obtenus sur les sphéroïdes tumoraux%
+              \sectionmark{Résultats en amplitude obtenus sur les sphéroïdes tumoraux}}
+\sectionmark{Résultats amplitude obtenus sur sphéroïdes tumoraux}%fout la merde partout
+
+Dans le chapitre précédent, nous avons présenté une méthode d'analyse de l'amplitude des pics $L$ et $3L$ permettant d'extraire une atténuation acoustique à partir de nos signaux. Dans cette sous section nous allons présenter l'application de cette méthode aux deux lignées de sphéroïdes HCT116 et HT29.
+\begin{figure}[ht!]
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{aL_bar.pdf}
+\caption{\label{courbes_ajustees_sphero_L}}
+\end{subfigure}
+~~
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{a3L_bar.pdf}
+\caption{\label{courbes_ajustees_sphero_3L}}
+\end{subfigure}
+\caption{tracé de (a)  $\bar{a}_L(d)$  et (b)  $\bar{a}_{3L}(d)$  pour de l'eau à 37\textdegree C , un sphéroïde HCT116 et un sphéroïde HT29}
+\end{figure}
+En figures \ref{courbes_ajustees_sphero_L} et \ref{courbes_ajustees_sphero_3L}, on trace les amplitudes normalisées, $\bar{a}_L(d)$ et  $\bar{a}_{3L}(d)$ pour de l'eau à 37\textdegree C , un sphéroïde HCT116 et un sphéroïde HT29. Pour ces échantillons on peut voir que l'atténuation pour les deux sphéroïdes(la courbe indiquée en pointillés) est plus importante que pour l'eau à 37\textdegree C dans le cas du pic $L$ (Figure \ref{courbes_ajustees_sphero_L}). Dans le cas du pic $3L$ la mesure des ces échantillons est trop bruité pour conclure. Dans la suite, on va extraire une atténuation pour l'ensemble des échantillons pour les deux lignées et pour un ensemble de mesure sur de l'eau à 37\textdegree C. 
+
+\begin{figure}[ht!]
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{amplitude_L2.pdf}
+\caption{\label{amplitude_L}}
+\end{subfigure}
+~~
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{amplitude_3L2.pdf}
+\caption{\label{amplitude_3L}}
+\end{subfigure}
+\caption{moyenne et écart type de (a) $\bar{a}_L(d)$ et (b) $\bar{a}_{3L}(d)$ à différentes fréquences pour de l'eau à 37 \textdegree C et des sphéroïdes HT29 et HCT116. }
+\end{figure}
+
+En figures \ref{amplitude_L} et \ref{amplitude_3L} on trace la moyenne et l'écart type de l'atténuation acoustique  $\alpha$ sur plusieurs échantillons entre 20 et 120 MHz. Les valeurs d'atténuation extraites entre 40 et 120 MHz sont globalement constantes au dessus de 40 MHz et diminuent légèrement lorsque la fréquence descend en dessous de 40 MHz pour les sphéroïdes (mais reste constante pour l'eau). 
+\begin{figure}[ht!]
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{amplitude_L2f.pdf}
+\caption{\label{amplitude_Lf}}
+\end{subfigure}
+~~
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[scale=0.5]{amplitude_3L2f.pdf}
+\caption{\label{amplitude_3Lf}}
+\end{subfigure}
+\caption{moyenne et écart type de $\bar{a}_L(d)$(a) $\bar{a}_{3L}(d)$ (b)  pour de l'eau à 37 \textdegree C et des sphéroïdes HT29 et HCT116.}
+\end{figure}
+
+En figures \ref{amplitude_Lf} et \ref{amplitude_3Lf}, on représente la moyenne et l'écart type des valeurs affichées en figures  \ref{amplitude_L} et \ref{amplitude_3L} sur l'intervalle de fréquences où l'atténuation du pic $L$ est globalement constante.
+La valeur moyenne d'atténuation mesurée est plus importante pour les sphéroïdes HT29 que pour les sphéroïdes HCT116. 
+
+ On peut distinguer une différence claire entre les valeurs de l'eau et celles des sphéroïdes. Il y a donc un mécanisme physique, de viscosité ou de diffusion, qui rend l'atténuation plus importante dans les sphéroïdes et qui est plus important chez les sphéroïdes HT29 que chez les sphéroïdes HCT116 au fréquence de l'ordre du MHz. On note que cette différence n'est visible que sur les moyennes $\bar{a}_L(d)$. Pour $\bar{a}_{3L}(d)$, le rapport signal sur bruit plus faible rend  la mesure trop imprécise bien qu'elle indique également une atténuation plus importante pour les sphéroïdes.
+
+
+\section{Conclusions générales}
+Dans cette section nous avons mesuré la vitesse du son dans des sphéroïdes des lignées HCT116 et HT29. Ces mesures de vitesses ont été obtenues pour des fréquences acoustiques allant de 20 à 120 MHz. Ces mesures montrent que les deux lignées, malgré leur différences sur le plan biologique, ont la même vitesse du son lorsqu'elles sont étudiées à des fréquences de l'ordre du MHz. Cette vitesse est de l'ordre de 1600 m/s. 
+
+Les résultats ont également montré que pour des compressions inférieures ou égales à 100 \textmu m, la compression n'a pas d'effet significatif sur la vitesse du son mesurée. Des expériences de compression suivi d'une décompression ont été réalisées et ont montré que pour les sphéroïdes HCT116 qu'il n'y avait pas de variation significative de la vitesse du son entre les deux phases du cycle. Ces deux expériences, nous ont donc permis de valider notre approche de la mesure de vitesse par le biais d'une compression.
+
+ Nous avons également mesuré le diamètre équatorial des sphéroïdes au fur et à mesure de la compression. Ces mesures de diamètre en fonction du niveau de la compression ont été comparées à des cas simples de solides déformables à volumes constants et ont montré une réponse à volume constant aux faibles compressions et une dilatation à l'équateur pour les fortes compressions que nous avons identifié comme un problème optique. Cependant le fait qu'il n'y ait pas de pertes de volume pour les faibles compressions confirment de nouveau que la compression ne change pas les propriétés physiques des agrégats.
+
+Nous avons également réalisé l'analyse en amplitude des deux lignées cellulaires et on en a conclut que la lignée HCT116 avait une  atténuation acoustique plus importante que la  lignée HT29.  Dans la partie suivante nous allons analyser ces résultats et les mettre en commun avec d'autres expériences de caractérisation mécaniques réalisées sur des sphéroïdes tumoraux afin de mieux comprendre le comportement des agrégats et  expliquer le comportement observé.
+
+
