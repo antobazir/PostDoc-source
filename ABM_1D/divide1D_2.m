@@ -1,3 +1,4 @@
+
 function Grid = divide1D_2(Grid,pos,c_idx,sz)
 
 %gestion des bords
@@ -39,7 +40,7 @@ endif
 
 %cas général
   plr = floor(2*rand())+1;
-  plr
+  plr;
     switch(plr)
       case 1
        if(Grid(pos+1)!=0)
@@ -50,7 +51,7 @@ endif
           endfor
          Grid(pos+1) = c_idx;
          else
-            disp('grid full')
+            disp('grid full');
             return
         endif
        else
