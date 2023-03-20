@@ -4,6 +4,9 @@
 \usepackage{geometry}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \begin{document}
 \tableofcontents
@@ -516,9 +519,9 @@ Quiescence in Cleri can be obtained if glucose or oxygen fall below a certain th
 \subsubsection{Discussion on nutrients availability and resulting growth dynamics}
 The assumption that O$_2$ is the limiting nutrient for tumor growth and more particularly spheroids seems to be heavily discussed. In her analysis, McKeown details how cells and particularly can survive sever hypoxia for up to several day through use of glycolysis for their energy needs. \cite{McKeown2014} Her review also supports the range of viable rim diameter being between 70 and 200 \textmu m, which means a mm-size system should in fact be able to reproduce the important gradients in oxygen.
 
-Interestingly, the metabolisms of oxygen and glucose seem to have non-trivial links. The 1986 study of Muller-Klieser and collaborators states the following :"For example, the averagecentral Po2 in spheroids with a diameter of 700 \textmu m dropped from 30 mmHg to 15 mmHg and O mmHg, as the glucose concentration in thegrowth medium was lowered from 5.5 mM to 1.8 mM and 0.8 mM, respectively."\cite{MuellerKlieser1986} This suggest an active role of cells in the process of diffusion of oxygen, with cells being less permeable, or consuming more oxygen when their metabolism decreases. Interestingly, the trend is reverse in larger spheroids. For MEMT6/Ro spheroids, even spheroids with diameter in excess of 700 \textmu m are shown to have non zero central concentration in standard growth conditions. 
+Interestingly, the metabolisms of oxygen and glucose seem to have non-trivial links. The 1986 study of Muller-Klieser and collaborators states the following :"For example, the averagecentral Po2 in spheroids with a diameter of 700 \textmu m dropped from 30 mmHg to 15 mmHg and O mmHg, as the glucose concentration in thegrowth medium was lowered from 5.5 mM to 1.8 mM and 0.8 mM, respectively."\cite{MuellerKlieser1986} This suggest an active role of cells in the process of diffusion of oxygen, with cells being less permeable, or consuming more oxygen when their metabolism decreases. Interestingly, the trend is reverse in larger spheroids. For EMT6/Ro spheroids, even spheroids with diameter in excess of 700 \textmu m are shown to have non-zero central concentration in standard growth conditions. 
 
-From a pure modelling point of view, the use
+From a pure modelling point of view, the use of oxygen as a limiting nutrient for growth is ruled for our model. But according to the observations of Kempf and collaborators, a scarcity of glucose alone (as long as it is not complete deprivation) does not necessarily lead to cell death either. In fact as explained by  Yee and Li in their 2021 article \cite{Yee2021}, the linked between necrosis in tumor cells and metabolism is far from trivial. indeed,  they point out that depending cell lines necrosis can be induced to various degrees by Hypoxia, Glucose deprivation and also possibly Oxydative stress. Their proposed mechanism for hypoxia is the swith from aerobic to anaerobic metabolism leading to an overproduction of lactate which indirectly results in higher levels of intracellular calcium leading to cell death. Glucose deprivation leads to metabolic stress which may results in metabolic catastrophe leading to cell death.\textbf{[expand]} The oxydative stress route to necrosis maybe through mitochondria dysfunction, ATP depletion, and therefore, cell death.
 
 \section{Focus on DIP2G Project}
 The previous sections were written in order to provide a broad view of the field of agent-based modelling applied to cancer biology. The next section will focus more on the core subject of the DIP2G project. Diffuse midline glioma and more specifically, diffuse intrinsic pontine glioma. Contrary to Glioblastome who have been studied thoroughly in the last decades with various tools[refs?], DIPG remain both hard to treat and to study due to their position in the brain and the fact that it develops only in children. For the specific scope of the DIP2G project. It is noted that DIPGs are hypoxic tumors (\textit{in vivo}) which as a lot of implication on their behaviour and notably on radio resistance.\cite{Cook2021}
@@ -581,13 +584,16 @@ Proliferation can be stained with Ki67 \cite{Grimes2014}\cite{Ghaffarizadeh2017}
 \subsubsection{Hypoxia}
 As stated by Raza and collaborators "Efficient cellular uptake can be problematic with porphyrins, due to their large size."\cite{Raza2017} Strategies using counterstaining of Ki67 and EF5 allowed to roughly estimates a circular line where the concentration is supposed to be 10\textmu M (or 10 mmHg)\cite{Grimes2014}\cite{Mao2018}. Other strategies have included the use of electron spin resonance\cite{Hashem2015}, which can give a more quantitative picture of $pO_2$ or the use of nanoparticles, sucha as the NanO$_2^{TM}$ probes which also give quantitative spatial imaging of the partial pressure of O$_2$.\cite{Dmitriev2014} \textbf{[talk about the limits]}. Pimonidazole can also be used  as an hypoxia marker. \cite{Onozato2017}
 
+An important thing to note is that while no data is available on DIPGs, some studies suggest that pathophysiological levels of hypoxia do not significantly impact cell cycle progression in glioblastoma cells. Whether this applies as well to DIPGs remains to be seen but it definitely raises the discussion over how hypoxia should affect DIPG cells in our model.
+
+Hypoxia can also be linked to increase radioresistance. As explained by Shen and collaborators:"Hypoxia, a common characteristic of most solid tumors, prevents the fixation of DNA damage by oxygen, thus being a major cause of radioresistance in cancer treatment [5]. Furthermore, hypoxia activates the hypoxia-inducible factor 1 (HIF-1) pathway which favors the survival of tumor cells by increasing their glucose uptake and utilization via altered glucose metabolism."\cite{Shen2020}
+
 \subsubsection{Metabolism}
 Oligomycin can be used to reduce the synthesis of ATP synthase meaning it reduces oxydative phosphorylation, which is (very roughly) one of the main aerobic processes of ATP production.\cite{Tidwell2022} As stated  in their study, oxygen and glucose may not capture the entire metabolism :"In low-oxygen conditions, as found in the core of large spheroids, glutamine also makes aerobic glycolysis more effective and can sustain cell growth even as the exclusive substrate." suggesting that a) glutamine may play a significant role in some tumors b) interactions between cell death/proliferation and hypoxia are not as straightforward as sometimes presented, hinting that shift to other metabolites occurs when glucose is depleted.\cite{Damiani2017}\cite{Rodriguez2008} It also suggests that the mechanism for metabolism may change from oxydative in young spheroids to glycolitic in old spheroids. \cite{Rodriguez2008} (pH is also stated not to decrease significantly in several cell lines. However, the diameter of spheroids in not specified.)
 
+Unfortunately it would be an oversimplification that tumor cells all convert significant portion of their metabolism to glycolysis. As stated by Lunt and Vander Heiden in their review, "it is important to note that the glycolytic ATP contributions are entirely dependent on the cell context and have a wide range (0.31 – 64\%) depending on cell/tissue type and experimental conditions"\cite{Lunt2011} (based on the work Zu \& and Guppy\cite{Zu2004}). It should also be noted that other molecules, such as Glutamine, supports ATP production and biosynthesis. But the goal here is not to accurately model metabolism down to single molecules but more to get a global but representative view  of the main contributors.
+
 The question of metabolism for DIPG cells does not seem trivial. According to Grasso and collaborators, the range of growth conditions and medium is varied.\cite{Grasso2015}. The strategy of the project is to work with serum free medium, growth factors and a specific mixture imitating brain matrix compose of Hyaluronic acid and matrigel. Those "non-trivial" conditions for growth begs the following question :"Should metabolites other than glucose and oxygen be included ?" This would entail the estimation or assumption of their diffusion and uptake rates by the modelled cells. Another strategy would be to abstract the nutrients other than oxygen. A single "virtual metabolite" could be described and its assumed characteristics would be adjusted in order to reproduce the observed growth curve. 
-
-
-\subsubsection{Oxydative stress} 
 
 \subsubsection{Growth factors \& nutrients availability}
 The question of growth factors will be adressed here. The following growth factors are used in cell cultures of the DIPG7 cell line. human Epidermal Growth factor (hEGF), human basic Fibroblast Growth Factor (h-bFGF), Platelet-Derived Growth Factor AA and BB (PDGF-AA and PDGF-BB). The difficult question here is to understand the diffusion of these growth factors. Their molecular weight is high several tens or hundred kDa in bound form.\cite{Taylor1970}
@@ -602,7 +608,7 @@ The consumption rate is taken to be equivalent to an association rate of the gro
 
 %\begin{table}[t]
 \begin{center}
-\begin{tabular}{ |p{18mm}|p{18mm}|p{28mm}|p{19mm}|p{15mm}|p{10mm}| }
+\begin{tabular}{ |p{18mm}|p{18mm}|p{35mm}|p{25mm}|p{15mm}|p{10mm}| }
  \hline
 
  \textbf{Molecule} & \textbf{Mol. wght}(kDa) & \textbf{Diffusion medium} & \textbf{Diffusion coeff.} \textmu m$^2$/min & Tortuosity & Ref. \\
@@ -697,7 +703,11 @@ The same relationship was found between pure matrix and tissue as with HCT116 an
 
 Knowing this, we can conclude on values that should be relevant in modelling nutrient diffusion for DIPG spheroids without matrix and the tumor-on-chip system with matrix. For oxygen, diffusion values are similar in water and in low concentrations agarose gel. 100000 \textmu m$^2$/min is a reasonable estimate of the diffusion coefficient. As explained before this value also holds for tissues since cell membranes are permeable to oxygen. This value will be used for both situations as the values in water and matrix are the same. For Glucose, the value in water, agarose gel and hyaluronic acid gel are similar (30000-40000 \textmu m$^2$/min). 40000 \textmu m$^2$/min is thus retained for the diffusion in medium and matrix. Adding cell tortuosity the value for glucose in tissue should be between 6000 \textmu m$^2$/min and 16000 \textmu m$^2$/min. Therefore a glucose tissue diffusion value  of 10000 \textmu m$^2$/min seems a good choice. For growth factors depending on the molecular weight of the complex, value in matrix/water are in the range of 1000-10000 \textmu m$^2$/min. Values found in tissue are expectedly lower by a factor ranging between 2 and 6 due to tortuosity. Therefore, if a low molecular weight ($\approx$ 10 kDa) is assumed, then the values are 10000 \textmu m$^2$/min for water/matrix and 3000 \textmu m$^2$/min for tissue. If a high molecular weight ($\approx$ 100 kDa)  is assumed then the values are 3000 \textmu m$^2$/min for water/matrix and 500-1000 \textmu m$^2$/min for tissue.
 
-Another question that needs to be adressed in order to fully understand nutrient availability in the tissue is the consumption rate of cells. For oxygen reported values are in the range of 50-100 amol/cell/s or 3000-6000 amol/cell/min.\cite{Nelson2017}\cite{Kempf2005}\cite{Mao2018}. For Glucose consumption, the range of values used and measured is 100-500 amol/cell/s which is equivalent to 6000 to 30000 amol/cell/min\cite{Mao2018}\cite{Kempf2005}\cite{Cleri2019}\cite{Jagiella2016}. Unfortunately data on growth factor consumption is scarce. One value was found for humain fibroblast growth factor in the study of Filion which comes from the work of Sperinde and Nugent.\cite{Filion2004}\cite{Sperinde2000} \textbf{[read Sperinde and expand]} The value that was found was 4.2 \textmu M $\cdot$ min$^{-1}$ which, assuming a cellular volume of 2000 \textmu m$^3$ translates into a consumption rate of approximately 10 amol/cell/s or 600 amol/cell/min. With all this information a rough model estimation of the availability of nutrients in tissue can be performed. In terms of initial concentration a typical concentration of 10 ng/mL is used for growth factors \cite{Meel2018}. For a molecule of 50 kDa this corresponds to a concentration of 2$\cdot 10^{-7}$ mM
+Another question that needs to be adressed in order to fully understand nutrient availability in the tissue is the consumption rate of cells. For oxygen reported values are in the range of 50-100 amol/cell/s or 3000-6000 amol/cell/min.\cite{Nelson2017}\cite{Kempf2005}\cite{Mao2018}. For Glucose consumption, the range of values used and measured is 100-500 amol/cell/s which is equivalent to 6000 to 30000 amol/cell/min\cite{Mao2018}\cite{Kempf2005}\cite{Cleri2019}\cite{Jagiella2016}. Unfortunately data on growth factor consumption is scarce. One value was found for humain fibroblast growth factor in the study of Filion which comes from the work of Sperinde and Nugent.\cite{Filion2004}\cite{Sperinde2000} \textbf{[read Sperinde and expand]} The value that was found was 420 \textmu M$^{-1}$ $\cdot$ min$^{-1}$ which, assuming a cellular volume of 2000 \textmu m$^3$ translates into a consumption rate of approximately 10 amol/cell/s or 600 amol/cell/min. With all this information a rough model estimation of the availability of nutrients in tissue can be performed. In terms of initial concentration a typical concentration of 10 ng/mL is used for growth factors \cite{Meel2018}. For a molecule of 50 kDa this corresponds to a concentration of 2$\cdot 10^{-7}$ mM.
+
+\subsubsection{Oxydative stress} 
+As explained in the work of Yee and Li, Oxydative stress maybe a signficant contributor of tumor necrosis along 
+
 
 \subsubsection{"Zero-dimensional" data}
 Of course expression gene determined through PCR or cytometry of cell cultures may also prove very relevant but they lack the spatial aspect that may be necessary in order to correctly formulate the model. However, "zero-dimensional" may be used "blindly" while encoding cell-level rules of the model, which could lead to insight on the spatial repartition of said gene activation provided the signalling pathway is included in the model. 
@@ -714,12 +724,132 @@ In their study \cite{Khaitan2006} states the following for human glioma cell lin
 
 %read : the role of myosin ii in glioma invasion: A mathematical model. for gliomae
 
+\section{Studies}
+In this section, the core work on the project will be organised and summarised for further reference. When possible, figures, tables and code snippets will be provided in order to give context on the reported results.
 
+\subsection{"Improving" the MODLOG code}  
 
-%mechanical vs nutrients based model ?
-%neurospheres vs immortalised cell lines: compliqué mais intéressant
-%\textbf{[has cellular respiration been modelled with SPN? Can we dot it ?]}
+\subsection{1D Modelling of the reaction diffusion system in Octave/MATLAB}
+This preliminary modelling in Octave/MATLAB was performed in order to answer several questions that have been raised before. The first one was to understand if the balance of consumption and diffusion in aggregates could lead to depletion of growth factors before depletion of glucose leading to a reduced proliferation or if quiescence would be purely mediated by the lack of nutrients.
 
+\subsubsection{Simple comparative 1D diffusion-reaction analysis in tissue for Oxygen, Glucose and a prospective growth factor}
+To begin, the 1D diffusion-reaction equation that will be solved is briefly presented here:
+\[ \frac{\partial [C](x,t)}{\partial t} = \frac{\partial }{\partial x}(D_C(x)\frac{\partial [C](x,t)}{\partial x}) -k_C(x,t)[C](x,t) \]  
+
+where $[C](x,t)$ is the concentration of the species of interest(in mM), $D_C(x)$ is the diffusion coefficient (in \textmu m$^2$/min) which may vary in space and $k_C$ is the local consumption/degradation rate of the species(in min$^{-1}$). This equation will therefore be solved for the three molecules that are Oxygen, Glucose and a "model" growth factor. To solve the equation values will be needed for each parameter, along with initial values. In our cases, the boundary values will also be fixated at their initial value.$k_C$ does not change in time to reflect any change in metabolism and is zero outside of tissue. All the relevant values are reported in the following table:
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{ |p{22mm}|p{10mm}|p{20mm}|p{20mm}|p{20mm}|p{15mm}| }
+\hline
+\textbf{Paramaters} & $[C]_0$ \ (mM) & $D_{C,medium}$ \ (\textmu m$^2$/min)& $D_{C,tissue}$ (\textmu m$^2$/min) & $k_C$ \ (min$^{-1}$)\\
+\hline
+\textbf{Oxygen} & 0.5 & 100000 & 100000 & 3$\cdot 10^{-4}$ \\
+\hline
+\textbf{Glucose} & 5 & 40000 & 10000 & 1$\cdot 10^{-3}$  \\
+\hline
+\textbf{Growth \ factor} & 10$^{-7}$ & 1000 & 300 & 1$\cdot 10^{-3}$\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The values for diffusion were discussed rather extensively in a previous section. The initial value were taken from typical experimental values for cell cultures. Note that they are not necessarily physiological. The value for $k_C$ were deduced from adjusting the first order response to the typical rate on consumption observed in experiments for glucose and oxygen. Typically fresh medium will be added every two days, suggesting that a significant decrease of the concentration of glucose takes a least 48h. Knowing that exponential function corresponding to the solution without diffusion must have a time constant of that magnitude the matching value of k for  glucose can be deduced. For oxygen, the consumption value is either taken equal or lower than glucose in models so both case will be tested.  For growth factors, the value was deduced from the paper of Filion\cite{Filion2004} and taken to be roughly the association rate of FGF-2 and FGFR
+
+Numerically, the idea was to keep a configuration close to that which will be used in the model. Therefore, the spatial step of the simulation is taken as the cell diameter  intended to be used in the model (15 \textmu m). The equation are solved with an explicit finite difference scheme. Solving PDE that way means the CFL condition must be respected. The most limiting case will obviously be oxygen as it has the higher diffusion coefficient. With the chosen spatial step this results in a time step that can be at most 1/900 min. In terms of several configuration reported in the next table were tested in order to see how the dyanmics scaled with size. It has been decided that the value at boundary would decrease with time in order to mimic a true "well".
+
+\begin{center}
+\begin{tabular}{ |p{20mm}|p{10mm}|p{10mm}|p{10mm}|p{10mm}|p{10mm}| }
+\hline
+\textbf{Paramaters} & System size & d$_{sphero}$ & t$_{step}$ \\
+\hline
+\textbf{Values} & 1000-2000 & 300-1000 & \\
+\hline
+\end{tabular}
+\end{center}
+
+This first tested configuration was a 1D tissue spreading over 300 microns in a well of width 2 mm. The value for glucose was 3$\cdot 10^{-4}$ and the one for oxygen was a tenth of that. What can be noted is that in this situation the value of glucose and oxygen after 50 h have not decreased significantly (0.01 mM). The decrease for glucose is expectedly more pronounced (1.4 mM) but not the 50 \% value we assumed would justify a refreshing of medium. Therefore the value, taken for the consumption rates may be too low. 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/Gl.pdf}
+	\caption{\label{Gl}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/Ox.pdf}
+	\caption{\label{Ox}}
+	\end{subfigure}
+	\caption{(a) 1D spatial and temporal evolution of oxygen in 300 \textmu m tissue (b) 1D spatial and temporal evolution of glucose in 300 \textmu m tissue}
+\end{figure}
+
+In order to better understand the balance between consumption and diffusion, the case of 1000 \textmu m-wide section with is also treated. The main information that is guiding  the choice for the consumption coefficient in this run is the fact that a mm-size spheroids generally have a necrotic core due to nutrients inavailability. By changing $k_C$ to $5 \cdot 10^{-1}$ for Oxygen and $5 \cdot 10^{-2}$ for Glucose.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/Ox_large_sphe_only_balanced.pdf}
+	\caption{ \label{Ox_bal}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/Gl_sphe_only_large_balanced.pdf}
+		\caption{ \label{Gl_bal}}
+	\end{subfigure}
+	\caption{(a) 1D spatial and temporal evolution of oxygen in 1000 \textmu m tissue (b) 1D spatial and temporal evolution of glucose in 1000 \textmu m tissue}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/time_large_sphe_only_balanced.pdf}
+	\caption{\label{t_bal}}
+\end{figure}
+
+What can be observed in the figures \ref{Ox_bal} and \ref{Gl_bal}, is that with those values the "stationary state" (as confirmed by \ref{t_bal}) shows a 30 \% between the rim and center which is certainly not enough to induce cell death but already allows a first discussion. THe second important fact about cell culture and spheroid growth is that culture medium is replaced every 48h. The second question we thus choose to answer is "how quickly tissue with  the previous constant depletes a large pool of medium?" Here the medium part of the model is extended to 15 mm and that this time the medium depletes over time. The results for 100 mn simulation are shown in  figures \ref{Ox_bal} and \ref{Gl_bal}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/Ox_huge.pdf}
+	\caption{ \label{Ox_bal}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/Gl_huge.pdf}
+		\caption{ \label{Gl_bal}}
+	\end{subfigure}
+	\caption{(a) 1D spatial and temporal evolution of oxygen in 1000 \textmu m tissue in a large well of medium(b) 1D spatial and temporal evolution of glucose in 1000 \textmu m tissue in a large well of medium}
+\end{figure}
+
+The problem is apparent for both oxygen and glucose. The decrease in concentration is too rapid with a 50 \% decrease at the rim is less than two hours suggesting complete depletion would occur before the 24hr mark, especially for oxygen and even for a comparatively large well.
+
+Before deducing that the model itself is inadequate it is necessary to assess the results of models that have been used successfully in the past with the same test. In order to validate our testing protocol, the model from Mao(\cite{Mao2018} with its parameters will be used and see how results change compare to previous efforts. The model had to be adapted slightly and some values were converted but the behavior was overall the same on the performed test which suggest that our model would probably lead to acceptable results if applied on an actual agent-based model.
+
+\subsubsection{1D model recapitulating 3D cell population and nutrient consumption}
+The question of metabolism and the necessity to estimate the dynamics of nutrients in the context lead to the following endeavour: deduce the nutrient consumption and cell size of the full spheroid at different stage without having to solve the equations for an entire 3D configuration.
+
+The assumptions and hypothesis underlying this development will be developed here shortly. The idea is to have an initial situation with a well filled with medium and nutrients in finite amount. Those nutrient can diffuse and be consumed by cells. Cells themselves are encoded in the medium and divide every 24h. Only a single line of cell and nutrient is represented. In order to represent a full cell population, the cell number is calculated as it would be in actual 3D mode but only cells corresponding to a single line crossing are represented in a 1D space and surrounding by two lines of medium. The consumption in order to account for the fact that there are more cells that those represented is scale. The cell on the line see their consumption multiplied by a factor corresponding to the conversion from a line to a sphere and redivided by the number of cells on the line. Therefore, the consumption does increase with time while the number of cell on the line itself does not increase.
+
+In order to account for cell death and the reduced proliferation due to lack of nutrients cells can also have a dead state. A cell is declared dead if its nutrient consumption falls below a certain threshold and therefore they are removed from the proliferative cell pool as soon as it happens. This model should yield a more representative evolution of the concentration of nutrients at different stages and can also allow for reloading of medium as would be the case in actual cell culture.  
+
+In terms of metabolism several options will be tested. First, a straightforward model with a simple threshold on glucose concentration will be tested, with cells immediately dying as they pass the starvation threshold and therefore being removed from the proliferative pool and simply becoming purely diffusive model points. A second configuration will be tested with a more complex threshold and a consumption value following a hill function closer to what was proposed by Mao and collaborators.\cite{Mao2018}. Lastly, the full model proposed by Cleri in his study will be implemented with parameter value from the literature in order to assess its behavior in actual proliferative context.
+
+\subsubsection{Calibration of the reduced metabolic model}
+A lot of constant cannot be set easily in the reduced metabolic model. However knowing concentration could help. Healthy brain cells exhibit concentrations of 2.88 mM which is in the known range for healthy cells (5-10 mM)\cite{Trautmann2009}\cite{Greiner2021}.
+%40 µmole/10^6 cells -> 40e-6 mole/10^6 cells ->40e-12 mole/cell 2e-14 mol/µm^3 ->20000 mol/m^3 > 20000 mM/L nope
+
+The publication of Mikirova they increase for ATP concentration in cancer cells is 2.5-fold.\cite{Mikirova2018} Therefore, a relevant range for ATP concentration in tumor tissue for our model could be between 10 and 30 mM for proliferating cells. For ADP, it is known that the normal ratio ATP/ADP is approximately 1000.\cite{ZIMMERMAN2011} However, due  to the glycolitic metabolism prevalent in cancer cells, The cytosolic ATP/DTP ratio decreases by a factor of 10 or more.\cite{LEMASTERS2021} Therefore, with cytosolic concentration in the range of 10-30 mM for ATP, ADP concentration should be at most 0.1- 0.3 mM. One last important parameter that could help in setting up the model would be the cellular ATP consumption and or production. Indeed,  if the steady-state concentration is known the dynamics can be recapitulated with the production rate.
+
+In terms of production rate experimental values have been obtained in MCF-7 cell line and other cell lines. The quantified production rate was approximately 900 mM/h \cite{RomeroAgilent}. A similar value was used as a threshold by Jagiella and collaborators in their study.\cite{Jagiella2016} Slightly lower values were reported by Mookerjee and collaborators but they are within the same order of magnitude (360 mM/h).\cite{Mookerjee2017}
+
+%Yeng qui donne 1M ATP/cell/S approx -> 18000 mM/h/cell en conso (bactéries)
+%Jagiella donne pour les cellules cancéreuses 1000 à 1700
+%"Quantifying Cellular ATP Production Rate Using Agilent Seahorse XF Technology" Romero al. 30 pmol/min/1000 cells -> 30 fmol/min/cell -> 15 mM/min/cell -> 900 mM/h par cellule (seuil chez Jagiella) (MCF-7)
+%"Quantifying intracellular rates of glycolytic and oxidative ATP production and consumption using extracellular flux measurements" 0.2fmol ATP/s/cell -> 360 mM/h on est sur le bon ordre de grandeur
+
+Interestingly, coefficient for $k_1$ and $k_2$ taken between 1 and 10 min$^{-1}$ and 0.3 for $\mu$ gave a depletion dynamic too fast with the concentration in the core of the spheroid dropping more 80 \% in less than  6 hours, Therefore adapting the time step is necessary. The goal is to choose time step long enough to ensure complete relaxation of the diffusion mechanism 
 
 \section*{to be treated}
 
@@ -798,6 +928,8 @@ hill equation is a  generalised form of Monod equation which was used on bacteri
 media. [37]" in Meel
 
 03/03/2023 : checkout murtrey diffusion 
+
+20/03/2023
 
 
 \newpage
