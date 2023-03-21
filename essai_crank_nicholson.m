@@ -2,8 +2,8 @@
 %méthode implicite
 sz = 100;
 dx = 15;
-dt = 1/900; %in min
-n_time=1000;
+dt = 1; %in min
+n_time=2;
 
 D = 100000;
 
@@ -63,4 +63,4 @@ figure
 plot(Gl)
 hold on
 plot(Gl_cn)
-plot(Gl_e)
+%plot(Gl_e)
