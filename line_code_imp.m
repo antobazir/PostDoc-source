@@ -20,31 +20,31 @@ Df = zeros(1,sz);
 
 ext_cOx = 0.6;
 ext_cGl = 5;
-%ext_cF = 2e-7;
+ext_cF = 2e-7;
 
 %boundary conditions
 Ox(1:sz) = ext_cOx; %concentration in mM
 Gl(1:sz) = ext_cGl; %concentration in mM
 %50 kDa = 8.3e-20 g -> 49800 g/mol -> 2e-13 mol/mL -> 2e-10 mol/L -> 2e-7 mM/L
-%F(1:sz) = ext_cF; %concentration in mM
+F(1:sz) = ext_cF; %concentration in mM
 
 
 DOx = 100000; %diffusion of oxygen
-kO_tissue = 1e-5; %consumption rate in mM/min based on 5000 amol/min & cell volume of 2000 µm^3
+kO_tissue = 1e-1; %consumption rate in mM/min based on 5000 amol/min & cell volume of 2000 µm^3
 AOx = DOx*dt/(dx^2);
 
 DG(1:sz) = 40000; %diffusion of glucose medium
 DG_tissue = 10000; %diffusion of glucose medium
-kG_tissue = 1e-5; %consumption rate in mM/min based on 500 amol/min & cell volume of 2000 µm^3
+kG_tissue = 1e-1; %consumption rate in mM/min based on 500 amol/min & cell volume of 2000 µm^3
 
-##Df(1:sz) = 1000; %diffusion of growth factor
-##Df_tissue = 300; %diffusion of growth factor
-##kf_tissue = 1e-5; %consumption rate in mM/min based on value given by Filion
+Df(1:sz) = 1000; %diffusion of growth factor
+Df_tissue = 300; %diffusion of growth factor
+kf_tissue = 1e-5; %consumption rate in mM/min based on value given by Filion
 
 Ncell = 1;
 Ndead = 0;
 Nth_G = 0.1;
-n_time_diff = 1440*1/dt*25+1/dt; %1440 min cell/cycle dt is 1/900 mn and 3 is the number of cycles
+n_time_diff = 1440*1/dt*2+1/dt; %1440 min cell/cycle dt is 1/900 mn and 3 is the number of cycles
 
 %state : 1 = proliferative
 % 2 =  quiescent
@@ -74,12 +74,12 @@ xlabel(aG,'position (µm)','fontsize',20)
 ylabel(aG, 'concentration (mM)','fontsize',20)
 xlim(aG,[-700 700])
 
-##%figure growth factor
-##fF = figure;
-##aF = axes(fF);
-##hold(aF);
-##xlabel(aF,'position (µm)','fontsize',20)
-##ylabel(aF, 'concentration (mM)','fontsize',20)
+%figure growth factor
+fF = figure;
+aF = axes(fF);
+hold(aF);
+xlabel(aF,'position (µm)','fontsize',20)
+ylabel(aF, 'concentration (mM)','fontsize',20)
 
 %figure glucose
 fGt = figure;
@@ -97,7 +97,7 @@ ylabel(aS, 'proliferative cells','fontsize',20)
 fSt = figure;
 aSt = axes(fSt);
 hold(aSt);
-xlabel(aSt,'time (jours)','fontsize',20)
+xlabel(aSt,'time (hours)','fontsize',20)
 ylabel(aSt, 'proliferative cells','fontsize',20)
 
 v_dead = [];
@@ -116,13 +116,16 @@ for t = 1:n_time_diff
   %mise à jour de la ligne de tissu
   l_tiss = floor(2*(3/4/pi)^(1/3)*(Ncell).^(1/3)); % calcul la largeur de la ligne de tissu en fonction du temps écoulé
   DG(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = DG_tissue;
-  %Df(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = Df_tissue;
+  Df(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = Df_tissue;
   kG(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = kG_tissue;
   kO(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = kO_tissue;
-  %kf(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = kf_tissue;
+  kf(floor((sz-l_tiss)/2):floor((sz-l_tiss)/2)+l_tiss-1) = kf_tissue;
 
   AGl = DG.*dt/(dx^2);
   BGl(2:sz-1) = (DG(3:sz)-DG(1:sz-2)).*dt/(4*dx^2);
+  Af = Df.*dt/(dx^2);
+  Bf(2:sz-1) = (Df(3:sz)-Df(1:sz-2)).*dt/(4*dx^2);
+  Bf(2:sz-1) = (Df(3:sz)-Df(1:sz-2)).*dt/(4*dx^2);
 
 
   v_dead = unique([v_dead find(Gl<Nth_G)]);
@@ -130,16 +133,16 @@ for t = 1:n_time_diff
   %assure que malgré la reprise de diffusion, une cellule morte reste morte
   kG(v_dead) = 0;
   kO(v_dead) = 0;
-  %kf(v_dead) = 0;
+  kf(v_dead) = 0;
 
   kG(find(Gl<Nth_G)) = 0;
   kO(find(Gl<Nth_G)) = 0;
-  %kf(find(Gl<Nth_G)) = 0;
+  kf(find(Gl<Nth_G)) = 0;
 
   if(mod(t,2880*1/dt)==0)
     Gl(and(kG==0,DG!=DG_tissue)) = ext_cGl;
     Ox(and(kG==0,DG!=DG_tissue)) = ext_cOx;
-    %F(and(kG==0,DG!=DG_tissue)) = ext_cF;
+    F(and(kG==0,DG!=DG_tissue)) = ext_cF;
   endif
 
     %diffusion------------------------------------------------
@@ -149,6 +152,7 @@ for t = 1:n_time_diff
     %calcul des vecteurs d
     dOx = Ox;
     dGl = Gl;
+    dF = F;
 
     %calcul de la matrice A Oxygène
     up_dg_ox = [0; AOx*ones(sz-2,1)];
@@ -164,6 +168,14 @@ for t = 1:n_time_diff
 
     AA_gl=diag(dg_gl)+ diag(-up_dg_gl,1)+ diag(-lo_dg_gl,-1);
 
+        %calcul de la matrice A growth factors
+    up_dg_f = [0 (Af(2:sz-1)-Bf(2:sz-1))];
+    lo_dg_f = [(Af(2:sz-1)+Bf(2:sz-1)) 0];
+    dg_f = [1 (2.*Af(2:sz-1)+1+(Ncell-Ndead)./(max(1,l_tiss-length(v_dead))).*kf(2:sz-1)*dt) 1];
+
+    AA_f=diag(dg_f)+ diag(-up_dg_f,1)+ diag(-lo_dg_f,-1);
+
+
     %mise à jour des vecteurs
     Ox_n = AA_Ox\dOx';
     Ox = Ox_n';
@@ -171,13 +183,16 @@ for t = 1:n_time_diff
     Gl_n = AA_gl\dGl';
     Gl = Gl_n';
 
+    F_n = AA_f\dF';
+    F = F_n';
+
     % partie où le système se vide.
     Ox(1) = Ox(2);
     Ox(sz) = Ox(sz-1);
     Gl(1) = Gl(2);
     Gl(sz) = Gl(sz-1);
-    %F(1) = F(2);
-    %F(sz) = F(sz-1);
+    F(1) = F(2);
+    F(sz) = F(sz-1);
     Ndead = floor(4/3*pi*(length(v_dead)/2)^3);
 
     if(mod(t,180/dt)==0)
@@ -195,17 +210,18 @@ for t = 1:n_time_diff
     if(mod(t,36*60/dt)==0)
         plot(aG,(1:sz)*dx-(sz*dx/2),Gl)
         plot(aO,(1:sz)*dx-(sz*dx/2),Ox)
-        %plot(aF,(1:sz)*dx,F)
+        plot(aF,(1:sz)*dx,F)
     endif
 endfor
 toc();
 
 
-        plot(aG,(1:sz)*dx-(sz*dx/2),kG,'x')
-        plot(aO,(1:sz)*dx-(sz*dx/2),kO,'x')
+        plot(aG,(1:sz)*dx-(sz*dx/2),Gl,'x')
+        plot(aO,(1:sz)*dx-(sz*dx/2),Ox,'x')
+        plot(aF,(1:sz)*dx-(sz*dx/2),F,'x')
 print (fO, "/home/antony/Documents/Post-doc/test_fortran/plots/Ox_line_1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 print (fG, "/home/antony/Documents/Post-doc/test_fortran/plots/Gl_line_1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-%print (fF, "/home/antony/Documents/Post-doc/test_fortran/plots/Fc_line_1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fF, "/home/antony/Documents/Post-doc/test_fortran/plots/Fc_line_1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 print (fGt, "/home/antony/Documents/Post-doc/test_fortran/plots/time_Gl_large_1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 
 
