@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{amsmath}
 
 \begin{document}
 \tableofcontents
@@ -828,13 +829,72 @@ The problem is apparent for both oxygen and glucose. The decrease in concentrati
 Before deducing that the model itself is inadequate it is necessary to assess the results of models that have been used successfully in the past with the same test. In order to validate our testing protocol, the model from Mao(\cite{Mao2018} with its parameters will be used and see how results change compare to previous efforts. The model had to be adapted slightly and some values were converted but the behavior was overall the same on the performed test which suggest that our model would probably lead to acceptable results if applied on an actual agent-based model.
 
 \subsubsection{1D model recapitulating 3D cell population and nutrient consumption}
-The question of metabolism and the necessity to estimate the dynamics of nutrients in the context lead to the following endeavour: deduce the nutrient consumption and cell size of the full spheroid at different stage without having to solve the equations for an entire 3D configuration.
+The question of metabolism and the necessity to estimate the dynamics of nutrients in the context lead to the following endeavour: attempt to roughly estimate the nutrient consumption and size and number of cells of the full spheroid at different stage without having to solve the equations for an entire 3D configuration.
 
-The assumptions and hypothesis underlying this development will be developed here shortly. The idea is to have an initial situation with a well filled with medium and nutrients in finite amount. Those nutrient can diffuse and be consumed by cells. Cells themselves are encoded in the medium and divide every 24h. Only a single line of cell and nutrient is represented. In order to represent a full cell population, the cell number is calculated as it would be in actual 3D mode but only cells corresponding to a single line crossing are represented in a 1D space and surrounding by two lines of medium. The consumption in order to account for the fact that there are more cells that those represented is scale. The cell on the line see their consumption multiplied by a factor corresponding to the conversion from a line to a sphere and redivided by the number of cells on the line. Therefore, the consumption does increase with time while the number of cell on the line itself does not increase.
+The assumptions and hypothesis underlying this development will be developed here shortly. The idea is to have an initial situation with a well filled with medium and nutrients in finite amount. Those nutrients or chemicals (read growth factors) can diffuse and be consumed by cells. Cells themselves are encoded in the medium and divide every 24h. While the calculation is supposed to represent a whole sphere in well, only a single line of cell and nutrient is represented explicitly in the code. In order to represent a full cell population, the cell number is calculated as it would be in actual 3D mode by starting with one cell and accounting for division of the proliferative cells: 
+\[N_{total} = N_{total} + N_{total} - N_{dead}\]
 
-In order to account for cell death and the reduced proliferation due to lack of nutrients cells can also have a dead state. A cell is declared dead if its nutrient consumption falls below a certain threshold and therefore they are removed from the proliferative cell pool as soon as it happens. This model should yield a more representative evolution of the concentration of nutrients at different stages and can also allow for reloading of medium as would be the case in actual cell culture.  
+The previous equation is applied at each division step of the model, then in order to know how many cells lie on the represented "line", the following formula is applied: 
 
-In terms of metabolism several options will be tested. First, a straightforward model with a simple threshold on glucose concentration will be tested, with cells immediately dying as they pass the starvation threshold and therefore being removed from the proliferative pool and simply becoming purely diffusive model points. A second configuration will be tested with a more complex threshold and a consumption value following a hill function closer to what was proposed by Mao and collaborators.\cite{Mao2018}. Lastly, the full model proposed by Cleri in his study will be implemented with parameter value from the literature in order to assess its behavior in actual proliferative context.
+\[l_{cells} = \mathtt{floor}(2(\frac{3}{4\pi})^{1/3}(N_{cell})^{1/3})) \] 
+   
+The reaction-diffusion is then only solved presented in the previous section is then solved on the line. The only modification is that in order to mimic the consumptioin of the entire sphere on the outside concentration level, the consumption term with cellular consumption is scaled by the number of live cell(see below) and redivided by the number of cell on the line. Therefore, the equation being solved on the 1D line is actually :
+
+\[ \frac{\partial [C](x,t)}{\partial t} = \frac{\partial }{\partial x}(D_C(x)\frac{\partial [C](x,t)}{\partial x}) -(\frac{N_{cell} - N_{dead}}{l_{cells}})k_C(x,t)[C](x,t) \]  
+
+
+In order to account for cell death and the reduced proliferation due to lack of nutrients cells can also have a dead state. A cell is declared dead if its nutrient consumption falls below a certain threshold and therefore they are removed from the proliferative cell pool as soon as it happens. This model should yield a more representative evolution of the concentration of nutrients at different stages and can also allow for reloading of medium as would be the case in actual cell culture. It should however be noted that the instantaneous death of cells might not be completely realistic. 
+
+\paragraph{Diffusion}
+The diffusion coefficient for Oxygen is taken to be 100000 \textmu m$^2$/min the same in tissue and medium as evidenced by the table presented before. An interpretation of this is that bilipid membrane are permeable to oxygen. This is also the assumption made by Mao and collaborators.\cite{Mao2018} The diffusion of glucose is taken to be around 40000 \textmu m$^2$/min in medium (same as water) and 10000 \textmu m$^2$/min in tissue (agarose gel value corrected with tortuosity). Following the value for large Dextran molecule of different molecular weight, growth factor diffusion coefficient were chosen to be 1000 \textmu m$^2$/min in medium and 300  \textmu m$^2$/min in tissue.
+
+\paragraph{Consumption}
+For glucose consumption Mao and collaborators report a value $7.12 \cdot 10^{-17}$ mol/cell/s. Since the model is formulated in mM in our study the value is converted assuming a cell volume of $1.2 \cdot 10^{-12}$ pL as reported in the aforementioned paper. This leads to a cellular consumption of glucose of  approximately 3 mM/cell/min. Assuming an identical cell volume, Schaller and collaborators\cite{Kempf2005} give a value of 1 mM/min. In the former study, oxygen consumption is taken to be identical to glucose consumption while in the latter, it is taken to be almost 5  times lower.  It should be noted that in the case of Schaller the value is a constant in mM/min while our $k_C$ is given in min$^{-1}$ so with a concentration of glucose around 5 mM the correct value for k would be 0.2 which we round down to 0.1 mM. The same value is taken for oxygen. For growth factors, the only value found that could be likened to consumption was the association rate of FGF-2 and FGFR and it was give as $4.2 \cdot 10^{-2}$ \textmu M/min. With a concentration of around $10^{-7 }$ deduced from the experimental value of concentration from the study of Meel on DIPG, the resulting $k_F$ should be  $8 \cdot 10^{-6}$ min$^{-1}$
+
+\paragraph{Starvation}
+The starvation threshold has been chosen to be on the concentration of glucose as it is supported by several authors that cells can survive acute hypoxia by adapting their metabolism.\cite{McKeown2014}\cite{Richards2016}. The results from Freyer and Muller-Klieser (\cite{MuellerKlieser1984},\cite{Freyer1986}) support that spheroid can be cultivated in concentration as low as 0.8 mM suggesting the value should be below that. Schaller and collaborators used a threshold which was a product of the oxygen and glucose concentration and the value in their 2005 study was 0.025 mM. If we simply take the square root of this value we end up with 0.16 mM.\cite{Kempf2005} In their paper on colorectal cancer spheroids, Mao took a much lower value of  0.15 \textmu M. \cite{Mao2018} Knowing this, both the 0.1 mM and 0.001 mM will be tested in this case.
+
+\paragraph{Metabolism}
+In terms of metabolism several options will be tested. First, a straightforward model with a simple threshold on glucose concentration will be tested, with cells immediately dying as they pass the starvation threshold and therefore being removed from the proliferative pool and simply becoming purely diffusive model points. A second configuration will be tested with a more complex threshold and a k$_{C}$ value following a Hill function closer to what was proposed by Mao and collaborators.\cite{Mao2018}. Lastly, the full model proposed by Cleri in his study will be implemented with parameter values from the literature in order to assess its behavior in actual proliferative context.
+
+\paragraph{Numerics}
+In terms of numerics, the reaction diffusion equations will be solved with a implicit methods. This allows the use of large timesteps compared to an explicit scheme. Solving is achieved by matrix inversion with the dedicated Octave function $\mathtt{mldivide}$. The spatial step is taken to be 15 \textmu m which is roughly the cell diameter. The timestep is taken to be 5 minutes. 
+
+\paragraph{Results}
+Unfortunately the first test with the reported set of values is inconclusive. Apparently, the relation between consumption, nutrient concentration and diffusion is not physically sane. In \ref{t_1D}, the concentration of glucose as a function of time  The rate of consumption for a single cell is already too high, or the amount of available nutrient too low. Indeed a single cell can deplete entirely the well is much less than 24h and that is for a single cell. So our scaling method is not viable. 
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/time_Gl_large_1.pdf}
+	\caption{\label{t_1D}}
+\end{figure}
+
+This modelling foray proved inconclusive however it helped develop the implicit algorithm that will be used in the next endeavor.
+
+\subsubsection{2D model in GNU/Octave}
+The 1D scaling method did not work. However, what could work and be almost immediately applicable to the DIPG project is a 2D model representing a section of cells in the chip which can be considered invariant in the z-direction as long as you stay away from the upper and lower bound of the chip. Rigourously it would be equivalent to an infinite cylinder but here, the distinction should not be too difficult. However, solving the whole system with the implicit method used before is not trivial going from  1D to 2D and therefore the calculations will be detailed here for verifications and further reference. First of all, the solved reaction-diffusion in its most trivial form is the following : 
+
+\[ \frac{\partial [C](x,y,t)}{\partial t} = \overrightarrow{\nabla}(D_C(x,y)) \cdot \overrightarrow{\nabla}( [C](x,y,t)) + D(x,y,t) \nabla^2 [C](x,y,t) -k_C(x,y,t)[C](x,y,t) \] 
+\[\rightarrow \frac{\partial [C]}{\partial t} = (\frac{\partial D_C}{\partial x}\frac{\partial [C]}{\partial x} + \frac{\partial D_C}{\partial y}\frac{\partial [C]}{\partial y}) + D (\frac{\partial^2 [C]}{\partial x^2} + \frac{\partial^2 [C]}{\partial y^2}) -k_C[C] \] 
+
+This equation then translate into implicit finite difference as follows: 
+\[\frac{G^{n+1}_{j,l} - G^{n}_{j,l}}{\Delta t} = (\frac{D_{j+1,l} - D_{j-1,l}}{2 \Delta x})(\frac{G^{n+1}_{j+1,l} - G^{n+1}_{j-1,l}}{2 \Delta x}) + (\frac{D_{j,l+1} - D_{j,l-1}}{2 \Delta y}) ( \frac{G^{n+1}_{j,l+1} - G^{n+1}_{j,l-1}}{2 \Delta y})\] \[ + D_{j,l}(\frac{G^{n+1}_{j+1,l} - 2G^{n+1}_{j,l} + G^{n+1}_{j-1,l}}{\Delta x^2} + \frac{G^{n+1}_{j,l+1} - 2G^{n+1}_{j,l} + G^{n+1}_{j,l-1}}{\Delta y^2}) - k_{j,l} G^{n+1}_{j,l}\]
+
+The method used to solve this is in Octave is derived from the one presented in chapter 19 of book \cite{Press1992}. The principle is that of operator splitting. In short, by solving the system in substeps it ensures that each substep is equivalent to the inversion of a tridiagonal matrix which can be handled by GNU/Octave. Therefore, there is a first solving step with a intermediary  matrix $G^{*}_{j,l}$ : 
+\begin{align*}
+  &-G^{*}_{j+1,l}[ \frac{D_{j,l}\Delta t}{\Delta x^2} + \frac{\Delta t}{4 \Delta x^2}(D_{j+1,l} - D_{j-1,l})]  \\
+&+ G^{*}_{j,l}[2 \frac{D_{j,l}\Delta t}{\Delta x^2} +1+k_{j,l}\Delta t]  \\
+&- G^{*}_{j-1,l}[ \frac{D_{j,l}\Delta t}{\Delta x^2} - \frac{\Delta t}{4 \Delta x^2}(D_{j+1,l} - D_{j-1,l})]\\
+ &= G^{n}_{j,l} 
+\end{align*}
+The first substep solves the tridiagonal corresponding to the derivation along x-axis to find the intermediary $G^{*}_{j,l}$ and then the second substep gives $G^{n+1}_{j,l}$ :
+\begin{align*}
+  &-G^{n+1}_{j,l+1}[ \frac{D_{j,l}\Delta t}{\Delta y^2} + \frac{\Delta t}{4 \Delta y^2}(D_{j,l+1} - D_{j,l-1})]  \\
+&+ G^{n+1}_{j,l}[2 \frac{D_{j,l}\Delta t}{\Delta y^2} +1 + k_{j,l}\Delta t]  \\
+&- G^{n+1}_{j,l-1}[ \frac{D_{j,l}\Delta t}{\Delta y^2} - \frac{\Delta t}{4 \Delta y^2}(D_{j,l+1} - D_{j,l-1})]\\
+ &= G^{*}_{j,l} 
+\end{align*}
+
 
 \subsubsection{Calibration of the reduced metabolic model}
 A lot of constant cannot be set easily in the reduced metabolic model. However knowing concentration could help. Healthy brain cells exhibit concentrations of 2.88 mM which is in the known range for healthy cells (5-10 mM)\cite{Trautmann2009}\cite{Greiner2021}.
@@ -929,7 +989,9 @@ media. [37]" in Meel
 
 03/03/2023 : checkout murtrey diffusion 
 
-20/03/2023
+20/03/2023: read "Browning, Sharp, et al. eLife 2021;10:e73020. DOI: https://doi.org/10.7554/eLife.73020 1 of 25
+Quantitative analysis of tumour
+spheroid structure"
 
 
 \newpage
