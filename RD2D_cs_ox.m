@@ -4,13 +4,13 @@ clear all;
 close all;
 
 tic()
-sz = 51;
-G = zeros(sz,sz);
-G2 = zeros(sz,sz);
-Gi = zeros(sz,sz);
-Gi2 = zeros(sz,sz);
-Gn = zeros(sz,sz);
-Gn2 = zeros(sz,sz);
+sz = 81;
+O = zeros(sz,sz);
+O2 = zeros(sz,sz);
+Oi = zeros(sz,sz);
+Oi2 = zeros(sz,sz);
+On = zeros(sz,sz);
+On2 = zeros(sz,sz);
 NabD_x = zeros(sz,sz);
 NabD_y = zeros(sz,sz);
 NabD = zeros(sz,sz);
@@ -18,20 +18,20 @@ k = zeros(sz,sz);
 AA_x = zeros(sz,sz,sz);
 AA_y = zeros(sz,sz,sz);
 
-G(round(sz/2),round(sz/2))=5;
-%G2(round(sz/2),round(sz/2))=5;
-%G(round(sz/2)-3:round(sz/2)+3,round(sz/2))=10;
+%O(round(sz/2),round(sz/2))=5;
+%O2(round(sz/2),round(sz/2))=5;
+%O(round(sz/2)-3:round(sz/2)+3,round(sz/2))=10;
 
 
 D = ones(sz,sz);
-D = 40000*D;
-D_tissue = 10000;
-k_tissue = 0.1
-r = round(sz/2.2)-2; %radius of the tissue circle in units
+D = 100000*D;
+D_tissue = 100000;
+k_tissue = 1
+r = round(sz/2.2)-1; %radius of the tissue circle in units
 
 dx = 15;
 dt = 1/100;
-ntime = 20/dt;
+ntime = 10/dt;
 
 %giving all indexes corresponding to a center circle
 [i,j,v] = find(D!=0);
@@ -39,6 +39,10 @@ dsy = j-round(sz/2);
 dsx = i-round(sz/2);
 D(find((dsx.^2+dsy.^2)<r^2))= D_tissue;
 k(find((dsx.^2+dsy.^2)<r^2))= k_tissue;
+%O(find((dsx.^2+dsy.^2)>=r^2))= 5;
+%O2(find((dsx.^2+dsy.^2)>=r^2))= 5;
+O(:,:) =0.5;
+O2(:,:) = 0.5;
 
 ##%square
 ##D(round(sz/2)-r:round(sz/2)+r,round(sz/2)-r:round(sz/2)+r)= D_tissue
@@ -52,7 +56,7 @@ NabD_x(2:sz-1,:) = dt*(D(3:sz,:)-D(1:sz-2,:))/(4*dx^2);
 NabD_y(:,2:sz-1) = dt*(D(:,3:sz)-D(:,1:sz-2))/(4*dx^2);
 
 
-##%MATRIX GENERATION (1st method)--------------------------------------------
+##%MATRIX OENERATION (1st method)--------------------------------------------
 ##%due to the variation of D in space the matrix changes with L so it needs 3 axes
 ##for l=1:sz
 ##      up_dg = [0; AD(2:sz-1,l)+NabD(2:sz-1,l)];
@@ -73,7 +77,7 @@ NabD_y(:,2:sz-1) = dt*(D(:,3:sz)-D(:,1:sz-2))/(4*dx^2);
 ##endfor
 ##%------------------------------------------------------------------------------
 
-%MATRIX GENERATION (2nd  method)--------------------------------------------
+%MATRIX OENERATION (2nd  method)--------------------------------------------
 %matrix generation for x in the block format
 %idée créer les diagonale à partir des matrices en rajoutant des lignes/colonnes de zéros où il ya besoin.
     u_mx = AD-NabD_x ;u_mx(1,:) = 0; u_mx(sz,:) = 0;
@@ -100,71 +104,73 @@ NabD_y(:,2:sz-1) = dt*(D(:,3:sz)-D(:,1:sz-2))/(4*dx^2);
 ##    SAA_ym = matrix_type(SAA_ym,"banded",1,1)
 
 for i=1:ntime
+    O(find((dsx.^2+dsy.^2)>=r^2))= 0.5;
+    O2(find((dsx.^2+dsy.^2)>=r^2))= 0.5;
     i
     %the artifact seems to be coming from the intermediary step scheme
-    Gi = reshape(AA_xm\vec(G),sz,sz);%compute the first matrix
-    %Gi = reshape(linsolve(SAA_xm,vec(G)),sz,sz);%compute the first matrix
+    Oi = reshape(AA_xm\vec(O),sz,sz);%compute the first matrix
+    %Oi = reshape(linsolve(SAA_xm,vec(O)),sz,sz);%compute the first matrix
 
-    Gn = reshape(AA_ym\vec(Gi'),sz,sz);
-    %Gn = reshape(linsolve(SAA_ym,vec(G')),sz,sz);
-    Gn = Gn';
+    On = reshape(AA_ym\vec(Oi'),sz,sz);
+    %On = reshape(linsolve(SAA_ym,vec(O')),sz,sz);
+    On = On';
 
-    G = Gn;
-    length(find(Gn-Gn'))
-    max(max(Gn-Gn'))
+    O = On;
+    length(find(On-On'))
+    max(max(On-On'))
 
     %waitforbuttonpress
     %kbhit()
 
 ##    %if that is the case then doing y then x should yield the reverse problem
-##    Gi2 = reshape(AA_ym\vec(G2'),sz,sz);
-##    %Gi2 = reshape(linsolve(SAA_ym,vec(G2')),sz,sz);%compute the first matrix
-##    Gi2= Gi2';
+##    Oi2 = reshape(AA_ym\vec(O2'),sz,sz);
+##    %Oi2 = reshape(linsolve(SAA_ym,vec(O2')),sz,sz);%compute the first matrix
+##    Oi2= Oi2';
 ##
-##    Gn2 = reshape(AA_xm\vec(Gi2),sz,sz);
-##    %Gn2 = reshape(linsolve(SAA_xm,vec(G)),sz,sz);
-##    G2= Gn2;
-    Gti(i,1) =  G(round(sz/2),round(sz/2));
-    Gti(i,2) =  G(round(sz/2),round(sz/5));
+##    On2 = reshape(AA_xm\vec(Oi2),sz,sz);
+##    %On2 = reshape(linsolve(SAA_xm,vec(O)),sz,sz);
+##    O2= On2;
+    Oti(i,1) =  O(round(sz/2),round(sz/2));
+    Oti(i,2) =  O(round(sz/2),round(sz/5));
 endfor
 
-fG = figure;
-aG = axes(fG);
-imagesc((1:sz)*dx,(1:sz)*dx,G)
-xlabel(aG,'position (µm)','fontsize',20)
-ylabel(aG, 'position (µm)','fontsize',20)
-##fG2 = figure;
-##aG2 = axes(fG2);
-##imagesc((1:sz)*dx,(1:sz)*dx,G2)
-##xlabel(aG2,'position (µm)','fontsize',20)
-##ylabel(aG2, 'position (µm)','fontsize',20)
+fO = figure;
+aO = axes(fO);
+imagesc((1:sz)*dx,(1:sz)*dx,O)
+xlabel(aO,'position (µm)','fontsize',20)
+ylabel(aO, 'position (µm)','fontsize',20)
+##fO2 = figure;
+##aO2 = axes(fO2);
+##imagesc((1:sz)*dx,(1:sz)*dx,O2)
+##xlabel(aO2,'position (µm)','fontsize',20)
+##ylabel(aO2, 'position (µm)','fontsize',20)
 ##figure
-##%imagesc((G2+G)/2)
-##imagesc((G+G2)/2-sqrt((G-G2).^2))
+##%imagesc((O2+O)/2)
+##imagesc((O+O2)/2-sqrt((O-O2).^2))
 toc()
 
 fD  = figure;
 aD = axes(fD);
 hold(aD);
-plot(aD,G(round(sz/2),:),'x-')
-plot(aD,G(:,round(sz/2)),'v-')
+plot(aD,(1:sz)*dx,O(round(sz/2),:),'x-')
+plot(aD,(1:sz)*dx,O(:,round(sz/2)),'v-')
 xlabel(aD,'position (µm)','fontsize',20)
 ylabel(aD, 'Concentration (u.a)','fontsize',20)
 legend(aD,'x-midline','y-midline')
-%plot(G2(round(sz/2),:),'x-')
-%plot(G2(:,round(sz/2)),'v-')
+%plot(O2(round(sz/2),:),'x-')
+%plot(O2(:,round(sz/2)),'v-')
 
-fGt  = figure;
-aGt = axes(fGt);
-hold(aGt);
-plot(aGt,(1:ntime)*dt,Gti(:,1))
-plot(aGt,(1:ntime)*dt,Gti(:,2))
-xlabel(aGt,'time (min)','fontsize',20)
-ylabel(aGt, 'Concentration (u.a)','fontsize',20)
-legend(aGt,'center','outside')
+fOt  = figure;
+aOt = axes(fOt);
+hold(aOt);
+plot(aOt,(1:ntime)*dt,Oti(:,1))
+plot(aOt,(1:ntime)*dt,Oti(:,2))
+xlabel(aOt,'time (min)','fontsize',20)
+ylabel(aOt, 'Concentration (mM)','fontsize',20)
+legend(aOt,'center','outside')
 
-print (fG, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G630_100_km1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-%print (fG2, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G2_100_k.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-print (fD, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_630lines_100_km1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-print (fGt, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_630t_km1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fO, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_O1050_100_cs_k1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+%print (fO2, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_O2_100_cs_km1_lg_full.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fD, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_Olines1050_100_cs_k1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fOt, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_Ot1050_cs_k1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 

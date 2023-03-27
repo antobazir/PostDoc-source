@@ -18,7 +18,7 @@ k = zeros(sz,sz);
 AA_x = zeros(sz,sz,sz);
 AA_y = zeros(sz,sz,sz);
 
-G(round(sz/2),round(sz/2))=5;
+%G(round(sz/2),round(sz/2))=5;
 %G2(round(sz/2),round(sz/2))=5;
 %G(round(sz/2)-3:round(sz/2)+3,round(sz/2))=10;
 
@@ -27,7 +27,7 @@ D = ones(sz,sz);
 D = 40000*D;
 D_tissue = 10000;
 k_tissue = 0.1
-r = round(sz/2.2)-2; %radius of the tissue circle in units
+r = round(sz/2.2)-1; %radius of the tissue circle in units
 
 dx = 15;
 dt = 1/100;
@@ -39,6 +39,10 @@ dsy = j-round(sz/2);
 dsx = i-round(sz/2);
 D(find((dsx.^2+dsy.^2)<r^2))= D_tissue;
 k(find((dsx.^2+dsy.^2)<r^2))= k_tissue;
+%G(find((dsx.^2+dsy.^2)>=r^2))= 5;
+%G2(find((dsx.^2+dsy.^2)>=r^2))= 5;
+G(:,:) =5;
+%G2(:,:) = 5;
 
 ##%square
 ##D(round(sz/2)-r:round(sz/2)+r,round(sz/2)-r:round(sz/2)+r)= D_tissue
@@ -100,6 +104,8 @@ NabD_y(:,2:sz-1) = dt*(D(:,3:sz)-D(:,1:sz-2))/(4*dx^2);
 ##    SAA_ym = matrix_type(SAA_ym,"banded",1,1)
 
 for i=1:ntime
+    G(find((dsx.^2+dsy.^2)>=r^2))= 5;
+    %G2(find((dsx.^2+dsy.^2)>=r^2))= 5;
     i
     %the artifact seems to be coming from the intermediary step scheme
     Gi = reshape(AA_xm\vec(G),sz,sz);%compute the first matrix
@@ -146,8 +152,8 @@ toc()
 fD  = figure;
 aD = axes(fD);
 hold(aD);
-plot(aD,G(round(sz/2),:),'x-')
-plot(aD,G(:,round(sz/2)),'v-')
+plot(aD,(1:sz)*dx,G(round(sz/2),:),'x-')
+plot(aD,(1:sz)*dx,G(:,round(sz/2)),'v-')
 xlabel(aD,'position (µm)','fontsize',20)
 ylabel(aD, 'Concentration (u.a)','fontsize',20)
 legend(aD,'x-midline','y-midline')
@@ -160,11 +166,11 @@ hold(aGt);
 plot(aGt,(1:ntime)*dt,Gti(:,1))
 plot(aGt,(1:ntime)*dt,Gti(:,2))
 xlabel(aGt,'time (min)','fontsize',20)
-ylabel(aGt, 'Concentration (u.a)','fontsize',20)
-legend(aGt,'center','outside')
+ylabel(aGt, 'Concentration (mM)','fontsize',20)
+legend(aGt,'center','mid-radius')
 
-print (fG, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G630_100_km1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-%print (fG2, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G2_100_k.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-print (fD, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_630lines_100_km1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-print (fGt, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_630t_km1.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fG, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G630_100_cs_km1_lg_full.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+%print (fG2, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G2_100_cs_km1_lg_full.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fD, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_lines630_100_cs_km1_lg_full.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fGt, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_t630_cs_km1_lg_full.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 
