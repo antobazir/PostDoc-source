@@ -5,12 +5,13 @@ tic()
 sz = 41;
 G = zeros(sz,sz);
 kG = zeros(sz,sz);
-Gsym = zeros(round(sz/2),round(sz/2));
-kGsym = zeros(round(sz/2),round(sz/2));
+Gsym = zeros(round(sz/2)+1,round(sz/2)+1);
+kGsym = zeros(round(sz/2)+1,round(sz/2)+1);
 
 DG = ones(sz,sz);
-DGsym = ones(round(sz/2),round(sz/2));
+DGsym = ones(round(sz/2)+1,round(sz/2)+1);
 DG = 40000*DG;
+DGsym = 40000*DGsym;
 DG_tissue = 10000;
 kG_tissue = 0.1;
 r = round(sz/2.2)-2; %radius of the tissue circle in units
@@ -28,7 +29,7 @@ kG(find((dsx.^2+dsy.^2)<r^2))= kG_tissue;
 [i,j,v] = find(DGsym!=0);
 dsy_s = j-round(sz/2);
 dsx_s = i-round(sz/2);
-Gsym(find((dsx_s.^2+dsy_s.^2)<r^2))= 1;
+DGsym(find((dsx_s.^2+dsy_s.^2)<r^2))= DG_tissue;
 
 G(:,:) =5;
 
@@ -39,16 +40,18 @@ for i=1:ntime
     i
 
     G(find((dsx.^2+dsy.^2)>=r^2))= 5;
-    G(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
+    %G(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
+    Gsym(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
 
     %explicit  scheme
+    Gsym(2:round(sz/2),round(sz/2)+1) = Gsym(2:round(sz/2),round(sz/2)-1);
+    Gsym(round(sz/2)+1,2:round(sz/2)) = Gsym(round(sz/2)-1,2:round(sz/2));
     %x-step
     G(2:sz-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
-    Gsym(2:round(sz/2)-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
-    Gsym(round(sz/2),2:round(sz/2)-1) =  G(round(sz/2),2:round(sz/2)-1) + dt*(DG(3:sz,2:round(sz/2)-1)-DG(1:sz-2,2:round(sz/2)-1))/(4*dx^2).*(G(3:sz,2:round(sz/2)-1)-G(1:sz-2,2:round(sz/2)-1)) + DG(round(sz/2),2:round(sz/2)-1)*dt/dx^2.*(G(3:sz,2:round(sz/2)-1) -2*(G(round(sz/2),2:round(sz/2)-1)) + G(1:sz-2,2:round(sz/2)-1)) -kG(round(sz/2),2:round(sz/2)-1).*G(round(sz/2),2:round(sz/2)-1)*dt;
+    Gsym(2:round(sz/2),2:round(sz/2)) =  Gsym(2:round(sz/2),2:round(sz/2)) + dt*(DGsym(3:round(sz/2)+1,2:round(sz/2))-DGsym(1:round(sz/2)-1,2:round(sz/2)))/(4*dx^2).*(Gsym(3:round(sz/2)+1,2:round(sz/2))-Gsym(1:round(sz/2)-1,2:round(sz/2))) + DGsym(2:round(sz/2),2:round(sz/2))*dt/dx^2.*(Gsym(3:round(sz/2)+1,2:round(sz/2)) -2*(Gsym(2:round(sz/2),2:round(sz/2))) + Gsym(1:round(sz/2)-1,2:round(sz/2))) -kG(2:round(sz/2),2:round(sz/2)).*Gsym(2:round(sz/2),2:round(sz/2))*dt;
     %y-step
     G(:,2:sz-1) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
-    Gsym(:,2:round(sz/2)) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
+    Gsym(2:round(sz/2),2:round(sz/2)) =  Gsym(2:round(sz/2),2:round(sz/2)) + dt*(DGsym(2:round(sz/2),3:round(sz/2)+1)-DGsym(2:round(sz/2),1:round(sz/2)-1))/(4*dx^2).*(Gsym(2:round(sz/2),3:round(sz/2)+1)-Gsym(2:round(sz/2),1:round(sz/2)-1)) + DGsym(2:round(sz/2),2:round(sz/2))*dt/dx^2.*(Gsym(2:round(sz/2),3:round(sz/2)+1) -2*(Gsym(2:round(sz/2),2:round(sz/2))) + Gsym(2:round(sz/2),1:round(sz/2)-1));
 
     Gt(i,1) =  G(round(sz/2),round(sz/2));
     Gt(i,2) =  G(round(sz/2),round(sz/2-r+2));
@@ -65,9 +68,19 @@ xlabel(aG,'position (µm)','fontsize',20)
 ylabel(aG, 'position (µm)','fontsize',20)
 title(aG, ['d= ' num2str(r*2*dx) '$\mu$m, D=' num2str(DG_tissue) '$\mu$m$^2$/min, k=' num2str(kG_tissue) 'mM/min, dt =' num2str(dt) 'mn, dx =' num2str(dx) '$\mu$m'])
 
+fGs = figure;
+aGs = axes(fGs);
+imagesc((1:round(sz/2))*dx,(1:round(sz/2))*dx,Gsym(1:round(sz/2),1:round(sz/2)))
+colorbar
+xlabel(aG,'position (µm)','fontsize',20)
+ylabel(aG, 'position (µm)','fontsize',20)
+
+
 fGx = figure;
 aGx = axes(fGx);
+hold(aGx)
 plot((1:sz)*dx,G(round(sz/2),:))
+plot((1:round(sz/2))*dx,Gsym(round(sz/2),1:round(sz/2)))
 xlabel(aGx,'position (µm)','fontsize',20)
 ylabel(aGx, 'Concentration (mM)','fontsize',20)
 title(aGx, ['d= ' num2str(r*2*dx) '$\mu$m, D=' num2str(DG_tissue) '$\mu$m$^2$/min, k=' num2str(kG_tissue) 'mM/min, dt =' num2str(dt) 'mn, dx =' num2str(dx) '$\mu$m'])
