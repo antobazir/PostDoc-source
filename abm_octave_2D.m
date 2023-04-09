@@ -1,4 +1,4 @@
-sz = 20;
+sz = 400;
 Grid = zeros(sz,sz);
 
 cr = 7.5; % cell radius
@@ -13,11 +13,11 @@ col = (1:sz).*ones(sz,1);
 %initialisation
 Grid(sz/2,sz/2)=1;
 
-while(c_idx<sz)
+while(c_idx<20*sz)
    idx = find(Grid!=0);
    discrepancy=length(1:c_idx)-length(idx)
    goal  = 1:c_idx
-   truth = sort(Grid(idx))
+   truth = sort(Grid(idx))'
   for i = 1:length(idx)
    idx(i);
    pos(2) = col(idx(i));
@@ -32,5 +32,6 @@ while(c_idx<sz)
   waitforbuttonpress
 
 endwhile
-
+max(max(Grid))
+length(find(Grid!=0))
 
