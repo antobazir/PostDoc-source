@@ -2,9 +2,10 @@ clear all;
 close all;
 
 tic()
-sz = 41;
+sz = 401;
 G = zeros(sz,sz);
 kG = zeros(sz,sz);
+T = zeros(round(sz/2)+1,round(sz/2)+1);
 Gsym = zeros(round(sz/2)+1,round(sz/2)+1);
 kGsym = zeros(round(sz/2)+1,round(sz/2)+1);
 
@@ -29,17 +30,42 @@ kG(find((dsx.^2+dsy.^2)<r^2))= kG_tissue;
 [i,j,v] = find(DGsym!=0);
 dsy_s = j-round(sz/2);
 dsx_s = i-round(sz/2);
+T(find((dsx_s.^2+dsy_s.^2)<r^2))= 20;
 DGsym(find((dsx_s.^2+dsy_s.^2)<r^2))= DG_tissue;
 
 G(:,:) =5;
+Gsym(:,:) =5;
 
 
 
 tic()
 for i=1:ntime
-    i
+    i;
 
     G(find((dsx.^2+dsy.^2)>=r^2))= 5;
+    %G(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
+
+
+    %explicit  scheme
+
+   %x-step
+    G(2:sz-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
+
+    %y-step
+    G(:,2:sz-1) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
+
+    Gt(i,1) =  G(round(sz/2),round(sz/2));
+    Gt(i,2) =  G(round(sz/2),round(sz/2-r+2));
+
+
+endfor
+toc()
+
+tic()
+for i=1:ntime
+    i;
+
+
     %G(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
     Gsym(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
 
@@ -47,14 +73,12 @@ for i=1:ntime
     Gsym(2:round(sz/2),round(sz/2)+1) = Gsym(2:round(sz/2),round(sz/2)-1);
     Gsym(round(sz/2)+1,2:round(sz/2)) = Gsym(round(sz/2)-1,2:round(sz/2));
     %x-step
-    G(2:sz-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
     Gsym(2:round(sz/2),2:round(sz/2)) =  Gsym(2:round(sz/2),2:round(sz/2)) + dt*(DGsym(3:round(sz/2)+1,2:round(sz/2))-DGsym(1:round(sz/2)-1,2:round(sz/2)))/(4*dx^2).*(Gsym(3:round(sz/2)+1,2:round(sz/2))-Gsym(1:round(sz/2)-1,2:round(sz/2))) + DGsym(2:round(sz/2),2:round(sz/2))*dt/dx^2.*(Gsym(3:round(sz/2)+1,2:round(sz/2)) -2*(Gsym(2:round(sz/2),2:round(sz/2))) + Gsym(1:round(sz/2)-1,2:round(sz/2))) -kG(2:round(sz/2),2:round(sz/2)).*Gsym(2:round(sz/2),2:round(sz/2))*dt;
     %y-step
-    G(:,2:sz-1) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
     Gsym(2:round(sz/2),2:round(sz/2)) =  Gsym(2:round(sz/2),2:round(sz/2)) + dt*(DGsym(2:round(sz/2),3:round(sz/2)+1)-DGsym(2:round(sz/2),1:round(sz/2)-1))/(4*dx^2).*(Gsym(2:round(sz/2),3:round(sz/2)+1)-Gsym(2:round(sz/2),1:round(sz/2)-1)) + DGsym(2:round(sz/2),2:round(sz/2))*dt/dx^2.*(Gsym(2:round(sz/2),3:round(sz/2)+1) -2*(Gsym(2:round(sz/2),2:round(sz/2))) + Gsym(2:round(sz/2),1:round(sz/2)-1));
 
-    Gt(i,1) =  G(round(sz/2),round(sz/2));
-    Gt(i,2) =  G(round(sz/2),round(sz/2-r+2));
+    Gst(i,1) =  Gsym(round(sz/2),round(sz/2));
+    Gst(i,2) =  Gsym(round(sz/2),round(sz/2-r+2));
 
 
 endfor
@@ -89,7 +113,7 @@ fGt  = figure;
 aGt = axes(fGt);
 hold(aGt);
 plot(aGt,(1:ntime)*dt,Gt(:,1))
-plot(aGt,(1:ntime)*dt,Gt(:,2))
+plot(aGt,(1:ntime)*dt,Gst(:,1))
 xlabel(aGt,'time (min)','fontsize',20)
 ylabel(aGt, 'Concentration (mM)','fontsize',20)
 legend(aGt,'center','rim')
