@@ -1,4 +1,4 @@
-sz = 400;
+sz = 200;
 Grid = zeros(sz,sz);
 
 cr = 7.5; % cell radius
@@ -13,11 +13,30 @@ col = (1:sz).*ones(sz,1);
 %initialisation
 Grid(sz/2,sz/2)=1;
 
-while(c_idx<20*sz)
+while(c_idx<sz)
    idx = find(Grid!=0);
    discrepancy=length(1:c_idx)-length(idx)
-   goal  = 1:c_idx
-   truth = sort(Grid(idx))'
+   goal  = 1:c_idx;
+   truth = sort(Grid(idx))';
+    imagesc(Grid!=0)
+    waitforbuttonpress
+
+   %migration
+   for j=1:24
+     idx = find(Grid!=0)
+    for i = 1:length(idx)
+        j
+        idx(i);
+        pos(2) = col(idx(i));
+        pos(1) = row(idx(i));
+        Grid = migrate2D_chip(Grid,pos,c_idx,sz);
+    endfor
+    imagesc(Grid!=0)
+    waitforbuttonpress
+   endfor
+
+   % division loop
+   idx = find(Grid!=0)
   for i = 1:length(idx)
    idx(i);
    pos(2) = col(idx(i));
@@ -32,6 +51,5 @@ while(c_idx<20*sz)
   waitforbuttonpress
 
 endwhile
-max(max(Grid))
-length(find(Grid!=0))
+
 

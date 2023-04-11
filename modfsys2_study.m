@@ -3,7 +3,9 @@ clear all;
 close all;
 
 %sz = conf(1); n_min = conf(2); kO_tissue = conf(3); kG_tissue = conf(4);
-%kT_tissue = conf(5); cT =  conf(6); cD = conf(7); k3 =  conf(8) dx =  conf(9) dt = conf(10)
+%kT_tissue = conf(5);
+%cT =  conf(6);
+%cD = conf(7); k3 =  conf(8) dx =  conf(9) dt = conf(10)
 conf(1,:) = [61 1400 0.5 10 0.017 0.5/10 1/100, 1 50 1/300];% pas kA
 conf(2,:) = [61 1400 0.5 10 1 0.5/10 1/100, 1 50 1/300];% pas de KA T se stabilise fort bas
 conf(3,:) = [61 1400 0.5 10 1 0.5/10 1/100, 1 50 1/300];% pas de KA T se stabilise fort bas back reg rajoutée. change rien
@@ -37,14 +39,56 @@ conf(28,:) = [201 500 0.3 0.6 0.005 0.5/10 1/100, 0.1 15 1/1000]; %same as befor
 conf(29,:) = [201 500 0.3 5 0.005 0.5/10 1/100, 0.1 15 1/1000]; %NOPE
 conf(30,:) = [201 300 10 10 0.02 0.5/10 1/100, 0.1 15 1/1000]; %NOPE
 conf(31,:) = [201 300 10 10 0.2 0.5/10 1/100, 0.1 15 1/1000];% not better
+conf(32,:) = [201 300 10 10 0.02 10/20 1/100, 0.1 15 1/1000]; %attempt with larger cD
+conf(33,:) = [201 300 10 10 0.02 40/20 1/100, 0.1 15 1/1000]; %even larger... pas bon du tout ! re le comportement d'avant
+conf(34,:) = [201 300 10 10 0.02 1/10 1/10, 0.1 15 1/1000];% pas ouf
+conf(35,:) = [201 300 10 100 0.02 1/10 1/10, 0.1 15 1/1000]; %tenter de faire ung gradient plus important en glucose et pour pouvoir réduire l'oxygène tout en gardant l'ATP faible au centre.-> PAS DU TOUT
+conf(36,:) = [201 300 10 1 0.02 1/10 1/10, 1 15 1/1000]; %tenter de faire ung gradient plus important en glucose et pour pouvoir réduire l'oxygène tout en gardant l'ATP faible au centre.-> pas mal
+conf(37,:) = [201 300 10 0.2 0.02 1/10 1/10, 5 15 1/1000]; %tenter de faire ung gradient plus important en glucose et pour pouvoir réduire l'oxygène tout en gardant l'ATP faible au centre.
+conf(38,:) = [201 300 10 5 0.02 1/10 1/10, 5 15 1/1000]; %tpas terrible(gradient moinslarge en G MAIS O remonte...) donc on réaugmente le glucose k1 ET le k3 pour voir.
+conf(39,:) = [201 300 10 10 0.02 1/10 1/10, 10 15 1/1000]; %t38 était mieux donc on contineu -> on approche
+conf(40,:) = [201 300 50 10 0.02 1/10 1/10, 50 15 1/1000]; % ->pareil qu'avant donc on tente cT
+conf(41,:) = [201 300 50 10 0.02 1/100 1/10, 50 15 1/1000]; % -> bon ça marche pas  de réduire donc on agumente CT
+conf(42,:) = [201 300 100 10 0.02 1 1/10, 50 15 1/1000]; % -> bon ça marche pas  de réduire donc on agumente CT et k1
+conf(43,:) = [201 300 10 10 0.02 1/100 10/20, 0.1 15 1/1000]; % on reteste 32 car on a pas changé le bon truc cD à la place de cT-> not better
+conf(44,:) = [201 300 200 10 0.02 1 10, 50 15 1/1000]; %-> pas suffisant
+conf(45,:) = [201 300 10 200 0.02 1 0.001, 200 15 1/1000]; %-> pas suffisant ormal chui mauvais. j'ai changé kO...
+conf(46,:) = [201 300 10 100 0.2 1 1, 100 15 1/1000]; %-> ça progresse l'égèrement. Le gradient est plus fin
+conf(47,:) = [201 300 1 100 0.02 1/100 1/100, 1 15 1/1000]; %-> non pas bien bon
+conf(48,:) = [201 300 10 200 0.2 1 1, 100 15 1/1000];%-> pas mal donc on réduit O mêm siu c'est un peu instable
+conf(49,:) = [201 300 0.1 300 0.2 1 0.01, 100 15 1/1000];%-> marche pas...
+conf(50,:) = [201 300 10 1 0.02 0.5/10 1/100, 0.1 15 1/1000];% La 20 mais avec le bon inversement
+conf(51,:) = [201 500 0.01 10 0.02 0.5/10 1/100, 0.1 15 1/1000];% La 21 mais avec moins de conso -> MIEUUUUUX
+conf(52,:) = [201 500 0.005 50 0.02 0.005/10 1/100, 0.1 15 1/1000];% La 21 mais avec moins de conso MIEUUUUUX ->  ou pas car du coup ça descend pas bien bas
+conf(53,:) = [201 500 0.1 10 0.02 1/100 1e-4, 0.1 15 1/1000];
+conf(54,:) = [201 500 0.5 10 0.02 1/100 1e-4, 0.1 15 1/1000]; %Po mal
+conf(55,:) = [201 500 0.8 10 0.02 1/100 1e-4, 0.1 15 1/1000];
+conf(56,:) = [201 500 0.9 10 0.02 1/100 1e-2, 0.1 15 1/1000];%-> bien aussi mais augmenter cd ne change rien.
+conf(57,:) = [201 500 0.15 2 0.02 1/100 1e-2, 0.1 15 1/1000];% -> on voit jusqu'où on peut baisser kG tout en gardant le bon comportement.
+conf(58,:) = [201 500 0.15 10 0.1 1/100 1e-2, 0.1 15 1/1000];% baisser kG fait remonter le O final donc one remet à la valeur d'avant et on change mu -> non c'est pire qu'avant
+conf(59,:) = [201 500 0.15 10 0.005 1/100 1e-2, 0.1 15 1/1000];% pas bon pour G
+conf(60,:) = [201 500 0.15 10 0.02 1/100 1e-2, 0.02 15 1/1000];% BIeeeen par contre le coeur à zéro ATP est TOUT petit on garde 60 pour l'instant (on essaiera d'augmenter un peu les conso pour voir si le coeur peut être plus gros)
+conf(61,:) = [201 500 0.15 50 0.02 1/100 1e-2, 0.02 15 1/1000];% on essaie d'augmenter kG
+conf(62,:) = [201 500 0.15 10 0.06 1/100 1e-2, 0.06 15 1/1000];% on rebaisse kG et on réaugmente mu et k3-> oxygèen au cntre ne chute plus assez
+conf(63,:) = [201 500 0.15 10 0.02 1/100 1e-2, 0.06 15 1/1000];% pas mal (coeur nécortique plus gros que 60 mais excès d'ATP au centre...) peut marcher aussi
+conf(64,:) = [201 500 0.15 10 0.02 1/100 1e-2, 0.008 15 1/1000];% NOPE
+conf(65,:) = [61 1400 0.15 10 0.02 1/100 1e-2, 0.02 50 1/500];% stable mais gradient do'xygène un peu faible
+conf(66,:) = [201 500 1/0.15 10 0.02 1/100 1e-2, 1 15 1/1000];% on essaie de régler pour avoir une conso de l'ordre de 10mM/min et siça marche pas on refixe kG
+conf(67,:) = [201 500 1/0.15 10 0.5 1/100 1e-2, 1 15 1/1000];% 66 est bon mais du coup on met aussi mu à la bonne valeur d'environ 10 mM/min ça tient mais le gradient est très court
+conf(68,:) = [201 500 1/0.15 2 0.5 1/100 1e-2, 1 15 1/1000];%
 
 
-dx = conf(31,9)
-dt = conf(31,10);
+%conf(66,:) = [401 500 0.15 10 1 1/100 1e-2, 0.02 15 1/1000];% stable mais gradient do'xygène un peu faible
+%conf(67,:) = [201 1400 0.15 10 0.02 1/100 1e-2, 0.02 15 1/1000];% stable mais gradient do'xygène un peu faible
+
+%60 ou 63
+
+dx = conf(68,9)
+dt = conf(68,10);
 
 p=0; %trace les courbes intermédiaires
 
-for i =31:31%size(conf,1)
+for i =68:68%size(conf,1)
   close all;
     i
   %[G,O,D,GD,T,Gt,Ot,Dt,GDt,Tt,kOct,kGt] = modfsys2DC_sym(conf(i,:));

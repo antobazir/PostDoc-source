@@ -1,35 +1,63 @@
-function Grid = divide2D(Grid,pos,c_idx,sz)
+function Grid = migrate2D_chip(Grid,pos,c_idx,sz)
   %plr = randi(1:4);
   %pos
   %cas full occupé ou inoccupé 1a et b
   if(Grid(pos(1)+1,pos(2))==0&&Grid(pos(1)-1,pos(2))==0&&Grid(pos(1),pos(2)+1)==0&&Grid(pos(1),pos(2)-1)==0)
       disp('1a');
       plr = randi(4);
+      switch(plr)
+        case 1
+             Grid(pos(1)+1,pos(2)) = c_idx;
+             Grid(pos(1),pos(2)) = 0;
+              return;
+        case 2
+             Grid(pos(1),pos(2)+1) = c_idx;
+             Grid(pos(1),pos(2)) = 0;
+              return;
+        case 3
+             Grid(pos(1)-1,pos(2)) = c_idx;
+             Grid(pos(1),pos(2)) = 0;
+              return;
+        case 4
+             Grid(pos(1),pos(2)-1) = c_idx;
+             Grid(pos(1),pos(2)) = 0;
+               return;
+      endswitch
+
   endif
+
    if(Grid(pos(1)+1,pos(2))!=0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)!=0&&Grid(pos(1),pos(2)-1)!=0)
-      disp('1b')
-      plr = randi(4);
+      disp('boxed in')
+       return;
   endif
 
   %cas avec  3 voisins sur 4 2 a b c et d
      if(Grid(pos(1)+1,pos(2))==0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)!=0&&Grid(pos(1),pos(2)-1)!=0)
      disp('2a');
-      plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
+          return;
   endif
 
      if(Grid(pos(1)+1,pos(2))!=0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)==0&&Grid(pos(1),pos(2)-1)!=0)
        disp('2b');
-      plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
+          return;
   endif
 
    if(Grid(pos(1)+1,pos(2))!=0&&Grid(pos(1)-1,pos(2))==0&&Grid(pos(1),pos(2)+1)!=0&&Grid(pos(1),pos(2)-1)!=0)
       disp('2c');
-      plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
+          return;
   endif
 
      if(Grid(pos(1)+1,pos(2))!=0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)!=0&&Grid(pos(1),pos(2)-1)==0)
      disp('2d');
-      plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
+          return;
   endif
 
   %cas avec 2 voisins sur 4 3 a b c et  d
@@ -37,35 +65,49 @@ function Grid = divide2D(Grid,pos,c_idx,sz)
    %disp('3a');
    rd = rand()
       if(rd<0.5)
-        plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3a-1')
+        return;
       else
-        plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3a-3')
+        return;
       endif
+
   endif
 
     if(Grid(pos(1)+1,pos(2))!=0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)==0&&Grid(pos(1),pos(2)-1)==0)
     %disp('3b')
     rd = rand()
       if(rd<0.5)
-        plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3b-2')
+        return;
       else
-        plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3b-4')
+        return;
       endif
+
   endif
 
     if(Grid(pos(1)+1,pos(2))!=0&&Grid(pos(1)-1,pos(2))==0&&Grid(pos(1),pos(2)+1)!=0&&Grid(pos(1),pos(2)-1)==0)
     %disp('3c')
       rd = rand()
       if(rd<0.5)
-        plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3c-3')
+        return;
       else
-        plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3c-4')
+        return;
       endif
   endif
 
@@ -73,11 +115,15 @@ function Grid = divide2D(Grid,pos,c_idx,sz)
     %disp('3d')
       rd = rand()
       if(rd<0.5)
-        plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3d-1')
+        return;
       else
-        plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3d-2')
+        return;
       endif
   endif
 
@@ -85,24 +131,32 @@ function Grid = divide2D(Grid,pos,c_idx,sz)
     %disp('3e')
       rd = rand()
       if(rd<0.5)
-        plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3e-3')
+        return;
       else
-        plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3e-2')
+        return;
       endif
+
   endif
 
     if(Grid(pos(1)+1,pos(2))==0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)!=0&&Grid(pos(1),pos(2)-1)==0)
     %disp('3f')
       rd = rand()
       if(rd<0.5)
-        plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3f-1')
       else
-        plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('3f-4')
       endif
+       return;
   endif
 
 
@@ -112,29 +166,42 @@ function Grid = divide2D(Grid,pos,c_idx,sz)
      %disp('4a')
       rd= rand()
       if(rd<0.3)
-        plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4a-2')
+        return;
       elseif(rd>=0.33&&rd<0.66)
-        plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4a-3')
+        return;
       else
-        plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4a-4')
+        return;
       endif
+
   endif
 
    if(Grid(pos(1)+1,pos(2))==0&&Grid(pos(1)-1,pos(2))!=0&&Grid(pos(1),pos(2)+1)==0&&Grid(pos(1),pos(2)-1)==0)
    %disp('4b')
       rd= rand()
       if(rd<0.3)
-        plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4b-1')
+        return;
       elseif(rd>=0.33&&rd<0.66)
-        plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4b-2')
+        return;
       else
-        plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4b-4')
+        return;
       endif
   endif
 
@@ -142,14 +209,20 @@ function Grid = divide2D(Grid,pos,c_idx,sz)
     %disp('4c')
       rd = rand()
       if(rd<0.3)
-        plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4c-1')
+        return;
       elseif(rd>=0.33&&rd<0.66)
-        plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4c-3')
+        return;
       else
-        plr = 4;
+         Grid(pos(1),pos(2)-1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4c-4')
+        return;
       endif
   endif
 
@@ -157,100 +230,23 @@ function Grid = divide2D(Grid,pos,c_idx,sz)
     %disp('4d')
       rd = rand()
       if(rd<0.3)
-        plr = 1;
+         Grid(pos(1)+1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4d-1')
+        return;
       elseif(rd>=0.33&&rd<0.66)
-        plr = 2;
+         Grid(pos(1),pos(2)+1) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4d-2')
+        return;
       else
-        plr = 3;
+         Grid(pos(1)-1,pos(2)) = c_idx;
+         Grid(pos(1),pos(2)) = 0;
         disp('4d-3')
+        return;
       endif
+
   endif
 
-%division and switching !
 
-  plr;
-    switch(plr)
-      case 1
-        if(Grid(pos(1)+1,pos(2))!=0)
-          [pos(1)+1 pos(2)];
-          %disp('occupied');
-          rim = find(Grid(pos(1)+2:sz,pos(2))==0);
-          rim = rim(1);
-          rim;
-          pos(1)+rim-1;
-          pos(1)+1;
-          before_shift = Grid(:,pos(2))';
-          %for i= pos(1)+2:-1:pos(1)+rim-1
-          for i= pos(1)+rim:-1:pos(1)+1
-              %disp('done');
-              Grid(i+1,pos(2))=Grid(i,pos(2));
-          endfor
-          after_shift = Grid(:,pos(2))';
-         Grid(pos(1)+1,pos(2)) = c_idx;
-       else
-         Grid(pos(1)+1,pos(2)) = c_idx;
-         %'1'
-        endif
-
-      case 2
-          if(Grid(pos(1),pos(2)+1)!=0)
-            [pos(1) pos(2)+1];
-            %disp('occupied');
-            rim = find(Grid(pos(1),pos(2)+2:sz)==0);
-            rim = rim(1);
-             pos(2)+rim-1;
-            pos(2)+1;
-            before_shift = Grid(pos(1),:);
-            %for i= pos(2)+2:-1:pos(2)+rim-1
-            for i= pos(2)+rim:-1:pos(2)+1
-             % disp('done');
-              Grid(pos(1),i+1)=Grid(pos(1),i);
-            endfor
-            after_shift = Grid(pos(1),:);
-          Grid(pos(1),pos(2)+1) = c_idx;
-       else
-         Grid(pos(1),pos(2)+1) = c_idx;
-         %'2'
-        endif
-
-      case 3
-         if(Grid(pos(1)-1,pos(2))!=0)
-          [pos(1)-1 pos(2)];
-          %disp('occupied');
-          rim = find(Grid(1:pos(1)+1,pos(2))!=0);
-          rim = rim(1);
-          rim;
-          before_shift = Grid(:,pos(2))';
-          for i= rim:pos(1)-1
-              Grid(i-1,pos(2))=Grid(i,pos(2));
-          endfor
-          after_shift = Grid(:,pos(2))';
-         Grid(pos(1)-1,pos(2)) = c_idx;
-       else
-         Grid(pos(1)-1,pos(2)) = c_idx;
-         %'3'
-        endif
-
-      case 4
-          if(Grid(pos(1),pos(2)-1)!=0)
-           [pos(1) pos(2)-1];
-          %disp('occupied');
-          rim = find(Grid(pos(1),1:pos(2)-1)!=0);
-          rim = rim(1);
-          rim;
-          before_shift = Grid(pos(1),:);
-          for i= rim:pos(2)-1
-              Grid(pos(1),i-1)=Grid(pos(1),i);
-          endfor
-          after_shift = Grid(pos(1),:);
-         Grid(pos(1),pos(2)-1) = c_idx;
-       else
-        Grid(pos(1),pos(2)-1) = c_idx;
-        %'4'
-        endif
-    endswitch
-    return;
-   'called'
 endfunction
