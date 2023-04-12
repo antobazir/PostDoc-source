@@ -27,13 +27,14 @@ conf(20,:) = [201 400 0.5 0.01 10 1/100 0.5/10];% on  tente une plus grosse cons
 conf(21,:) = [201 400 0.05 0.01 10 1/100 0.5/10];% on  tente une plus grosse conso d'ATP et moins de conso glucose -> nope
 conf(22,:) = [201 400 0.05 0.01 0.02 1/100 0.5/10];% on  tente une plus grosse conso d'ATP et moins de conso glucose -> nope
 conf(23,:) = [331 240 0.5 10 0.017 0.5/10 1/100];
+conf(24,:) = [201 500 1/0.15 10 0.5 1/100 1e-2];
 
 dx = 15;
 dt = 1/1000;
 
 p=0; %trace les courbes intermédiaires
 
-for i =22:22%size(conf,1)
+for i =24:24%size(conf,1)
   close all;
     i
   [G,O,D,GD,T,Gt,Ot,Dt,GDt,Tt,kOct,kGt] = fullsys2D_sym(conf(i,:));

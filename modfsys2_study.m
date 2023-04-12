@@ -75,20 +75,23 @@ conf(64,:) = [201 500 0.15 10 0.02 1/100 1e-2, 0.008 15 1/1000];% NOPE
 conf(65,:) = [61 1400 0.15 10 0.02 1/100 1e-2, 0.02 50 1/500];% stable mais gradient do'xygène un peu faible
 conf(66,:) = [201 500 1/0.15 10 0.02 1/100 1e-2, 1 15 1/1000];% on essaie de régler pour avoir une conso de l'ordre de 10mM/min et siça marche pas on refixe kG
 conf(67,:) = [201 500 1/0.15 10 0.5 1/100 1e-2, 1 15 1/1000];% 66 est bon mais du coup on met aussi mu à la bonne valeur d'environ 10 mM/min ça tient mais le gradient est très court
-conf(68,:) = [201 500 1/0.15 2 0.5 1/100 1e-2, 1 15 1/1000];%
-
-
-%conf(66,:) = [401 500 0.15 10 1 1/100 1e-2, 0.02 15 1/1000];% stable mais gradient do'xygène un peu faible
-%conf(67,:) = [201 1400 0.15 10 0.02 1/100 1e-2, 0.02 15 1/1000];% stable mais gradient do'xygène un peu faible
-
+conf(68,:) = [201 500 1/0.15 2 0.5 1/100 1e-2, 1 15 1/1000];% normalement c'est la config de référence pour des consos  d'ATP et d'oxygène/glucose de l'ordre de 10 mM/min
+%68 marche mais gradients courts et oxygène qui remonte un peu donc on reste sur 67
+conf(69,:) = [401 500 1/0.15 10 0.5 1/100 1e-2, 1 15 1/1000];% stable mais gradient do'xygène un peu faible
+conf(70,:) = [201 1400 1/0.15 10 0.5 1/100 1e-2, 1 15 1/1000];% stable mais gradient do'xygène un peu faible
+conf(71,:) = [201 500 1/0.15 10 0.05 1/100 1e-2, 1 15 1/1000]; %reduce mu again ouais non.
 %60 ou 63
 
-dx = conf(68,9)
-dt = conf(68,10);
+%dx = conf(68,9)
+%dt = conf(68,10);
 
 p=0; %trace les courbes intermédiaires
 
-for i =68:68%size(conf,1)
+for i =71:71%size(conf,1)
+
+  dx = conf(i,9)
+  dt = conf(i,10);
+
   close all;
     i
   %[G,O,D,GD,T,Gt,Ot,Dt,GDt,Tt,kOct,kGt] = modfsys2DC_sym(conf(i,:));

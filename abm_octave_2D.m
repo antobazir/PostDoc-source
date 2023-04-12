@@ -13,6 +13,11 @@ col = (1:sz).*ones(sz,1);
 %initialisation
 Grid(sz/2,sz/2)=1;
 
+%Il y a envrion 50 µL de volume et si on a 10 000 cellules par µL ça 500 000 cellules
+% La puce peut normalement contenir environ 30 000 000 de cellues. Là on en met moins d'un million
+
+%0.5*2*2*2*2
+
 while(c_idx<sz)
    idx = find(Grid!=0);
    discrepancy=length(1:c_idx)-length(idx)
