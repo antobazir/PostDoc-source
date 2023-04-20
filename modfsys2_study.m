@@ -80,6 +80,10 @@ conf(68,:) = [201 500 1/0.15 2 0.5 1/100 1e-2, 1 15 1/1000];% normalement c'est 
 conf(69,:) = [401 500 1/0.15 10 0.5 1/100 1e-2, 1 15 1/1000];% stable mais gradient do'xygène un peu faible
 conf(70,:) = [201 1400 1/0.15 10 0.5 1/100 1e-2, 1 15 1/1000];% stable mais gradient do'xygène un peu faible
 conf(71,:) = [201 500 1/0.15 10 0.05 1/100 1e-2, 1 15 1/1000]; %reduce mu again ouais non.
+conf(72,:) = [61 1400 1/0.15 10 0.02 1/100 1e-2, 1 50 1/500];% on essaie de régler pour avoir une conso de l'ordre de 10mM/min et siça marche pas on refixe kG
+conf(73,:) = [41 30 200 50 0.225 1/100 200/10 15 15 1/5000];% on fixe une prod totale de 6 mM/min avec 3/4mito et 1/4 glyco
+conf(74,:) = [41 30 200 50 3.75 1/100 200/10 37.5 15 1/5000];% on fixe une prod totale de 15 mM/min avec 3/4mito et 1/4 glyco too sharp... makes a solid necrotic core.
+
 %60 ou 63
 
 %dx = conf(68,9)
@@ -87,7 +91,7 @@ conf(71,:) = [201 500 1/0.15 10 0.05 1/100 1e-2, 1 15 1/1000]; %reduce mu again 
 
 p=0; %trace les courbes intermédiaires
 
-for i =71:71%size(conf,1)
+for i =74:74%size(conf,1)
 
   dx = conf(i,9)
   dt = conf(i,10);
@@ -134,6 +138,15 @@ for i =71:71%size(conf,1)
   legend('center','rim')
   print (["/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Ot_conf" num2str(i) ".pdf"], "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 
+  fD = figure;
+  aD = axes(fD);
+  imagesc(aD,(1:round(conf(i,1)/2))*dx,(1:round(conf(i,1)/2))*dx,D(1:round(conf(i,1)/2),1:round(conf(i,1)/2)))
+  colorbar
+  set(aD,'outerposition',[0.05 0.05 0.8 0.95])
+  xlabel(aD,'position (µm)','fontsize',20)
+  ylabel(aD,'position (µm)','fontsize',20)
+  print (fD,["/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_D_conf" num2str(i) ".pdf"], "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+
 
   fT = figure;
   aT = axes(fT);
@@ -179,7 +192,7 @@ for i =71:71%size(conf,1)
   plot((1:length(Gt(:,1)))*dt*100,kOct(:,1))
   plot((1:length(Gt(:,2)))*dt*100,kOct(:,2))
   xlabel('time (min)','fontsize',20)
-  ylabel('magnitude','fontsize',20)
+  ylabel('O_${cons}$ magnitude','fontsize',20)
   legend('center','rim')
   print (["/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_kOct_conf" num2str(i) ".pdf"], "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 
@@ -188,7 +201,7 @@ for i =71:71%size(conf,1)
   plot((1:length(Gt(:,1)))*dt*100,kGt(:,1))
   plot((1:length(Gt(:,2)))*dt*100,kGt(:,2))
   xlabel('time (min)','fontsize',20)
-  ylabel('magnitude','fontsize',20)
+  ylabel('G_${cons}$ magnitude','fontsize',20)
   legend('center','rim')
   print (["/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_kGt_conf" num2str(i) ".pdf"], "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 

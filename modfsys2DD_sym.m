@@ -113,8 +113,8 @@ for i=1:ntime
 
 
     D(2:round(sz/2),2:round(sz/2)) =  D(2:round(sz/2),2:round(sz/2)) -dx/cell_size*kG(2:round(sz/2),2:round(sz/2)).*dt.*D(2:round(sz/2),2:round(sz/2)).*G(2:round(sz/2),2:round(sz/2)) + dx/cell_size*kT(2:round(sz/2),2:round(sz/2)).*dt.*T(2:round(sz/2),2:round(sz/2));
-    GD(2:round(sz/2),2:round(sz/2)) =  GD(2:round(sz/2),2:round(sz/2)) +dx/cell_size*kG(2:round(sz/2),2:round(sz/2)).*dt.*D(2:round(sz/2),2:round(sz/2)).*G(2:round(sz/2),2:round(sz/2)) - dx/cell_size*kO(2:round(sz/2),2:round(sz/2)).*dt.*GD(2:round(sz/2),2:round(sz/2)).*O(2:round(sz/2),2:round(sz/2)) - dx/cell_size*kA(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2))*dt;;
-    T(2:round(sz/2),2:round(sz/2)) =  T(2:round(sz/2),2:round(sz/2)) +dx/cell_size*kO(2:round(sz/2),2:round(sz/2)).*dt.*O(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2)) - dx/cell_size*kT(2:round(sz/2),2:round(sz/2)).*dt.*T(2:round(sz/2),2:round(sz/2)) + dx/cell_size*kA(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2))*dt;
+    GD(2:round(sz/2),2:round(sz/2)) =  GD(2:round(sz/2),2:round(sz/2)) +dx/cell_size*kG(2:round(sz/2),2:round(sz/2)).*dt.*D(2:round(sz/2),2:round(sz/2)).*G(2:round(sz/2),2:round(sz/2)) - 3.75*dx/cell_size*kO(2:round(sz/2),2:round(sz/2)).*dt.*GD(2:round(sz/2),2:round(sz/2)).*O(2:round(sz/2),2:round(sz/2)) - dx/cell_size*kA(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2))*dt;;
+    T(2:round(sz/2),2:round(sz/2)) =  T(2:round(sz/2),2:round(sz/2)) +3.75*dx/cell_size*kO(2:round(sz/2),2:round(sz/2)).*dt.*O(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2)) - dx/cell_size*kT(2:round(sz/2),2:round(sz/2)).*dt.*T(2:round(sz/2),2:round(sz/2)) + dx/cell_size*kA(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2))*dt;
 
     if(mod(i,100)==0)
       Ot(l,1) =  O(round(sz/2),round(sz/2));

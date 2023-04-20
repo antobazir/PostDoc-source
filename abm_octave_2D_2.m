@@ -69,7 +69,7 @@ while(c_idx<2048)
 		pos(2) = col(idx(i));
 		pos(1) = row(idx(i));
 		pos;
-		[Grid,G,O,D,GD,T] = divide2D_full(Grid,pos,c_idx+1,sz,G,O,D,GD,T);
+		[Grid,G,O,D,GD,T] = divide2D_full(Grid,pos,c_idx+1,sz,G,O,D,GD,T);%finir modif
 		Grid;
 		parent(c_idx+1) = Grid(idx(i)); %nécessaire pour mettre à jour les concentrations...
 ##		D(find(Grid==c_idx+1))= D(find(Grid==parent(c_idx+1)));

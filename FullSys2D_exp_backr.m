@@ -2,7 +2,7 @@ clear all;
 close all;
 
 tic()
-sz = 401;
+sz = 101;
 G = zeros(sz,sz);
 D = zeros(sz,sz);
 GD = zeros(sz,sz);
@@ -16,7 +16,7 @@ kT = zeros(sz,sz);
 DOx = ones(sz,sz);
 DOx = 100000*DOx;
 DOx_tissue = 100000;
-kO_tissue = 0.5; %0.1 %1 yields too much of a gradient
+kO_tissue = 200; %0.1 %1 yields too much of a gradient
 DG = ones(sz,sz);
 DG = 40000*D;
 DG_tissue = 10000;
@@ -60,8 +60,8 @@ for i=1:ntime
     %T(find((dsx.^2+dsy.^2)>=r^2))= 20;
     %GD(find((dsx.^2+dsy.^2)>=r^2))= 1;
 
-     kG(find((dsx.^2+dsy.^2)<r^2)) = kG_tissue*exp(-1/100*T(find((dsx.^2+dsy.^2)<r^2))./ D(find((dsx.^2+dsy.^2)<r^2)));
-     kO(find((dsx.^2+dsy.^2)<r^2)) = kO_tissue- kO_tissue/10.*D(find((dsx.^2+dsy.^2)<r^2)) ;
+    kG(find((dsx.^2+dsy.^2)<r^2)) = kG_tissue*exp(-1/100*T(find((dsx.^2+dsy.^2)<r^2))./ D(find((dsx.^2+dsy.^2)<r^2)));
+    kO(find((dsx.^2+dsy.^2)<r^2)) = kO_tissue- kO_tissue/10.*D(find((dsx.^2+dsy.^2)<r^2)) ;
 
     %explicit  scheme
     %x-step

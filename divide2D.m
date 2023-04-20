@@ -1,4 +1,4 @@
-function Grid = divide2D(Grid,pos,c_idx,sz)
+function Grid = divide2D_full(Grid,pos,c_idx,sz)
   %plr = randi(1:4);
   %pos
   %cas full occupé ou inoccupé 1a et b

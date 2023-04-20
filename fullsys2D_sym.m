@@ -51,7 +51,7 @@ DG_tissue = 10000;
 r = round(sz/2.2)-2; %radius of the tissue circle in units
 
 dx = 15;
-dt = 1/1000;
+dt = 1/25000;
 ntime = n_min/dt;
 
 %giving all indexes corresponding to a center circle
@@ -106,8 +106,8 @@ for i=1:ntime
 
 
     D(2:round(sz/2),2:round(sz/2)) =  D(2:round(sz/2),2:round(sz/2)) -kG(2:round(sz/2),2:round(sz/2)).*dt.*D(2:round(sz/2),2:round(sz/2)).*G(2:round(sz/2),2:round(sz/2)) + kT(2:round(sz/2),2:round(sz/2)).*dt.*T(2:round(sz/2),2:round(sz/2));
-    GD(2:round(sz/2),2:round(sz/2)) =  GD(2:round(sz/2),2:round(sz/2)) +kG(2:round(sz/2),2:round(sz/2)).*dt.*D(2:round(sz/2),2:round(sz/2)).*G(2:round(sz/2),2:round(sz/2)) - kO(2:round(sz/2),2:round(sz/2)).*dt.*GD(2:round(sz/2),2:round(sz/2)).*O(2:round(sz/2),2:round(sz/2));
-    T(2:round(sz/2),2:round(sz/2)) =  T(2:round(sz/2),2:round(sz/2)) +kO(2:round(sz/2),2:round(sz/2)).*dt.*O(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2)) - kT(2:round(sz/2),2:round(sz/2)).*dt.*T(2:round(sz/2),2:round(sz/2));
+    GD(2:round(sz/2),2:round(sz/2)) =  GD(2:round(sz/2),2:round(sz/2)) +kG(2:round(sz/2),2:round(sz/2)).*dt.*D(2:round(sz/2),2:round(sz/2)).*G(2:round(sz/2),2:round(sz/2)) - 5*kO(2:round(sz/2),2:round(sz/2)).*dt.*GD(2:round(sz/2),2:round(sz/2)).*O(2:round(sz/2),2:round(sz/2));
+    T(2:round(sz/2),2:round(sz/2)) =  T(2:round(sz/2),2:round(sz/2)) +5*kO(2:round(sz/2),2:round(sz/2)).*dt.*O(2:round(sz/2),2:round(sz/2)).*GD(2:round(sz/2),2:round(sz/2)) - kT(2:round(sz/2),2:round(sz/2)).*dt.*T(2:round(sz/2),2:round(sz/2));
 
     if(mod(i,100)==0)
       Ot(l,1) =  O(round(sz/2),round(sz/2));
@@ -122,10 +122,12 @@ for i=1:ntime
       Tt(l,2) =  T(round(sz/2),round(sz/2-r+2));
       kGt(l,1) =  kG(round(sz/2),round(sz/2)).*G(round(sz/2),round(sz/2)).*D(round(sz/2),round(sz/2));
       kGt(l,2) =  kG(round(sz/2),round(sz/2-r+2)).*G(round(sz/2),round(sz/2-r+2)).*D(round(sz/2),round(sz/2-r+2));
+      kGt(l,3) =  kG(round(sz/2),round(sz/2-r/2+2)).*G(round(sz/2),round(sz/2-r/2+2)).*D(round(sz/2),round(sz/2-r/2+2));
       kGet(l,1) =  kG_tissue*exp(-T(round(sz/2),round(sz/2))./D(round(sz/2),round(sz/2)));
       kGet(l,2) =  kG_tissue*exp(-T(round(sz/2),round(sz/2)-r+2)./D(round(sz/2),round(sz/2))-r+2);
       kOct(l,1) =  kO(round(sz/2),round(sz/2)).*O(round(sz/2),round(sz/2)).*GD(round(sz/2),round(sz/2));
       kOct(l,2) =  kO(round(sz/2),round(sz/2-r+2)).*O(round(sz/2),round(sz/2-r+2)).*GD(round(sz/2),round(sz/2-r+2));
+      kOct(l,3) =  kO(round(sz/2),round(sz/2-r/2+2)).*O(round(sz/2),round(sz/2-r/2+2)).*GD(round(sz/2),round(sz/2-r/2+2));
       l = l+1;
     endif
 endfor

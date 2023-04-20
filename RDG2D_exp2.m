@@ -12,7 +12,7 @@ DG = ones(sz,sz);
 DGsym = ones(round(sz/2),round(sz/2));
 DG = 40000*DG;
 DG_tissue = 10000;
-kG_tissue = 0.1;
+kG_tissue = 10;
 r = round(sz/2.2)-2; %radius of the tissue circle in units
 
 dx = 15;
@@ -25,10 +25,10 @@ dsy = j-round(sz/2);
 dsx = i-round(sz/2);
 DG(find((dsx.^2+dsy.^2)<r^2))= DG_tissue;
 kG(find((dsx.^2+dsy.^2)<r^2))= kG_tissue;
-[i,j,v] = find(DGsym!=0);
-dsy_s = j-round(sz/2);
-dsx_s = i-round(sz/2);
-Gsym(find((dsx_s.^2+dsy_s.^2)<r^2))= 1;
+##[i,j,v] = find(DGsym!=0);
+##dsy_s = j-round(sz/2);
+##dsx_s = i-round(sz/2);
+##Gsym(find((dsx_s.^2+dsy_s.^2)<r^2))= 1;
 
 G(:,:) =5;
 
@@ -39,16 +39,16 @@ for i=1:ntime
     i
 
     G(find((dsx.^2+dsy.^2)>=r^2))= 5;
-    G(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
+    %G(find((dsx_s.^2+dsy_s.^2)>=r^2))= 5;
 
     %explicit  scheme
     %x-step
     G(2:sz-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
-    Gsym(2:round(sz/2)-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
-    Gsym(round(sz/2),2:round(sz/2)-1) =  G(round(sz/2),2:round(sz/2)-1) + dt*(DG(3:sz,2:round(sz/2)-1)-DG(1:sz-2,2:round(sz/2)-1))/(4*dx^2).*(G(3:sz,2:round(sz/2)-1)-G(1:sz-2,2:round(sz/2)-1)) + DG(round(sz/2),2:round(sz/2)-1)*dt/dx^2.*(G(3:sz,2:round(sz/2)-1) -2*(G(round(sz/2),2:round(sz/2)-1)) + G(1:sz-2,2:round(sz/2)-1)) -kG(round(sz/2),2:round(sz/2)-1).*G(round(sz/2),2:round(sz/2)-1)*dt;
+    %Gsym(2:round(sz/2)-1,:) =  G(2:sz-1,:) + dt*(DG(3:sz,:)-DG(1:sz-2,:))/(4*dx^2).*(G(3:sz,:)-G(1:sz-2,:)) + DG(2:sz-1,:)*dt/dx^2.*(G(3:sz,:) -2*(G(2:sz-1,:)) + G(1:sz-2,:)) -kG(2:sz-1,:).*G(2:sz-1,:)*dt;
+    %Gsym(round(sz/2),2:round(sz/2)-1) =  G(round(sz/2),2:round(sz/2)-1) + dt*(DG(3:sz,2:round(sz/2)-1)-DG(1:sz-2,2:round(sz/2)-1))/(4*dx^2).*(G(3:sz,2:round(sz/2)-1)-G(1:sz-2,2:round(sz/2)-1)) + DG(round(sz/2),2:round(sz/2)-1)*dt/dx^2.*(G(3:sz,2:round(sz/2)-1) -2*(G(round(sz/2),2:round(sz/2)-1)) + G(1:sz-2,2:round(sz/2)-1)) -kG(round(sz/2),2:round(sz/2)-1).*G(round(sz/2),2:round(sz/2)-1)*dt;
     %y-step
     G(:,2:sz-1) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
-    Gsym(:,2:round(sz/2)) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
+    %Gsym(:,2:round(sz/2)) =  G(:,2:sz-1) + dt*(DG(:,3:sz)-DG(:,1:sz-2))/(4*dx^2).*(G(:,3:sz)-G(:,1:sz-2))+ DG(:,2:sz-1)*dt/dx^2.*(G(:,3:sz) -2*(G(:,2:sz-1)) + G(:,1:sz-2));
 
     Gt(i,1) =  G(round(sz/2),round(sz/2));
     Gt(i,2) =  G(round(sz/2),round(sz/2-r+2));

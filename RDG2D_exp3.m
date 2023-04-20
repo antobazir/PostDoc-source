@@ -2,7 +2,7 @@ clear all;
 close all;
 
 tic()
-sz = 21;
+sz = 61;
 G = zeros(sz,sz);
 kG = zeros(sz,sz);
 
@@ -72,9 +72,9 @@ legend(aGt,'center','rim')
 title(aGt, ['d= ' num2str(r*2*dx) '$\mu$m, D=' num2str(DG_tissue) '$\mu$m$^2$/min, k=' num2str(kG_tissue) 'mM/min, dt =' num2str(dt) 'mn, dx =' num2str(dx) '$\mu$m'])
 
 
-print (fG, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G_cons12.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-print (fGx, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_Gx_cons12.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
-print (fGt, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_Gt_cons12.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fG, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_G_cons13.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fGx, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_Gx_cons13.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
+print (fGt, "/home/antony/Documents/Post-doc/test_fortran/plots/RD_Gt_cons13.pdf", "-dpdflatexstandalone","-S480,360","-FCalibri:22");
 
 %name configs and run them with different parameters
 %cons1 Schaller cons / my parameters  small tissue D 6000 k 20 cell diam 2.5
