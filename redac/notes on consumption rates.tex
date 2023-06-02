@@ -1,0 +1,191 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+
+\begin{document}
+
+07/04/2023: Is there a nutrient threshold for proliferative metabolism in tumors ?
+-"Both hypoxia and glucose deprivation have been shown to increase intracellular ROS production in cancer cells, leading to mitochondrial dysfunction, energy depletion, and eventual cellular demise" Yee
+-"Pharmacological inhibition of ROS production via treatment with N-acetyl-L-cysteine (NAC) and catalase abolished tumor cell death in a study using A549 human lung cancer cells, suggesting glucose deprivation-instigated cell death is accomplished via production of intracellular ROS"
+
+11/04/2023 : Lia Scotti Campos explique bien qu'il y a de la matrice dans les neurosphères...
+
+11/04/2023 :  Les cellules migrent dans la sphère ? Génèrent-elles de la matrice pendant la prolif ? Oui. -> diffusion glucose dans des grosses protéines ?
+
+13/04/2023: Meeting with Fabrizio 
+- Need more thorough treatment of the mathematical oddity generating the reincreases -> map  before/during/after the reincrease
+- Faire une analyse plus systématique pour chaque paramètre (glucose dans le cas 1 oxygène dans le cas 2) en mode Que se passe-t-il quand on bouge la conso associé et quelle est l'effet des autres paramètres
+
+%20/04/2023 find more on atp production.
+%- Hossmann1986 : A mecanism prevents lowering of the pH despite glycolysis
+%- "two metabolic features which distinguish tumors consistently from the brain: a much lower rate of energy utilization" (Kitsch et al. 1967)
+%- "Measurements of regional tissue pH revealed that brain tumors are generally alkaline and not acid in respect to normal brain tissue"
+%-"restriction of glucose delivery to the tumor by the blood may be more important than acidosis for inducing energy failure and subsequent tissue necrosis."
+%-"calculated glucose use of tumors was almost three times as high as in the brain"
+%-"the oxygen/glucose uptake ratio was below 2 gmol/~mol, which corresponds to a glycolytic rate of more than 65\%"
+%-"tumors are known to consume much less energy than the normal brain"
+%- Use data for glucose consumption approx. 30 µmol/100g/min + https://itis.swiss/virtual-population/tissue-properties/database/density/ -> 1050 kg/m$^3$ -> 1050 g/L
+%-  3.15e-4 mol/L/min -> 3.15e-1 mmol/L/min -> 0.315 mM/min mmmh nope in normal cortex mais sinon c'est genre 0.9 mM/min (souris)
+%
+%-Kirsch1967
+%-"with measured oxygen consumption of tumor being only 5\% of brain. Malignant brain tumors have a striking tolerance to anoxia, and in fact, maintain low but finite levels of adenosine triphosphate (ATP) after long periods of complete ischemia (9)."
+%-"Though the periphery of the tumor is composed of actively proliferating cells with exceptional mitotic activity, the center of the tumor, though grossly necrotic, contains islands of viable, nonproliferating neoplastic cells."
+%-"Calculations made on the basis of known diffusion and solubility coefficients of oxygen plus tumor oxygen uptake indicate that cells over 200 µm from a capillary source are essentially anaerobic (23)."
+%- Oxygen consumption in tumor 0.05 mm /kg/min
+%
+%-Rhodes1983
+%- measurement of Rhodes in human glioma suggest a not higher glucose consumption compared to adjacent normal tissue -> 5 mg/100mL/min -> 27 µmol/100mL/min -> 270  µmol/L/min -> 2.7e-4 mol/L/min -> 0.27 mM/min
+%- oxygen consumption lower than healthy tissue 1.2 mL/100 mL/min -> 32.1 mL/mol in pure water (from Zhou 2001) 
+%- 12 mL/L/min -> 1.14e-2 mL/g/min -> 5.35e-4 mol/L/min -> 5.35e-1 mmol/L/min -> 0.5 mM/min car 22.4 L/mol-> 22400 mL/mol -> 0.5 mM/min 
+%
+%-DeSousa2022
+%"in vitro ATP production for GBM39 is 11 pmol/min/1000cells in vivo et 5 ex vivo avec 60\% de glycolytic"-> 5.5 mM/min -> 2-3 mM/min ex vivo
+%
+%- Mergenthaler2013
+%~5.6 mg glucose per 100 g human brain tissue per minute-> 5.6 mg/100g/min -> 180 g/mol -> 180 000 mg/mol ->3.11e-5 mol/100g/min (healthy) -> 3.11e-7 mol/g/min -> 3.26e-4 mol/L/min -> 0.326 mmol/L/min -> 0.3 mM/min
+%
+%-VanGolen2013
+%0.2 µmol/cm^3/min + 1 cm^3 = 1 mL -> 0.2 µmol/mL/min -> 200 µmol/L/min -> 0.2 mM/min glucose
+%
+%-Herholz1992
+%"The present results demonstrate that where tumor peak MRGlu was higher than the contralateral cortical MRGlu, lactate concentration was always abnormal."
+%values 20-30 with a max at 90 µmol/100g/mn when lactate is high ->  0.3 mM/min and max 0.9 mM/min
+%
+%-ROdgers013
+%de 10 à 300 µmol/100g/min -> 0.1 à 3 µmol/g/min ->  105 - 3150 µmol/L/min -> 0.105 - 3.15 mM/min oxygen 
+%
+%-Shalit9172
+%Near the pons in coma -> approx 1-2 mL/100gr/min oxygen approx 0.5 mM/min aussi
+
+**Integrated metabolic and epigenomic reprograming by H3K27M mutations in diffuse intrinsic pontine gliomas
+-Supports the metabolic change in DIPG is the same than in other tumors
+- H3.3K27M Exhibit Enhanced Glycolysis and TCA Cycle Metabolism Compared with H3WT Cells"
+-"H3K27M Show Higher Glutamine and Citrate Levels In Vivo Compared with H3WT-Midline Gliomas"
+- higher concentration of glutamine and glutamate than glucose
+-"The glutamine antagonist 6-diazo-5-oxo-L-norleucine (DON) (Lemberg et al., 2018) increased H3K27me3 levels in glutamine-dependent H3.3K27M NSC and DIPG-007 but not in glucose-independent SF7761 cells (Figure 4D)."
+-"These data together suggest that inhibition of GDH, HK2 and IDH1 lower α-KG/Suc ratios, increases H3K27me3 and suppresses proliferation of H3.3K27M cells."
+
+**TAMI-80. CELLULAR METABOLISM IN DIFFUSE INTRINSIC PONTINE GLIOMA
+"The 13C-isotopomer analysis revealed that SF8628 cells produced 25.26 ± 10.63\% acetyl-CoA from [U-13C]glucose which is ~3.7 times higher than that produced from GBM cells (6.83 ± 0.76\%; our previous work), suggesting that DIPGs are metabolically very active."
+- Donc soit les cellules DIPG métabolisent PLUS tout court soit le métabolisme oxydative est plus élevé.
+
+Measuring Tumor Metabolism in Pediatric Diffuse Intrinsic Pontine Glioma Using Hyperpolarized Carbon-13 MR Metabolic Imaging
+"The ratios of lactate-to-pyruvate, lactate-to-total carbon, and normalized lactate in T2 lesions (0.70 ± 0.24, 0.36 ± 0.08, and 2.9 ± 1.1, resp.) were significantly higher than the corresponding values in the healthy normal brain (0.20 ± 0.06, 0.14 ± 0.03, and 1.1 ±0.25, resp." and "In contrast, the normalized pyruvate was found to be similar across both regions and comparable to the healthy brain"
+
+
+**Targeting metabolic/epigenetic pathways: a potential strategy for cancer therapy in diffuse intrinsic pontine gliomas
+"All integrated approaches including RNA sequencing, proteomics, and metabolomics in H3K27M NSCs comprehensively demonstrated that these cells displayed augmented glycolysis and TCA cycle"
+"What’s more, enhanced glutaminolysis was also certificated by isotope tracing"
+
+**Therapeutic targeting of differentiation state-dependent metabolic vulnerabilities in DIPG
+- "H3K27M diffuse intrinsic pontine gliomas (DIPG) exhibit cellular heterogeneity comprising less-differentiated, stem-like glioma cells that resemble oligodendrocyte precursors (OPC) and more differentiated astrocyte (AC)-like cells."
+- "H3K27M OPC-like cells are hypothesized to be the putative drivers of tumor growth and aggressiveness and possess in vivo tumor-initiating potential compared to more differentiated cells 12–15"
+- donne un courbe de croissance des sphère pour DIPG 007
+- OCR de 50  pmol/min/cell pour la gliomapshere non différentiée de DIPG007 (monte à 100 avec le FCCP) et ECAR 10
+- ATP ADP ratio super faible ?!
+-"These results suggest that DIPG-007 and SF7761 DGC can compensate for the inhibition of respiration through utilization of glycolysis, which the GS appear unable to do."
+-" the direct ratio of ATP to ADP revealed substantially lower levels in GS across all lines" and seems closer to 1 than anything else
+
+** Targeting Glucose Metabolism of Cancer Cells with Dichloroacetate to Radiosensitize High-Grade Gliomas Cook 2021
+-"Like many other solid malignant tumors, HGGs preferentially use aerobic glycolysis to uptake and convert glucose into lactate. This altered glucose metabolism not only enables tumor cells to use glucose-derived carbons for the synthesis of essential cellular ingredients, but it also rapidly provides ATP to fuel cellular activities. In addition, this metabolic shift contributes significantly to treatment resistance including resistance to radiotherapy (RT) "
+-"It is now thought that the Warburg effect gives HGG cells an advantage by supporting rapid cell proliferation and survival [21]"
+-"Mitochondrial and glycolytic ATP production was observed to be a 1:1 ratio of OXPHOS to glycolysis among some individual primary GSC lines, while others heavily favored glycolysis and lactate production and are therefore more responsive to glycolytic inhibition"
+-" Hypoxic HGG cells are unable to survive if they are glutamine starved "
+
+**Targeting tumor hypoxia and mitochondrial metabolism with anti-parasitic drugs to improve radiation response in high-grade gliomas Mudassar 2020
+- "An enhanced rate of aerobic glycolysis suggests that cancer cells should have a decreased rate of OXPHOS; however, current research increasingly suggests that along with glycolysis, some cancers also rely on mitochondrial biogenesis and OXPHOS for energy production and in vivo progression [52, 53]. "
+- "Vlashi et al. 2011 observed that unlike differentiated glioma cells, GSCs are less glycolytic and predominantly reliant on mitochondrial function and OXPHOS, producing large amounts of ATP [62]."
+
+
+**Glutaminolysis: A Hallmark of Cancer Metabolism
+-"Currently, a widely accepted theory is that aerobic glycolysis can accumulate abundant glycolytic intermediates that are shunted into de novo synthesis of nucleotides, nonessential amino acids, and fatty acids (5). Furthermore, higher glycolytic rates support faster ATP generation compared with glucose oxidation in the TCA cycle (10). In cancer cells in which enzymatic expression of pyruvate kinase isoform 2 (PKM2) is found to be high, the conversion of phosphoenolpyruvate (PEP) into pyruvate is slower than in cells with high PKM1 expression. This leads to the accumulation of pyruvate precursors, which are driven into branch pathways such as the pentose phosphate pathway (PPP), the lipid biosynthesis pathway, or amino acid synthesis."
+-" Glutamine is the most abundant circulating amino acid in blood and muscle. Several decades ago, investigators discovered that glutamine consumption rates in HeLa cells are 10 to 100 times greater than those of other amino acids (14). High glutamine consumption has been discovered in many cancers, including pancreatic, ovarian, and breast cancers (15–17). This finding has also been confirmed clinically; plasma glutamine concentration within different tumors is significantly lower than in healthy subjects (18, 19)."
+
+
+**Targeting reduced mitochondrial DNA quantity as a therapeutic approach in pediatric high-grade glioma Shen 2020
+OCR DIPG 4000 pmol/min/1e6 cells et ECAR 5200 marrant parce que chez lyssiotis c'est linverse sur des cellules ex vivo -> 4e-3 pmol/min/cell
+
+**High glycolytic activity of tumorcells leads to underestimation of electron transport system capacity when mitochondrial ATP synthase is inhibited
+- for both glioma lines ATP/ADP ratio is below 0.05 (confirmed)
+- OCR -> 3000 pmol/min/1e6 cells donc cohérent avec l'autre papier
+- if only glutamine is available ATP fall by 60 \% but OCR is not affected !
+
+
+**Targeting reduced mitochondrial DNA quantity as atherapeutic approach in pediatric high-grade gliomas
+ - non rien
+ 
+**Intracellular Adenosine Triphosphate (ATP) Concentration: A Switch in the Decision Between Apoptosis and Necrosis
+- sur le type cellulaire testé (lymphocyte T) la nécrose prend le pas sur l'apoptose pour 0.2mM de glucose (pour une concentration normale de 5)
+- "With αCD95, an ATP loss >70\% (i.e., a residual ATP concentration of <0.5 nmol x mg prot−1) was invariably followed by necrosis (Fig. ​(Fig.3,3, b and c)"
+-residual ATP above 50\%) changed the mode of cell
+death from necrosis to apoptosis
+
+**Current Insights Into Oligodendrocyte Metabolism and Its Power to Sculpt the Myelin Landscape
+"Metabolic pathways largely fall into three distinct categories: anabolic, catabolic, or waste disposal. Anabolic pathways are a series of enzyme-catalyzed reactions that require energy inputs and carbon backbones to synthesize complex macromolecules such as proteins, carbohydrates, and lipids, whereas catabolic reactions ultimately produce energy by sequential degradation of large molecules into their smaller constituents: proteins into amino acids, carbohydrates into sugars, and lipids into fatty acids. Waste disposal mechanisms remove toxic byproducts and, together with total cellular metabolism, help to coordinate the optimal energetic balance needed for all cellular activities"
+
+**Cellular Metabolism and Disease: What Do Metabolic Outliers Teach us
+-la figure 1 est très bien pour comprendre le rôle de chaque processus
+
+** Metabolic Reprogramming in Brain Tumors
+- "The two principal nutrients that cancer cells use are the sugar glucose and the amino acid glutamine. These two nutrients are central to many anabolic processes including the biosynthesis of ATP, nucleotides, proteins, and lipids (1–3)."
+-"increased glycolysis may seem wasteful from a perspective of ATP generation, but it contributes to the generation of biomass for the proliferation and growth of cancer cells."
+-"Secreted lactate alters the microenvironment and enables tumors to adapt to hypoxia"
+-" Recent results from our lab and other groups have demonstrated that glioma cells primarily use fatty acids as a substrate for energy production."
+-"While glioma cells clearly rely upon fatty acids for energy production, it is not clear whether they acquire fatty acids from the bloodstream or build these carbon chains themselves."
+
+**Cell cycle–related metabolism and mitochondrial dynamics in a replication-competent pancreatic beta-cell line
+-Basal and ATP linked OCR increase during  S phase compared to G1/S
+-Basal OCR : G1/S -> 100 pmol/µg protein/min S->200 G2/M -> 180 
+-ATP-linked OCR : G1/S -> 30 pmol/µg protein/min S->700 G2/M -> 60
+- ECAR mPH/min : G1/S -> 2 S -> 4 G2/M-> 3.5 (S approx G2/M) 
+
+**The Biology of Cancer: Metabolic Reprogramming Fuels Cell Growth and Proliferation
+-Quiescent cells (left) have a basal rate of glycolysis, converting glucose (glc) to pyruvate (pyr), which is then oxidized in the TCA cycle. Cells can also oxidize other
+substrates like amino acids and fatty acids obtained from either the environment or the degradation of cellular macromolecules. As a result, the majority of ATP
+(yellow stars) is generated by oxidative phosphorylation
+
+**The Rate of Oxygen Utilization by Cells
+-Explains the whole thing gr protein and so on (THANK GOD)
+-So it requires the protein mass per cell (GREAT) but it's in the range 100-1000 pg for all tested cell lines.
+-"At concentrations of oxygen used in most mammalian cell culture (e.g. ≈182 μM in air-saturated media with 5 \% CO2, 37 °C, sea level)"
+-"These examples have changes that range from 1.5- to a 5-fold increase in OCR. Interestingly, cells in lag phase apparently can in some circumstances consume oxygen at rates greater than when in exponential growth. A process that occurs during lag phase is adjustment of the extra cellular redox environment [63, 64, 65]. Adjusting the redox status of extra cellular thiols would require considerable flux through the pentose cycle and thus a large demand for ATP and possible need for dioxygen. However, the OCR in different phases of the cell cycle and growth needs more detailed studies to provide clear knowledge of these associations." important
+
+**Glucose consumption in recurrent glioma 
+the overall consumption can vary a lot in patient with some over 6 while other below 2 but most are above 2
+
+**Les mesures d'Alessandro et de Shen sont cohérentes !
+
+"The Multifaceted Contributions of Mitochondria to Cellular Metabolism"
+-  Glutamine anaplerosis sustains TCA cycle intermediates in conditions of limiting glucose and MPC inhibition, demonstrating the potential flexibility of these metabolic nodes.34,35
+- Palmitate, a 16-carbon fatty acid (FA), stores 39KJ/g of energy compared to 16KJ/g stored in glucose.49 Therefore, FAs are a major source of cellular energy, particularly under conditions of nutrient stress. 
+-Beyond toxicity, ROS are potent mitogen signaling agents that foster proliferation, differentiation, and migration.123,142 Specifically, ROS oxidize cysteine residues, linking mitochondria to signaling cascades. 
+
+**Fatty acid oxidation is required for the respiration and proliferation of malignant glioma cells
+- "Fatty acid chains can be used to produce energy within a growing tumor;6 prostate and breast cancer cells in particular have been specifically shown to employ fatty acid oxidation as a metabolic strategy.7,8 Etomoxir, an inhibitor of fatty acid oxidation, has been shown to decrease oxygen consumption rates (OCRs) and impair ATP and NADPH production in the pediatric glioblastoma cell line SF188.9"
+- "  In this report, we show that fatty acid oxidation is in fact the primary catabolic pathway in human glioblastoma cells (hGBMs) maintained under such optimal culture conditions. Blocking this pathway reduces cellular respiratory and proliferative activity."
+-"Therefore, excess glucose utilization, as predicted by the Warburg effect, may not be particularly characteristic of gliomas."
+
+**Metabolism and Brain Cancer
+- " Another important reason for the cancer cells to switch to aerobic glycolysis is to provide metabolic macromolecules for the daughter cells. 13C-nuclear magnetic resonance spectroscopy measurements show that 90\% of glucose and 60\% of glutamine are converted into lactate or alanine by GBM cell cultures.50 Although each lactate excreted from the cell wastes three carbons that might otherwise be utilized for either ATP production or macromolecular precursor biosynthesis, the tumor cells choose this method to fasten carbon incorporation into biomass to increment cell division velocity. Glutaminolysis also generates reductive power required for fatty acid biosynthesis by NADPH production via the activity of NADP+-specific malate dehydrogenase (malic enzyme), in addition to the fundamental role in replenishing the TCA cycle.51"
+- "An important penalty for this increased flux of macromolecules to provide biomass for the proliferating cancer cells not converted to aerobic glycolysis is also an increase in mitochondrial OXPHOS, the major source of ROS production. Elevated mitochondrial ROS formation frequently occurs upon suppression of pyruvate input into OXPHOS.75"
+
+**Ten-fold Augmentation of EndothelialUptake of Vascular Endothelial Growth FactorWith Ultrasound After Systemic Administration
+
+**Defining normoxia, physoxia and hypoxia in
+tumours—implications for treatment response
+When HIF1a and HIF1b expression was measured in cultured
+HeLa cells from 0% to 20% oxygen, a maximal response was found
+at 0.5% oxygen with a half maximal expression at 1.5–2% oxygen;
+expression was significantly low above 4% oxygen, 38 confirming
+that HIF1 is active in the required range to control physiological
+responses to oxygen deprivation (discussed further below).
+
+
+\end{document}

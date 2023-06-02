@@ -8,8 +8,10 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{amsmath}
+\usepackage{tikz}
 
 \begin{document}
+
 \tableofcontents
 
 \section{Introduction}
@@ -377,7 +379,7 @@ In the model of Cleri, cells proliferate provided they have enough oxygen and gl
 % va falloir parler diffusion à un moment
 Qualitative and quantitative behaviour may vary between cell lines. Experimental data should allow determination of the critical mechanism for both quiescence and cell death in relation to hypoxia. in this paragraph a focus will be put on determining a broad trend in quantitative criterion for hypoxia by comparing experiments and simulations on spheroids for different cell lines. In order to understand the impact of the chosen values on growth, the diffusion coefficient will also be compared.
 
-A first observation is that oxygen concetration can be given in terms of partial pressure (mm Hg), percentage or molar concentration (mM or \textmu M) . Equivalence between concentration an partial pressure can be found the work on Grimes and collaborators which establishes a relation between partial pressure and a quantity which is the inverse of concentration. He derives a factor $\Omega$ which he states is equal to $ \rho_{T} \rho_{O_2} K = 3.0318 \cdot 10^7$ mmHg kg m$^{-3}$ with  $\rho_{T}$ = 1000 kg/m$^3$, $\rho_{O_2}$ = 1.331 kg/m$^3$ and $K = 2.2779 \cdot 10^{-4}$ mm Hg  m$^{3}$ kg$^{-1}$.\cite{Grimes2014} However, a quick verification shows that the value for $\Omega$ should in fact be $3.0318 \cdot 10^{-1}$ mmHg kg m${-3}$. In that case, converting a partial pressure of 100 mm Hg which is the order of magnitude used by Hamis and collaborators yields a concentration of 100 \textmu M which is the order of magnitude found in the study of Mao and collaborators as well. Equivalence between percentage and partial pressures are gieven by McKeown.\cite{McKeown2014} %rajouter le calcul du train pour la correspondance avec les mM
+A first observation is that oxygen concetration can be given in terms of partial pressure (mm Hg), percentage or molar concentration (mM or \textmu M) . Equivalence between concentration an partial pressure can be found the work on Grimes and collaborators which establishes a relation between partial pressure and a quantity which is the inverse of concentration. He derives a factor $\Omega$ which he states is equal to $ \rho_{T} \rho_{O_2} K = 3.0318 \cdot 10^7$ mmHg kg m$^{-3}$ with  $\rho_{T}$ = 1000 kg/m$^3$, $\rho_{O_2}$ = 1.331 kg/m$^3$ and $K = 2.2779 \cdot 10^{-4}$ mm Hg  m$^{3}$ kg$^{-1}$.\cite{Grimes2014} However, a quick verification shows that the value for $\Omega$ should in fact be $3.0318 \cdot 10^{-1}$ mmHg kg m${-3}$. In that case, converting a partial pressure of 100 mm Hg which is the order of magnitude used by Hamis and collaborators yields a concentration of 100 \textmu M which is the order of magnitude found in the study of Mao and collaborators as well. Equivalence between percentage and partial pressures are given by McKeown.\cite{McKeown2014} %rajouter le calcul du train pour la correspondance avec les mM
 
 Consequently, if Bull and collaborators do follow the work of Grimes and collaborators by setting an external partial pressure of O${_2}$ of 100 mm Hg, then the corresponding concentration is close to 100 \textmu M which matches previous values. Therefore the concentration for hypoxia is between 10 \textmu M and 60 \textmu M, and the concentration for quiescence is 30 \textmu and 70 \textmu M which is 2 orders of magnitude above what was used by Mao and collaborators. It is also above the partial pressure for maximum expression of the most hypoxia markers which is stated to be below 10 mm Hg (approx 10 µM).\cite{Grimes2014}\cite{McKeown2014}. In terms of dynamics, the oxygen diffusion coefficient in tissue was taken as 1750 \textmu m$^2$/sec and the oxygen consumption rate was 20 amol/cell/s, with both values taken from the model of Schaller and Meyer-Hermann\cite{Kempf2005}
 
@@ -390,7 +392,7 @@ In the study of Mao and collaborators,in their paper, Mao and collaborators simu
 Cleri, in his model, does not formally model a starvation threshold but considers that if the cell is in oxygen-induced quiescence for long enough, it undergoes necrosis. The chosen threshold is 0.3 mM for an initial concentration of 0.6 mM, which is twice the maximum concentration tested by Freyer in his experiments and reported later by Schaller and Meyer-Hermann in their model. The threshold itself has been taken above the external concentration tested in experiments, and is 20 times the threshold chosen by Kempf and collaborators for hypoxia (which does not lead to cell death). For the diffusion coefficient of oxygen the retained value is 15 \textmu m$^2$/s. It is also taken lower than glucose diffusion coefficient. The oxygen uptake rate is harder to determine due to the equation system used instead of the diffusion-reaction equation used in most other models.
 
 %kempf
-In the model of Kempf and collaborators, an external concentration of 0.13 mM (or 60 mmHg) is taken outside the spheroid and the hypoxia limit is taken at 0.014 mM (14 \textmu M approximately 14 mmHg) which is close to the 10 mmHg usually chosen and is supported by experimental evidence on head and neck squamous tumors in mouse. However hypoxia never leads to cell death or quiescence which follows McKeown's review on the matter. The main impact of hypoxia is set to be on metabolism and radioresistance. The diffusion coefficient for oxygen in the original model of Schaller and Meyer-Hermann is 1750 \textmu m$^2$/sec in tissue. This value is used again in the 2015 study of Kempf and collaborators coupled to a value of 3300 \textmu m$^2$/sec in water and the possibly of this coeffcient to vary continuously depending on local cell density. Kempf and collaborators modelled two consumption rates for active and quiescent cells. The oxygen consumption rate for active cells was 83 amol/cell/s and the consumption rate for quiescent cells was 49 amol/cell/s.
+In the model of Kempf and collaborators, an external concentration of 0.13 mM (or 60 mmHg) is taken outside the spheroid and the hypoxia limit is taken at 0.014 mM (14 \textmu M approximately 14 mmHg) which is close to the 10 mmHg usually chosen and is supported by experimental evidence on head and neck squamous tumors in mouse. However hypoxia never leads to cell death or quiescence. The main impact of hypoxia is set to be on metabolism and radioresistance. The diffusion coefficient for oxygen in the original model of Schaller and Meyer-Hermann is 1750 \textmu m$^2$/sec in tissue. This value is used again in the 2015 study of Kempf and collaborators coupled to a value of 3300 \textmu m$^2$/sec in water and the possibly of this coeffcient to vary continuously depending on local cell density. Kempf and collaborators modelled two consumption rates for active and quiescent cells. The oxygen consumption rate for active cells was 83 amol/cell/s and the consumption rate for quiescent cells was 49 amol/cell/s.
 
 An important aspect of the dynamics in both Jagiella model and Freyer experiments in the dynamics for a given cell line is the concentration of nutrient outside the spheroid during growth. In the paper of Freyer from 1986, concentration of O2 was either  0.07 mM/L or 0.28 mM/L. A minimal concetration for oxygen is given at 0.07 mM but in the final model, it is a threshold for quiescence and not viability. Hashem and collaborators measured O$_{2}$ on HCT116 spheroids on day 7 and reported the following :""The general trend is that the internal areas show smaller line widths that correspond (through the calibration curve) to $pO_2$ levels of ~50-60 mmHg. On the other hand, the partial oxygen pressure in the spheroids' external regions, where the signal line width was maximal, is about 120-130 mmHg."\cite{Hashem2015}. The oxygen diffusion coefficient is taken to be the same as Bull and Kempf's studies at 1750 \textmu m/s and its consumption rate Contrary to Mao and collaborators who estimated the diffusion in the medium to 2.5 times higher than in tissue, Jagiella takes the diffusion in medium to be 30 times higher than in tissue.  
 
@@ -719,7 +721,7 @@ Growth factors are peptidic complexes that are often in the range of tens of kDa
 
 The same relationship was found between pure matrix and tissue as with HCT116 and the collagen gel. Dextran diffusion was also measured and gives a hint about the values that may be relevant for complexes between 50 and 100 kDa of molecular weight. The value for  70 kDa dextran was found to 2400 \textmu m$^2$/min and 450 \textmu m$^2$/min in rat cortex.
 
-Knowing this, we can conclude on values that should be relevant in modelling nutrient diffusion for DIPG spheroids without matrix and the tumor-on-chip system with matrix. For oxygen, diffusion values are similar in water and in low concentrations agarose gel. 100000 \textmu m$^2$/min is a reasonable estimate of the diffusion coefficient. As explained before this value also holds for tissues since cell membranes are permeable to oxygen. This value will be used for both situations as the values in water and matrix are the same. For Glucose, the value in water, agarose gel and hyaluronic acid gel are similar (30000-40000 \textmu m$^2$/min). 40000 \textmu m$^2$/min is thus retained for the diffusion in medium and matrix. Adding cell tortuosity the value for glucose in tissue should be between 6000 \textmu m$^2$/min and 16000 \textmu m$^2$/min. Therefore a glucose tissue diffusion value  of 10000 \textmu m$^2$/min seems a good choice. For growth factors depending on the molecular weight of the complex, value in matrix/water are in the range of 1000-10000 \textmu m$^2$/min. Values found in tissue are expectedly lower by a factor ranging between 2 and 6 due to tortuosity. Therefore, if a low molecular weight ($\approx$ 10 kDa) is assumed, then the values are 10000 \textmu m$^2$/min for water/matrix and 3000 \textmu m$^2$/min for tissue. If a high molecular weight ($\approx$ 100 kDa)  is assumed then the values are 3000 \textmu m$^2$/min for water/matrix and 500-1000 \textmu m$^2$/min for tissue.
+Knowing this, we can conclude on values that should be relevant in modelling nutrient diffusion for DIPG spheroids without matrix and the tumor-on-chip system with matrix. For oxygen, diffusion values are similar in water and in low concentrations agarose gel. 100000 \textmu m$^2$/min is a reasonable estimate of the diffusion coefficient. As explained before this value also holds for tissues since cell membranes are permeable to oxygen. This value will be used for both situations as the values in water and matrix are the same. For Glucose, the value in water, agarose gel and hyaluronic acid gel are similar (30000-40000 \textmu m$^2$/min). 40000 \textmu m$^2$/min is thus retained for the diffusion in medium and matrix. Adding cell tortuosity the value for glucose in tissue should be between 6000 \textmu m$^2$/min and 16000 \textmu m$^2$/min. Therefore a glucose tissue diffusion value  of 10000 \textmu m$^2$/min seems a good choice. For growth factors depending on the molecular weight of the complex, value in matrix/water are in the range of 1000-10000 \textmu m$^2$/min. Values found in tissue are expectedly lower by a factor ranging between 2 and 6 due to tortuosity. Therefore, if a low molecular weight ($\approx$ 10 kDa) is assumed, then the values are 10000 \textmu m$^2$/min for water/matrix and 3000 \textmu m$^2$/min for tissue. If a high molecular weight ($\approx$ 100 kDa)  is assumed then the values are 3000 \textmu m$^2$/min for water/matrix and 500-1000 \textmu m$^2$/min for tissue. In fact, the work of Albro and collaborators on Dextran shows that it should be 3000 in water, 1500 in matrix and 300 in dense tissue.\cite{Albro2009}
 
 Another question that needs to be adressed in order to fully understand nutrient availability in the tissue is the consumption rate of cells. For oxygen reported values are in the range of 50-100 amol/cell/s or 3000-6000 amol/cell/min.\cite{Nelson2017}\cite{Kempf2005}\cite{Mao2018}. For Glucose consumption, the range of values used and measured is 100-500 amol/cell/s which is equivalent to 6000 to 30000 amol/cell/min\cite{Mao2018}\cite{Kempf2005}\cite{Cleri2019}\cite{Jagiella2016}. Unfortunately data on growth factor consumption is scarce. One value was found for humain fibroblast growth factor in the study of Filion which comes from the work of Sperinde and Nugent.\cite{Filion2004}\cite{Sperinde2000} \textbf{[read Sperinde and expand]} The value that was found was 420 \textmu M$^{-1}$ $\cdot$ min$^{-1}$ which, assuming a cellular volume of 2000 \textmu m$^3$ translates into a consumption rate of approximately 10 amol/cell/s or 600 amol/cell/min. With all this information a rough model estimation of the availability of nutrients in tissue can be performed. In terms of initial concentration a typical concentration of 10 ng/mL is used for growth factors \cite{Meel2018}. For a molecule of 50 kDa this corresponds to a concentration of 2$\cdot 10^{-7}$ mM.
 
@@ -1277,11 +1279,13 @@ In that version of the model, the consumption terms are in min$^{-1}$. Measured 
 
 %For glucose, it is mentioned on Merck Millipore's website that "Neurospheres are to be passaged using gentle mechanical trituration when they reach diameters of 200-500 \textmu m or through enzymatic dissociation.". Therefore, the hypothesis will be made that no necrotic core appears before the spheres reaches 500 \textmu m diameter.  Using the Octave 2D model for $k_{1,max}$ = 1 min$^{-1}$, the glucose concentration falls at approximately 1 mM at the core of a 500 \textmu m  diameter tissue section. if $k_{1,max}$ = 0.1 min$^{-1}$, [G] only falls to approximately 4 mM. A consumption of 10 mM/min in the first order decay model and or Hill function type model results in an extended depleted zone. Since we assume the necrotic core starts to form around 500 \textmu m diameter, a  $k_{1,max}$ value in the range of 2-5 min$^{-1}$ yields the right behavior in the glucose model. This is equivalent to a maximum conusmption of 10-25 mM/min, which is almost an order of magnitude higher than the value of approximately 3 mM/min reported by Mao in their study on HCT116 but closer from the 50-100 mM/min reported by Schaller for non-human mammary cells. 
 
-Various measurements have been performed on human and rat brain tissue. The cerebral metabolic rate have been measured in both tumor and and healthy tissue. The type of tumor is not DIPG but mostly glioblastomae. Though it is not the same type of tissue this is the closest that was found in the literature. For glucose, the consumption metabolic rate have been measured in several studies. Rhodes and collaborators reported a value of  5 mg/100gr/min, which corresponds to a value of approximately 0.3 mM/min.\cite{Rhodes1983} Hossmann and collaborators reported similar value for brain tissue near tumors but a higher value of 30 µmol/100g/min, which is equivalent to  0.9 mM/min.\cite{Hossmann1986} Both values are coherent with value reported by Herholz and collaborators who also report that higher glucose consumption measured in patients seems to be correlated to high levels of lactate in the tumor.\cite{Herholz1992} More recent values were reported by Mergenthaler and collaborators (0.3 mM/min for healthy tissue \cite{Mergenthaler2013}) and Val Golen (0.2 mM/min for non tumor tissue in diabetic subjects.) Therefore, two hypothesis can be tested : Low consumption (0.3 mM/min) or high consumption (0.9 mM/min.) This leads to $k_{1,max}$ between 0.3 and 0.9 mM$^{-1}\cdot$ min$^{-1}$ accounting for the concentrations of G and D in the model.
+Various measurements have been performed on human and rat brain tissue. The cerebral metabolic rate have been measured in both tumor and and healthy tissue. The type of tumor is not DIPG but glioma or glioblastoma. Though it is not the same type of tissue this is the closest that was found in the literature. For glucose, the consumption metabolic rate have been measured in several studies. Rhodes and collaborators reported a value of 5 mg/100gr/min through in vivo PET scan measurements on patient with gliomae, which corresponds to a value of approximately 0.3 mM/min.\cite{Rhodes1983} Hossmann and collaborators reported similar value for rat brain tissue near implanted tumors but a higher value of 30 µmol/100g/min for tumors, which is equivalent to  0.9 mM/min(using fluoresence tool).\cite{Hossmann1986} Both values are coherent with other in vivo PET scan and MRS values reported by Herholz and collaborators in different types of brain tumors who also report that, for glioblastomes, higher glucose consumption measured in patients seems to be correlated to high levels of lactate in the tumor.\cite{Herholz1992} More recent values were reported by Mergenthaler and collaborators (0.3 mM/min for healthy tissue \cite{Mergenthaler2013}) and Val Golen (0.2 mM/min for non tumor tissue in diabetic subjects.) Therefore, two hypothesis can be tested : Low consumption (0.3 mM/min) or high consumption (0.9 mM/min.) This leads to $k_{1,max}$ between 0.3 and 0.9 mM$^{-1}\cdot$ min$^{-1}$ accounting for the concentrations of G and D in the model.
 
 %Since we know $[D] \approx 0.1$ mM, then $k_{1,max}$ is multiplied by 10 compared to the previously mentioned values which leads to $k_{1,max}$ = 20 -50 min$^{-1} \cdot$ mM$^{-1}$
 
 Cerebral metabolic rate have also been measured for oxygen in brain tissue in both rat and human tissue. Rhodes and collaborators also gave a measured value for CMRO$_2$ which was approximately 0.5 mM/min. (converted from 1.2 mL/100 mL/min and assuming a brain tissue density of 1050 g/L) \cite{Rhodes1983} A more recent set of value was provided by Rodgers on brain tissue with measured value ranging from 0.1 mM/min to 3 mM/min. Measurements by Shalit yielded values of approximately 0.5 mM/min as well.\cite{Shalit1972} In the model the value of 0.5 mM/min will be used. Kirsch and collaborators also noted that  "Calculations made on the basis of known diffusion and solubility coefficients of oxygen plus tumor oxygen uptake indicate that cells over 200 µm from a capillary source are essentially anaerobic" which gives information on the expected behavior \cite{Kirsch1978}
+
+Reported OCR value for DIPG in neurospheres are approxiamtely of 0.003 pmol/min/cell.\cite{Shen2019}\cite{Ruas2018} Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 3 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm which translates into 1.6 mM/min for oxygen consumption. (a value of 50 pmol/min/cell has been reported by \cite{Mbah2022})
 
 %For $k_{2,max}$, we do not have any measured values for the DIPG neurospheres. We could apply the same reasoning as for glucose. It should however be kept in mind that  oxygen can diffuse through membrane and has a higher diffusion coefficient than glucose. It it therefore entirely possible that oxygen may still be available in regions where glucose has been depleted. Two hypothesis can be made in order to choose a value for $k_{2,max}$. if cell death occurs only in case of complete glucose depletion, then oxygen may be present in significant amount (read more than 1/10 of the external concentration) at the core of the agregate even for size of 500 \textmu m. If oxygen also needs to be present in small amounts (around 1/10 of the external concentration) for the cell to survive. Then it can be assumed that like glucose, $k_{2,max}$ should be set so that the concentration near the core of the 500 \textmu m  diameter is close to zero. To summarise for the 500 \textmu m diameter sphere :
 %\begin{enumerate}
@@ -1309,412 +1313,777 @@ Cerebral metabolic rate have also been measured for oxygen in brain tissue in bo
 %Therefore, $k_{2,max}$ will be taken to be equivalent to  0.1 min$^{-1}$. Considering the fact that in the equation system, $k_{2,max}$ is multiplied by $[GD]$ as well as $[O]$. The initial concentration of $[GD]$ is taken to be 0.1 mM ($k_{1,max} [G][D]$ at $t=0$)
 %----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-The value for $c_T$ is taken to be 1/100 as it ensures that if $[T]/[D]$ increases to 1000, the $k_{1}$ almost vanishes. $c_D$ conditions the decreases in oxygen consumption when ADP is available. $c_D$ will be se so that oxygen concentration vanishes if $[D]$ reaches 10 times its initial/intended value. Therefore, $c_D = k_{2,max}/10$. 
+The value for $c_T$ is taken to be 1/100 as it ensures that if $[T]/[D]$ increases to 1000, the $k_{1}$ almost vanishes. $c_D$ conditions the decreases in oxygen consumption when ADP is available. $c_D$ will be se so that oxygen consumption vanishes if $[D]$ reaches 10 times its initial/intended value. Therefore, $c_D = \frac{k_{2,max}}{10[D]_0}$. 
 
-In terms of production rate experimental values have been obtained in MCF-7 cell line and other cell lines. The quantified production rate was approximately 720 mM/h \cite{RomeroAgilent}. A similar value was used as a threshold by Jagiella and collaborators in their study.\cite{Jagiella2016} Slightly lower values were reported by Mookerjee and collaborators but they are within the same order of magnitude (360 mM/h), though their results were obtained on non-cancerous mouse cells.\cite{Mookerjee2017}  De Sousa and collaborators obtained values for ATP production of GBM39 (glioblastoma) of  11 pmol/min/1000cells in vitro and 5 pmol/min/1000cells ex vivo, which corresponds to values of 5 mM/min in vitro and approximately 2 mM/min. The value of 5 mM/min is the value that will be used.
-
-Since the value for oxygen consuption and ATP production are identical, the model needs to be changed to adapt to the measured values. And the easiest way to do it is to add a coefficient to the ATP production term as follows :
+In terms of ATP production rate, experimental values have been obtained in MCF-7 cell line and other cell lines. The quantified production rate was approximately 720 mM/h \cite{RomeroAgilent}. A similar value was used as a threshold by Jagiella and collaborators in their study.\cite{Jagiella2016} Slightly lower values were reported by Mookerjee and collaborators but they are within the same order of magnitude (360 mM/h), though their results were obtained on non-cancerous mouse cells.\cite{Mookerjee2017}  De Sousa and collaborators obtained values for ATP production of GBM39 (glioblastoma) of  11 pmol/min/1000cells in vitro and 5 pmol/min/1000cells ex vivo, which corresponds to values of 5 mM/min in vitro and approximately 2 mM/min. The value of 5 mM/min is the value that will be used this study.\cite{DeSousa2022} \textbf{[préciser la méthode?]}
+In the model presented above, the value for oxygen consuption and ATP production are identical. The model needs to be changed to adapt to the measured values. And the easiest way to do it is to add a coefficient to the ATP production term as follows :
 
 
 \[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - k_1 [G][D]  \]
 \[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) -  k_2 [O][GD]  \]
-\[ \frac{d [GD]}{d t} =  k_1 [G][D] - \gamma k_2 [O][GD] \]
+\[ \frac{d [GD]}{d t} =  k_1 [G][D] - \gamma_2 k_2 [O][GD] \]
 \[ \frac{d [D]}{d t} =  -k_1 [G][D] + \mu [T]  \]
-\[ \frac{d [T]}{d t} = \gamma k_2 [O][GD] - \mu [T]  \] 
+\[ \frac{d [T]}{d t} = \gamma_1 k_2 [O][GD] - \mu [T]  \] 
 
-Setting $\gamma$ to the right values allows to have a difference between oxygen consumption and ATP production. In that case, $\gamma$ should be set to 10 
+Setting $\gamma_1$ to the right values allows to have a difference between oxygen consumption and ATP production. In that case, $\gamma_1$ should be set to 10. The value that $\gamma_1$ should take is straightforward. $\gamma_2$ two hypotheses will be tested : in the first $\gamma_2 = \gamma_1 = 10 $ and the second $\gamma_2 = 1$
 
 %This gives a rough idea of the magnitude that shall be achieved in the production term of the model at equilibrium. ATP production in that model is set by the $k_{2}[GD][O]$ term, meaning its value should be between 360 mM/h and 720 mM/h, which corresponds to 6 mM/min to 12 mM/min at maximum. In our case, it is closer to  3 mM/min. So to match these values, $k_{2,max}$ in the full model should be 200 min$^{-1} \cdot$ mM$^{-1}$ rather than 100 which is also compatible with the previous reasoning.
 
-In cells, it is assumed the ATP does not accumulate more than what is needed to ensure ATP availability over the whole cytoplasm and therefore the value of ATP concentration should maintain itself around 20 mM. For the value to stay stable, the consumption term in the equation for $[T]$  should have maximum value that is identical to production. Therefore we should have $\mu [T] \approx k_{2}[GD][O] \approx $ 5 mM/min. Knowing this, and having set a value of 20 mM for $[T]$ the value for $\mu$ should be approximately 0.25  min$^{-1}$. 
+In cells, it is assumed the ATP does not accumulate more than what is needed to ensure ATP availability over the whole cytoplasm and therefore the value of ATP concentration should maintain itself around 20 mM. For the value to stay stable, the consumption term in the equation for $[T]$  should have maximum value that is identical to production. Therefore we should have $\mu [T] \approx k_{2}[GD][O] \approx $ 5 mM/min. Knowing this, and having set a value of 20 mM for $[T]$ the value for $\mu$ should be approximately 0.25  min$^{-1}$. This assumption might be questioned and discussed later in the light of the results obtained by Bauer and collaborators on hematopoietic cells. In their study they found that stimulated growth may lead to accumulation of ATP beyond the metabolic of the cells.\cite{Bauer2004}
+
+Two different models will be implemented. In the first the neurospheres will be represented. Therefore, cells will be arranged in a spherical packed agregate. The other configuration will be the chip. In which cells will be suspended in  matrix with various concentrations. In all cases, the results will be given for an hour of computation
+
+
+
+\subsubsection{Results on the 2D dense model}
+The model representing a dense tissue, it was only tested for the 500 \textmu m-diameter dense tissue spot that is supposed to represent the neurospheres of DIPG cells.
+
 
 To summarize, the configurations are shown in the following table
 
  \begin{center}
-\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}| }
+\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}|p{15mm}|p{15mm}|p{15mm}|p{15mm}| }
 \hline
-\textbf{Parameters} & Low cons config & High cons config   \\ 
+\textbf{Parameters} & Low cons config A & High cons config  A & Low cons config B & High cons config  B & Low cons config A $k_2 = cons$ & High cons config  B $k_2 = cons$  \\ 
 \hline
-\textbf{$d_0$ (\textmu m)} & 500 & "  \\ 
+\textbf{$d_0$ (\textmu m)} & 500 & " & " & " & " & " \\ 
 \hline
-\textbf{$\Delta x$ (\textmu m)} & 15 & "  \\ 
+\textbf{$\Delta x$ (\textmu m)} & 5 & " & " & " & " & " \\ 
 \hline
-\textbf{$\Delta t$ (mn)} & $0.1\cdot 10^{-3}$ & "  \\ 
+\textbf{$\Delta t$ (mn)} & $0.1\cdot 10^{-3}$ & " & " & " & " & " \\ 
 \hline
-\textbf{$[G]_0$ (mM)} & 5 & " \\ 
+\textbf{$[G]_0$ (mM)} & 5 & "  & " & " & " & "\\ 
 \hline
-\textbf{$[O]_0$ (mM)} & 0.15 & " \\ 
+\textbf{$[O]_0$ (mM)} & 0.15 & " & " & " & " & " \\ 
 \hline
-\textbf{$[D]_0$ (mM)} & 0.2 & "  \\ 
+\textbf{$[D]_0$ (mM)} & 0.2 & "  & " & " & " & " \\ 
 \hline
-\textbf{$[GD]_0$ (mM)} & 0.1 & "  \\ 
+\textbf{$[GD]_0$ (mM)} & 0.1 & "  & " & " & " & " \\ 
 \hline
-\textbf{$[T]_0$ (mM)} & 20 & " \\ 
+\textbf{$[T]_0$ (mM)} & 20 & "  & " & " & " & "\\ 
 \hline
-\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 3 & 9 \\ 
+\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.3 & 0.9  & 0.3 & 0.9 & 0.3 & 0.9 \\ 
 \hline
-\textbf{$c_{T}$ } & 0.01 & " \\ 
+\textbf{$c_{T}$ } & 0.01 & "  & " & " & " & " \\ 
 \hline
-\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 200 & "  \\ 
+\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 33 & "  & " & " & " & "  \\ 
 \hline
-\textbf{$c_{D}$ } & $k_{2,max}/10$& "  \\ 
+\textbf{$c_{D}$ } & $\frac{k_{2,max}}{10[D]_0}$& "  & " & " & 0 & "  \\ 
 \hline
-\textbf{$\mu$ } & $0.25$& " \\ 
+\textbf{$\mu$ (min$^{-1}$) } & $0.27$& "  & " & " & " & " \\ 
+\hline
+\textbf{$\gamma_1$ } & $10$& "  & " & " & " & " \\ 
+\hline
+\textbf{$\gamma_2$ } & $10$& "  & 1 & " & " & " \\ 
 \hline
 
 \end{tabular}
 \end{center}
  
-% \begin{center}
-%\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}|p{15mm}| }
-%\hline
-%\textbf{Parameters} & Ref config & Config. 2 & Config. 3 \\ 
-%\hline
-%\textbf{$d_0$ (\textmu m)} & 500 & 1500 & 5000 \\ 
-%\hline
-%\textbf{$\Delta x$ (\textmu m)} & 15 & " & " \\ 
-%\hline
-%\textbf{$\Delta t$ (mn)} & $0.2\cdot 10^{-3}$ & " & " \\ 
-%\hline
-%\textbf{$[G]_0$ (mM)} & 5 & " & " \\ 
-%\hline
-%\textbf{$[O]_0$ (mM)} & 0.15 & " & " \\ 
-%\hline
-%\textbf{$[D]_0$ (mM)} & 0.2 & " & " \\ 
-%\hline
-%\textbf{$[GD]_0$ (mM)} & 0.1 & " & " \\ 
-%\hline
-%\textbf{$[T]_0$ (mM)} & 20 & " & " \\ 
-%\hline
-%\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 50 & " & " \\ 
-%\hline
-%\textbf{$c_{T}$ } & 0.01 & " & " \\ 
-%\hline
-%\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 200 & " & " \\ 
-%\hline
-%\textbf{$c_{D}$ } & $k_{2,max}/10$& " & " \\ 
-%\hline
-%\textbf{$\mu$ } & $0.3$& " & " \\ 
-%\hline
-%
-%\end{tabular}
-%\end{center}
-
-\subsubsection{Results on the 2D model}
-The model representing a dense tissue, it was only tested for the 500 \textmu m-diameter dense tissue spot that is supposed to represent the neurospheres of DIPG cells.
-
+\paragraph{Results for Low cons. config A}
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf1.pdf}
-	\caption{ \label{G_conf1}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf17.pdf}
+	\caption{ \label{G_conf17}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf1.pdf}
-		\caption{ \label{O_conf1}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf17.pdf}
+		\caption{ \label{O_conf17}}
 	\end{subfigure}
-	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf1}}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf17} for Low cons. configuration A}
 \end{figure} 
 
-Figure \ref{conf1}, shows the stationary state for glucose and oxygen over the tissue spot. One thing that can be seen is that the concentration of glucose at the core is over 1 mM. However, contrary to what Kirsch and collaborators suggested, oxygen level does not drop at the core and stays relatively high. Time evolutions are plotted in figure \ref{tconf1}.
+Figure \ref{conf17}, shows the stationary state for glucose and oxygen over the tissue spot. One thing that can be seen is that the concentration of glucose at the core is over 2 mM. However, contrary to what Kirsch and collaborators suggested, oxygen level does not drop at the core and stays relatively high at 75\% of the initial value.. Time evolutions are plotted in figure \ref{tconf17}.
 
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf1.pdf}
-	\caption{ \label{Gt_conf1}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf17.pdf}
+	\caption{ \label{Gt_conf17}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf1.pdf}
-		\caption{ \label{Ot_conf1}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf17.pdf}
+		\caption{ \label{Ot_conf17}}
 	\end{subfigure}
-	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and glucose consumption(b) \label{tconf1}}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and oxygen(b) for Low cons. configuration A \label{tconf17}}
 \end{figure}
 
-The oxygen behavior seems to be subjected to numerical artifacts and therefore the model is rerun with a smaller step size in space (5 \textmu m) and an adpated timestep with respect to the CFL condition.  
+The oxygen behavior is oscillatory. This does not come from numerics as different stepsizes were tested and that the behavior stayed the same. This therefore appears a mathematical features of the system  when solved with this set of constants. Taking a look at the time evolution of ADP, ATP and the consumption terms can providing a better understanding of the observed oscillatory behavior
 
-%The proposed explanation involves both the balance diffusion and consumption for oxygen and glucose and the general behavior of the system. Soon after the initial time,  both oxygen and glucose drop to zero at the center. This drives both consumption term to zero. In order to understand what happens next the concentration of ATP and ADP need to be monitored over time at the center.
-
-\begin{figure}[ht!]
-	\begin{subfigure}{0.45\textwidth}
-	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf2.pdf}
-	\caption{ \label{Gt_conf2}}
-	\end{subfigure}
-	~~
-	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf2.pdf}
-		\caption{ \label{Ot_conf2}}
-	\end{subfigure}
-	\caption{time evolution for 500 \textmu m-diameter tissue section  for Glucose (a) and oxygen(b) with adapted steps \label{GOtconf2}}
-\end{figure}
-
-With smaller steps, the curve is smoother and the minimal values are slightly lower but the overall behavior is unchanged, suggesting that the observed behavior does not have a numerical origin. Monitoring the other variables at the center and rim can help understand the beahvior of the system.
 
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Dt_conf4.pdf}
-	\caption{ \label{Dt_conf4}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Dt_conf17.pdf}
+	\caption{ \label{Dt_conf17}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Tt_conf4.pdf}
-		\caption{ \label{Tt_conf4}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Tt_conf17.pdf}
+		\caption{ \label{Tt_conf17}}
 	\end{subfigure}
-	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) with adapted steps \label{DTtconf4}}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) for Low cons. config A  \label{DTtconf17}}
 \end{figure} 
 
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_kGt_conf4.pdf}
-	\caption{ \label{kGt_conf4}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_kGt_conf17.pdf}
+	\caption{ \label{kGt_conf17}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_kOct_conf4.pdf}
-		\caption{ \label{kOct_conf4}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_kOct_conf17.pdf}
+		\caption{ \label{kOct_conf17}}
 	\end{subfigure}
-	\caption{time evolution for 500 \textmu m-diameter tissue section  for Glucose consumption (a) and oxygen consumption(b) with adapted steps \label{ktconf4}}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for Glucose consumption (a) and oxygen consumption(b) for Low cons. config A \label{ktconf17}}
 \end{figure} 
   
-The concentration of ATP at the center is non-zero and depletes gradually without being replenished through oxygen consumption. This leads to an accumulation of ADP that can be seen in figure \ref{tDTconf37}. This accumulation of ADP drives up the $k_{1}[G][D]$ term leading to an augmentation of ADP consumption near the center. The tipping point happens when the consumption of ADP increases above the supply due to the $\mu[T]$. 
-The oscillatory behavior seems to come from the alternance of accumulation of ATP and ADP until the consumption of either is driven up again. Said alternance make the system oscillate until equilibrium is reached after approximately 40 mn.
+The concentration of ATP at the center is initially non-zero and depletes gradually without being replenished through oxygen consumption, since oxygen consumption at the center almost immediately falls to zero (see fig. \ref{kOct_conf17}). This leads to an accumulation of ADP that can be seen in figure \ref{DTtconf17}. This accumulation of ADP drives up the $k_{1}[G][D]$ term leading to an augmentation of ADP consumption near the center. The tipping point happens when the consumption of ADP , and subsequent generation of ATP, increases above the supply due to the $\mu[T]$. $[D]$ Then start to decreases sharply and $[T]$ reincreases accordingly as can be seen in the oxygen consumption.
+The oscillatory behavior seems to come from the alternance of accumulation of ATP and ADP until the consumption of either is driven up again. Said alternance make the system oscillate until equilibrium is reached after approximately 40 mn. The same process can be observed at the rim but with quicker convergence.
+
+It can be noted that in this case the ADP consumption is nearly constant at 3 mM meaning the ATP/ADP is even lower that the one initially intended especially considering that the ATP steady-state value (10 mM/min) is half of the initial one. This might seem satisfactory but since the glycolytic pathway is not implemented it could be considered anormal behavior as oxydative phosphorylation should yield a higher ATP/ADP at the rim.
+
+The endpoint for such system is also not ADP but the [GD] and therefore by the time the system settles the concentration of $[GD]$ becomes close to the initial concentration value of ATP
 
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf4.pdf}
-	\caption{ \label{D_conf4}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf17.pdf}
+	\caption{ \label{D_conf17}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf4.pdf}
-		\caption{ \label{T_conf4}}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf17.pdf}
+		\caption{ \label{T_conf17}}
 	\end{subfigure}
-	\caption{Concentration map for 500 \textmu m-diameter tissue section at 60 mn for ADP (a) and ATP(b) with adapted steps \label{DTconf4}}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section at 60 mn for ADP (a) and ATP(b)for Low cons. config A \label{DTconf17}}
 \end{figure} 
 
-What can be noted is that the ATP/ADP ratio falls even further below the initial value of 100 and is now closer to 10, which does not contradict the initial assumption. ATP near the rim, stays stable around 15 mM/min which is in the expected range found in the literature. The ATP concentration falls down to 1/3 of the max value near the center suggesting that cells at the center of a 500 \textmu m are not completely depleted.
+\paragraph{Results for High cons. config A}
+As stated before a high glucose consumption configuration was also tested. 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf18.pdf}
+	\caption{ \label{G_conf18}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+Bon	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf18.pdf}
+		\caption{ \label{O_conf18}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf18} for high cons. configuration A}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf18.pdf}
+	\caption{ \label{Gt_conf18}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf18.pdf}
+		\caption{ \label{Ot_conf18}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and oxygen(b) for high cons. configuration A \label{tconf18}}
+\end{figure}
+
+A higher glucose consumption exectedly results in lower steady-state concentrations for both glucose and oxygen as can be seen in figure \ref{conf18}. Time evolutions are qualitatively similar with oscillatins for oxygen. (fig \ref{tconf18})
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf18.pdf}
+	\caption{ \label{D_conf18}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf18.pdf}
+		\caption{ \label{T_conf18}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section at 60 mn for ADP (a) and ATP(b)for Low cons. config A \label{DTconf18}}
+\end{figure}
+
+ADP is shown to be slightly lower near the rim compared to the case of lower glucose consumption and ATP stays at it maximum value near the rim and a viable range of  approximately50 \textmu m in steady-state. The ATP/ADP ratio is higher but still not at the level of the initial value.  
+
+\paragraph{Results for Low cons. config B}
+As explained before, of the addition of $\gamma_1$ and $\gamma_2$ postulates that the two are equal but $\gamma_2$ may also taken to be equal to 1. It is therefore necessary to evaluate this option as well.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf19.pdf}
+	\caption{ \label{G_conf19}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf19.pdf}
+		\caption{ \label{O_conf19}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf19} for low cons. configuration B}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf19.pdf}
+	\caption{ \label{Gt_conf19}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf19.pdf}
+		\caption{ \label{Ot_conf19}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and oxygen(b) for low cons. configuration B \label{tconf19}}
+\end{figure}
+
+In this case no notable difference is observed with the case where $\gamma_1 = \gamma_2$ in figure \ref{tconf19} and \ref{DTconf19}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf19.pdf}
+	\caption{ \label{D_conf19}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf19.pdf}
+		\caption{ \label{T_conf19}}
+	\end{subfigure}
+	\caption{concentration map for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) for low cons. config B \label{DTconf19}}
+\end{figure}
+
+\paragraph{Results for high cons. config B}
+As explained before, of the addition of $\gamma_1$ and $\gamma_2$ postulates that the two are equal but $\gamma_2$ may also taken to be equal to 1. It is therefore necessary to evaluate this option as well.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf20.pdf}
+	\caption{ \label{G_conf20}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf20.pdf}
+		\caption{ \label{O_conf20}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf20} for high cons. configuration B}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf20.pdf}
+	\caption{ \label{Gt_conf20}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf20.pdf}
+		\caption{ \label{Ot_conf20}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and oxygen(b) for high cons. configuration B \label{tconf20}}
+\end{figure}
+
+For the high glucose consumption case, the glucose behavior is nearly identical to the case where $\gamma_1 = \gamma_2$. The oxygen time evolution is however different. It is still oscillatory but the relaxation time is shorter. (figures \ref{conf20} and \ref{tconf20}).
 
 
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Dt_conf20.pdf}
+	\caption{ \label{Dt_conf20}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Tt_conf20.pdf}
+		\caption{ \label{Tt_conf20}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) for high cons. config B \label{DTtconf20}}
+\end{figure} 
 
-%The conjunction of a high value for $[D]$ and the absence of supply leads to a drastic diminution of $[D]$ to value an order of magnitude lower than those  set initially. All ADP is as of this point converted into $[GD]$ which increases accordingly. A very low $[D]$ concentration means that the glucose consumption remains low even if glucose reincreases. The conjunction of low consumption and high supply leads to a  reincreases at the core.
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_kGt_conf20.pdf}
+	\caption{ \label{kGt_conf20}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_kOct_conf20.pdf}
+		\caption{ \label{kOct_conf20}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for Glucose consumption (a) and oxygen consumption(b) for high cons. config B \label{ktconf20}}
+\end{figure} 
 
-%Lower glucose supply does lead to a zero value at the core (with $k_{1,max}$ being changed accordingly). Interstingly, if Oxygen supply is increased, the situation is switched and oxygen now has a non-zero steady state value at the core, while glucose falls to zero in a durable way. The reason, it does not happen with oxygen in the configuration reference is that even with $[GD]$ reincreasing the supply is low enough that the consumption near the rim of the tissue is enough to prevent supply from reaching the center, which is not the case for glucose.
-%
-%An interesting small modification can be made in the equations turning them into: 
-%
-%\[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - k_1 [G][D]  \]
-%\[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) -  k_2 [O][GD]  \]
-%\[ \frac{d [GD]}{d t} =  k_1 [G][D] - 5 k_2 [O][GD] \]
-%\[ \frac{d [D]}{d t} =  -k_1 [G][D] + \mu [T]  \]
-%\[ \frac{d [T]}{d t} = 5 k_2 [O][GD] - \mu [T]  \]
-%
-%The reason for this change is that according to the results of Jagiella and the measurements reported by Romero and collaborators a possible value for ATP production would be 1000 mM/h which corresponds to 15 mM/h. In that case, with a value for oxygen consumption of 3 mM/min the model is changed so that an oxygen consumption of 3 mM/min results in an ATP consumption of 15 mM/min. The variant of the model is tested with all other parameters of the model kept identical except for the timestep. Indeed, $5k_2$ becomes the shortest time constant of the system and necessitate a smaller timestep than before.
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_Gt_conf48.pdf}
-%	\caption{ \label{Gt_conf48}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_Ot_conf48.pdf}
-%		\caption{ \label{Ot_conf48}}
-%	\end{subfigure}
-%	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) \label{GOtconf48}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_G_conf48.pdf}
-%	\caption{ \label{G_conf48}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_O_conf48.pdf}
-%		\caption{ \label{O_conf48}}
-%	\end{subfigure}
-%	\caption{Concentration map for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) \label{GOconf48}}
-%\end{figure} 
-%
-%The time evolution of glucose and oxygen concentration are shown in figure \ref{GOtconf48}. The increase in for the ATP term production prevents the previous problem and leads to the opposite one: Oxygen is now the species that does not drop to zero at the core. However, considering what was said before, It is possible that the core of neurosphere is in fact not fully depleted of oxygen. Furthermore, the measurements of Hashem on spheroids of similar size seem to suggest that concentration does not drop to zero but rather to a value around 50\% of the external value.\cite{Hashem2015} This interestingly goes against the simulations of Mao who predicted a fully depleted core in spheroids of that size.\cite{Mao2018} It is all the more interesting that the oxygen cellular consumption value used in this study was derived from their model.
-%
-%It can be seen in the maps that the gradients are pretty steep, leading to a significant necrotic core even in 500 \textmu m-diameter neurospheres. The value for glucose was estimated very roughly and actually turns out to be significantly higher than the value of approximately 3 mM/min measured by Mao and collaborators. A calculation is then ran with $k_{1,max}$ set so that the global maximum glucose consumption is equal to 3 mM/min. Interstingly this yields a smoother gradient for glucose but a even more oscillatory behavior for oxygen which seems chaotic as can be seen in \ref{GOtconf53}
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_G_conf53.pdf}
-%	\caption{ \label{G_conf53}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_Ot_conf53.pdf}
-%		\caption{ \label{Ot_conf48}}
-%	\end{subfigure}
-%	\caption{Concentration map for 500 \textmu m-diameter tissue section  for glcuose (a) and time evolution for oxygen (b) \label{GOtconf53}}
-%\end{figure} 
-%
-%In the first example, the oxygen consumption was increased in order to obtain 6 mM/min ATP consumption term. But now, we also have the option of adapting the system in order to have both the 3 mM/min oxygen consumption and the 6 mM/min ATP production. This, however leads back to a behavior very similar to the one observed before, as can be seen in figure \ref{GOtconf51}.
-%
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_Gt_conf51.pdf}
-%	\caption{ \label{Gt_conf51}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_Ot_conf51.pdf}
-%		\caption{ \label{Ot_conf51}}
-%	\end{subfigure}
-%	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) \label{GOtconf51}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_G_conf51.pdf}
-%	\caption{ \label{G_conf51}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_O_conf51.pdf}
-%		\caption{ \label{O_conf51}}
-%	\end{subfigure}
-%	\caption{Concentration map for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) \label{GOconf51}}
-%\end{figure} 
+The only notable difference in figure \ref{ktconf20} in the time evolution with config A is the behavior of the glucose consumption. 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf20.pdf}
+	\caption{ \label{D_conf20}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf20.pdf}
+		\caption{ \label{T_conf20}}
+	\end{subfigure}
+	\caption{concentration map for 500 \textmu m-diameter tissue section  for ADP (a) and ATP(b) for high cons. config B \label{DTconf20}}
+\end{figure}
+
+In figure \ref{DTconf20} a notable difference with the $\gamma_1 = \gamma_2$ case is the fact that ATP at the rim settles at value higher than the initial one (30 mM). This is not incompatible with the reported experimental value and that does keep the ATP/ADP ratio higher than in other configurations. It should also be noted that this configuration along with other does not yield anaerobic tissue at 200 \textmu m.
+
+\paragraph{Results low cons config A $k_2 = cons"$}
+Though the principle of backregulation of glucose consumption through ATP/ADP ratio seems natural (production stops if reserve are full) the rationale between the backregulation of oxygen consumption and therefore ATP production by the amount ADP seems counterproductive. Cells will ideally have a rather high ATP/ADP ratio. But in that case when ADP increases it slows down ATP production... Moreover ADP is already accounted for in glucose consumption backregulation. Therefore configuration where this backregulation is shutdown are tested. Both $\gamma$ configurations are tested in that case
+
+For the suppressed backregulation in the case of $\gamma$ with different values (10 and 1) the system  blows up numerically for both low and high glucose consumption. Those configurations will therefore not be kept for the following studies and the focus will be put solely on the $\gamma_1 = \gamma_2$.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf25.pdf}
+	\caption{ \label{G_conf25}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf25.pdf}
+		\caption{ \label{O_conf25}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf25} for low cons. configuration A}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf25.pdf}
+	\caption{ \label{Gt_conf25}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf25.pdf}
+		\caption{ \label{Ot_conf25}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and oxygen(b) for low cons. configuration A $k_2 = cons$ \label{tconf25}}
+\end{figure}
+
+In that case, the oxygen level falls to 2/3 of the initial level and the behavior is much less oscillatory which could be expected considering how the whole system behaved with the backregulation before. (see figure \ref{tconf25})
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf25.pdf}
+	\caption{ \label{D_conf25}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf25.pdf}
+		\caption{ \label{T_conf25}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for ADP (b) and ATP \label{conf25} for low cons. configuration A $k_2 = cons$}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Dt_conf25.pdf}
+	\caption{ \label{Dt_conf25}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Tt_conf25.pdf}
+		\caption{ \label{Tt_conf25}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and  ATP(b) for low cons. configuration A $k_2 = cons$ \label{tconf25}}
+\end{figure}
+
+What is interesting is that in that case the end point of the system is ADP and not the $[GD]$ bound state which seems more natural. The ATP/ADP ratio at the rim is approximately 6 which is not that high. But the overall behavior is less pathological. It can  be observed that there is no oxygen depletion at 200 \textmu m depth in the dense aggregate.
+
+\paragraph{Results high cons config A $k_2 = cons"$}
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_G_conf27.pdf}
+	\caption{ \label{G_conf27}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_O_conf27.pdf}
+		\caption{ \label{O_conf27}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for glucose (b) and oxygen \label{conf27} for high cons. configuration A $k_2 = cons$}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Gt_conf27.pdf}
+	\caption{ \label{Gt_conf27}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Ot_conf27.pdf}
+		\caption{ \label{Ot_conf27}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for glucose (a) and oxygen(b) for high cons. configuration A $k_2 = cons$ \label{tconf27}}
+\end{figure}
+
+For high glucose consumption, the glucose falls near zero at the center of the aggregate and the oxygen falls slightly lower than in the low consumption case (see figure \ref{conf27}). The behavior is smoother than with the backregulation on $k_2$ 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_D_conf27.pdf}
+	\caption{ \label{D_conf27}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_T_conf27.pdf}
+		\caption{ \label{T_conf27}}
+	\end{subfigure}
+	\caption{Concentration map for 500 \textmu m-diameter tissue section  (a) for ADP (b) and ATP \label{conf27} for high cons. configuration A $k_2 = cons$}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Dt_conf27.pdf}
+	\caption{ \label{Dt_conf27}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fsys2D_Tt_conf27.pdf}
+		\caption{ \label{Tt_conf27}}
+	\end{subfigure}
+	\caption{time evolution for 500 \textmu m-diameter tissue section  for ADP (a) and  ATP(b) for high cons. configuration A \label{tconf27}}
+\end{figure}
+
+In the high consumption case, the ATP and ADP dynamics and spatial repartition do not change significantly. The ATP concentration falls lower while staying close to 20 near the rim. 
+
 
 \paragraph{Conclusions}
-Using estimates for the different consumptions and concentrations for the literature, a configuration with behavior compatible with observations and hypotheses was found. Some aspects can be considered problematic such as the oscillatory time behavior of oxygen. However, those features were proven not to be caused by numerical aspects of the model.
+Using estimates for the different consumptions and concentrations for the literature, different configurations were tested for the case of the neurosphere. It has been found that the best configuration would be the one with the same value for $gamma_1$ and $\gamma_2$ and where the backregulation on $k_2$ has been removed.
 
-In the next subsection the model will be adapted to better fit the behavior or cells, and notably tumor cells, to observations.
-%\paragraph{Observations \& Test}
-%With the chosen set of parameters for the concentration for glucose and oxygen fall to zero in less than 30 mn which could be expected. However ,as shown in figure \ref{conf8}, after 3 hours, the concentration $[D]$ drops after approximately 180 mn driving down the glucose consumption irreversibly leading to the reincrease of the concentration $[G]$ at the core of the tissue spot. Direct observations does not seem to suggest any obvious direct cause to the  decrease of $[D]$ and the subsequent reincrease in $[G]$ at the center of the tissue spot.
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_G_conf8.pdf}
-%	\caption{ \label{G_conf8}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/fullsys2D_Gt_conf8.pdf}
-%		\caption{ \label{Gt_conf8}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{conf8}}
-%\end{figure} 
-%
-%A series of tests were conducted in order to understand the behavior of the model and try to obtain a zero steady-state value for glucose at the center, as is expected in tumor :
-%\begin{itemize}
-%\item{Test 1:} The consumption of oxygen was increased. The idea was that if $[D]$ accumulated too much leading the $[D]$ to the subsequent sharp decrease, then an increased $k_{2,max}$ would result in a different behavior
-%\item{Test 2:} Analog to test 1 where the glucose consumption was decreased.
-%\item{Results 1 \& 2:} The system kept the same behavior overall and the concentration in glucose reincreased. Interstingly decreasing glucose consumption showed the shape of the curve when it does not cross zero, and suggests that with this model glucose concentration cannot reach zero at the core. 
-%\item{Test 3:} It is suspected that the low value for ATP consumption could be the origin of the slow dynamics that are observed, therefore the value was increased from 0.02 to 1 and later 50 to see if it changed the behavior of the system
-%\item{Results 3:}  Though it did shift the inflexion point, no clear effect on the response of the system  was observed.
-%\item{Test 4:} A numerical origin to the problem was considered. It was thus assumed that if the observed behavior was linked to a stability problem, lowering the timestep value may change the behavior.
-%\item{Results 4:} Changing the time step had no visible incidence on the system behavior, disproving the numerical hypothesis
-%\end{itemize}
-%
-%Overall, the coupled nature of the system made it very difficult to simply tune its behavior towards the wanted behavior. More thant 20 configuration were tested and almost all consumption parameters were varied by an order of magnitude.
-%
-% \begin{center}
-%\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}|p{15mm}|p{25mm}| }
-%\hline
-%\textbf{Parameters} & Config. 1 & Config. 2 & Config. 3 & Config. 4-23 \\ 
-%\hline
-%\textbf{$d_0$ (\textmu m)} & 2600 & " & " & 2000-3500 \\ 
-%\hline
-%\textbf{$\Delta x$ (\textmu m)} & 15 & " & " & 15-50 \\ 
-%\hline
-%\textbf{$\Delta t$ (mn)} & 10$^{-3}$ & " & " & 5e$^{-3}$ - 1e$^{-2}$ \\ 
-%\hline
-%\textbf{$[G]_0$ (mM)} & 5 & " & " & " \\ 
-%\hline
-%\textbf{$[O]_0$ (mM)} & 0.15 & " & " & " \\ 
-%\hline
-%\textbf{$[D]_0$ (mM)} & 0.2 & " & " & 0.2 - 2 \\ 
-%\hline
-%\textbf{$[GD]_0$ (mM)} & 0.1 & " & " & 0.1 - 1\\ 
-%\hline
-%\textbf{$[T]_0$ (mM)} & 20 & " & " & " \\ 
-%\hline
-%\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 10 & " & " &  0.01 - 10\\ 
-%\hline
-%\textbf{$c_{T}$ } & 0.01 & " & " & 0.01 - 0.1\\ 
-%\hline
-%\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.1 & " & " & 0.01 - 5\\ 
-%\hline
-%\textbf{$c_{D}$ } & $k_{2,max}/10$& " & " & $k_{2,max}/10$-$k_{2,max}/100$ \\ 
-%\hline
-%\textbf{$\mu$ (min$^{-1}$ } & 0.02 & 1 & 10 & 0.02-10 \\ 
-%\hline
-%\textbf{duration } & 20 & " & " & 100-400 \\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%
-%
-%\paragraph{Discussion \& conclusions}
-%It appears that the model in that state cannot lead to a situation of glucose depletion in the core of large aggregate. Cells being depleted of glucose for three hours seems too short to lead to cell death. The origin of this behavior seems to be firmly encoded in the equations. There is no reliable source of ADP ($[D]$) that can maintain the glucose consumption above zero. Simulation with a larger step in space in order to favor stability and accuracy over long simulations were performed ans still lead to that behavior suggesting this is not a numerical artifact.
-%
-%It is accepted that the glucose behavior of the system cannot be used in a cellular model because it does not fall to zero for long enough to actually lead to cell death through starvation. For this reason, and because of a few additional points that will be detailed further, an updated model based on those equation is proposed.
+\subsection{Rassessment of the model}
+What  has been evidenced in the previous section is that  the constants in the model cannot be simply set and that the steady-state cannot be predicted in a straightforward fashion from the values of the constant. First of all the model is slightly modified to include a $\delta$ that fills the same role for glucose that $\gamma$ does for oxygen. That is to say remove the necessity for strict equality between the rate of consumption and the ensuing molecule production. The equation system is thus written as follows :
 
-
-
-\subsection{Modifications on the reduced metabolic model}
-
-\subsubsection{Model presentation and hypothesis}
-It has now been well established that tumor cells exhibit aerobic AND anaerobic metabolism. A commonly cited potential explanation is that proliferation is better supported by the kinetics of anaerobic glycolysis, which is faster than oxydative phosphorylation.\cite{Mikirova2018}\textbf{[find more papers on this]}. In the current reduced model, there is no direct path from glucose to ATP. Therefore, a first suggested modification would be to add an anaerobic glycolysis pathway to the system. The most straightforward way to include that would be to add a consumption term $k_3$ corresponding to anaerobic glycolysis in the glucose equation and a corresponding production term in the ATP equation.
-
-The equation system would thus become:
-\[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - k_1 [G][D] -k_3 [G]  \]
+\[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - k_1 [G][D]  \]
 \[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) - k_2 [O][GD]  \]
-\[ \frac{d [GD]}{d t} =  k_1 [G][D] - \gamma k_2 [O][GD] \]
-\[ \frac{d [D]}{d t} =  -k_1 [G][D] + \mu [T]  \]
-\[ \frac{d [T]}{d t} =  \gamma k_2 [O][GD] - \mu [T] + k_3 [G]  \]
+\[ \frac{d [GD]}{d t} =  \delta k_1 [G][D] - \gamma k_2 [O][GD] - k_3[GD] \]
+\[ \frac{d [D]}{d t} =  -\delta k_1 [G][D] + \mu [T]  \]
+\[ \frac{d [T]}{d t} =  \gamma k_2 [O][GD] - \mu [T] + k_3[GD] \]
 
-Another option which is a bit more complex  is the one where the path without oxygen goes through $[GD]$ instead of $[D]$  yielding the following version of the equation system :
 
-\[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - k_1 [G][D]   \]
-\[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) - k_2 [O][GD]  \]
-\[ \frac{d [GD]}{d t} =  k_1 [G][D] - 2 k_2 [O][GD] - k_3 [GD]\]
-\[ \frac{d [D]}{d t} =  -k_1 [G][D] + \mu [T]    \]
-\[ \frac{d [T]}{d t} =  2 k_2 [O][GD] - \mu [T] + k_3 [GD]  \]
+Another important point that should be noted is that contrary to what was presented before, the two sides (i.e $\gamma_1$ and $\gamma_2$) must be equal in order to keep the following condition true : 
 
-This option makes sense in how requires both glucose and ADP to end up with a new ATP molecule. This is the one that will be studied in this section.
+\[ [T] + [D] + [GD] = const \]
 
-The obvious caveat is that this addition to the system means the new value of $k_3$ must be evaluated. The starting point is the ATP production which is still taken to be 6 mM/min. However, this time the production must be divided between the mitochondrial ATP and glycotlytic ATP. In MCF-7 cells it was reported that this ratio was 3/4 of mitochondrial and 1/4 of glycolytic ATP  For the sake of simplicity, it will also be assumed that backregulation works similarly between both pathway in those first tests, leading to  :
+The term $k_3[GD]$ corresponds to the glycolytic path which cannot be ignored especially in tumor cells. There could have been other ways to include this path in the equations but this one was preferred for the following reasons :
+\begin{itemize}
+\item using $[GD]$ instead of $[G]$ alone makes the glycolytic path dependent on both glucose and ADP which is closer to reality
+\item This option also conserves the validity of the conservation equation mentioned above 
+\end{itemize}
 
-\[k_3 = k_{3,max} \exp(-c_T [T]/[D])\]
+As explained in the previous section,  it is in fact difficult to find a set of values for all the parameters that satisfies all the criteria found in the literature or derived from experimental observations. Therefore, all the criteria will be listed in the following table :
 
-with $c_T$  taking the same value as for $k_1$.
+\begin{center}
+\begin{tabular}{ |p{30mm}|p{30mm}|p{15mm}| }
+\hline
+Criterion & Source  & Ref.\\ 
+\hline
+ $[O]_{core,\infty} \approx 0$ & chip observations & N.A \\
+ \hline
+ $ k_1 [G]_{\infty}[D]_{\infty} \approx$ 0.1-1 mM/min & \textit{in vivo} measurements on brain tumors & \cite{Hossmann1986} \cite{Herholz1992} \cite{Rhodes1983}\\
+ \hline
+  $ k_2 [GD]_{\infty}[O]_{\infty} \approx$ 0.5-3 mM/min & \textit{in vitro} measurements on DIPGs & \cite{Shen2019} \cite{Ruas2018} \\
+ \hline
+  $ l_{[O]=0} \approx $ 1000 \textmu m & chip observations & N.A  \\
+ \hline 
+   $ \gamma k_2 [GD]_{\infty}[O]_{\infty} + k_3 [GD]_{\infty} \approx$ 5 mM/min & \textit{in vitro} ATP$_{prod}$ measurements on GBM39 & \cite{DeSousa2022}\\
+ \hline
+    $ \frac{\gamma k_2 [GD]_{\infty}[O]_{\infty}}{k_3 [GD]_{\infty}} \approx$ $\frac{6}{4}$ & \textit{in vitro} ATP$_{prod}$ measurements on GBM39 & \cite{DeSousa2022}\\
+ \hline
+     $ \frac{[T]_{\infty}}{[D]_{\infty}} \approx$ $0.05- 1$ & \textit{in vitro} measurements on DIPGs & \cite{Shen2019} \cite{Mbah2022}\\
+ \hline
+\end{tabular}
+\end{center}
 
-With this modified model two main configurations were tested. The first one was a "low consumption" configuration corresponding to a maximum ATP consumption rate of 6 mM/min 
+Exploration of different values for all parameters lead to the finding of an optimal configuration on a high-concentration chip configuration. The value for all parameters are displayed in the following table :
+
+ \begin{center}
+\begin{tabular}{ |p{22mm}|p{15mm}| }
+\hline
+\textbf{Parameters} & Optimal config  \\ 
+\hline
+\textbf{$d_0$ (\textmu m)} & 4500  \\ 
+\hline
+\textbf{$\Delta x$ (\textmu m)} & 15  \\ 
+\hline
+\textbf{$\Delta t$ (mn)} & $1\cdot 10^{-3}$ \\ 
+\hline
+\textbf{$[G]_0$ (mM)} & 5  \\ 
+\hline
+\textbf{$[O]_0$ (mM)} & 0.15 \\ 
+\hline
+\textbf{$[D]_0$ (mM)} & 0.2   \\ 
+\hline
+\textbf{$[GD]_0$ (mM)} & 0.1  \\ 
+\hline
+\textbf{$[T]_0$ (mM)} & 20  \\ 
+\hline
+\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.01  \\ 
+\hline
+\textbf{$c_{T}$ } & 0  \\ 
+\hline
+\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 45 \\ 
+\hline
+\textbf{$c_{D}$ } &  0  \\ 
+\hline
+\textbf{$\mu$ (min$^{-1}$)} & $0.52$\\ 
+\hline
+\textbf{$\gamma$ } & $1.6$  \\ 
+\hline
+\textbf{$\delta$ } & $6$  \\ 
+\hline
+\textbf{Cell conc. (µL$^{-1}$)} & $10 000$ \\ 
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsubsection{Results}
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/chp_G_conf80.pdf}
+	\caption{ \label{G_conf80}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_O_conf80.pdf}
+		\caption{ \label{O_conf80}}
+	\end{subfigure}
+	\caption{Concentration map for 4500 \textmu m-diameter pellet section  (a) for glucose (b) and oxygen \label{conf80} for the best configuration }
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_D_conf80.pdf}
+	\caption{ \label{G_con80}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_T_conf80.pdf}
+		\caption{ \label{O_conf80}}
+	\end{subfigure}
+	\caption{Concentration map for 4500 \textmu m-diameter pellet section  (a) for glucose (b) and oxygen \label{conf80} for the best configuration }
+\end{figure}
+
+Though they are not displayed in plots, the values for the other criterion are shown in the following table 
+
+\begin{center}
+\begin{tabular}{ |p{30mm}|p{30mm}| }
+\hline
+Criterion & Value in the model  \\ 
+\hline
+ $[O]_{core,\infty} \approx 0$ & $[O]_{core,\infty} = 0$ \\
+ \hline
+ $ k_1 [G]_{\infty}[D]_{\infty} \approx$ 0.1-1 mM/min &  $ k_1 [G]_{\infty}[D]_{\infty} =$ 0.6 mM/min\\
+ \hline
+  $ k_2 [GD]_{\infty}[O]_{\infty} \approx$ 0.5-3 mM/min &   $ k_2 [GD]_{\infty}[O]_{\infty} =$ 1 mM/min  \\
+ \hline
+  $ l_{[O]=0} \approx $ 1000 \textmu m & $l_{[O]=0} \approx $ 1000  \\
+ \hline 
+   $ \gamma k_2 [GD]_{\infty}[O]_{\infty} + k_3 [GD]_{\infty} \approx$ 5 mM/min &    $ \gamma k_2 [GD]_{\infty}[O]_{\infty} + k_3 [GD]_{\infty} =$ 3.6 mM/min\\
+ \hline
+    $ \frac{\gamma k_2 [GD]_{\infty}[O]_{\infty}}{k_3 [GD]_{\infty}} \approx$ $\frac{6}{4}$ &     $ \frac{\gamma k_2 [GD]_{\infty}[O]_{\infty}}{k_3 [GD]_{\infty}} =$ $\frac{5}{4}$ \\
+ \hline
+     $ \frac{[T]_{\infty}}{[D]_{\infty}} \approx$ $0.05- 1$ &  $ \frac{[T]_{\infty}}{[D]_{\infty}} =0.5 $ \\
+ \hline
+\end{tabular}
+\end{center}  
+This evidences that the configuration is mostly suitable compared to the criterion fixed earlier. with only the complete ATP production being slightly lower that the targeted value but still in the millimolar range which is expected for intracellular concentration.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+		\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_O_conf81.pdf}
+		\caption{ \label{O_conf81}}
+	\end{subfigure}
+	~~
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/bfsys2D_O_conf36.pdf}
+	\caption{ \label{O_conf36}}
+	\end{subfigure}
+	\caption{Oyxygen concentration map for 4500 \textmu m-diameter pellet section  (a) and for the 500 \textmu m-diameter neurosphere (b) \label{conf81}  }
+\end{figure}
+For the neurosphere, the concetration fall to 0.06 mM which may not be considered fully anaerobic as was stated by \cite{Kirsch1978}. However, the concentration is still 60\% lower than the external one. Also it should be noted that in this in this case the external concentration is not the physioxic concentration for tumors that would be 0.04 (5\%) according to McKeown. \cite{McKeown2014} if the external concentration was lower the core of the neurosphere would be completely anoxic.
+
+Now that  a satisfying "stable" model has been found the question becomes how to include metabolic behavior of cells(i.e quiescence and necrosis) in the model in a way that is realistic with respect to the physiological reality of cells.
+
+\subsubsection{Model Response to Starvation}
+One of the most strking features of cancer cells metabolism is the ability for numerous cell lines to switch from a glycolytic-oriented metabolism to an oxydative one and vice versa if oxygen or glucose becomes scarce. \cite{MullerKlieser1986} \cite{Freyer1986}
+
+The question adressed in this section is whether the model, as it is currently expressed can switch between oxydative and glycotytic metabolism depending on its envrionment. Therefore concentration of one nutrient is divided by 20 and the resulting effect on other metabolites is observed.
+
+\paragraph{Glucose starvation}
+As can be seen in figures \ref{tconf82} and \ref{Btconf82}, the starvation in glucose induces a sharp decrease in all metabolic variables. All consumptions are divided by at least 10 compared to reference values obtained. Most importantly, the ATP concentration falls drastically to 1/10th of the value obtained before.
+
+Decrease of ATP content below a threshold possibly as high as 70 \% of the control value can lead to cell death \cite{Lieberthal1998}. A value of 30\% has also been reported to induce apoptosis by Izyumov and collaborators in HeLa cells.\cite{Izyumov2004}
+
+Knowing this and considering the results, the cells can be considered to all undergo necrosis. However, observations on the DIPG cells that the current study seeks to model has shown resilience to glucose starvation. The observations can be understand by taking a look at the structure of the model. Indeed, no pathway to ATP works without glucose.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kGt_conf84.pdf}
+	\caption{ \label{kGt_conf84}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kOct_conf84.pdf}
+		\caption{ \label{kOct_conf84}}
+	\end{subfigure}
+	\caption{time evolution for glucose consumption (a) and  oxygen consumption (b) in the chip in the case of glucose starvation \label{tconf84}}
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_Tt_conf84.pdf}
+	\caption{ \label{Tt_conf84}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_k3t_conf84.pdf}
+		\caption{ \label{k3t_conf84}}
+	\end{subfigure}
+	\caption{time evolution for ATP concentration (a) and  glycolytic consumption (b) in the chip in the case of glucose starvation \label{Btconf82}}
+\end{figure}
+
+\paragraph{Oxygen starvation}
+Contrary to glucose, it can be seen in figures \ref{tconf86} and \ref{Btconf86} that the oxygen starvation does not lead to ATP depletion. This was expected as the glycotytic path had been added in the model specifically to that end.
+
+Another observation is that without any other modification that the oxygen concentration the equation system resulted in a spontaneous balancing of the glycolytic consumption in order to maintain the ATP concentration nearly at the same level as in the situation where oxygen is available.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kGt_conf86.pdf}
+	\caption{ \label{kGt_conf86}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kOct_conf86.pdf}
+		\caption{ \label{kOct_conf86}}
+	\end{subfigure}
+	\caption{time evolution for glucose consumption (a) and  oxygen consumption (b) in the chip in the case of glucose starvation \label{tconf86}}
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_Tt_conf86.pdf}
+	\caption{ \label{Tt_conf86}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_k3t_conf86.pdf}
+		\caption{ \label{k3t_conf86}}
+	\end{subfigure}
+	\caption{time evolution for ATP concentration (a) and  glycolytic consumption (b) in the chip in the case of oxygen starvation \label{Btconf86}}
+\end{figure}
+
+\paragraph{Model response to starvation}
+The response to glucose starvation is not compatible with observations. Indeed, DIPG-007 cells have been seen as resistant to glucose starvation which is not what the model suggest. This raises the question of how glucose resistance is achieved.
+
+Similar to a certain number of cells and notably cancer cells DIPG-cells can rely on two mechanisms to avoid cell death when glucose become scarce. The first one is glutaminolysis. Glutamine is one of the molecule involved in the TCA cycle and if glucose goes missing it can be used as a replacement carbon source to meet cell ATP demands. Moreover, ATP can also be derived from autophagy, which is a process in which cells degrade large molecules in order to obtain additional energy.
+
+\subsubsection{Realistic chip situation}
+Up until that point, external concentration was maintained at a given level for both oxygen and glucose. This was supposed to mimic a constant flux of fresh medium. However the first few experiments ran on the chip were made without a flux. Nutrient supply was achieved through a change of the medium after 48h.
+
+The goal of this section is to investigate the glucose and oxygenation state of the model after 48h  in order to better understand the dynamics of cells in the chip.
+
+One of the first and most notable changes in that case is that the concentration of glucose is changed from 5 mM (value found in the literature) to 20 mM which is closer to the concentration actually used in the experiments on the chip.
+
+The first notable observation in figure \ref{GtkGtdepconf3} is that the glucose consumption overshoots its previous maximum value of 0.6 mM/min by 100 \%. This means that a new configuration where the maximum is lower had to be found
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/dep/cfsys2Ddep_Gt_conf3.pdf}
+	\caption{ \label{Gtdep_conf3}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/dep/cfsys2Ddep_kGt_conf3.pdf}
+		\caption{ \label{kGtdep_conf3}}
+	\end{subfigure}
+	\caption{time evolution for glucose concentration (a) and glucose consumption (b) in the chip in the case of non-circulating medium \label{GtkGtdepconf3}}
+\end{figure}
+
+In order to achieve lower glucose consumption, especially at the rim  the following set of constants was fed into the model and the simulations were ran for 400 mn.
+
+While glucose decreases slowly enough to guarantee a concentration above 10 mM after several hour, oxygen is depleted. Indeed with consumption rate  found in the literature oxygen and an initial concentration of 150 \textmu M, the concentration depletes entirely in an hour even at the rim and the metabolism is sustained almost entirely through glycolysis. Physically the faster settling makes sense as oxygen is less abundant and diffuses much faster than glucose.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/dep/cfsys2Ddep_Gt_conf7.pdf}
+	\caption{ \label{Gtdep_conf7}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/dep/cfsys2Ddep_Ot_conf7.pdf}
+		\caption{ \label{Otdep_conf7}}
+	\end{subfigure}
+	\caption{time evolution for glucose concentration (a) and glucose consumption (b) in the chip in the case of non-circulating medium \label{GtkGtdepconf7}}
+\end{figure}
+
+The preliminary conclusion that can be drawn from the results presented in figure \ref{GtkGtdepconf6} is that even if a majority of cells slowed down their consumption as a result of less abundant nutrients, the system would still be anoxic for almost 24h between medium and probably significantly depleted in glucose.
+
+\subsection{A more realistic and stoechiometric variant...}
+So far the model is being described by ODE that do not account for stoechiometry of the different reactions taking place. While the full system would be too complex to describe with accurate stoechimetry, Jagiella and collaborators proposed a simplified version of glycolytic and oxydative metabolism :
+
+\[ [G] + 2[N]^+ \rightarrow 2[P] + 2[T] + 2[N]  \]
+\[ [P] + [N] + 3[O] \rightarrow 17[T] + [N]\]
+
+with $[P]$ the concentration in Pyruvate, $[N]$ being the concentration of NADH and $[N]^+$ the concentration of NAD+. This equation will be used as basis to reformulate the preivous model in order to account for stoechiometry.
+
+\subsubsection{Pyruvate as the intermediate bound state} 
+First of all, an interesting observation is that, even if it does not correspond strictly to reality, replacing $[GD]$ by $[P]$ in our model would be a sensible choice. In fact, knowing this, the initial model should even be rewritten as: 
+
+\[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - (k_1+k_3) [G][D] \]
+\[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) - k_2 [O][P]  \]
+\[ \frac{d [P]}{d t} =  \delta k_1 [G][D] - \gamma k_2 [O][P]  \]
+\[ \frac{d [D]}{d t} =  -\delta (k_1+k_3) [G][D] + \mu [T]  \]
+\[ \frac{d [T]}{d t} =  \gamma k_2 [O][P] - \mu [T] + \delta k_3[G][D] \]
+
+
+This variant makes more sense if the intermediate state is considered to be Pyruvate. It also still respects the conservation that was set before. Considering the initial concentration chosen for $[GD]$ is 0.2 mM and that this value is within the range of known intracellular concentration of pyruvate, it is considered that the balance still holds. Before going any further, this  variant of the model is compared to the previous for similar sets of parameters.
+
+The new equation set was tested on the chip configuration with two concentrations with the following set of parameters:
 
  \begin{center}
 \begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}| }
 \hline
-\textbf{Parameters} & Low cons. config & High cons. config   \\ 
+\textbf{Parameters} & Low gluc. cons config. & High gluc. cons config  \\ 
 \hline
-\textbf{$d_0$ (\textmu m)} & 500 & " \\ 
+\textbf{$d_0$ (\textmu m)} & 4500 & " \\ 
 \hline
 \textbf{$\Delta x$ (\textmu m)} & 15 & " \\ 
 \hline
-\textbf{$\Delta t$ (mn)} & $0.2\cdot 10^{-3}$ & "  \\ 
+\textbf{$\Delta t$ (mn)} & $1\cdot 10^{-3}$ & "\\ 
 \hline
-\textbf{$[G]_0$ (mM)} & 5 & "  \\ 
+\textbf{$[G]_0$ (mM)} & 20 & "  \\ 
 \hline
-\textbf{$[O]_0$ (mM)} & 0.15 & "  \\ 
+\textbf{$[O]_0$ (mM)} & 0.15 & "\\ 
 \hline
 \textbf{$[D]_0$ (mM)} & 0.2 & "  \\ 
 \hline
@@ -1722,378 +2091,536 @@ With this modified model two main configurations were tested. The first one was 
 \hline
 \textbf{$[T]_0$ (mM)} & 20 & "  \\ 
 \hline
-\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 50 & "  \\ 
+\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.5 & 1.6   \\ 
 \hline
-\textbf{$c_{T}$ } & 0.01 & "  \\ 
+\textbf{$c_{T}$ } & 0 & "  \\ 
 \hline
-\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 200 & " \\ 
+\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.4  & "  \\ 
 \hline
-\textbf{$c_{D}$ (mM$^{-2}$ $\cdot$ mn$^{-1}$)} & $k_{2,max}/10$& "  \\ 
+\textbf{$c_{D}$ } & 0 & "  \\ 
 \hline
-\textbf{$\mu$ (mn$^{-1}$} & $0.225$ & 3.75  \\ 
+\textbf{$\mu$ (min$^{-1}$)} & $0.8$ & " \\ 
 \hline
-\textbf{$k_{3,max}$  (mn$^{-1}$)} & 15 & 37.5  \\ 
+\textbf{$\gamma$ } & $2$ & "  \\ 
+\hline
+\textbf{$\delta$ } & $12$ & 5.5  \\ 
+\hline
+\textbf{$k_{3,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 1.6 & 2  \\ 
+\hline
+\textbf{Cell conc. (µL$^{-1}$)} & $10 000$  & " \\ 
 \hline
 \end{tabular}
 \end{center}
-%
-%
-%\subsubsection{Tested configurations}
-%The same 2D finite difference model as before is used to solve the new equation system with the following configurations: 
-%
-% \begin{center}
-%\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}|p{15mm}|p{20mm}|}
-%\hline
-%\textbf{Parameters} & Config. 1 & Config. 2 & Config. 3 & Config. 4-31 \\ 
-%\hline
-%\textbf{$d_0$ (\textmu m)} & 2600 & " & " & 2000-3500 \\ 
-%\hline
-%\textbf{$\Delta x$ (\textmu m)} & 15 & " & " & 15-50 \\ 
-%\hline
-%\textbf{$\Delta t$ (mn)} & 10$^{-3}$ & " & " & 5e$^{-3}-$ - 1e$^{-2}$ \\ 
-%\hline
-%\textbf{$[G]_0$ (mM)} & 5 & " & " & " \\ 
-%\hline
-%\textbf{$[O]_0$ (mM)} & 0.15 & " & " & " \\ 
-%\hline
-%\textbf{$[D]_0$ (mM)} & 0.2 & " & " & 0.2 - 2 \\ 
-%\hline
-%\textbf{$[GD]_0$ (mM)} & 0.1 & " & " & 0.1 - 1\\ 
-%\hline
-%\textbf{$[T]_0$ (mM)} & 20 & " & " & " \\ 
-%\hline
-%\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 10 & " & " &  0.01 - 10\\ 
-%\hline
-%\textbf{$c_{T}$ } & 0.01 & " & " & 0.01 -0.1\\ 
-%\hline
-%\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.1 & " & " & 0.01 - 5\\ 
-%\hline
-%\textbf{$c_{D}$ } & $k_{2,max}/10$& " & " & $k_{2,max}/10$-$k_{2,max}/100$ \\ 
-%\hline
-%\textbf{$\mu$ (min$^{-1}$ } & 0.02 & 1 & 10 & 0.005 - 10 \\ 
-%\hline
-%\hline
-%\textbf{$k_{3,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.02 & " & " & 0.1 - 10 \\
-%\hline
-%\textbf{duration (min) } & 20 & " & " & 100 - 400 \\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%
-%
-%No configuration where $k_{3,max}$ leads to a lower than ATP production is considered as it is known that ATP production is faster with anaerobic glycolysis (but less efficient) than cellular respiration. However, due to the presence of $[D]$ and its observed behavior in the previous model (accumulation in amount in excess of 10  mM depending on model parameters), the choice of value for $k_{3,max}$ may not be trivial and therefore several values were tested for both hypothesis A and B 
-%
-%\subsubsection{Results and discussion for hypothesis A and B}
-%
-%\paragraph{Results for hypothesis A}
-%Configuration 1 yielded a behavior similar to the one encountered previously, with a center glucose concentration settling at approximately 3 mM. Configuration 2 and 3 do not lead to stable zero glucose concentration at the center either... this time glucose concentration reincreases later but it still does.
-%
-%The next test was then to increase further the value of $k_{3,max}$ in order make the "simple" first order consumption dominant  in the glucose equation. This lead a stable zero concentration at the center for at least 400 mn. But this also results in high (and increasing)  concentration for GD, T and D at the rim of  the aggregate.
-%
-%Tests for larger duration evidenced that numerical errors with our step size and system parameters prevent calculation from remaining stable for long duration which lead to the system blowing up after a certain time. A solution was to reduce the timestep to 1/4000 mn. Reducing the time step did yield a more stable solution. However, this does put the applicability of this alogrithm to large simulations in question. It should also be noted that the reincrease observed in the model without additional term does not disappear with a reduced step size suggesting it does not come from numerics. (config. 11, 12 and 13)
-%
-%For config 14, time step is reincreased and oxygen and glucose concentration are decreased in order to try and obtain a stable concentration at the rim. Configuration 17 evidences how numerical problems can be solved with a smaller time step but it means extremely long simulations with the chose step size in space.
-%
-%The step size in space was however reduced in order to assess the model dynamics
-%
-%\paragraph{Results for hypothesis B}
-%The results for hypothesis B are more satisfactory. The model converges in less than 200 minutes (with the large time step). However, now is is the oxygen concentration that reincreases to approximately 5 \textmu M after  40 mn. (see config. 8 and 9). That being said, it does not reincreases as much as glucose did. The settling of the model only taking 40 mn also allows considering applying to actual simulations. The concentration of other quantities of the model also stay in a more reasonable range compared to hypothesis A. It should also be noted that by raising the oxygen consumption, a stable zero value was also obtained
-%
-%The configuration displayed in the following table produced satisfactory results with zero steady-state concentrations for 1400 mn ($\approx$ 1 day) at the center of the tissue. Such results were obtained for the following configurations:
-%
-%\begin{center}
-%\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}|}
-%\hline
-%\textbf{Parameters} & Config. 1 & Config. 2 \\ 
-%\hline
-%\textbf{$d_0$ (\textmu m)} & 5000 & 2600  \\ 
-%\hline
-%\textbf{$\Delta x$ (\textmu m)} & 15 & 50  \\ 
-%\hline
-%\textbf{$\Delta t$ (mn)} & 10$^{-3}$ & 1/500 \\ 
-%\hline
-%\textbf{$[G]_0$ (mM)} & 5 & "  \\ 
-%\hline
-%\textbf{$[O]_0$ (mM)} & 0.15 & "  \\ 
-%\hline
-%\textbf{$[D]_0$ (mM)} & 0.2 & " \\ 
-%\hline
-%\textbf{$[GD]_0$ (mM)} & 0.1 & " \\ 
-%\hline
-%\textbf{$[T]_0$ (mM)} & 20 & "\\ 
-%\hline
-%\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 10 & 10 \\ 
-%\hline
-%\textbf{$c_{T}$ } & 0.01 & " \\ 
-%\hline
-%\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 10 & 10 \\ 
-%\hline
-%\textbf{$c_{D}$ } & $k_{2,max}/10$& " \\ 
-%\hline
-%\textbf{$\mu$ (min$^{-1}$ } & 0.02 & 0.02 \\ 
-%\hline
-%\hline
-%\textbf{$k_{3,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 0.1 & 0.1  \\
-%\hline
-%\textbf{duration (min) } & 500 & 1400 \\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%
-%
-%
-%Quantitatively, the model is also consistant as the ADP concentration becomes close to the ATP initial concentration when the glucose and oxygen become scarce at the center. In conditions of nutrient scarcity the ATP concentration falls  in a couple of hours. This might be faster than the 24 hours for cell death used by Mao and collaborators in \cite{Mao2018}. However, Cells may resort to autophagy in order to provide for their nutrient needs for at least part of the remaining time in the cell cycle before necrosis occurs.\cite{Gozuacik2007} As explained by Yee and collaborators, several pathways to necrosis are possible (glucose deprivation, oxygen deprivation) and therefore in the prospective model, no distinction will be made.
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_G_conf18.pdf}
-%	\caption{ \label{G_conf18}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Gt_conf18.pdf}
-%		\caption{ \label{Gt_conf18}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Gconf18}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_O_conf18.pdf}
-%	\caption{ \label{O_conf18}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Ot_conf18.pdf}
-%		\caption{ \label{Gt_conf18}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Oconf18}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_T_conf18.pdf}
-%	\caption{ \label{T_conf18}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Tt_conf18.pdf}
-%		\caption{ \label{Tt_conf18}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Tconf18}}
-%\end{figure}
-%
-%As can be seen in figures \ref{Gconf18},\ref{Oconf18} and \ref{Tconf18} oncentration are stable over more than 23h which is important for inclusion in the cellular model afterwards. All concentrations drop to zero at the center and they do so in less than 2 hours suggesting that a steady-state approximation might be used. The only problem is that  the oxygen gradient is too steep in space. Indeed concentration falls to zero in less 300 \textmu m which is too prononced if we considered the hypothesis that led to size chosen for the system.
-%
-%Almost twenty configuration were explored in order to try and get a smoother oxygen gradient.
-%
-%While the previous used very exploratory configuration it should be noted that a "natural" configuration with values set  by accounting for the various facts presented above on consumption and concentration has been tested.
-%
-%\begin{center}
-%\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}|p{15mm}|}
-%\hline
-%\textbf{Parameters} & Config. ref & Alt. config & "depleted core" config.\\ 
-%\hline
-%\textbf{$d_0$ (\textmu m)} & 2600 & " & " \\ 
-%\hline
-%\textbf{$\Delta x$ (\textmu m)} & 15 & " & "  \\ 
-%\hline
-%\textbf{$\Delta t$ (mn)} & 10$^{-3}$ & " & " \\ 
-%\hline
-%\textbf{$[G]_0$ (mM)} & 5 & " & " \\ 
-%\hline
-%\textbf{$[O]_0$ (mM)} & 0.15 & " & " \\ 
-%\hline
-%\textbf{$[D]_0$ (mM)} & 0.2 & " & "  \\ 
-%\hline
-%\textbf{$[GD]_0$ (mM)} & 0.1 & " & " \\ 
-%\hline
-%\textbf{$[T]_0$ (mM)} & 20 & " & "\\ 
-%\hline
-%\textbf{$k_{1,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 2 & 10 & 10 \\ 
-%\hline
-%\textbf{$c_{T}$ } & 0.01 & 0.01 & 0.5/10 \\ 
-%\hline
-%\textbf{$k_{2,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 1/0.15 & 1/0.15 & 10 \\ 
-%\hline
-%\textbf{$c_{D}$ } & 10$^{-2}$ & " & 1/100  \\ 
-%\hline
-%\textbf{$\mu$ (min$^{-1}$ } & 0.5 & 0.02 & 0.02 \\ 
-%\hline
-%\textbf{$k_{3,max}$ (mM$^{-1}$ $\cdot$ mn$^{-1}$)} & 1 & 1 & 0.1  \\
-%\hline
-%\textbf{duration (min) } & 500-1400 & " & "   \\ 
-%\hline
-%\end{tabular}
-%\end{center}
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_G_conf68.pdf}
-%	\caption{ \label{G_conf68}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Gt_conf68.pdf}
-%		\caption{ \label{Gt_conf68}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Gcon68}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_O_conf68.pdf}
-%	\caption{ \label{O_conf68}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Ot_conf68.pdf}
-%		\caption{ \label{Gt_conf68}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Oconf68}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_T_conf68.pdf}
-%	\caption{ \label{T_conf68}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Tt_conf68.pdf}
-%		\caption{ \label{Tt_conf68}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Tconf68}}
-%\end{figure}
-%
-%The reference configuration is stable over time (1400 mn) but yields a behavior that gives very steep spatial gradients and therefore a very slim non-zero ATP region over the aggregate.(see figures \ref{Gcon68},\ref{O_conf68} \ref{T_conf68}) This is not neceassarily a problem as will be explained in the discussion further. However it is interesting to note that by tweaking the values from the reference configuration  to those in the alternate configuration, smoother gradients can be obtained  along with lower steady-state value for oxygen.(see figures \ref{Gcon66},\ref{O_conf66} \ref{T_conf66}) 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_G_conf66.pdf}
-%	\caption{ \label{G_conf66}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Gt_conf66.pdf}
-%		\caption{ \label{Gt_conf66}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Gcon66}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_O_conf66.pdf}
-%	\caption{ \label{O_conf66}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Ot_conf66.pdf}
-%		\caption{ \label{Gt_conf66}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Oconf66}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_T_conf66.pdf}
-%	\caption{ \label{T_conf66}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Tt_conf66.pdf}
-%		\caption{ \label{Tt_conf66}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Tconf66}}
-%\end{figure} 
-%
-%It is possible to obtain a "depleted-core" configuration with this model. This depleted core can be stable. However, the set of parameters is somewhat rather different than the one that was chosen as reference initially.
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_G_conf17.pdf}
-%	\caption{ \label{G_conf17}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Gt_conf17.pdf}
-%		\caption{ \label{Gt_conf17}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Gcon17}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_O_conf17.pdf}
-%	\caption{ \label{O_conf17}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Ot_conf17.pdf}
-%		\caption{ \label{Ot_conf17}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Oconf17}}
-%\end{figure} 
-%
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_T_conf17.pdf}
-%	\caption{ \label{T_conf17}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/modfsys2DA_Tt_conf17.pdf}
-%		\caption{ \label{Tt_conf17}}
-%	\end{subfigure}
-%	\caption{Concentration map for 2600 \textmu m-diameter tissue section  (a)time evolution at rim and center(b) \label{Tconf17}}
-%\end{figure} 
-%
-%This configuration yields interesting results. The ATP concentration remains constant in the area where oxygen is non zero. There is a second area of lower ATP concentration when oxygen is zero but glucose is non-zero. Then ATP drops to zero when both concentration reach 0 (with a slight increase near the limit). Surprisingly, there was no configuration where the oxygen gradient could be made larger than the glucose one with this model. They are either roughly equal in length or the glucose gradient is larger. This is, however, not in line with the hypothesis we made.
-%
-%\paragraph{Discussions \& Conclusions}
-%The low thickness of the gradient compared to the chip system may not be a problem. Indeed, in the chip, the cell density at seeding is 10 000 per \textmu L. Cell being cultured for 4 days, the density can then be at most 160 000 per \textmu L. In our, cases cells have a volume of approxiamtely 2 pL, meaning that a fully filled space like what we modelled, would have a cell density of approximately 500 000 cell per \textmu L. This of course affects both consumption and diffusion, as a less dense tissue means a decreased tortuosity and therefore that may increase up to an order of magnitude back to the matrix value (which is close to medium) for HA matrix.
-%
-%What appears to come out of these tests is that the non-linear nature of the system makes its response hard to predict and to tune. This also begs the question of whether the system actually a root (read steady-state) with our set of parameters whether it can be reached in reasonable time. The coupled and non-linear nature of  the system means that the system cannot simply be guided towards the right behavior by playing with constants $k$ in a straight forward fashion. 
-%
-%%These tests raise an obvious question. It can be seen that the concentration of ATP decreases gradually at the core. Is the gradual decrease (over a couple of hours) a physiological situation ? A few hours over the course of a cell cycle is actually pretty short. Therefore does the metabolic catastrophe situation apply here ? More importantly is gradual decrease a reversible situation or is any significant decrease below the normal level enough to trigger cell death irreversibly.
-%
-%%Yeng qui donne 1M ATP/cell/S approx -> 18000 mM/h/cell en conso (bactéries)
-%%Jagiella donne pour les cellules cancéreuses 1000 à 1700
-%%"Quantifying Cellular ATP Production Rate Using Agilent Seahorse XF Technology" Romero al. 30 pmol/min/1000 cells -> 30 fmol/min/cell -> 15 mM/min/cell -> 900 mM/h par cellule (seuil chez Jagiella) (MCF-7)
-%%"Quantifying intracellular rates of glycolytic and oxidative ATP production and consumption using extracellular flux measurements" 0.2fmol ATP/s/cell -> 360 mM/h on est sur le bon ordre de grandeur
+
+\paragraph{Low consumption}
+The model is first tested with constant supply  of glucose and oxygen.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_kGt_conf61.pdf}
+	\caption{ \label{PkGt_con61}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_kOct_conf61.pdf}
+		\caption{ \label{PkOt_conf61}}
+	\end{subfigure}
+	\caption{Time evolution for 4500 \textmu m-diameter pellet section  (a) for glucose consumption (b) and oxygen consumption \label{Pconf61} for the low glucose consumption configuration after 30 mn }
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	%\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_kGlyt_conf61.pdf}
+	\caption{ \label{PkGy_con61}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_Tt_conf61.pdf}
+		\caption{ \label{PT_conf61}}
+	\end{subfigure}
+	\caption{Concentration map for 4500 \textmu m-diameter pellet section  (a) for glycolytic consumption (b) and ATP \label{Pconf61} for the low glucose consumption configuration after 30 mn}
+\end{figure}
+
+\paragraph{High consumption}
+In the high consumption case with constant supply ,the concentration maps are shown for glucose, oxygen, ADP and ATP. all the criterion in terms of consumption rates are also respected with the two configurations.
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_kGt_conf65.pdf}
+	\caption{ \label{PkGt_con65}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	%\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_kOct_conf65.pdf}
+		\caption{ \label{PkOt_conf65}}
+	\end{subfigure}
+	\caption{Time evolution for 4500 \textmu m-diameter pellet section  (a) for glucose consumption (b) and oxygen consumption \label{Pconf65} for the low glucose consumption configuration after 30 mn }
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	%\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_kGlyt_conf65.pdf}
+	\caption{ \label{PkGy_con65}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/Pyr/cfsys2DPyr_Tt_conf65.pdf}
+		\caption{ \label{PT_conf65}}
+	\end{subfigure}
+	\caption{Concentration map for 4500 \textmu m-diameter pellet section  (a) for glycolytic consumption (b) and ATP \label{Pconf65} for the low glucose consumption configuration after 30 mn}
+\end{figure}
+Therefore it can be seen that for both high and low consumption the model with Pyruvate.
+
+\paragraph{Depletion configuration}
+In the depletion configuration however it becomes pretty evidential that the model used is not adapted. Indeed, as shown in figure   the relaxation to a zero consumption state happens in less than one hour which is not compatible with observation. This leads in the next subsection to reappraisal of our model
+
+\subsubsection{Stoechiometry}
+Now, if the stoechiometry of the different species is accounted for then the system of equation becomes : 
+
+
+\[ \frac{d [G]}{d t} = \overrightarrow{\nabla} (D_G \overrightarrow{\nabla} [G]) - k_1 [G][D]^2  \]
+\[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) - k_2 [O]^3[P][D]^{17}  \]
+\[ \frac{d [P]}{d t} =  2 k_1 [G][D]^2 - k_2 [O]^3[P][D]^{17}  \]
+\[ \frac{d [D]}{d t} =  - 2 k_1[G][D]^2 + \mu [T] + 17 k_2 [O]^3[P][D]^{17}  \]
+\[ \frac{d [T]}{d t} =  17 k_2 [O]^3[P][D]^{17} - \mu [T] + 2 k_1[G][D]^2 \]
+
+\subsection{The problem with the reduced model}
+\subsubsection{Problem Statement}
+The subfield of chemistry dealing with the time evolution of concentrations in kinetics. In kinetics, writing a reaction in the following way : 
+
+\[\frac{d [S]}{d t}] = k[R_1][R_2] \]
+
+,Where $S$ is a given chemical species and $R_1$ and $R_2$ are two reagents, is valid under certain hypotheses. $k$ is a time constant. The reaction must typically be what is called an elementary reaction which typically involves less than 3 molecules and is used to describe small steps occuring at the molecular scale in larger reaction mechanisms. If the previous equation is used to described a more complex mechanism involving a larger number of molecules and/or intermediate steps, then its validity needs to be checked experimentally. This equation describes what is typically called a second order reaction and has been used to describe all the mechanisms involved in the reduced metabolic model.
+
+It can seem pretty intuitive to expand this type of relation to account for stoechiometry and/or reaction involving more reagents by just adding terms to the product on the right-hand side and possibly adding an exponent and/or factor to account for stoechiometry like Jagiella and collaborators did. \cite{Jagiella2016} However there is no experimental evidence nor theoretical basis that supports this treatment.
+
+In our case, knowing this not only makes any adaptation of the model to account for stoechiometry unviable, but also fundamentally questions the correctness of the previous equation systems used up to that point. Moreover even the extended model presented by Cleri, is said to be made up mostly of enzymatic reactions. Enzymatic eaction are normally described using a specific framework (see Michaelis-Menten equation). The main problem here is that this model also comes with a lot of hypotheses and typically describes "simple" enzymatic reactions. Even, the glycolytic step of the extended system would not easily be described through this method as it includes more than 10 steps, most of which reversible and several including an interaction with ATP/ADP.
+
+As has been demonstrated by using the model in various configurations (constant supply, depletion)  abstraction of the chemical reality in this fashion leads to a model whose constants will only describe a narrow portion of reality while being inadapted to different situations.
+
+\subsubsection{Proposed solution}
+A more sound solution that can be used  in order to describe the time evolution of different metabolites is the one chosen by Casciari, Sotirchos and Sutherland in their study.\cite{Casciari1992} In their study the only explicit kinetic dynamic they use is the one for bicarbonate which they take from another study. Glucose and oxygen consumption are given by empirically fitted function from experimental data. They do not include  ATP or ADP in their model.
+
+The consumption terms for glucose and oxygen take the following form : 
+\[q_G = q_{G,max} \frac{[G]}{[G] + k_G} \]
+\[q_O = q_{O,max} \frac{[O]}{[O] + k_O} \] 
+This is close to the velocity law of an enzymatic reaction or a Hill function which  was presented above. In the study of Casicari and collaborators study, the max consumption term depended on other metabolites concentrations including glucose and oxygen. 
+This dependency takes the following form : 
+\[ q_{G,max} = (A_G + \frac{B_G}{[O]})\frac{1}{[H^+]^n}\]
+\[ q_{O,max} = (A_O + \frac{B_O}{[G][H^+]^n})\]
+
+With the chosen value, the Hill function behavior maintains the consumption at maximum, down to a 0.1\%, until the concentration falls below a fraction of its initial value(less than 1\% for glucose). This offers a solution that would allow integration of the consumption data available on brain tumors and specifically DIPG. However, we do not have data on the critical concentration of oxygen and glucose that "stop" consumption.
+
+While Casciari and collaborators gathered substantial data on controlled culture conditions, similar data is currently lacking on DIPG. While some quantative aspects of metabolism are known the picture that will be drawn here will not be ase detailed as the one from Casciari,'s study. To try and partially remedy this several hypotheses will be tested for different aspect of metabolism. Data from other cell types may also be used when available but always with caution.
+
+\subsection{ATP and link with nutrients}
+One of the advantages of the reduced model, was that it would allow the monitoring of ATP and ADP which are interesting quantities in tumors. The proposed solution for this would be close to the one proposed by Jagiella. It would be written : 
+
+\[ \frac{d[ATP]}{dt} = 2q_G + 17/3q_O \] 
+
+The stoechimoetry is directly derived from Berg and collaborators book on biochemistry.\cite{Berg2006} To summarize:
+\begin{enumerate}
+\item Gluc $\rightarrow$ 2 Pyr + 2 ATP 
+\item Pyr $\rightarrow$ NADH + Acetyl-CoA (into the mitochondrion) 
+\item Acetyl-CoA $\rightarrow$ 3 NADH + FADH2 + 2 ATP (Citric Acid cycle)
+\item 5 NADH + FADH$_2$ + 3 O$_2$ $\rightarrow$  26 ATP 
+\end{enumerate} 
+
+So the ATP yield would be written as :
+
+\[ \frac{d[ATP]}{dt} = 2q_G + 26/3q_O  \] 
+
+This yields a realistic balance of the different components. However one important aspects that has been neglected so far is the kinetics of the whole process. Indeed, it is stated in several studies taht oxydative phosphorylation is slower that glycolysis which might be one of the reason why proliferative cancer cells tend to rely more on glycolysis than healthy ones.\textbf{[put refs]} This is intuitive as the combination of the citric acid cycle and oxydative phosphorylation makes for a more complex reaction mechanism than glycolysis. The question becomes :"How do we estimate their relative role ?"
+
+\subsubsection{Relative importance of glycolysis and oxydative metabolism}
+For brain tumors, there are experimental values for glycolytic ATP production and oxydative ATP production. It has been shown that total ATP production was approximately 5 mM/min with 60\% coming from glycolysis and 40\% coming from oxydative phosphorylation. However, if the consumption values from before are simply injected into the previous equation, while the range of ATP production obtained in realistic, the balance between glycolysis is tilted sharply towards mitochondrial production. Therefore, in order to achieve the right glycolytic-to-oxydative-metabolism ratio (G/O ratio), coefficient need to be added to the previous equation. Physiologically those coefficient represent the difference in ATP production  speed between the two methods: 
+
+\[ \frac{d[ATP]}{dt} = \kappa_{Gly} 2q_G + \kappa_{Mito} 26/3q_O  \] 
+
+Therefore if, the oxygen consumption, glucose consumption, ATP production and G/O ratio are known, the coefficient can be obtained for a given cell line and set of conditions. For example, the values of DeSousa and collaborators can be used.\cite{DeSousa2022} They found OCR in the range of 1-3 mM/mn (assuming cell volume in the 1-3 pL range). Though, glucose consumption value are not reported other studies shows  them to be in the range of 0.1-1 mM/min (assuming the same range of cell volumes). Without the $\kappa$ coefficients, an ATP production between 9 and 28 mM/min would be obtained, which is compatible with the range of ATP production measured onf GBM39 by DeSousa which ranges between 4 and 12 mM/min depending on the assumed cell volume. This, however, does not respect the G/O ratio.
+In that case in order to find values for $\kappa_{Gly}$ and $\kappa_{Mito}$ we set values for consumptions and total ATP production : $q_G$ = 0.5 mM/min , $q_O$ = 2 mM/min and $p_{ATP} =  \frac{d[ATP]}{dt} $ = 10 mM/min. With those values, $\kappa_{Gly}$ = 6 and $\kappa_{Mito}$ = 0.231
+
+
+\subsubsection{Contextual metabolic behavior}
+It has been established that cells and most notably proliferative cancer cells were able to adapt their metabolism to their environment. For example, some cancer cell lines, that are normally mainly glycolytic, can rely more heavily on oxydative metabolism and/or autophagy if glucose becomes scarce.\cite{MullerKlieser1986} This reflection on the possible scarcity of glucose and the response of the system to it is interesting.
+
+If glucose becomes scarce, the TCA cycle can be replenished through both glutaminolysis. This mechanism allows ATP production and Biosynthesis on top of providing Pyruvate to the cell that can be used as a substrate for biosynthesis as well. 
+
+It should be noted that glutamine can also be a limiting factor for proliferation even more than oxygen itself. Indeed, with culture concentration of 5 mM and consumption rate in the range 0.5 - 1.5 mM/min (on SF188 \cite{Wise2008}. Glutamine may become scarce even before glucose does in cancer cells. Indeed, molecular oxygen is only required in the electron transport chain. While it does maintain intracellular pH and prolonged failure of the mechanism may lead to cell death, it should also be noted that aside from energy supply it does not seem to hold  a prominent role in biosynthesis and proliferation providing an intuitive understanding of why tumor cells tolerate hypoxia. It should however not be considered that glucose is not used by the TCA as experiments led by Winer and Wu showed that affixiion of glucose lead to an increased OCR, suggesting a glucose flux into OCR on PC-3 cells. Even though they do not report the SF188 cell line to oxidise glucose directly. Tthey also state :"This oxygen consumption in the absence of exogenous substrate is most likely fueled by the oxidation of endogenous substrates; therefore, cancer cells appear to have a significant pool of endogenous oxidizable substrates including fatty acids, amino acids, and glycogen."\cite{Winer2014}
+
+The modelled behavior will be that if the other species is reduced significantly, the consumption of the other species will increase in order to provide for the lack of the other nutrient. In order to maintain ATP production. Therefore the consumption terms can be rewritten as :
+
+\[ q_G =  [ q_{G,max}^{base} + q_{G,max}^{comp} \frac{[O]}{[O]+ k_O}] \frac{[G]}{[G] + k_G} \]
+\[ q_O =  [ q_{O,max}^{base} + q_{O,max}^{comp} \frac{[G]}{[G]+ k_G}] \frac{[O]}{[O] + k_O} \]
+
+In first approximation,  the value for $q_{G,max}^{comp}$ and $q_{O,max}^{comp}$ will be set so that in case of near complete depletion of one nutrient and maintained abundance of the other, ATP consumption is kept near its normal value. Say, in the previous example, Oxygen vanishes completely,leading to $q_O = 0$.  Then in order for ATP production to remain at 10 mM/min, one must have $q_{G,max}^{comp}$ = 0.3334 mM/min. In the opposite situation, one would have  $q_{O,max}^{comp}$ = 3 mM/min. To have a more physical picture of what this entails the coefficient should be kept.  Therefore,  $\kappa_{Gly}q_{G,max}^{comp}$ = 2 mM/min and  $\kappa_{Gly}q_{G,max}^{comp}$ = 0.70 mM/min.
+
+\subsubsection{The case of Glutamine}
+Glutamine metabolism highlights one of the main challenges of our approach. Glutamine plays a very important role in internal regulation mechanism of proliferating cells. It is a vital component of the  TCA cycle which it can replenish in proliferative cells.\cite{Villar2015} Cancer cells appear to generally display an enhanced glutaminolysis compared to healthy ones.\cite{Wise2008} But the most important feature that needs to be understood for a model is the response to the rarefaction of this core nutrient. Understanding it will also help paint a bigger picture with respect to the other exogenous metabolites that are oxygen and glucose.
+
+Glutamine can also be a limiting factor for proliferation even more than oxygen itself. Gltutamine concentration in cell is usually 5 mM. Reported consumption rates are more dispersed. Wise and collaborators reported a consumption 80 \textmu mole/10$^9$cells/day which on SF188 cells, depending on cell volume, is in the of range 0.5 - 1.5 mM/min.\cite{Wise2008} (cell volume between 1 and 3 pL). Other measurements by Gauthier-Coles and collaborators we performed on U87 glioma cells and yielded consumption rate between 0.3 mM and 5 mM/min. The large range of values is due to the fact that measurements are given normalised by protein content which is not given for the studied cells. (though they report a cell volume of 2 pL on average)\cite{Gauthier2021} They also report on the glucose consumption for these cells which is approximately 5 times higher. Therefore, as a rule of thumb glutamine consumption will be kept at around this level relative to glucose concentration. Intuitively, if glutamine is primarily used for replelnishment of the TCA cycle then it makes  sense  that its consumption would be a fraction of the OCR. Other studies did not  report consumption rate directly but gave concentration time evolutions compatible with previous data. More specifically, Wang and collaborators report a ratio of 2 between glucose and glutamine consumption in favor of glucose on MCF-7.\cite{Wang2018} a ratio of the order of 5 is found on HepG2 cells by Nilsson and collaborators with consumption slightly lower than other cell types\cite{Nilsson2020}. Their experiment shows that in case of glucose deprivation glutamine consumption is not significantly increased, but that cell profileration slows down significantly. The general trend is a consumption which seems to be between 2 and 5 times lower, which is also the assumption made by Shan and collaborators in their model in the case of glutamine addiction. \cite{Shan2018} Therefore, as a rule of thumb glutamine consumption will generally be taken to be approximately a 3rd of glucose consumption.
+
+Considering the above, glutamine may become scarce  before glucose does in cancer cells. Indeed, molecular oxygen is only required in the electron transport chain. While it does maintain intracellular pH and prolonged failure of the mechanism may lead to cell death, it should also be noted that aside from energy supply it does not seem to hold  a prominent role in biosynthesis and proliferation providing an intuitive understanding of why tumor cells tolerate hypoxia. It should however not be considered that glucose is not used by the TCA, as experiments led by Winer and Wu showed that affixion of glucose lead to an increased OCR, suggesting a glucose flux into OCR on PC-3 cells. Even though they do not report the SF188 cell line to oxidise glucose directly. They also state :"This oxygen consumption in the absence of exogenous substrate is most likely fueled by the oxidation of endogenous substrates; therefore, cancer cells appear to have a significant pool of endogenous oxidizable substrates including fatty acids, amino acids, and glycogen."\cite{Winer2014}
+
+This goes to show that cell response to an exogenous substrate could essentially be separated in three categories:
+\begin{itemize}
+\item Addictive : Absence of the substrate quickly leads to growth arrest and cell death
+\item Sensitive : Absence of the substrate slows down proliferation and may result in cell death in conjunction with other factors
+\item Independent : Absence of the substrate does not affect cell fate
+\end{itemize}
+
+Glutamine is therefore added to our equation system with a consumption modelled similarly to oxygen and glucose. The system thus becomes :
+
+\[ q_{Gc} =  [ q_{G,max}^{base} + q_{Gc,max}^{comp} \frac{[O]}{[O]+ k_O}] \frac{[Gc]}{[Gc] + k_{Gc}} \]
+\[ q_O =  [ q_{O,max}^{base} + q_{O,max}^{comp} \frac{[Gc]}{[Gc]+ k_{Gc}}\frac{[Gt]}{[Gt]+ k_{Gt}}] \frac{[O]}{[O] + k_O} \] 
+\[ q_G =  [ q_{Gt,max}^{base} + q_{Gt,max}^{comp}f(q_{Gc},q_O)] \frac{[Gt]}{[Gt] + k_{Gt}} \]
+
+It is straightforward to add the Glutamine Hill function to the oxygen equation as a shortage of Glutamine would deprive the system of NADH and FADH$_2$, therefore slowing down the electron transport chain and thereby, oxygen consumption. This is supported by the work of Martin and collaborators on C6 gliomas cell where they showed reduced oxydative metabolism, ATP production and growth  in the absence of glutamine.\cite{Martin1999} The relationship between compensatory consumption of Glutamine is less obvious and previous information seem to show that on brain tumors, Glutamine consumption does not increase when glucose becomes scarce.
+
+There is also the question of the response of DIPG cells to their culture conditions. It has been shown for other tumor cells types that the metabolism was different in monolayers and spheres.\cite{Natarajan2019} And that  gene expression was also significantly changed in  DIPG cells when the culture method was changed from monolayer to neurospheres.\cite{Meel2017} Though, no data is available it would be interesting to assume that an impact on metabolism will be observed.
+
+
+\section{The new model}
+The new prospective model will detail the metabolic aspect in space and time.
+
+\subsection{Metabolites} 
+As stated before three external metabolites and ATP are modelled with the following equations: 
+\[ \frac{d [Gc]}{d t} = \overrightarrow{\nabla} (D_{Gc} \overrightarrow{\nabla} [Gc] - q_{Gc}  \]
+\[ \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \overrightarrow{\nabla} [O]) - q_O  \]
+\[ \frac{d [Gt]}{d t} = \overrightarrow{\nabla} (D_{Gt} \overrightarrow{\nabla} [Gt]) - q_{Gt}  \]
+\[ \frac{d [F]}{d t} = \overrightarrow{\nabla} (D_{F} \overrightarrow{\nabla} [F]) - q_{F}  \]
+
+with,
+
+\[ q_{Gc} =  [ q_{G,max}^{base} + q_{Gc,max}^{comp} \frac{[O]}{[O]+ k_O}] \frac{[Gc]}{[Gc] + k_{Gc}} \]
+\[ q_O =  [ q_{O,max}^{base} + q_{O,max}^{comp} \frac{[Gc]}{[Gc]+ k_{Gc}}\frac{[Gt]}{[Gt]+ k_{Gt}}] \frac{[O]}{[O] + k_O} \] 
+\[ q_{Gt} =  [ q_{Gt,max}^{base} + q_{Gt,max}^{comp}f(q_{Gc},q_O)] \frac{[Gt]}{[Gt] + k_{Gt}} \]
+\[ q_{F} =  q_{F,max} \frac{[F]}{[F] + k_{F}} \]
+
+and,
+
+\[ \frac{d[ATP]}{dt} = \kappa_{Gly} (q_{Gc},q_O) 2q_G + \kappa_{Mito}(q_{Gc},q_{Gt},q_O) 26/3q_O  \] 
+
+As explained before, the values of the constants will depend on culture conditions both in terms of nutrients availablity but also in terms of anchorage conditions. Another important aspect of our model will be the crosstalk between metabolism and cell cycle progression.
+
+\subsection{Cell cycle, proliferation \& metabolism}
+Right after mitosis, cells pass through the  G1/S checkpoints where the cells monitors both presence of growth factors and sufficient amount of nutrients in the immediate vicinity of the cell. It is argued in some studies that growth factors threshold and nutrients are subjected to separate checks.\cite{Zetterberg1996}\cite{Foster2010} This difference is far from trivial as it stated that the first checkpoint depends on growth factors, and the second depends on nutrient availability. More specifically, it seems to only be possible to transition to G$_0$ BEFORE the growth-factor-dependent checkpoint. Lack of nutrients would then lead to cell cycle arrest in G$_1$ while growth factors depletion would lead to $G_0$ quiescence.
+
+Knowing this, two versions of the model can be designed :
+\begin{itemize}
+\item "Nutrient-only" model 
+\item "Nutrient \& growth factor" model
+\end{itemize} 
+
+Before introducing the specifics of each version, one important common point to bring up is the absence of DNA damage checkpoint. Though this seems to be a radical hypothesis, cancer cells general harbour mutation that will downregulate/suppress the impact of DNA damage checkpoint allowing for mutations to pass down rapidly with little repair (which probably also speeds up replication to a degree). We therefore neglect any DNA damage checkpoint in S-phase and G2-phase and assume that once the cells  goes to S-phase it either completes division or dies if nutrient are not present in sufficient quantities.
+
+\subsubsection{"Nutrient-only" model}
+In the "nutrient-only"model, the assumption will be that cells only monitor nutrient concentration to assess whether they move past the G1-phase. This, however, makes the distinction between "arrested G1" and G0 more difficult in terms of decision-making especially if growth factors are absent. At this point, two options are possible: 
+
+\begin{itemize}
+\item A threshold on nutrient concentration and quiescence
+\item A threshold on total ATP concentration a growth arrest
+\end{itemize} 
+In the first case, if a cell has been exposed to sufficient nutrient concentration for large periods but goes below threshold right before (at least an hour) G1/S transition, it will stop and become quiescent. In the second case, the concentration may fall but the cell will transition regardless as it considers it has enough reserves to go through the rest of the cell cycle.
+
+\vspace{1cm}
+\hspace{2cm} 
+\begin{tikzpicture}
+
+\draw[very thick](-1,0) circle (0.5) node {M};
+\draw[very thick, ->] (-1+0.5,0) -- (-1+0.5+1,0);
+
+\draw[very thick](-1+0.5+1+0.5,0) circle (0.5) node {G1};
+\draw[very thick, ->] (1.5,0) -- (2.5,0);
+
+\draw[very thick](3,0) circle (0.5) node {S};
+\draw[very thick, ->] (3.5,0) -- (4.5,0);
+
+\draw[very thick](5,0) circle (0.5) node {G2};
+\draw[very thick, ->] (5.5,0) -- (6.5,0);
+
+\draw[very thick](7,0) circle (0.5) node {M};
+ \draw[thick,gray!70!black](2,-1.5) node {Nutrient/ATP tally};
+ 
+\draw[thick] (2,-1) -- (2,1);
+
+\end{tikzpicture}
+
+\subsubsection{"Nutrient \& growth factor" model}
+In case where both growth factors and nutrients are included in the model the flow will be as follows :
+
+\vspace{1cm}
+\hspace{2cm} 
+\begin{tikzpicture}
+
+\draw[very thick](-1,0) circle (0.5) node {M};
+\draw[very thick, ->] (-0.5,0) -- (0.5,0);
+
+\draw[very thick](1,0) circle (0.5) node {G1};
+\draw[very thick, ->] (1.5,0) -- (3.5,0);
+
+\draw[very thick](4,0) circle (0.5) node {S};
+\draw[very thick, ->] (4.5,0) -- (5.5,0);
+
+\draw[very thick](6,0) circle (0.5) node {G2};
+\draw[very thick, ->] (6.5,0) -- (7.5,0);
+
+\draw[very thick](8,0) circle (0.5) node {M};
+ \draw[thick,gray!70!black](2,-1.5) node {Growth factor};
+ \draw[thick] (2,-1) -- (2,1);
+  \draw[thick,gray!70!black](3,1.5) node {Nutrient or ATP tally};
+ \draw[thick] (3,-1) -- (3,1);
+\end{tikzpicture}
+
+In the growth factor case the cell goes into G0-phase while in the case of nutrient  depletion, the G1-phase is lengthened until nutrient concentration crosses a given threshold or until the total ATP reaches the right value. In this case, and the previous one, the question of what happens in case nutrients become insufficient before division can be completed is raised and will be answered in the next section.
+
+\subsection{Cell death}
+Cell death can be divide into  two different categories. Programmed cell death and non-programmed cell death. Programmed cell death tend to be initiated through signalling pathways. Non-programmed cell death is usually due to a loss of function due to a decline in homeostasis such as a large deviation in redox homeostasis due to mitochondrial damage, a harsh environment, or a loss of ATP. At the level of this model, it would not be worth the effort to try and capture all the subtlty of those cell death variations. However, it will be important to distinguish between apoptosis/autophagy where the cell "disappears" and "necrosis" where it does not. The assumption here will be that two thresholds of ATP can be set. The first threshold, if crossed will lead to non necrotic cell death in a certain amount of time. The second threshold lower than the first will lead to necrosis. This  hypothesis is supported by experimental observations on healthy cells. \cite{Lieberthal1998}\cite{Why1999} \cite{Yee2021} Whether the mutations of apoptotic genes completely shuts it down in favor of necrosis remains to be seen.
+
+In summation, in addition to the quiescence threshold $p_{ATP,q}$, that is only valid in G1 phase before the resriction point, two  other thresholds are defined as $p_{ATP,ap}$ and $p_{ATP,ne}$ with  $p_{ATP,ap} > p_{ATP,ne}$. The precise value if previous study are looked at even a value equivalent to 70\% of the normal one is enough to trigger apoptosis if maintained for long enough and 50 \% triggers necrosis invariably.\cite{Lieberthal1998}
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{2cm} 
+\begin{tikzpicture}
+
+
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (0mm,18mm) arc (90:135:18mm) -- (0,0);
+\filldraw[fill=orange!10!white, draw=black] (0,0) -- (0mm,15mm) arc (90:135:15mm) -- (0,0);
+\filldraw[fill=red!20!white, draw=black] (0,0) -- (0mm,12mm) arc (90:135:12mm) -- (0,0);
+\draw[thick,gray!70!black](-9mm,21mm) node {M};
+
+
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (-18*0.707mm,18*0.707mm) arc (135:180:18mm) -- (0,0);
+\filldraw[fill=orange!10!white, draw=black] (0,0) -- (-15*0.707mm,15*0.707mm) arc (135:180:15mm) -- (0,0);
+\filldraw[fill=red!20!white, draw=black] (0,0) -- (-12*0.707mm,12*0.707mm) arc (135:180:12mm) -- (0,0);
+\draw[thick,gray!70!black](-21mm,10mm) node {G2};
+
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (-18mm,0mm) arc (180:270:18mm) -- (0,0);
+\filldraw[fill=orange!10!white, draw=black] (0,0) -- (-15mm,0mm) arc (180:270:15mm) -- (0,0);
+\filldraw[fill=red!20!white, draw=black] (0,0) -- (-12mm,0mm) arc (180:270:12mm) -- (0,0);
+\draw[thick,gray!70!black](-17mm,-17mm) node {S};
+
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (-0mm,-18mm) arc (-90:90:18mm) -- (0,0);
+\filldraw[fill=cyan!10!white, draw=black] (0,0) -- (18*0.866mm,18*0.5mm) arc (30:90:18mm) -- (0,0);
+\filldraw[fill=orange!10!white, draw=black] (0,0) -- (11*0.866mm,11*0.5mm) arc (30:-90:11mm) -- (0,0);
+\filldraw[fill=red!20!white, draw=black] (0,0) -- (9*0.866mm,9*0.5mm) arc (30:-90:9mm) -- (0,0);
+\draw[thick,gray!70!black](17mm,-17mm) node {G1};
+
+\draw[draw=green!20!white, dashed,very thick] (0,0) -- (-0mm,-18mm);
+\draw[very thick, ->] (0mm,0mm) -- (22mm,0mm);
+\draw[very thick] (18mm,2mm) -- (18mm,-2mm);
+\draw[thick,gray!70!black](25mm,-4mm) node {$p_{ATP}$};
+\draw[draw=black, thick] (0,0) -- (18mm,10.2mm);
+\draw[thick,gray!70!black](20mm,10.5mm) node {R};
+\draw[draw=black, dashed] (0,-18mm) -- (0 mm,-22mm);
+\draw[thick,gray!70!black](0mm,-25mm) node {G1/S};
+
+
+\draw[thick,->] (0mm,21mm) arc(90:70:21mm);
+\draw[dashed] (0mm,-15mm) arc(-90:30:15mm);
+
+%legend
+\filldraw[fill=green!20!white, draw=black] (35mm,9mm) rectangle (37mm,11mm);
+\draw[thick,gray!70!black](62mm,10mm) node {$p_{ATP}>p_{ATP,ap} \rightarrow$  survival};
+\filldraw[fill=orange!10!white, draw=black] (35mm,3mm) rectangle (37mm,5mm);
+\draw[thick,gray!70!black](72mm,4mm) node {$p_{ATP,ap}>p_{ATP}>p_{ATP,ne} \rightarrow$  apoptosis};
+\filldraw[fill=red!20!white, draw=black] (35mm,-3mm) rectangle (37mm,-1mm);
+\draw[thick,gray!70!black](62mm,-2mm) node {$p_{ATP}<p_{ATP,ne} \rightarrow$  necrosis};
+\filldraw[fill=cyan!10!white, draw=black] (35mm,-9mm) rectangle (37mm,-7mm);
+\draw[thick,gray!70!black](54mm,-8mm) node {ATP independent};
+\draw[draw=black, dashed] (35mm,-15mm) -- (39 mm,-15mm);
+\draw[thick,gray!70!black](50mm,-15mm) node {$p_{ATP,prolif}$};
+
+
+
+%\filldraw[fill=green!20!white, draw=black] (0,0) -- (18mm,0mm) arc (170:210:18mm) -- (0,0);
+%\filldraw[fill=red, draw=black] (0,0) -- (12mm,0mm) arc (170:210:12mm) -- (0,0);
+\end{tikzpicture}
+\caption{Cell fate as a function of ATP production and cell cycle phases \label{cell fate}}
+\end{figure}
+
+The cell death and decision making is summarised in figure \ref{cell fate}. from the end mitosis (M) until the restriction point (R) it is assumed ATP production (or nutrient availability) is not critical. The cell can survive these 4 hours through autophagy even if nutrient are depleted. At the restriction point (R), growth factor availability is assessed. If growth factors are present the cell then goes on into the second part of G1 and assess if enough nutrients are present to go into S-phase.
+
+From (R) onward until G1/S, the cell dies if the amount of nutrient prevents it from performing homeostasis, which is not as costly as proliferation. mild depletion will lead to apoptosis while acute depletion will lead to necrosis. After G1/S, since the cell engage active proliferation, the thresholds are raised to reflect the higher ATP consumption overall.
+
+The limit between G1 and S is dashed. This is to signify that cells may arrest growth in G1 if nutrient are not present in sufficient quantity to support proliferation. This behavior is based on the assumption that cells are parcimonious in G1-phase. This means that they will primarily ensure homeostasis and invest surplus into proliferation and preparation of S-phase. This whole reasoning leaves aside a primary aspect of the cell phenotype : migration.
+
+\subsection{The case of cell migration}
+In this part, the goal is to attempt to answer three main questions about cell migration in DIPG: 
+\begin{itemize}
+\item What triggers or stop cell migration ?
+\item What is the energetic cost of migration ?
+\item How fast is cell migration ?
+\item How is it coordinated with proliferation and the cell cycle ? 
+\end{itemize}
+
+Definitive answers are not available for most cancer cell lines let alone DIPG whose migration  has seldom been studied from a "biophysical" point of view, as in trying to measure quantitative physical quantities in a large set of conditions. The literature review gives some clues about the behaviour and they will be included in the model with some hypothesis in order to be able to complete the formulation.  In order to find data applicable to the model a first search was conducted for DIPG, then a broader one on Oligodendrocyte precursor cells (OPC), and then other cancer cell lines were also checked to fill in eventual gaps or to confront findings in order to assess the potential variability of a given behavior between cell lines or within a cell line.
+
+\subsubsection{What triggers or stop cell migration ?}
+The answer to this question is definitely not trivial. For DIPG cells, observation and preliminary experiments suggest both contact with the right type of matrix and the presence of the right type of growth factors are necessary for cell migration to occur. It should be noted  that under certain culture conditions the cell became adherent monolayers. \cite{Meel2017} (TSM base + 10\% heat inactivated FBS) Elements in the review of Rajasekharan on Oligodendrocyte precursor cells, whose phenotype is close to the studied cell line here, suggest that lack of growth factor inhibits migration. It also states that Fyn pathway may still lead to migration, which is linked to integrin and therefore cell-ECM contact \cite{Rajasekharan2009} DIPG cells (most specifically DIPG-007) also appear to downregulate or underexpress beta-catenin which is linked to cell-cell contact and elevated levels result in reduced migration.\cite{Cockle2015}
+
+It should also be noted that migration will not be treated similarly in the neurosphere and in the chip. Neurospheres do not appear to produce the same type of matrix protein that triggers migration in cells and the abundance of cell-cell contacts may play a role in the inhibition of migration as well.\cite{Campos2004} This is further supported by the fact that spheres grown in non-adherent environment exhibit migration once placed in extracellular matrix scaffolds.\cite{Cockle2015} Experiments from Corning Life Sciences also show that cell can migrate from neurospheres without growth factor if placed in a growth factor depleted envrionment coated with laminin.\cite{Corning} 
+
+\subsubsection{What is the energetic cost of migration ?}
+An aspect that has been left out of the discussion so far is the energetic requirement of migration. Estimate suggest that up to 50 \% of ATP requirement could be directed towards migration.\cite{Zanotelli2021} Others studies from the same group showed that denser matrix correlated with higher ATP:ADP ratio in migrating metastatic cells. This means that we have to consider three energy expenses : Homeostasis, Proliferation, and migration. Two hypothesis will be at the foundation of the model on that aspect. Proliferation and migration are equivalent in terms of energy consumption and the repartition of produced ATP during the two remains roughly equal regardless of the amount available energy. For this to be realistic, it is obvious that migration speed and proliferation speed must be slowed down in case of ATP reduced availability.
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{4cm} 
+\begin{tikzpicture}[domain=0:4] 
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    %axes
+    \draw[->] (-0.2,0) -- (4.5,0) ; 
+    \draw[->] (0,-0.2) -- (0,4.5) node[above] {ATP cons.};
+    
+    %rectangles
+    \filldraw[fill=cyan!10!white,draw=black] (0.75,0) rectangle (1.25,1);
+    \filldraw[fill=green!60!black,draw=black] (0.75,1) rectangle (1.25,2);
+    \draw (1,-0.5) node {quiesc.};
+    
+    
+    \filldraw[fill=cyan!10!white,draw=black] (3,0) rectangle (3.5,1);
+    \filldraw[fill=green!30!black,draw=black] (3,1) rectangle (3.5,3);
+    \filldraw[fill=orange,draw=black] (3,3) rectangle (3.5,4);
+    \draw (3.25,-0.5) node {prolif.};
+    
+    \filldraw[fill=green!60!black, draw=black] (5,2) rectangle (5.2,2.2);
+	\draw[thick,gray!70!black](5.5,2.1) node {/};
+    \filldraw[fill=green!30!black, draw=black] (6,2) rectangle (6.2,2.2);
+	\draw[thick,gray!70!black](7.5,2.1) node {migration};
+	\filldraw[fill=orange, draw=black] (5,3) rectangle (5.2,3.2);
+	\draw[thick,gray!70!black](6.5,3.1) node {proliferation};
+	\filldraw[fill=cyan!10!white, draw=black] (5,1) rectangle (5.2,1.2);
+	\draw[thick,gray!70!black](6.5,1.1) node {homeostasis};
+    
+\end{tikzpicture}
+\caption{Energy consumption for quiescent and proliferative cells \label{energy}}
+\end{figure}
+
+Therefore with cell migration included, the energy consumption of a cell is taken as shown in figure \ref{energy}. In the quiescent state, energy is evenly split between homeostasis and slow migration. If ATP production capacity falls the cell will prioritize homeostasis and migration will be slow gradually until it reaches zero. If ATP production decreases further then cell death may occur. For proliferating cells, migration is faster and more energy consuming than in quiescent cells. Biosynsthesis also consumes a lot energy and homeostasis is considered to be roughly the same. However, it is important to note after G1/S checkpoint, the threshold for survival will be considered to be higher (see fig.\ref{cell fate}). The reason is that the commitment to division cannot be halted the way it can be in G1. It is therefore considered that the proliferation energy cost is necessary for survival and thus the only "dispensable" energy expense becomes migration.  
+ 
+
+\subsubsection{How fast is cell migration ?}
+Data on oligodendrocyte precursor cells  gave a mean velocity of 10 \textmu m/h with maximal value of 120 \textmu m/h.\cite{Happel2013} Other measurements on OPCs yielded values between 10 \textmu m/h and 20 \textmu m/h. and measurement on U251 glioma cells yielded of 30 \textmu m/h.\cite{Piltti2017}   
+
+Following up on previous knowledge, it is assumed that migration and proliferation will slow down in similar proportion. They will slow down until the apoptosis threshold is reached.
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{4cm} 
+\begin{tikzpicture}[domain=0:4] 
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    %axes
+    \draw[->] (-1.7,0) -- (4.5,0) node[right] {$p_{ATP}$}; 
+    \draw[->,color=green!20!black] (4.3,-0.2) -- (4.3,4.2) node[above] {$v_{cell}$};
+    \draw[->,color=blue] (-1.5,-0.2) -- (-1.5,4.2) node[above] {$t_{G1}$};
+    
+    %ticks
+     \draw[-] (0,-0.2) -- (0,0.2);
+     \draw (0,-0.6) node {$p_{ATP,crit}$};
+     \draw[-] (3,-0.2) -- (3,0.2);
+     \draw (3,-0.6) node {$p_{ATP,suff}$};
+     
+     %lines
+     \draw[dashed] (0,0.2) -- (0,4.2);
+     \draw[dashed] (3,0.2) -- (3,4.2);
+     
+      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
+      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
+      \draw[domain=0:3,color=green!30!black] plot (\x,\x);
+      \draw[domain=3:4.3,color=green!30!black] plot (\x,3);
+      \draw[color=green!30!black] (5.5,3) node {$v_{max,GF+}$};
+      \draw[domain=0:3,color=green!60!black] plot (\x,0.5*\x);
+      \draw[domain=3:4.3,color=green!60!black] plot (\x,1.5);
+      \draw[color=green!60!black] (5.5,1.5) node {$v_{max,GF-}$};
+  \end{tikzpicture}
+  \caption{Relation between ATP production, cell migration speed and G1 phase length \label{vcell}}
+\end{figure}
+
+As shown in figure \ref{vcell} the relation is in fact opposite. G1 will lengthen until the minimal threshold for survival is crossed. Cell migration speed will increase with ATP production until a maximum value which will depend on the presence of growth factors. If growth factors are abundant, maximum migration speed will be higher to reflect how growth factors promotes migration (but are not necessary for it to occur).
+
+Though it was represented as a linear increase in figure \ref{vcell}, the speed slope will most likely be a sum of heaviside function due to the coarse (cell-level) spatial discretization of the model.
+
+\subsubsection{How is it coordinated with proliferation and the cell cycle ?}
+A timelapse of Huang on Oligodendrocyte precursor cells shows that OPC progressively stop migrating stop their migration 1 to 2 hours before dividing and then resume. Suggesting that migration can basically occur at anytime that is not division.\cite{Huang2020} Data gathered on other cell types showed that at a given time up to 80 \% of migrating cells are in G1 or S-phase while the rest are in G2.\cite{Alhashem2022} There is also evidence that cells in G0 phase migrate too for certain cell types.\cite{Lamb2014}
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{4cm} 
+\begin{tikzpicture}
+%circle & arcs
+\draw[draw=green!30!black] (90:0) -- (90:1) arc (90:30:1);
+\draw[draw=green!30!black] (30:1) -- (30:2) arc (30:-180:2);
+\draw[draw=green!30!black] (-180:2) -- (-180:1) arc (-180:-240:1);
+\draw[draw=green!30!black] (-240:1) -- (-240:0);
+
+%axes & lines
+\draw[->,color=black, thick] (90:0) -- (90:2.5) ;
+\draw[color=black] (-0.7,2.5) node {$v_{cell}$};
+\draw[color=black] (-0.1,1) -- (0.1,1);
+\draw[color=black] (0.5,1.2) node {$v_{slow}$};
+\draw[color=black] (-0.1,2) -- (0.1,2);
+\draw[color=black] (0.5,2.1) node {$v_{fast}$};
+\draw[color=black] (90:-2) -- (90:-2.3) node[below] {G1/S};
+\draw[color=black] (30:2) -- (30:2.3);
+\draw[color=black] (30:2.6) node{R};
+\draw[color=black] (180:2) -- (180:2.3);
+\draw[color=black] (180:2.9) node{S/G2};
+\draw[color=black] (120:1) -- (120:1.3);
+\draw[color=black] (120:1.6) node{G2/M};
+\end{tikzpicture}
+\caption{Relationship between cell cycle phase and migration speed for proliferating cells \label{vcycle}}
+\end{figure}
+
+For proliferating cells, the migration speed will depend on the cell cycle phase as shown in figure \ref{vcycle}. This would be the ideal, most realistic situation. Though this may be simplified into only fast and slow phases  for the sake of simplicity (the stop phase for division would be removed). Quiescent cells can only move at speed between $v_{slow}$ and 0 as they are not stimulated by growth factors.
+
+\subsection{The differences between neurospheres and the chip}
+One of the reasons 3D culture models became a source of interest for the scientific community especially in cancer research is due to the impact of mechanics.\cite{Romani2020} Pathways like Wnt, NOTCH and YAP/TAZ, are famously deregulated in cancer. This interplay between mechanics and proliferation, migration  and general cell physiology is also present in DIPG cells. Interestingly observation suggest they are not sensitive to contact inhibition. Nonetheless the very different nature of the two configuration should be mentioned.
+
+\subsubsection{Cell-cell vs cell-matrix}
+In the case, of neurosphere, cells have a lot of cell-cell contact which do not involve exactly the same pathways as cell-matrix contacts. This has an impact on the metabolic behavior of a given cell line. For example it has been reported that ECM detachment from a Hyaluronic acid matrix increased glucose metabolism in various cell lines including U-87 glioma cell line.\cite{Sullivan2018} It has also been shown that stiffer environment promotes glioma aggressiveness through PIEZO1.\cite{ChenX2018} Most literature found on this subject seem to present a rather coherent picture : Stiff environment tend to promote proliferation, glyoclysis and migration. \cite{Chen2021}\cite{Barnes2017}
+
+It should however be noted that even in the sphere configuration, the cells most likely produce some ECM molecules. In rat or mouse neurosphere, Laminins and fibronectins are produced by cells in the neurosphere, with Fibronectin being present all across the sphere while laminin is mostly present at the edge.\cite{Campos2004}
+
+\subsubsection{Access to metabolite}
+In the chip configuration, metabolites and nutrients are supplied radially to cell/matrix ensemble. Cells not having too many cell-cell contacts it can be assumed that the matrix will be the limiting diffusion medium and that no significant tortuosity impacts mobility of different molecules, except for oxygen which crosses membranes anyway. 
+
+For glucose and glutamine, the impact is roughly the same. The neurosphere compaction leads to a high tortuosity and therefore a reduced diffusion coefficient in addition of the consumption term. The depletion layer is therefore expected to be radially thinner than in the sphere configuration. However a main question that should be adressed is what the matrix in the sphere is made of and how it impacts diffusion compared to the hyaluronic acid/matrigel mixture of the chip configuration.
+
+As literature review for growth factors was conducted, evidence accumulated that modelling such a process accurately would prove extremely difficult. This will be develop in the next subsection
+
+\subsection{The growth factor question}
+Growth factor were slated for inclusion in the model from early on due to their assumed role in the passage of the restriction point R, and promotion of cell proliferation and cell migration.\cite{Nabil2021}\cite{Rajasekharan2009}\cite{Bauer2004}
+
+However several problems makes the realistic inclusion of growth factor in the model extremely challenging. First of all, there is a general scarcity of data on diffusivity and consumption rate. Rough estimates on diffusivity and consumption rate could be found based on experimental data found in the literature. However, these lead to a more qualitative problem.
+
+Growth factors in solution are reported to have short half-lives (hours at most).\cite{Ren2020}\cite{Teixeira2020} For this reason, in vitro and in vivo growth factors tend to be attached to larger molecules which stabilises them. These molecules are typically molecules of the ECM. The interactions between cells and growth factors thus become a function of the attached molecules, not only through their physical and chemical properties, but also through their interactions with the cell membrane.\cite{Teixeira2020}\cite{ChenJW2018} 
+
+Even assuming that the previous interactions are completely sorted out, the question of spatial and temporal aspects of internalisation of the "growth factor-receptor" complex would still need to be adressed. For example, attachement to a large protein may prevent internalisation altogether as long as the large ECM protein is not dissociated from the complex possibly leading to continuous promitotic signalling, but also to the  prolonged unavailability of the receptor. On the contrary, internalised GFR complex may be dissociated very quickly leaving the receptor open to return to the membrane and bind to a new growth factor.\cite{Ren2020}\cite{Teixeira2020}
+
+All the previous fact lead to the conclusion that there is simply not enough knowledge on growth factors as is for them to be included in the model without massive and uncheckable hypothesis having to be made.
+
+\subsubsection{The migration question}
+The question of migration in the chip is rather straightforward. It will be considered to be triggered by the cell-matrix contact, and therefore present by default in the chip configuration. It may be hampered by lack of nutrient, or on the contrary increased by "moderate" hypoxia However, quiescence does not equate with arrested migration. Since hypoxia now becomes a major factor in the model, its impact on migration should also be assessed. Several studies make a direct link between the upregulation of HIF-1$\alpha$ and enhanced migration.\cite{Joseph2015}\cite{Velasquez2019}\cite{Eckerich2007} 
+
+It is thus important to know or at least estimate the level at which the HIF-1 induced migration increase will result in increased migration. In her review, McKeown reports that the level for HeLa cells inducing maximal response was 0.5\% (0.0375 mM) with a a half response obtained 1.5-2\% and a low expression at 4\%.\cite{McKeown2014}
+
+\subsection{Hypoxia-induced quiescence}
+As explained in the previous subsection, growth factors will be left out of the new model even though they were intially included. The big question thus becomes how is the restriction point passage decided ? Or, more braodly, what induces cell quiescence ?
+
+Fortunately, a recent study outlines the answer to that question.\cite{Nabil2021} Glucose is also reported to possibly induce quiescence. However, the cited study never removes glucose or inhibits glucose transporter without removing serum as well, which prevents from establishing firmly the role on glucose in the phenomenon.\cite{Hu2011}
+However several reported studies establish how hypoxia leads cells to a quiescent state either through exposition to an oxygen depleted environment or through a chemical used to emulate this situation.\cite{Nabil2021} One of those study observed the effect hypoxia on monolayer and 3D cultures of MCF-7 cells. Hypoxia (0.1\% level) induced drasti augmentation of quiescent cell numbers and practically stop growth in the monolayer culture with a reaction time of less than 2 days.\cite{Lee2018}
+
+Therefore, severe hypoxia will be selected as the new criterion for the passage of the restriction point. This however raises the question of the value for the threshold, as it might be higher than 0.1\%(0.0075 mM). McKeown's review on the subject supports that a value of 1\% (0.075 mM)  is realistic as a threshold where the effect of hypoxia are already felt. It is also explained that hypoxia can lead to tumor cell death if the level falls below 0.01\% (0.0075 mM).\cite{McKeown2014} These are the value that will be used in the model.
+
 
 
 \section*{to be treated}
 
-27/01/2023 : algo de voronoi sympa présenté dans la ref 21 et 22 de Kempf. voir si ça peut améliorer celui de Fabrizio
-	read 31 and 32 of kempf 2010 pour voir ce que ça dit sur la quiescence
-	read 45  and 51 of Schaller
-
-read "Simulating PDGF-driven glioma growth and invasion in an anatomically accurate brain domain." for simulation of gliomae with ABM
-
-\textbf{and "Strategies of eradicating glioma cells: A multi-scale mathematical model with mir-451-ampk-mtor control."}
-
-[read Roose for interstitial stresses and look the model about solid stresses in more detail]
-
-[use KIM2007 to expand on continuum models]
-
-\textbf{[It should be noted that interstitial pressure could be easy modelled with immersed boundary where the mechanics are already encoded within the model]}
-
-%Yu2020 si j'ai la foi plus tard. en gros ils font plusieurs modèles intéressants en java avec 3 représentations du cycle métabolique. Si je fais l'étude comparative sur le cycle du glucose faudra en parler.
-
-\textbf{[find ref on apoptosis role in tumor cell population. ]}
 
 
 %https://www.ncbi.nlm.nih.gov/books/NBK9876/ garder ça pour plus tard (grosse ref sur les cellules eukaryotes
@@ -2126,39 +2653,14 @@ read "Simulating PDGF-driven glioma growth and invasion in an anatomically accur
 
 if you do wide field, you need to slice or you're not getting images at the core...?
 
-hill equation is a  generalised form of Monod equation which was used on bacteria in 1949
 
-\textbf{[In Onzonato, they use Fucci markers on HeLa cells. They do not stain cell death so we do not know about necrotic core... ask alessandro]}
-
-\textbf{keep : "Three-Dimensional Cell Culture Systems in Radiopharmaceutical Cancer Research" for further reference about markings ?}
-
-01/02/2023: \textbf{[Short bibliography on  BMG-1 spheroids to see the general phenotype  as khaitan obtains surprising stuff]} scaffold ?
-
-01/02/2023: \textbf{keep : "The Glycolytic Switch in Tumors: How Many Players Are Involved?"}
-
-06/02/2023: Freyer 83 also give extracellular space fraction
-
-06/02/2023: Lire le papier de Bell2021 sur les gliomes...
-
-07/02/2023: read Voissière in full, lots of information on human 3D cell culture of chondrosarcoma such as reduced cell cycle pace
-
-07/02/2023: read Tyson and Novak too
-
-07/02/2023: "Mathematical modeling of the proliferation gradient in multicellular tumor spheroids" for comparison to results of models could be interesting
-
-20/02/2023:  add meele and the other paper on DIPG to bibliography
-
-28/02/2023: "Furthermore, glioma cells cultured as neurospheres were found to display a different metabolic profile compared to identical cell lines grown as monolayers in serum-containing
-media. [37]" in Meel
-
-03/03/2023 : checkout murtrey diffusion 
-
-20/03/2023: read "Browning, Sharp, et al. eLife 2021;10:e73020. DOI: https://doi.org/10.7554/eLife.73020 1 of 25
-Quantitative analysis of tumour
-spheroid structure"
+**Cell kinetic characteristics in different parts of multicellular spheroids of human origin KEEP THIS
 
 
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{biblio_synthese}
 \end{document}
+% Si 15 mM de glucose -> 50 pmol initialement dispo 
+% si les consos sont justes on est entre 0.6 et 1.2 fmol/min pour une cellule de 15 µm de diam 
+% donc normalement ça met 400 à 800 mn à se vider !
