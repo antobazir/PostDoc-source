@@ -1,0 +1,139 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Introduction}
+This note aims at providing a fresh methodological start in the scope of the DIP2G project. The 6 first months of work on the modelling side of the project can be divided in two roughly equal parts: 1) review of available modelling tools and their achievements. 2) review of the available experimental data on diffuse intrinsic pontine glioma(DIPG) and other glioma cancer cell lines in order to feed  the prospective model. Pages of text have been written on those two subjects before and brief summaries of both will be given in the following paragraphs 
+
+In terms of modelling tools available, the variety of tools makes it difficult to classify them into clear cut categories. Continuous models that tend to treat tissues(i.e cells and their microenvironment) as interacting concentration fields have been used to recapitulate growth dynamics and derive governing equations. Those can be stochastic on deterministic but generally leave out the intracellular scale to focus on "cell-to-tissue"-scale descriptions. On the other end of the spectrum lie models inspired more by systems biology  and that will attempt to recapitulate entire regulation pathways or metabolic fluxes. But of course, representing  all models as belonging to a single axis that would describe scale would be reductive. Several approach can be employed for a given scale. For example, the growth dynamics of spheroids have been replicated both by continuum models of interacting concentration fields and by agent-based models. Agent-based model are best illustrated by "Game of Life" type of simulation where individuals/agents/cells will multiply and interact according  to set rules giving rise to possible emerging properties which are harder to capture with more straightforward mathematical models. A common feature in many of these models is that they require at least some degree of adjustement of  their constants to experimental data. The predictive value of these models often depends strongly on how said fitting is performed.[examples ?] This is not a problem and  a wide array of studies showcase the implementation of the evermore complete models leading to refined behaviors and possible interpretations.
+
+On the biological and experimental side of things, most work on DIPG cell lines is less than two decades old due to inavailability of tractable cell lines beforehand. Several studies have since been performed on different cell lines both in vitro and in vivo with xenograft performed in rats. However, physicists and biologists do not work with and reflect on the same "objects". Physicists will tend to think of tissues and their behavior as a "simple" interplay of nutrients leading to more or less growth in the tissue. Biologists will, for the most part, approach tissue and cell behavior through the study of regulatory pathways which will of course depend on the presence of nutrients but are so interconnected that it is difficult to formulate any prediction to a given change in input. The interconnectedness of different pathways also means that even a slight change in experimental conditions can give results that would be considered completely different by a physicist. Striking examples include how a cell line may "reverse" the citric acid cycle from oxydative phosphorylation to reductive carobyxlation under certain circumstances, The significant difference in oxygen consumption in a given cell line when it is grown as a sphere or as an adherent monolayer, or the different in glycolysis in two apparently close cell lines.
+
+This far, the authors of this study are not interested in sampling 100,000 metabolic flux configurations or testing tens of different hypotheses on larger scale models. Said approach is interesting when the experimental data is readliy available and that one wishes to study possible mechanisms underlying the observed behavior, which is not the case of the DIPG project at the time when those lines are being written. The best approach now, with regards to the available experimental data is to try to answer simple physical question in well-defined configurations and explore the possible implications by looking both at available data and the obtained physical results. The first question that will be adressed in the study is the question of hypoxia.
+
+\section{Hypoxia in DIPG : Quantitative aspects and cell response}
+\subsection{A definition of hypoxia}
+Diffuse intrinsic pontine glioma are known to be hypoxic tumors.\cite{Bailleul2021} It is in this case necessary to try to define hypoxia both from physical (read "quantitative") and biological point of view. For this purpose, the 2014 review of McKeown provides a good starting point.\cite{McKeown2014} She defines a spectrum of sate corresponding to different levels of oxygenation. Most notably, she outlines the following definitions: 
+\begin{itemize}
+\item physiological hypoxia : the lower level at which normal hypoxic responses are elicited (range: lower limit approximately 1\%; upper limit possibly $\approx$ 5\%)
+\item Pathological hypoxia : shows persistence of poor oxygenation suggesting disruption to normal homeostasis.
+\end{itemize} 
+In short, physiological hypoxia seems to define a level where the cell can adapt its oxygen consumption in order to maintain oxygen pressure at its physioxic/homeostatic level. While pathological hypoxia seems to define the range for which it becomes impossible for the cell to maintain the oxygen level and therefore homeostasis. This definition already evidences the complex nature of the phenomenon, as it implies that in some cases, the cell can lower their consumption in order to keep the oxygen pressure at given level. Modelling such response would imply knowledge of two things, the different thresholds triggering said response, and the temporal dynamics of it in order to know if any rebound effects are to be included. It should be noted that in general, studies that are referring to hypoxia generally refer to pathological hypoxia with level generally around or below 1\%. \cite{Bailleul2021}\cite{Waker2018}\cite{Saxena2019}
+
+These quantitative aspects leave aside an important aspect of hypoxia and how it impacts cells and tissue : time. Indeed hypoxia, will also be divided into different categories depending on how long the state of hypoxia lasts. "Acute hypoxia" refers to hypoxia that lasts up to 24 hours while hypoxia lasting longer will be referred to as "chronic hypoxia", which may be counterintuitive for the unsuspecting public. Lastly, Chronic hypoxia is defined as a succession of acute hypoxia state followed by reoxygenations. These definitions are not arbitrary and stem from molecular observation about hypoxia. As explained : "Under hypoxia, PHD is inhibited such that HIF-$\alpha$ is not recognized by VHL and hence accumulates"\cite{Saxena2019} and "HIF-1$\alpha$ is ubiquitously expressed, while HIF-2$\alpha$ expression is more tissue specific and expressed in blood vessels, kidney, liver, pancreas, heart, lungs, intestine, and brain". Therefore, initial interest in HIF-1$\alpha$ and HIF-2$\alpha$ will be required in this study. Hypoxia-Inducible Factors are therefore considered the markers of hypoxia in tissue and notably in cancer tissues, and they trigger several cascade that will impact cell behavior in terms of metabolism, proliferation and migration among other things.
+
+This interplay between HIF-1$\alpha$ and HIF-2$\alpha$ seems to be coordinated in a rather widespread fashion across various cell lines : it has been demonstrated in vitro among several endothelial cell line with 0.9 \% O$_2$\cite{Bartoszewski2019},  it was also verified in neurobalstoma cells in vitro at 1\% O$_2$.\cite{Holmquist2006} Said switch was also observed on U87 glioma cells.\cite{Koh2011} In that case, it is interesting to note the difference of response between 0.5 \% O$_2$ and 1\% O$_2$. At 1\% O$_2$ HIF1-$\alpha$ is detectable after 72 hours but has decreased significantly compared to earlier levels while HIF2-$\alpha$. below 0.5 \% O$_2$, HIF1-$\alpha$ decreases notably after 16 hours. In both cases HIF2-$\alpha$ seems to follow HIF1-$\alpha$ and does not (to the author eyes) demonstrate a significant difference in expression in terms of timing. A study on neuroblastoma cell lines demonstrated a more evident shift, but in that case what is shown is that acute hypoxia (at 5\%, 2\% and 1\%) triggers important HIF1-$\alpha$ expression, with mild HIF2-$\alpha$ at 1\% and 2\%.\cite{Lin2011}. Chronic hypoxia (decreasing level with 72 hours steps between each) triggered much more significant HIF2-$\alpha$ expression and much less HIF1-$\alpha$ expression than in the acute case.\cite{Lin2011} It is possible that in the previous case exposition to hypoxia was not long enough to really trigger expression of HIF2-$\alpha$ seen in the latter, if the potential difference between cell line is left out.
+
+Broadly, acute hypoxia (up to 72 hours) seems to trigger expression HIF1-$\alpha$ preferentially, while HIF2-$\alpha$ stabilizes much more after longer period (more than 4 days) of hypoxia around 1\%. Of course duration and relative levels will depend on the cell lines and the severity of hypoxia. The next step is thus to try and gather available data on hypoxia in DIPG cell lines.
+  
+\subsection{Available data on hypoxia on DIPG}
+\subsubsection{Response of DIPG cells to Hypoxia}
+The goal of the literature survey performed here is to assess the amount and the kind of data available on hypoxia DIPG cell lines. Our goal is mostly to find data on the expression of HIF1-$\alpha$ and its potential consequences on cell proliferation migration and metabolism. A review from Shen and collaborators reports that when analysing hypoxia, the fact that some cell lines express HIFs constitutively regardless of oxygen levels should be taken into account.\cite{Shen2020} For the cell lines studied in the DIP2G project (DIPG-007 and DIPG-0013)a small expression of HIF1-$\alpha$ is detected on DIPG-007 at 21 \% O$_2$ cultured as adherent monolayers, and this expression goes up signficantly when $pO_2$ is lowered to 1\%\cite{Bailleul2021}. In their study, Waker and collaborators exposed DIPG-IV and DIPG-XIII to hypoxia both "naturally" and through the use of CoCl$_2$.\cite{Waker2018} They report :"All three DIPG cultures retained stable expression of HIF1-$\alpha$ and HIF2-$\alpha$ protein at ambient oxygen tension, unchanged by [hypoxia-mimetics] treatment." What can be noted is that DIPG-IV cells have lower but significant constitutive expression of HIF1-$\alpha$ and HIF2-$\alpha$ than DIPG-XIII. After (supposedly) 24 hours of exposition to 100 \textmu M CoCl$_2$, HIF1-$\alpha$ expression is unaffected in both cell lines. For HIF2-$\alpha$, There is an increase for DIPG-IV and no clear effect for DIPG-XIII. These changes have also been reported for 2\% oxygen level (supposedly) for 24 hours. An interesting fact is that Hexokinase II (glycotlytic enzyme) is strongly expressed in both cell lines with hypoxia compared to control and more so  in DIPG-XIII whose HIFs level do not change with CoCl$_2$. The increase in glycolytic enzyme is coherent with the increase in glycotytic rate increase induced by hypoxia. Another interesting results is that oligomycin which shuts down ATP synthase does not lead to more glycolysis suggesting that these cells do not compensate loss of mitochondrial ATP by up regulating glycolysis(or that they did not have time to do so). Lastly Hypoxia mimetics halted proliferation in both cell lines.
+
+Now there can be an attempt at building a broader picture of the hypoxia response of DIPG cell lines. In normoxia, cells can express more or less constitutive HIFs. Interestingly this may stem from the kind of histone mutations the cell line is associated with DIPG-007 harbor H3.3 mutation while DIPG-4 harbor H3.1 mutation.\cite{Katagi2021} It would be interesting to know if this plays a role into determining HIFs constitutive expression. It will not be easy to conclude on this.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{18mm}|p{18mm}|p{18mm}|p{18mm}|p{18mm}|p{18mm}| }
+\hline
+\textbf{Cell line} & HIF1-$\alpha$ const. expr & HIF2-$\alpha$ const. expr & HIF1-$\alpha$ hypox. incr. & HIF2-$\alpha$ hypox. incr. & Mutations & Ref \\
+\hline
+\textbf{SU-DIPG-IV} & Yes & Yes & No & Yes & H3.1K27M ACVR1 & \cite{Waker2018} \\
+\hline
+\textbf{HSJD-DIPG-007} & Yes & N.D & No & N.D & H3.3K27M ACVR1 &\cite{Bailleul2021} \\
+\hline
+\textbf{SU-DIPG-XIII} & Yes & Yes & No & No & H3.3K27M TP53 & \cite{Waker2018} \\
+\hline
+\textbf{HSJD-DIPG-0013} & No & N.D & Yes & N.D & H3.3K27M TP53  & \cite{Bailleul2021} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+If the focus is put on the two cell lines with the same mutations results are inconsistent with one expressing HIF1-$\alpha$ constitutively while the other does not. The main difference between 0013 and XIII lines is their respective STR profile and culture conditions not being fully detailed by Waker and collaborators. It is possible that Waker and collaborators cultured their cells as monolayers while the DIPG-0013 results presented by Bailleul and collaborators were obtained on cells cultured as neurospheres. Most notably, 96 hours of culture of the DIPG-XIII as neurospheres presented no difference at 21 \% $pO_2$ and 1 \% $pO_2$\cite{Bailleul2021}, while the hypoxia mimetics completely stopped growth for the same duration in the study of Waker and collaborators.\cite{Waker2018} This maybe due to the different culture configuration.
+
+\subsubsection{Oxygen consumption of DIPG cells}
+In order to know the extent of hypoxia the cells are subjected to, it is important to know the oxygen consumption of the cells in culture. In most cases, the oxygen consumption rate is measured in monolayers through the use of the seahorse XF kit.\cite{RomeroAgilent} Value are generally reported in pmol/min/cell. Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 2 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm which translates into 1.5 mM/min for oxygen consumption. In the case of Mbah and Shen, it was reported in a monolayer-like situation as the cells were plated in wells coated in laminin.  Jiang and collaborators also reported on lung cancer cells that oxygen consumption increased in the monolayer situation compared to the spheroid. This is the first quantitative data we found on that matter and they show OCR to be reduced by two thirds in spheroid compared to monolayers.\cite{Jiang2016} The value for OCR is not to be adjusted as we consider that the contact with the HA/matrigel scaffold produces similar effect to the laminin-coated surfaces used by Shen, Mbah and their collaborators to assess the OCR with the seahorse experiments.
+
+The value reported by Shen and collaborators is 4000 pmol/min/$10^6$ cells which corresponds to a consumption of 2 mM/min/cell. This value is reported for HSJD-DIPG-007 cell line cultured as neurospheres.\cite{Shen2019} In the case of Mbah and collaborators, they derived two models from the HSJD-DIPG-007 and SU-DIPG-XIII cell lines: one grown as neurospheres and another cultured as adherent monolayer with serum. The OCR and ECAR were measured in both cases. For HSJD-DIPG-007 the OCR value reported for gliospheres-cultured cells reported is 50 pmol/min/cell. The first thing is to compare this to the value reported by Shen and collaborators which is 0.004 pmol/min/cell. This means that the same experiment on the same cell line yielded results different by 4 orders of magnitude. Other values reported for brain tumor cells by Ruas and collaborators are in the range of 80 pmol/s/$10^6$ cells, which corresponds to 4800 pmol/min/$10^6$ cells measured in suspension on U87 glioma cells. This is much closer to the value of Shen and collaborators. A possible explanation is a conversion error by Mbah and collaborators. If there value is taken not to be 50 pmol/min/cell but 50 pmol/sec/$10^6$ cells then it becomes much closer to the other values. And to further support this point, the results on ECAR are suggested to the same discrepancy and can be corrected in the same way. Now, if the correction is applied to the gliosphere values for HSDJ-DIPG-007 the measured OCR is 50 pmol/s/$10^6$ cells, which corresponds to 3000 pmol/min/$10^6$ cells, and therefore 1.5 mM/min/cell (assuming a 2 pL cell volume). The same operation for SU-DIPG-XIII yields 4.5 mM/min/cell.
+
+\subsubsection{Building the model}
+Now that all the information available has been presented, the model will be built by selecting the most relevant aspects. First of all, it is interesting to note that the DIPG cell line with the most available information is the "13" group (i.e. SU-DIPG-XIII and HSJD-DIPG-0013) which harbors the H3.3K27M and TP53 mutations (according to cellosaurus) 
+
+In terms of response to hypoxia those cell line appear  to react as follows. When grown as sphere hypoxia in the range of 1\% $pO_2$ has no noticeable effect on growth over 4 days of the HSJD-DIPG-0013 line. However, the SU-DIPG-XIII line when culture on laminin coated (supposition from the information available in Waker and collaborators poster \cite{Waker2018}) show complete growth arrest when suggest to hypoxia mimetics which should emulate hypoxia in the range of 1-2 \% over the same time period. 
+
+Even though, these situations are most likely not strictly equivalent due to the different type of extracellular matrix proteins being involved (laminin vs. hyaluronic acid), it will nonetheless be assumed that the modelled cells in the matrix should behave like the SU-DIPG-XIII cells in the experiments of Waker and collaborators. This means that cells will undergo growth arrest  below 2\% oxygen pressure.
+
+In terms of oxygen consumption consumption, since an OCR is available for SU-DIPG-XIII on a laminin-coated plate, this value (4.5 mM/min/cell) will also be used in the model. Even though it has been reported that cells may lower their oxygen consumption when oxygen level drops this effect will not be included at first. Therefore this model shall only describe the situation of pathological hypoxia described by McKeown. This may slightly impact the temporal dynamics of the whole system by producing a shorter gradient than in reality. This hypothesis shall be tested later.
+
+A last aspect that will not necessarily be treated right away but should be mentioned here is the impact of glycolysis rate. Indeed it was also measured  on the SU-DIPG-XIII that glycolysis rate increased roughly two-fold when exposed to hypoxia-mimetics for 24 hours. While this does not immediately matter as the model focus solely on oxygen this may strongly impact the glucose dynamics in the model when they are included.
+
+\section{Proper modelling \& Results}
+\subsection{The tumor-on-chip device}
+In the scope of the DIP2G project, the most interesting configuration to model is the "tumor-on-chip" configuration. This chip is made of circular well of 10 mm diameter and 750 \textmu m thickness, connected to a microfluidic device through small inlet/outlet holes, as shown in the following drawing.
+
+\vspace{1cm}
+\hspace{2cm}
+\begin{tikzpicture}
+	%inlets
+	\draw(0,-0.5) arc(270:90:0.5);
+	
+	\draw(0,0.5) -- (1,0.5);
+	\draw(0,-0.5) -- (1,-0.5);
+	
+	\draw(8,0.5) arc(90:-90:0.5);
+	
+	\draw(7,0.5) -- (8,0.5);
+	\draw(7,-0.5) -- (8,-0.5);
+	
+	% center 
+	\draw(4,0) circle (3);
+	
+	%annotations 
+	\draw[<->](1.1,0) -- (6.9,0);
+	\draw(4,0.5) node {10 mm};
+	
+\end{tikzpicture}
+
+The circular central part is filled with fluid between two parallel glass blades and also contains the cell/matrix pellet. This pellet is made of a 80/20 mix of Hyaluronic acid, which is the main constitutent of the extracellular matrix (ECM) in the human brain, and matrigel, which is made of the membrane matrix secreted by Engelbreth-Holm-Swarm mouse sarcoma. The proportion is chosen in part to ensure reticulation fast enough to avoid cell sedimentation an maintain them in a 3D configuration.
+
+This information about the matrix composition are important for the following reason: The cross-linking process makes the finalsize of the pellet   variable. Pellet diameter can vary between 4.5 mm and 8 mm depending on experimental parameters. For this reason, in the simulations, the extreme cases of a large and small chip will be treated.
+
+\subsection{The question of fluid circulation}
+Another important aspect is the fluid surrounding the pellet in the chip. The volume of fluid in the central part of the chip is more important if the pellet is smaller. This becomes relevant if the chip is used in the non-circulating configuration. In that configuration fresh medium is not circulated continuously in the chip and therefore, glucose, oxygen and other nutrients in the medium deplete over time because of cellular consumption. This means that a larger pellet consumes more and has less reserves than a smaller one.
+
+In the model, the simpler "circulating" configuration will be considered at first. The main reasons being that circulating configuration is approximated in the model by a constant concentration of nutrients in the medium. This is simpler both in terms of programming and in terms of physics. Indeed, with the depleting configuration the cells in the chip never reach a steady state which makes analysis more difficult. In the case of circulating configuration, once the diffusion and consumption have relaxed, the concentration at any point in the pellet is constant and a function of where the considered point lies in the chip.
+
+\subsection{Modelling the chip}
+The chip is modelled in MATLAB/Octave using a finite difference algorithm. The spatial step is set a 15 \textmu m which is considered to be theh cell diameter for the studied cell type. Since the reaction-diffusion equation is solved on that grid with an explicit scheme, the time step is set to 1/1000 th of minute the respect the Courant-Friedrichs-Lewy stability condition which depends on the diffusion coefficient of oxygen.\cite{Press1992}
+
+Before going into more detail it should be mentioned that although the situation is 3-dimensional, the representation in the model limits itself to the 2-dimensional circular midsection of the chip. That is to say the 15 \textmu m layer in the middle of the chip. This is justified by several different factors. The system extension along the z-axis is sufficiently large so that translational invariance along that axis can be considered to hold true.  
+
+The grid is a 667x667 square, and a circular domain with the diameter of the pellet is delimited within the square. In order to place the cells within the grid the following way: Only non-adjacent grid spots are open for cells. For example if the grid spot at the center of the circular zone corresponding to the pellet is tagged as "open", then the 8 adjacent spots are taken out of the selection. Once all the open spots have been designated, the algorithm randomly fills them with the corresponding number of cells.
+
+ The number of cells is calculated by multiplying the targeted concentration (typically 10 000 cell per \textmu L) by the modelled pellet volume which, in this case, is 15 x $2 \pi r_{pellet}$. 
+ 
+Lastly is in order to save computational resources those calculation are in fact only performed on a quarter of the grid. The underlying assumption that the axial symmetry in x and y means that the only difference would be the position of certain cell, of which the global density does vary much over the surface of the pellet.
+
+%Shen2019 is not in hypoxia
+
+%need to make a note on the molecular aspect of HIFs and  the ETC not obvious so far...
+\section*{Appendix}
+\subsection{Proof of the validity of the 2D approximation}
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio_synthese}
+\end{document}
+

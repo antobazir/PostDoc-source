@@ -1285,7 +1285,7 @@ Various measurements have been performed on human and rat brain tissue. The cere
 
 Cerebral metabolic rate have also been measured for oxygen in brain tissue in both rat and human tissue. Rhodes and collaborators also gave a measured value for CMRO$_2$ which was approximately 0.5 mM/min. (converted from 1.2 mL/100 mL/min and assuming a brain tissue density of 1050 g/L) \cite{Rhodes1983} A more recent set of value was provided by Rodgers on brain tissue with measured value ranging from 0.1 mM/min to 3 mM/min. Measurements by Shalit yielded values of approximately 0.5 mM/min as well.\cite{Shalit1972} In the model the value of 0.5 mM/min will be used. Kirsch and collaborators also noted that  "Calculations made on the basis of known diffusion and solubility coefficients of oxygen plus tumor oxygen uptake indicate that cells over 200 µm from a capillary source are essentially anaerobic" which gives information on the expected behavior \cite{Kirsch1978}
 
-Reported OCR value for DIPG in neurospheres are approxiamtely of 0.003 pmol/min/cell.\cite{Shen2019}\cite{Ruas2018} Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 3 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm which translates into 1.6 mM/min for oxygen consumption. (a value of 50 pmol/min/cell has been reported by \cite{Mbah2022})
+Reported OCR value for DIPG in neurospheres are approxiamtely of 0.003 pmol/min/cell.\cite{Shen2019}\cite{Ruas2018} Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 3 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm which translates into 1.6 mM/min for oxygen consumption. (a value of 50 pmol/min/cell has been reported by \cite{Mbah2022}) In the case of Mbah and Shen it was reported in  a monolayer-like situation as the cells were plated in wells coated in laminin. while Ruas measured the consumption in suspension, and is the only one not using DIPG.
 
 %For $k_{2,max}$, we do not have any measured values for the DIPG neurospheres. We could apply the same reasoning as for glucose. It should however be kept in mind that  oxygen can diffuse through membrane and has a higher diffusion coefficient than glucose. It it therefore entirely possible that oxygen may still be available in regions where glucose has been depleted. Two hypothesis can be made in order to choose a value for $k_{2,max}$. if cell death occurs only in case of complete glucose depletion, then oxygen may be present in significant amount (read more than 1/10 of the external concentration) at the core of the agregate even for size of 500 \textmu m. If oxygen also needs to be present in small amounts (around 1/10 of the external concentration) for the cell to survive. Then it can be assumed that like glucose, $k_{2,max}$ should be set so that the concentration near the core of the 500 \textmu m  diameter is close to zero. To summarise for the 500 \textmu m diameter sphere :
 %\begin{enumerate}
@@ -1860,12 +1860,12 @@ Exploration of different values for all parameters lead to the finding of an opt
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/chp_G_conf80.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/chp_G_conf80.pdf}
 	\caption{ \label{G_conf80}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_O_conf80.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_O_conf80.pdf}
 		\caption{ \label{O_conf80}}
 	\end{subfigure}
 	\caption{Concentration map for 4500 \textmu m-diameter pellet section  (a) for glucose (b) and oxygen \label{conf80} for the best configuration }
@@ -1874,12 +1874,12 @@ Exploration of different values for all parameters lead to the finding of an opt
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_D_conf80.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_D_conf80.pdf}
 	\caption{ \label{G_con80}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_T_conf80.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_T_conf80.pdf}
 		\caption{ \label{O_conf80}}
 	\end{subfigure}
 	\caption{Concentration map for 4500 \textmu m-diameter pellet section  (a) for glucose (b) and oxygen \label{conf80} for the best configuration }
@@ -1914,7 +1914,7 @@ This evidences that the configuration is mostly suitable compared to the criteri
 	\begin{subfigure}{0.45\textwidth}
 	\centering
 		\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_O_conf81.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_O_conf81.pdf}
 		\caption{ \label{O_conf81}}
 	\end{subfigure}
 	~~
@@ -1942,12 +1942,12 @@ Knowing this and considering the results, the cells can be considered to all und
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kGt_conf84.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_kGt_conf84.pdf}
 	\caption{ \label{kGt_conf84}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kOct_conf84.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_kOct_conf84.pdf}
 		\caption{ \label{kOct_conf84}}
 	\end{subfigure}
 	\caption{time evolution for glucose consumption (a) and  oxygen consumption (b) in the chip in the case of glucose starvation \label{tconf84}}
@@ -1956,12 +1956,12 @@ Knowing this and considering the results, the cells can be considered to all und
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_Tt_conf84.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_Tt_conf84.pdf}
 	\caption{ \label{Tt_conf84}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_k3t_conf84.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_k3t_conf84.pdf}
 		\caption{ \label{k3t_conf84}}
 	\end{subfigure}
 	\caption{time evolution for ATP concentration (a) and  glycolytic consumption (b) in the chip in the case of glucose starvation \label{Btconf82}}
@@ -1975,12 +1975,12 @@ Another observation is that without any other modification that the oxygen conce
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kGt_conf86.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_kGt_conf86.pdf}
 	\caption{ \label{kGt_conf86}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_kOct_conf86.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_kOct_conf86.pdf}
 		\caption{ \label{kOct_conf86}}
 	\end{subfigure}
 	\caption{time evolution for glucose consumption (a) and  oxygen consumption (b) in the chip in the case of glucose starvation \label{tconf86}}
@@ -1989,12 +1989,12 @@ Another observation is that without any other modification that the oxygen conce
 \begin{figure}[ht!]
 	\begin{subfigure}{0.45\textwidth}
 	\centering
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_Tt_conf86.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_Tt_conf86.pdf}
 	\caption{ \label{Tt_conf86}}
 	\end{subfigure}
 	~~
 	\begin{subfigure}{0.45\textwidth}
-	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys2D_k3t_conf86.pdf}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/cfsys/cfsys2D_k3t_conf86.pdf}
 		\caption{ \label{k3t_conf86}}
 	\end{subfigure}
 	\caption{time evolution for ATP concentration (a) and  glycolytic consumption (b) in the chip in the case of oxygen starvation \label{Btconf86}}
@@ -2283,8 +2283,9 @@ It is straightforward to add the Glutamine Hill function to the oxygen equation 
 There is also the question of the response of DIPG cells to their culture conditions. It has been shown for other tumor cells types that the metabolism was different in monolayers and spheres.\cite{Natarajan2019} And that  gene expression was also significantly changed in  DIPG cells when the culture method was changed from monolayer to neurospheres.\cite{Meel2017} Though, no data is available it would be interesting to assume that an impact on metabolism will be observed.
 
 
-\section{The new model}
+\section{The new model : Hypotheses  \& available data}
 The new prospective model will detail the metabolic aspect in space and time.
+This section aims at providing answers to simple question which may prove relevant within the framework of the model. As data is not necessarily available on the cell lines the project focuses on (DIPG-07 and DIPG-XII), data from other glioma cell line or possibly other cancer cell lines will be used in order to bring both qualitative and quantitative answers to those questions.
 
 \subsection{Metabolites} 
 As stated before three external metabolites and ATP are modelled with the following equations: 
@@ -2317,6 +2318,7 @@ Knowing this, two versions of the model can be designed :
 
 Before introducing the specifics of each version, one important common point to bring up is the absence of DNA damage checkpoint. Though this seems to be a radical hypothesis, cancer cells general harbour mutation that will downregulate/suppress the impact of DNA damage checkpoint allowing for mutations to pass down rapidly with little repair (which probably also speeds up replication to a degree). We therefore neglect any DNA damage checkpoint in S-phase and G2-phase and assume that once the cells  goes to S-phase it either completes division or dies if nutrient are not present in sufficient quantities.
 
+%rewrite this section remove the distinction
 \subsubsection{"Nutrient-only" model}
 In the "nutrient-only"model, the assumption will be that cells only monitor nutrient concentration to assess whether they move past the G1-phase. This, however, makes the distinction between "arrested G1" and G0 more difficult in terms of decision-making especially if growth factors are absent. At this point, two options are possible: 
 
@@ -2578,11 +2580,16 @@ A timelapse of Huang on Oligodendrocyte precursor cells shows that OPC progressi
 
 For proliferating cells, the migration speed will depend on the cell cycle phase as shown in figure \ref{vcycle}. This would be the ideal, most realistic situation. Though this may be simplified into only fast and slow phases  for the sake of simplicity (the stop phase for division would be removed). Quiescent cells can only move at speed between $v_{slow}$ and 0 as they are not stimulated by growth factors.
 
+\subsubsection{Coupling between migration and proliferation ?}
+A final question is how the proliferating cells divide their energy between migration and proliferation when ATP reserves drop because of lack of nutrients. The answer to this question is not straightforward as migration and proliferation are not completely coupled. For example, Flubendazole can induce G2/M cell cycle arrest with no impact on migration\cite{Zhou2018}. Cell cycle arrest induced through the YAP signalling pathway also inhibits migration in glioblastoma cells.\cite{Wang2023} Propofol has been shown to impact both proliferation and migration in glioma cells.\cite{Cheng2022} Silencing of the HIWI gene also reduced both proliferation (by inducing cell cycle arrest and apoptosis) and reduced cell migration.\cite{WangX2014} Cation channel have also been shown to impact proliferation and migration likewise.\cite{Rooj2011} Ginkgolic acid is also reported to inhibits cell migration and proliferation in glioblastoma.\cite{Li2021} Eupatilin has also been shown to disrupt both migration and proliferation.\cite{Fei2019} Interestingly for head and neck cancer, TGF-$\beta$ in head and neck cancer generates population of arrested cells  with high motility.\cite{Takahashi2022} as TGF-$\beta$ is also the pathway involved in cell cycle arrest modelling it obviously is interesting to know how it can impact migration in glioma specifically. it is reported that TGF-$\beta$ expression may enhance glioma migration.\cite{Han2015} If put together with Foster's interpretation, the hypothesis can then be that TGF-$\beta$ expression due to lack of nutrients inhibits cell cycle progression but promotes cell migration\cite{Foster2010} Uckun and collaborators have shown that in the specific case of DIPG patients, overexpression correlated with poorer prognosis in terms of invasion suggesting that expression TGF-$\beta$ may indeed promote invasion and possibly migration.\cite{Uckun2023} The whole picture is of course more complex and invovlves several pathways but it would be difficult to account for all of them. in conclusion, it will be considered that the TGF-$\beta$ pathway may trigger/enhance migration in harsh environment (typically mild hypoxia). it should however be noted that Kim and collaborators reported that TGF-$\beta$ in cancer cells has little regulatory effect on proliferation. The simplest way would thus be to considered migration and proliferation to be regulated similarly by nutrients.
+
 \subsection{The differences between neurospheres and the chip}
 One of the reasons 3D culture models became a source of interest for the scientific community especially in cancer research is due to the impact of mechanics.\cite{Romani2020} Pathways like Wnt, NOTCH and YAP/TAZ, are famously deregulated in cancer. This interplay between mechanics and proliferation, migration  and general cell physiology is also present in DIPG cells. Interestingly observation suggest they are not sensitive to contact inhibition. Nonetheless the very different nature of the two configuration should be mentioned.
 
 \subsubsection{Cell-cell vs cell-matrix}
-In the case, of neurosphere, cells have a lot of cell-cell contact which do not involve exactly the same pathways as cell-matrix contacts. This has an impact on the metabolic behavior of a given cell line. For example it has been reported that ECM detachment from a Hyaluronic acid matrix increased glucose metabolism in various cell lines including U-87 glioma cell line.\cite{Sullivan2018} It has also been shown that stiffer environment promotes glioma aggressiveness through PIEZO1.\cite{ChenX2018} Most literature found on this subject seem to present a rather coherent picture : Stiff environment tend to promote proliferation, glyoclysis and migration. \cite{Chen2021}\cite{Barnes2017}
+In the case, of neurosphere, cells have a lot of cell-cell contact which do not involve exactly the same pathways as cell-matrix contacts. This has an impact on the metabolic behavior of a given cell line. For example, it has been reported that ECM detachment from a Hyaluronic acid matrix increased glucose metabolism in various cell lines including U-87 glioma cell line.\cite{Sullivan2018} It has also been shown that stiffer environment promotes glioma aggressiveness through PIEZO1.\cite{ChenX2018} Most literature found on this subject seem to present a rather coherent picture : Stiff environment tend to promote proliferation, glyoclysis and migration. \cite{Chen2021}\cite{Barnes2017}
+
+Jiang and collaborators also reported on lung cancer cells that oxygen consumption increased in the monolayer situation compared to the spheroid. This is the first quantitative data we found on that matter and they show OCR to be reduced by two thirds in spheroid compared to monolayers.\cite{Jiang2016}
 
 It should however be noted that even in the sphere configuration, the cells most likely produce some ECM molecules. In rat or mouse neurosphere, Laminins and fibronectins are produced by cells in the neurosphere, with Fibronectin being present all across the sphere while laminin is mostly present at the edge.\cite{Campos2004}
 
@@ -2607,21 +2614,145 @@ All the previous fact lead to the conclusion that there is simply not enough kno
 \subsubsection{The migration question}
 The question of migration in the chip is rather straightforward. It will be considered to be triggered by the cell-matrix contact, and therefore present by default in the chip configuration. It may be hampered by lack of nutrient, or on the contrary increased by "moderate" hypoxia However, quiescence does not equate with arrested migration. Since hypoxia now becomes a major factor in the model, its impact on migration should also be assessed. Several studies make a direct link between the upregulation of HIF-1$\alpha$ and enhanced migration.\cite{Joseph2015}\cite{Velasquez2019}\cite{Eckerich2007} 
 
-It is thus important to know or at least estimate the level at which the HIF-1 induced migration increase will result in increased migration. In her review, McKeown reports that the level for HeLa cells inducing maximal response was 0.5\% (0.0375 mM) with a a half response obtained 1.5-2\% and a low expression at 4\%.\cite{McKeown2014}
+It is thus important to know or at least estimate the level at which the HIF-1 induced migration increase will result in increased migration. In her review, McKeown reports that the oxygen level for HeLa cells inducing maximal HIF-1$\alpha$ response was 0.5\% (0.00375 mM) with a half response obtained 1.5-2\% (0.01125-0.015 mM) and a low expression at 4\%.\cite{McKeown2014}
 
-\subsection{Hypoxia-induced quiescence}
+\subsection{Hypoxia-induced arrest/quiescence}
 As explained in the previous subsection, growth factors will be left out of the new model even though they were intially included. The big question thus becomes how is the restriction point passage decided ? Or, more braodly, what induces cell quiescence ?
 
 Fortunately, a recent study outlines the answer to that question.\cite{Nabil2021} Glucose is also reported to possibly induce quiescence. However, the cited study never removes glucose or inhibits glucose transporter without removing serum as well, which prevents from establishing firmly the role on glucose in the phenomenon.\cite{Hu2011}
 However several reported studies establish how hypoxia leads cells to a quiescent state either through exposition to an oxygen depleted environment or through a chemical used to emulate this situation.\cite{Nabil2021} One of those study observed the effect hypoxia on monolayer and 3D cultures of MCF-7 cells. Hypoxia (0.1\% level) induced drasti augmentation of quiescent cell numbers and practically stop growth in the monolayer culture with a reaction time of less than 2 days.\cite{Lee2018}
 
-Therefore, severe hypoxia will be selected as the new criterion for the passage of the restriction point. This however raises the question of the value for the threshold, as it might be higher than 0.1\%(0.0075 mM). McKeown's review on the subject supports that a value of 1\% (0.075 mM)  is realistic as a threshold where the effect of hypoxia are already felt. It is also explained that hypoxia can lead to tumor cell death if the level falls below 0.01\% (0.0075 mM).\cite{McKeown2014} These are the value that will be used in the model.
+Therefore, severe hypoxia will be selected as the new criterion for the passage of the restriction point. This however raises the question of the value for the threshold, as it might be higher than 0.1\%(0.0075 mM). McKeown's review on the subject supports that a value of 1\% (0.075 mM)  is realistic as a threshold where the effect of hypoxia are already felt. It is also explained that hypoxia can lead to tumor cell death if the level falls below 0.01\% (0.0075 mM).\cite{McKeown2014} These are the values that will be used in the model.
+
+As for growth factor, exiting the cell cycle is only considered possible in the 4 hours  after mitosis. Cells being starved of oxygen past this point will remain in arrested G1 or undergo cell death. or not
+
+It should be noted that CoCl2 at low (100 µM) concentration seem to stimulate proliferation rather than stop it and that the significant slowdown in growth observed by Lee et al. at 100 \textmu M was only observed at 150 \textmu  M by Rana and collaborators.\cite{Lee2018}\cite{Rana2019} While this quantitative discrepancy on otherwise identical cell line raises questions it nonetheless point towards the same qualitative conclusion : Mild hypoxia stimulates growth while acute hypoxia stops it which is also observed in other studies.\cite{Wigerup2016}\cite{Li2009} Migration seems to work the same way.\cite{Bhagat2016}
 
 
+\subsection{Quiescence, Arrested G1, growth factors and nutrients}
+To know whether cell are quiescent or in state of cell cycle arrest is considered to be an important question for our model. Our first intuition, following textbooks treating broad biology subjects was that cells had a restriction point in G1, whose passage was modulated solely by the presence of growth factor.\cite{Cooper2006} Howevern as literature on cancer cells was being surveyed, a more complex image of the truth emerged.
 
+A good starting point for this question in literature is the review of Nik Nabil and collaborators.\cite{Nabil2021} In their review, they explicitly state that quiescent cells are non-proliferating (Ki-67 negative) and that their passage into quiescence can be modulated by several factors other than serum inclusion in culture medium. It has been shown that acute hypoxia (0.1\%) led to a majority of cancer cells going quiescent on breast cancer cultures.\cite{Lee2018} Glucose starvation with maintained supply of serum have also resulted in a higher proportion of quiescent cells in glioblastoma cells.\cite{WangL2018} 
+
+Another important point is whether G0 cells should be distinguished from arrested G1 cells. A study on the dynamics of Ki67 seems to suggest that no difference should be made between G0 and arrested G1\cite{Miller2018} Other studies also present G0/G1 cells indistinctly.\cite{Jiang1998}\cite{Song2018} Another study also presents arrested G1 cells as Ki-67 negative which is the criterion for the definition of G0 cells.\cite{Sobecki2017} However, the way the restriction point and nutrient checkpoint are presented in the study of Foster seem to suggest a difference between G0 and arrested G1. The main difference pointed here seemingly being the time difference in recovery between serum deprivation and amino acid deprivation observed by Yen and Pardee.\cite{Yen1978} Indeed amino acid deprived cells recovered in 2 hours while serum deprived cells took 12 hours to progress to S. This, seem to be understood by many as evidence of different quiescent state.
+
+Foster and colleagues point out, however, that the mTOR pathway that is supposed to be activated in presence of sufficient nutrient may also be sensitive to growth factors which is also stated by in mammals. The previous fact is also stated in other studies.\cite{Fingar2004} This blurs the line of separation between nutrient action and growth factor action. This however explains how nutrient starvation may results in cell quiescence even in presence of sufficient growth factors.
+
+In fact, none of the previously cited studies ever present G0 and arrested G1 as explicitly different. Some use only the term arrested G1 and other use both G0 and arrested G1. However, this leaves open the question of what happens when G1 cell cycle arrest is induced after the restriction point. In their article from 2000, Donovan and Slingerland state the following: "Cells are sensitive to TGF-$\beta$ during a discrete period in early G1 phase, until they reach a 'restriction point' 6-10 h after G0 release [47,48]. When TGF-$\beta$ is added after this critical time point, cells complete the cell cycle but arrest during the subsequent G1 phase." Suggesting that once the restriction point is passed cells will go through the entire cell cycle.\cite{Donovan2000} This suggest that an arrested state that is not the growth factor meidated G0 exists and may maintain itself as long as the second checkpoint depending on TGF-$\beta$ and related to nutrient is not passed. 
+
+The broader picture seem to be that of a continuum of possible quiescent state. The deepest quiescent state being obtained by complete deprivation of growth factor. The cell then stops until growth factors are replenished and takes between 6 and 10 h  to get to the 2nd checkpoint where nutrient availability is checked. This other quiescent is a priori different from G0 from a molecular point of view as it takes less time to exit and it is triggered by a different pathway. it this second checkpoint, if passed that leads to full commitment to mitosis. Therefore, in our model a clear difference will be made between arrested G1 and G0. However, this distinction will remain artificial as growth factor dynamics have yet to be elucidated. An important thing to note is that in both case it is probable that cells are Ki-67 negative.
+
+\section{First studies}
+In the previous sections we outlined broad aspects of the model which will hopefully be included in broader general hybrid model which  may respond realistically to environmental cues, recapitulate metabolic plasticity of cancer cells and be able to yield interesting data on cell growth dynamics first in normal situation and then potentially in situation where drugs and/or radiation will be applied to the system.
+
+One of the main difficulties is the various timescales that are involved in the system and that would force a complete model to have small space and time step while also covering large duration. A prime example is the case of oxygen. if the model space scale is that of a cell ($\approx$  15 \textmu m), the diffusion values for oxygen in tissue ($\approx$ 100000 \textmu m/s) means that the time step needs to be approximately 1/1000 of a minutes. Keeping in mind that cell cycle is between 18h and 24h, any spatially extended system can become very computationally costly. Even though the authors intend to at some point tackle the full model, it is considered more efficient to break some of the question into bite-sized pieces of more manageable modelling problems. To illustrate this approach, the case of  the oxygen within the chip will be treated thoroughly in the following subsection.
+
+\subsection{Establishment of hypoxia, and cell response} 
+Before modelling a full cell cycle it is interesting to know what the nutritional landscape of the cells will be. Here, the focus will be placed firmly on the chip situation and the oxygen supply as preliminary calculation showed that due to consumption and diffusion other nutrients will not undergo shortage before at least 24h even at the center of the chip.
+
+\subsubsection{Hypotheses and configuration}
+The model is designed to represent the chip configuration. In order to save computational resources only the median layer of the 750 \textmu m system will be represented as it is assumed that translational invariance along the z-axis is valid in the system.
+
+The geometry of the model is as follows : the modelled zone is divided into the fluid/supply area and the matrix/cell region. The entire square grid is 5400 \textmu m by 5400 \textmu m. A 4500 \textmu m-diamter circular region in which each pixel represents either a cell or matrix. Cells are able to progress within the matrix by hopping from pixel to pixel. The specifics and quantitative aspects will be discussed further. 
+
+\begin{center}
+	\begin{tabular}{ |p{22mm}|p{15mm}|p{15mm}| }
+		\hline
+		\textbf{Parameters} & Value & Ref.  \\ 
+		\hline
+		\textbf{$D_Ox$ (\textmu m)} & 100000 \textmu / min & \cite{Hober1947} \\
+		\textbf{$q_{O,max}$ (\textmu m)} & 2 mM/min/cell & \cite{Ruas2018}\cite{Mbah2022}\cite{Shen2020}\\
+				\textbf{$[0]_{O}$ (\textmu m)} & 0.15 mM & Experimental conditions
+	\end{tabular}
+\end{center}
+
+The value for OCR is not  to be adjusted as we consider that the contact with the HA/matrigel scaffold produces similar effect to the laminin-coated surfaces used by Shen, Mbah and their collaborators to assess the OCR with the seahorse experiments.
+
+As will be shown further migration is not included in the model yet as the modelling time will typically be of the order of 60 mn. s On such a short time even the most active cells would only jump one site and therefore migration cannot at this timescale provoke any serious reorganizing of the system.
+
+\subsubsection{First results}
+In the first case, we model the case where oxygen supply in supposedly constantly renewed by supply of oxygenated medium. 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_conf6.pdf}
+	\caption{ \label{O_conf5_ct}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_Ot_conf6.pdf}
+		\caption{ \label{Ot_conf5}}
+	\end{subfigure}
+	\caption{Contour map of oxygen concentration with pellet outlined in red  \label{Oconf6} for a cell concentration of 10 000 cell per \textmu L }
+\end{figure}
+What can be seen in figure \ref{Oconf6} is that the oxygen concentration stabilizes in less than 10 minutes in the whole system and that concentration at the core of the chip falls to zero.
+
+Now to push the analysis further we seek the assess the impact of this physical reality on the behavior of cells in the chip. Following the review of McKeown, acute hypoxia (expression of HIF1-$\alpha$ start at about 2 \% (0.015 mM) and ranges down to 0.1 \% (0.00075 mM) without immediate cell death.\cite{McKeown2014} literature review supports that cells subjected to that level of acute hypoxia will proliferate less and that this proliferation will rest mostly on glycolysis.\cite{Wigerup2016}\cite{Fuchs2020}\cite{Jiang2016}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_ctr_conf6.pdf}
+	\caption{ Contour plot of oxygen concentration in the chip configuration with constant supply \label{O_conf6_ct}}
+\end{figure}
+
+In figure \ref{O_conf6_ct}, the data from the previous figure is reploted in contours and rescaled in order to bring up the hypoxic area. The hypoxic area start when oxygen concentration falls below 2\%. In the model, this is shown to happen at 1 mm depth. There is also 100-200 \textmu m zone at the center where the concentration falls to zero (or at least at approximately 0.1\%) in the range of acute hypoxia which we assume will stop growth.
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{4cm} 
+\begin{tikzpicture}
+	\draw(0,0)--(0,5.5);
+	\draw(-0.5,1) node {500};
+	\draw(-0.5,2) node {1000};
+	\draw(-0.5,3) node {1500};
+	\draw(-0.5,4) node {2000};
+	\draw(-0.5,5) node {2500};
+	
+	\draw(0,0)--(5.5,0);
+	\draw(1,-0.5) node {500};
+	\draw(2,-0.5) node {1000};
+	\draw(3,-0.5) node {1500};
+	\draw(4,-0.5) node {2000};
+	\draw(5,-0.5) node {2500};
+	
+	\draw[color=blue!10!black](4.25,5.5) arc(180:270:1);
+	\draw(7,5.25) node {Arrested growth};
+	
+	\draw[color=green](3,5.5) arc(180:270:2.25);
+	\draw(7,3.75) node {slowed growth};
+	
+	\draw[color=yellow](1,5.5) arc(180:270:4.25);
+	\draw(7,2.25) node {normal growth};
+
+\end{tikzpicture}
+\caption{Estimated behavior for different zones of the chip  \label{sum_O}}
+\end{figure}
+
+An interesting question is to know how to different zones will be distributed after 24h in a system where no fresh oxygen is supplied. Of course, the full calculation would require to account for migration and to a certain number of cells having undergone division. But as a first approximation it will be assumed that the cell concentration has not changed after 24h to get a first idea. 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/depGO3/cfsys2DdepGO3_O_conf6.pdf}
+	\caption{ \label{O_conf5_ct}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/depGO3/cfsys2DdepGO3_Ot_conf6.pdf}
+		\caption{ \label{Ot_conf5}}
+	\end{subfigure}
+	\caption{Map of oxygen concentration with pellet outlined in red  \label{Oconf6} for a cell concentration of 10 000 cell per \textmu L }
+\end{figure}
+
+The first results shows that without constant supply the oxygen would drop to zero in less than 2 hours triggering generalized growth arrest across the whole chip. This might explain why cells stop migrating and proliferating after a time.
+
+
+ 
+ 
 \section*{to be treated}
 
-
+OCR decreased by 2/3rds in spheroid compared to monolayer
 
 %https://www.ncbi.nlm.nih.gov/books/NBK9876/ garder ça pour plus tard (grosse ref sur les cellules eukaryotes
 
@@ -2656,7 +2787,7 @@ if you do wide field, you need to slice or you're not getting images at the core
 
 **Cell kinetic characteristics in different parts of multicellular spheroids of human origin KEEP THIS
 
-
+https://faseb.onlinelibrary.wiley.com/doi/epdf/10.1096/fj.02-0352rev discute cette histoire de G1 et G0 mais je comprends pas vraiment.
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{biblio_synthese}
