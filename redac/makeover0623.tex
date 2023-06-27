@@ -67,9 +67,9 @@ If the focus is put on the two cell lines with the same mutations results are in
 \subsubsection{Oxygen consumption of DIPG cells}
 In order to know the extent of hypoxia the cells are subjected to, it is important to know the oxygen consumption of the cells in culture. In most cases, the oxygen consumption rate is measured in monolayers through the use of the seahorse XF kit.\cite{RomeroAgilent} Value are generally reported in pmol/min/cell. Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 2 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm which translates into 1.5 mM/min for oxygen consumption. In the case of Mbah and Shen, it was reported in a monolayer-like situation as the cells were plated in wells coated in laminin.  Jiang and collaborators also reported on lung cancer cells that oxygen consumption increased in the monolayer situation compared to the spheroid. This is the first quantitative data we found on that matter and they show OCR to be reduced by two thirds in spheroid compared to monolayers.\cite{Jiang2016} The value for OCR is not to be adjusted as we consider that the contact with the HA/matrigel scaffold produces similar effect to the laminin-coated surfaces used by Shen, Mbah and their collaborators to assess the OCR with the seahorse experiments.
 
-The value reported by Shen and collaborators is 4000 pmol/min/$10^6$ cells which corresponds to a consumption of 2 mM/min/cell. This value is reported for HSJD-DIPG-007 cell line cultured as neurospheres.\cite{Shen2019} In the case of Mbah and collaborators, they derived two models from the HSJD-DIPG-007 and SU-DIPG-XIII cell lines: one grown as neurospheres and another cultured as adherent monolayer with serum. The OCR and ECAR were measured in both cases. For HSJD-DIPG-007 the OCR value reported for gliospheres-cultured cells reported is 50 pmol/min/cell. The first thing is to compare this to the value reported by Shen and collaborators which is 0.004 pmol/min/cell. This means that the same experiment on the same cell line yielded results different by 4 orders of magnitude. Other values reported for brain tumor cells by Ruas and collaborators are in the range of 80 pmol/s/$10^6$ cells, which corresponds to 4800 pmol/min/$10^6$ cells measured in suspension on U87 glioma cells. This is much closer to the value of Shen and collaborators. A possible explanation is a conversion error by Mbah and collaborators. If there value is taken not to be 50 pmol/min/cell but 50 pmol/sec/$10^6$ cells then it becomes much closer to the other values. And to further support this point, the results on ECAR are suggested to the same discrepancy and can be corrected in the same way. Now, if the correction is applied to the gliosphere values for HSDJ-DIPG-007 the measured OCR is 50 pmol/s/$10^6$ cells, which corresponds to 3000 pmol/min/$10^6$ cells, and therefore 1.5 mM/min/cell (assuming a 2 pL cell volume). The same operation for SU-DIPG-XIII yields 4.5 mM/min/cell.
+The value reported by Shen and collaborators is 4000 pmol/min/$10^6$ cells which corresponds to a consumption of 2 mM/min/cell. This value is reported for HSJD-DIPG-007 cell line cultured as neurospheres.\cite{Shen2019} In the case of Mbah and collaborators, they derived two models from the HSJD-DIPG-007 and SU-DIPG-XIII cell lines: one grown as neurospheres and another cultured as adherent monolayer with serum. The OCR and ECAR were measured in both cases. For HSJD-DIPG-007 the OCR value reported for gliospheres-cultured cells reported is 50 pmol/min/cell. The first thing is to compare this to the value reported by Shen and collaborators which is 0.004 pmol/min/cell. This means that the same experiment on the same cell line yielded results different by 4 orders of magnitude. Other values reported for brain tumor cells by Ruas and collaborators are in the range of 80 pmol/s/$10^6$ cells, which corresponds to 4800 pmol/min/$10^6$ cells measured in suspension on U87 glioma cells. This is much closer to the value of Shen and collaborators. A possible explanation is a conversion error by Mbah and collaborators. If the value reported by Mbah and collaborators is taken not to be 50 pmol/min/cell but 50 pmol/sec/$10^6$ cells then it becomes much closer to the other values. And to further support this point, the results on ECAR are suggested to the same discrepancy and can be corrected in the same way. Now, if the correction is applied to the gliosphere values for HSDJ-DIPG-007 the measured OCR is 50 pmol/s/$10^6$ cells, which corresponds to 3000 pmol/min/$10^6$ cells, and therefore 1.5 mM/min/cell (assuming a 2 pL cell volume). The same operation for SU-DIPG-XIII yields 4.5 mM/min/cell.
 
-\subsubsection{Building the model}
+\subsubsection{Incorporating data into the model}
 Now that all the information available has been presented, the model will be built by selecting the most relevant aspects. First of all, it is interesting to note that the DIPG cell line with the most available information is the "13" group (i.e. SU-DIPG-XIII and HSJD-DIPG-0013) which harbors the H3.3K27M and TP53 mutations (according to cellosaurus) 
 
 In terms of response to hypoxia those cell line appear  to react as follows. When grown as sphere hypoxia in the range of 1\% $pO_2$ has no noticeable effect on growth over 4 days of the HSJD-DIPG-0013 line. However, the SU-DIPG-XIII line when culture on laminin coated (supposition from the information available in Waker and collaborators poster \cite{Waker2018}) show complete growth arrest when suggest to hypoxia mimetics which should emulate hypoxia in the range of 1-2 \% over the same time period. 
@@ -117,21 +117,148 @@ Another important aspect is the fluid surrounding the pellet in the chip. The vo
 In the model, the simpler "circulating" configuration will be considered at first. The main reasons being that circulating configuration is approximated in the model by a constant concentration of nutrients in the medium. This is simpler both in terms of programming and in terms of physics. Indeed, with the depleting configuration the cells in the chip never reach a steady state which makes analysis more difficult. In the case of circulating configuration, once the diffusion and consumption have relaxed, the concentration at any point in the pellet is constant and a function of where the considered point lies in the chip.
 
 \subsection{Modelling the chip}
-The chip is modelled in MATLAB/Octave using a finite difference algorithm. The spatial step is set a 15 \textmu m which is considered to be theh cell diameter for the studied cell type. Since the reaction-diffusion equation is solved on that grid with an explicit scheme, the time step is set to 1/1000 th of minute the respect the Courant-Friedrichs-Lewy stability condition which depends on the diffusion coefficient of oxygen.\cite{Press1992}
+\subsubsection{Geometry and initialisation}
+The chip is modelled in MATLAB/Octave using a finite difference algorithm. The spatial step is set a 15 \textmu m which is considered to be theh cell diameter for the studied cell type. Since the reaction-diffusion equation is solved on that grid with an explicit scheme, the time step is set to 1/1500 th of minute the respect the Courant-Friedrichs-Lewy stability condition which depends on the diffusion coefficient of oxygen.\cite{Press1992}
 
 Before going into more detail it should be mentioned that although the situation is 3-dimensional, the representation in the model limits itself to the 2-dimensional circular midsection of the chip. That is to say the 15 \textmu m layer in the middle of the chip. This is justified by several different factors. The system extension along the z-axis is sufficiently large so that translational invariance along that axis can be considered to hold true.  
 
-The grid is a 667x667 square, and a circular domain with the diameter of the pellet is delimited within the square. In order to place the cells within the grid the following way: Only non-adjacent grid spots are open for cells. For example if the grid spot at the center of the circular zone corresponding to the pellet is tagged as "open", then the 8 adjacent spots are taken out of the selection. Once all the open spots have been designated, the algorithm randomly fills them with the corresponding number of cells.
+The grid is a 667x667 square, and a circular domain with the diameter of the pellet is delimited within the square. In order to place the cells within the grid the following way: only non-adjacent grid spots are open for cells. For example if the grid spot at the center of the circular zone corresponding to the pellet is tagged as "open", then the 8 adjacent spots are taken out of the selection. Once all the open spots have been designated, the algorithm randomly fills them with the corresponding number of cells.
 
- The number of cells is calculated by multiplying the targeted concentration (typically 10 000 cell per \textmu L) by the modelled pellet volume which, in this case, is 15 x $2 \pi r_{pellet}$. 
+ The number of cells is calculated by multiplying the targeted concentration (typically 10 000 cell per \textmu L) by the modelled pellet volume which, in this case, is 15 x $2 \pi r_{pellet}$. As said before the pellet radiusu which has been said to be variable. However it has been said that it is the cross-linking process that reduces the pellet size. It it therefore assumed that all pellets are seeded at a diameter of 8 mm.
  
-Lastly is in order to save computational resources those calculation are in fact only performed on a quarter of the grid. The underlying assumption that the axial symmetry in x and y means that the only difference would be the position of certain cell, of which the global density does vary much over the surface of the pellet.
+Lastly is in order to save computational resources those calculations are in fact only performed on a quarter of the grid. The underlying assumption that the axial symmetry in x and y means that the only difference would be the position of certain cell, of which the global density does vary much over the surface of the pellet.
+
+\subsubsection{Modelling diffusion and consumption}
+Oxygen dynamics within the chip are modelled with the reaction-diffusion equation :
+
+\[ \frac{\partial [C](x,y,t)}{\partial t} = \overrightarrow{\nabla}(D_C(x,y)) \cdot \overrightarrow{\nabla}( [C](x,y,t)) + D_C(x,y,t) \nabla^2 [C](x,y,t) -k_C(x,y,t) \] 
+
+The first diffusion term of the equation is taken as zero in the case of oxygen. Indeed, since the concentration outside the pellet is kept constant, the only diffusion that matters is that within the pellet where the diffusion coefficient is considered constant. The value of diffusion coefficient of oxygen in tissue is taken to be 120000 \textmu m$^2$/min in tissue, which is close to the value used in previous modelling studies on spheroids\cite{Mao2018}\cite{Kempf2015} and close to value measured on agarose gels.\cite{McCabe1975}\cite{Figueiredo2018}.
+
+The consumption term is taken to be in the form of a Hill function of the oxygen concentration : 
+
+\[ k_C(x,y,t) = \frac{[C]^n}{[C]^n + [C]^n_{0}}k_{max}  \]
+
+This function has been used in previous studies to model oxygen consumption. \cite{Mao2018}\cite{Kempf2015}\cite{Jagiella2016}. The $k_{max}$ is the maximum consumption value. The $[C]^n_{0}$ is the concentration value for which the consumption is half of the maximum value. The $n$  exponent is a value that changes the behavior of the function from heaviside function (low $n$) to a sigmoid function (high $n$). As in the models taken for reference, the value for $n$ will be 1 in the model. The value for $[C]^n_{0}$ was taken to be 0.00133 mM by Mao and collaborators and 0.031 mM by Jagiella and collaborators.\cite{Mao2018}\cite{Jagiella2016} The 0.03 mM will be chosen as it was fitted to experimental data rather assumed. The $k_{max}$ value will be taken to be 4.5 mM/min as explained in the previous section. 
+
+
+\subsection{Results for Oxygen}
+The simulations were run for 10 minutes with all the parameters given previously. In figure \ref{DG_map}, the map of cell positions is given for two different pellet size.  \\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_DG_conf1.pdf}
+	\caption{ \label{DG_conf1}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_DG_conf2.pdf}
+		\caption{ \label{DG_conf2}}
+	\end{subfigure}
+	\caption{Map of the cell localisation in the simulated quarter slice of the tumor-on-chip device for a pellet diameter of 8 mm (a) and 4.5 mm (b). Cells are in blue while the matrix/medium is yellow \label{DG_map}}
+\end{figure}
+	
+The next interesting quantity to follow is the evolution of oxygen in time to assess the temporal relaxation of the system. In figure \ref{Ot}, it can be seen that the system relaxes in less than 2 minutes, which could be expected given the diffusion coefficient of oxygen and the max consumption value in the study. It should however be noted that this short time of relaxation correspond to the extracellular dynamics of oxygen dictated by physics, which are not equivalent to the response time of cells to the external stimulus which is most likely longer.\\
+ 
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_Ot_conf1.pdf}
+	\caption{ \label{Ot_conf1}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_Ot_conf2.pdf}
+		\caption{ \label{Ot_conf2}}
+	\end{subfigure}
+	\caption{Time evolution of the oxygen concentration for for a pellet diameter of 8 mm (a) and 4.5 mm (b) at the rim and center of the pellet. \label{Ot}}
+\end{figure}
+
+Finally, one should look at the concentration maps of oxygen in the relaxed system which are displayed in figure \ref{O_ctrmap}. It can be seen that the steady-state oxygen gradient resulting from the balance of diffusion and consumption. In the case of the 8 mm wide pellet, the gradient is slightly above 600 \textmu m while it is closer to 400 \textmu m in the case 4.5 mm wide pellet. In both cases, large central portions of the chip have a zero concentration of oxygen. This will be the next extension of this study.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_ctr_conf1.pdf}
+	\caption{ \label{O_ctr_conf1}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_ctr_conf2.pdf}
+		\caption{ \label{O_ctr_conf2}}
+	\end{subfigure}
+	\caption{Contour map of the oxygen concentration for for a pellet diameter of 8 mm (a) and 4.5 mm (b) at the rim and center of the pellet. \label{O_ctrmap}}
+\end{figure}
+
+The scale in the contour map has been rescaled to have "saturate" at 0.015 mM (2\%). The darkest line correspond to an oxygen level of 0.002 mm ($\approx$ 0.2\%). The yellow part therefore correspond to the area of the pellet where cells are not in physiological hypoxia. All cells beyond that point should be considered to express more HIF1-$\alpha$ and/or HIF2-$\alpha$ than the ones on the rim according to the data gathered by Waker and collaborators. Another intersting observation in this study is that SU-DIPG-XIII cells subjected to hypoxia stopped their proliferation and raise their glycolytic rate two fold.\cite{Waker2018}
+
+\subsection{Modelling glucose dynamics}
+The glucose consumption in the model is handled in a similar way to oxygen consumption, that is to say, using a reaction-diffusion equation and a Hill  function to model the evolution of consumption as a function of nutrient availability.
+
+\subsubsection{Glucose diffusion}
+This means that values for parameters of diffusion and the consumption are needed in order to perform the simulations. As for oxygen, the glucose outside the pellet is considered to be constant in time and space. Therefore, the only diffusion coefficient needed is that of glucose in matrix and tissue. Indeed, the concentration of cells is important but they are not as tightly packed as they would be in a spheroid. It seems sensible to assume that the effective diffusion coefficient for glucose in that configuration will be lower than that of a pure Hyaluronic acid/matrigel gel and higher than that of a densely packed tissue made of cells and the same matrix
+
+Literature review did not provide a glucose diffusion value human brain tumors. However, a study from 1982  by Li measured a glucose diffusion coefficient of $1.5\cdot 10^{-6}$ cm$^2$/s (9000 \textmu m$^2$/min) for 9L rat brain tumor spheroids.\cite{Li1982} For lack of data closer to the model used in this study, this will be taken as the "packed tissue" value. 
+
+For the pure matrix value, the results for glucose diffusion in Hyaluronic acid gels in PBS are less straightforward. Indeed, a study from Hadler showed that glucose diffusivity ranged between $0.8\cdot 10^{-5}$ cm$^2$/s and $0.5\cdot 10^{-5}$ cm$^2$/s for concentration of 0.5 \% and 1 \%, but increases to $2.0\cdot 10^{-5}$ cm$^2$/s for concentration of 2.5\%, which is in the range of concentrations used in physiological studies with hydrogels.\cite{Gerecht2007} Therefore, in the model both the normal and enhanced glucose diffusion cases will be treated.
+
+To adress the question of chip not being pure matrix, an estimation of tortuosity can be made. Tortuosity is defined as either the ratio of effective and free diffusion coefficient, the ratio of the square of the previous quantities, the ratio of path length of molecules in the porous medium and in free medium, or the square of that quantity. In their study, Hamad and collaborators asess different models that link tortuosity to porosity.\cite{Hamad2018} With an initial concentration of 10 000 cells per \textmu L in the chip, the porosity ranges between 97\% for the large pellet and 0.90\% 
+
+If the models of Maxwell and Berryman are used, the obtained  are comprised between 1.015 and 1.06. Therefore, it will be considered that cells do not significantly impact the diffusion properties, so the values for glucose diffusion are the matrix values : $0.5\cdot 10^{-5}$ cm$^2$/s (low diffusion case) which corresponds to 30000 \textmu m$^2$/min, and $2.0\cdot 10^{-5}$ cm$^2$/s (enhanced diffusion case) which corresponds to 120000 \textmu m$^2$/min.
+%0.97 (8 mm)
+%0.896 (4.5mm) 
+
+\subsubsection{Glucose consumption}
+As for the oxygen the parameters of the Hill function for glucose need to be determined. 
+
+The Hill function exponent is taken as unity similar to oxygen. No clear measurements in a low glucose environment performed on the SU-DIPG-XIII of HSJD-DIPG-0013 cell line have been found in the literature. The hypothesis is made that consumption drops to 50 \% when glucose level falls below 1 mM.
+
+Similar to glucose diffusion, no direct glucose consumption measured have been performed on in vitro cultures of SU-DIPG-XIII or HSJD-DIPG-0013 cells. 
+However, the glucose consumption can be roughly estimated. In conditions  of normoxia and sufficient nutrient availability cancer cells have a metabolism shifted towards glycolysis compared to equivalent healthy cells.\cite{DeSousa2022}\cite{Mbah2022}\cite{Shen2019}
+
+DeSousa and collaborators measured in the ratio of glycolytic ATP and mitochondrial ATP in brain tumors (GBM39) with an in vitro seahorse assay. They found a repartition of 60 \% for glycolysis and 40 \% for oxydative phosphorylation.\cite{DeSousa2022} With some hypotheses, this can be used to estimate a glucose consumption.
+
+The ATP production can be mathematically linked to consumption of glucose and oxygen by the following equation :
+
+\[ \frac{d[ATP]}{dt} = 2q_G + 26/3q_O \] 
+
+Where $q_G$ and $q_O$ are the consumption of glucose  and oxygen respectively. The multiplication of the consumption terms comes from the stoechiometry of glycolysis and oxydative phosphorylation as reported by Berg \cite{Berg2006}. In this case, the value of ATP production itself is not so important. What matters most is the fact that if the measurements from DeSousa and collaborators are transposed into the context of DIPG then it can be assumed that the two terms on the right hand size should be of roughly equal magnitude.
+
+Since $q_O$ was taken to be 4.5 mM/min in the previous calculation this yields of value of 19.5 mM/min for glucose consumption. This is significantly higher than what has been measured on tumors with PET scans on brain tumors which are closer to 1 mM/min.\cite{Hossmann1986}\cite{Herholz1992} However, measurements from DeSousa showed that in vitro cells produced twice as much ATP as ex vivo cells for brain tumors and  the value in vivo is most likely an average over an heterogeneous population of tumor cells.\cite{DeSousa2022} Therefore, until OCR and glucose consumption measurements are made of DIPG cells, the 19.5 mM/min value will be kept.
+
+\subsubsection{Hypoxia-induced increase in glycolytic rate}
+The results of Waker and collaborators show that the glycolytic rate in SU-DIPG-XIII increased from $\approx$ 120 pmoles/min to $\approx$ 240 pmoles/min when hypoxia-mimetics are induced through 100 \textmu M of CoCl$_2$. While it is not explicitly stated in the document, it can be assumed that the 100 \textmu M concentration of of CoCl$_2$ should correspond to an oxygen level of 2 \%. It is also intersting to note that the glycolytic rate before the addition of glucose are quite close, suggesting that very little acidification comes from mitochondrial metabolism or other sources, notably whein compared to the SU-DIPG-IV cell line.
+
+The increased consumption is included in a straight forward fashion : When oxygen concentration falls below 0.015 mM (2\%), the value of $k_{max,glu}$ is multiplied by 2. It is interesting to note that the consumption of oxygen starts decreasing at 0.03 mM which is above the level where the shift in glycolysis occurs.
+
+
+
+
+%\begin{figure}[ht!]
+%	\begin{subfigure}{0.45\textwidth}
+%	\centering
+%	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_conf1.pdf}
+%	\caption{ \label{O_conf1}}
+%	\end{subfigure}
+%	~~
+%	\begin{subfigure}{0.45\textwidth}
+%	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_conf2.pdf}
+%		\caption{ \label{O_conf2}}
+%	\end{subfigure}
+%	\caption{Map of the oxygen concentration for for a pellet diameter of 8 mm (a) and 4.5 mm (b) at the rim and center of the pellet. \label{O_map}}
+%\end{figure}
+
+
+
+
+%1 mpH = 3.0 à 2.999
 
 %Shen2019 is not in hypoxia
 
 %need to make a note on the molecular aspect of HIFs and  the ETC not obvious so far...
 \section*{Appendix}
-\subsection{Proof of the validity of the 2D approximation}
+\subsection*{Proof of the validity of the 2D approximation}
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{biblio_synthese}
