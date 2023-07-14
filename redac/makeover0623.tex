@@ -80,7 +80,7 @@ In terms of oxygen consumption consumption, since an OCR is available for SU-DIP
 
 A last aspect that will not necessarily be treated right away but should be mentioned here is the impact of glycolysis rate. Indeed it was also measured  on the SU-DIPG-XIII that glycolysis rate increased roughly two-fold when exposed to hypoxia-mimetics for 24 hours. While this does not immediately matter as the model focus solely on oxygen this may strongly impact the glucose dynamics in the model when they are included.
 
-\section{Proper modelling \& Results}
+\section{The Tumor-on-chip device and its computational representation}
 \subsection{The tumor-on-chip device}
 In the scope of the DIP2G project, the most interesting configuration to model is the "tumor-on-chip" configuration. This chip is made of circular well of 10 mm diameter and 750 \textmu m thickness, connected to a microfluidic device through small inlet/outlet holes, as shown in the following drawing.
 
@@ -128,7 +128,7 @@ The grid is a 667x667 square, and a circular domain with the diameter of the pel
  
 Lastly is in order to save computational resources those calculations are in fact only performed on a quarter of the grid. The underlying assumption that the axial symmetry in x and y means that the only difference would be the position of certain cell, of which the global density does vary much over the surface of the pellet.
 
-\subsubsection{Modelling diffusion and consumption}
+\subsubsection{Modelling Oxygen diffusion and consumption}
 Oxygen dynamics within the chip are modelled with the reaction-diffusion equation :
 
 \[ \frac{\partial [C](x,y,t)}{\partial t} = \overrightarrow{\nabla}(D_C(x,y)) \cdot \overrightarrow{\nabla}( [C](x,y,t)) + D_C(x,y,t) \nabla^2 [C](x,y,t) -k_C(x,y,t) \] 
@@ -142,7 +142,8 @@ The consumption term is taken to be in the form of a Hill function of the oxygen
 This function has been used in previous studies to model oxygen consumption. \cite{Mao2018}\cite{Kempf2015}\cite{Jagiella2016}. The $k_{max}$ is the maximum consumption value. The $[C]^n_{0}$ is the concentration value for which the consumption is half of the maximum value. The $n$  exponent is a value that changes the behavior of the function from heaviside function (low $n$) to a sigmoid function (high $n$). As in the models taken for reference, the value for $n$ will be 1 in the model. The value for $[C]^n_{0}$ was taken to be 0.00133 mM by Mao and collaborators and 0.031 mM by Jagiella and collaborators.\cite{Mao2018}\cite{Jagiella2016} The 0.03 mM will be chosen as it was fitted to experimental data rather assumed. The $k_{max}$ value will be taken to be 4.5 mM/min as explained in the previous section. 
 
 
-\subsection{Results for Oxygen}
+\section{Modelling oxygen dynamics in the chip}
+\subsection{Results}
 The simulations were run for 10 minutes with all the parameters given previously. In figure \ref{DG_map}, the map of cell positions is given for two different pellet size.  \\
 
 \begin{figure}[ht!]
@@ -191,8 +192,11 @@ Finally, one should look at the concentration maps of oxygen in the relaxed syst
 	\caption{Contour map of the oxygen concentration for for a pellet diameter of 8 mm (a) and 4.5 mm (b) at the rim and center of the pellet. \label{O_ctrmap}}
 \end{figure}
 
-The scale in the contour map has been rescaled to have "saturate" at 0.015 mM (2\%). The darkest line correspond to an oxygen level of 0.002 mm ($\approx$ 0.2\%). The yellow part therefore correspond to the area of the pellet where cells are not in physiological hypoxia. All cells beyond that point should be considered to express more HIF1-$\alpha$ and/or HIF2-$\alpha$ than the ones on the rim according to the data gathered by Waker and collaborators. Another intersting observation in this study is that SU-DIPG-XIII cells subjected to hypoxia stopped their proliferation and raise their glycolytic rate two fold.\cite{Waker2018}
+The scale in the contour map has been rescaled to have "saturate" at 0.015 mM (2\%). The darkest line correspond to an oxygen level of 0.002 mm ($\approx$ 0.2\%). The yellow part therefore correspond to the area of the pellet where cells are not in physiological hypoxia. All cells beyond that point should be considered to express more HIF1-$\alpha$ and/or HIF2-$\alpha$ than the ones on the rim according to the data gathered by Waker and collaborators. Another intersting observation in this study is that SU-DIPG-XIII cells subjected to hypoxia stopped their proliferation and raise their glycolytic rate two-fold.\cite{Waker2018} Including glucose consumption and this glycolytic increase in the model will be the core of the next study. 
 
+\subsection{Discussion}
+
+\section{Model with glucose consumption}
 \subsection{Modelling glucose dynamics}
 The glucose consumption in the model is handled in a similar way to oxygen consumption, that is to say, using a reaction-diffusion equation and a Hill  function to model the evolution of consumption as a function of nutrient availability.
 
@@ -215,48 +219,255 @@ As for the oxygen the parameters of the Hill function for glucose need to be det
 The Hill function exponent is taken as unity similar to oxygen. No clear measurements in a low glucose environment performed on the SU-DIPG-XIII of HSJD-DIPG-0013 cell line have been found in the literature. The hypothesis is made that consumption drops to 50 \% when glucose level falls below 1 mM.
 
 Similar to glucose diffusion, no direct glucose consumption measured have been performed on in vitro cultures of SU-DIPG-XIII or HSJD-DIPG-0013 cells. 
-However, the glucose consumption can be roughly estimated. In conditions  of normoxia and sufficient nutrient availability cancer cells have a metabolism shifted towards glycolysis compared to equivalent healthy cells.\cite{DeSousa2022}\cite{Mbah2022}\cite{Shen2019}
+However, measurements have been performed on glioma and glioblastoma cell lines such as GBM39, U251 and A549 cells. In order to progress further these values will be presented and used in this study.
 
-DeSousa and collaborators measured in the ratio of glycolytic ATP and mitochondrial ATP in brain tumors (GBM39) with an in vitro seahorse assay. They found a repartition of 60 \% for glycolysis and 40 \% for oxydative phosphorylation.\cite{DeSousa2022} With some hypotheses, this can be used to estimate a glucose consumption.
+Measurements were usually performed with glucose consumption assay kits and performed on standard 96-well or 6 well plate by plating a density of cells ranging from 10000 to 40000 cells per well. No specific laminin coating are reported and the consumption is generally evaluated by measuring the concentration of glucose after a giving time period (12-24hrs). For all given values, the cells potentially dividing during that period are not accounted for which may make  the value slightly overestimated since they are calculated with the initial cell density.\cite{Mai2017}\cite{Shankland2002}\cite{LiuFM2021}
 
-The ATP production can be mathematically linked to consumption of glucose and oxygen by the following equation :
+Measurements performed by Mai and collaborators on the GBM39 cell line yielded a consumption of 0.006 nmol/cell/12hr which in this study's model translate into 4.15 mM/min assuming a cell volume of 2 pL.\cite{Mai2017} Shankland and collaborators reported a glucose consumption of approximately 1 mM over 200 mn for 70 million A549 cells, which translates into 3.8 mM/min following the same conversion as before. Liu and collaborators reported a consumption of 1 mg/mL over 24 hours in U251 (wt) cells, which translates a value of 8.5 mM/min in the model that will be used for this study.\cite{Liu2021}
 
-\[ \frac{d[ATP]}{dt} = 2q_G + 26/3q_O \] 
-
-Where $q_G$ and $q_O$ are the consumption of glucose  and oxygen respectively. The multiplication of the consumption terms comes from the stoechiometry of glycolysis and oxydative phosphorylation as reported by Berg \cite{Berg2006}. In this case, the value of ATP production itself is not so important. What matters most is the fact that if the measurements from DeSousa and collaborators are transposed into the context of DIPG then it can be assumed that the two terms on the right hand size should be of roughly equal magnitude.
-
-Since $q_O$ was taken to be 4.5 mM/min in the previous calculation this yields of value of 19.5 mM/min for glucose consumption. This is significantly higher than what has been measured on tumors with PET scans on brain tumors which are closer to 1 mM/min.\cite{Hossmann1986}\cite{Herholz1992} However, measurements from DeSousa showed that in vitro cells produced twice as much ATP as ex vivo cells for brain tumors and  the value in vivo is most likely an average over an heterogeneous population of tumor cells.\cite{DeSousa2022} Therefore, until OCR and glucose consumption measurements are made of DIPG cells, the 19.5 mM/min value will be kept.
+The scope of values obtained leads to the study of high consumption case (8 mM/min) and a low consumption case (4 mM/min), similar to the case of standard and enhanced diffusion presented in the previous part. 
+ 
 
 \subsubsection{Hypoxia-induced increase in glycolytic rate}
 The results of Waker and collaborators show that the glycolytic rate in SU-DIPG-XIII increased from $\approx$ 120 pmoles/min to $\approx$ 240 pmoles/min when hypoxia-mimetics are induced through 100 \textmu M of CoCl$_2$. While it is not explicitly stated in the document, it can be assumed that the 100 \textmu M concentration of of CoCl$_2$ should correspond to an oxygen level of 2 \%. It is also intersting to note that the glycolytic rate before the addition of glucose are quite close, suggesting that very little acidification comes from mitochondrial metabolism or other sources, notably whein compared to the SU-DIPG-IV cell line.
 
 The increased consumption is included in a straight forward fashion : When oxygen concentration falls below 0.015 mM (2\%), the value of $k_{max,glu}$ is multiplied by 2. It is interesting to note that the consumption of oxygen starts decreasing at 0.03 mM which is above the level where the shift in glycolysis occurs.
 
+\newpage
+\subsection{Results on glucose}
+As explained before due to the absence of glucose measurements on diffusion and consumption in SU-DIPG-XIII and HSJD-DIPG-0013 cell lines, value for the simulation were taken for other cancer tissue or glioma cell line. Since two "regimes" were identified for pellet size, glucose consumption, and glucose diffusion, all those cases will be treated in the following section in the following order :
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{ |p{15mm}|p{41mm}|p{34mm}|p{27mm}|}
+			\hline
+			\textbf{Config.} & $k_{max,glu}$ (mM/min) & $D_{glu,tiss}$ (\textmu m$^2$/min) & $d_{pell}$ (\textmu m) \\
+			\hline
+			\textbf{1} & 4 & 30000 & 8000 \\
+			\hline
+			\textbf{2} & 8 & 30000 & 8000 \\
+			\hline
+			\textbf{3} & 4 & 30000 & 4500 \\
+			\hline
+			\textbf{4} & 8 & 30000 & 4500 \\
+			\hline
+			\textbf{5} & 4 & 120000 & 8000 \\
+			\hline
+			\textbf{6} & 8 & 120000 & 8000 \\
+			\hline
+			\textbf{7} & 4 & 120000 & 4500 \\
+			\hline
+			\textbf{8} & 8 & 120000 & 4500 \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{table}
+
+For each configuration the spatial and temporal dynamics of glucose in the pellet will be discussed. As before, the supply is considered to be constant outside the pellet.
+
+\subsubsection{Configuration 1: Large \& slow}
+Configuration 1 correspond to the case of a large pellet in which standard diffusion and low glucose consumption take place. The implemented consumption hike due to hypoxia does work. However, the short relaxation time means the inflexion is barely visible on the graph.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GOr/cfsys2DGGr_G_ctr_conf5.pdf}
+	\caption{ \label{G_ctr_conf5}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GOr/cfsys2DGOr_Gt_conf5.pdf}
+		\caption{ \label{Gt_conf5}}
+	\end{subfigure}
+	\caption{\textbf{Configuration 1:} Contour map of the glucose concentration for a pellet diameter of 8 mm (a) Time evolution of the glucose concentration at the center and ath the rim of the pellet (b). \label{G_t_ctr_1}}
+\end{figure}
+
+This is the "slowest" configuration in terms of relaxation time. This is due to the large size of the system, slow diffusion and relatively low consumption. As can be seen in figure \ref{G_t_ctr_1}, the system relaxes to a minimal value of 0 at the center in 200 minutes. This also results in that configuration being the most depleted in the center. A close inspection of the glucose profile (not shown) shows that glucose concentration is halved roughly 1000 \textmu m-deep into the chip in this configuration and that complete depletion occurs at 3000 \textmu m depth.
+
+\newpage
+\subsubsection{Configuration 8 : Small \& fast}
+Configuration 8 is the polar opposite of configuration 1. In that case, diffusion is fast, consumption is high meaning the system equilibrates quickly. The pellet size is also the smallest observed.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GOr/cfsys2DGGr_G_ctr_conf12.pdf}
+	\caption{ \label{G_ctr_conf12}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GOr/cfsys2DGOr_Gt_conf12.pdf}
+		\caption{ \label{Gt_conf12}}
+	\end{subfigure}
+	\caption{\textbf{Configuration 8:} Contour map of the glucose concentration for a pellet diameter of 8 mm (a) Time evolution of the glucose concentration at the center and ath the rim of the pellet (b). \label{G_t_ctr_8}}
+	
+The system equilibrates in less than an hour at a central value of 5 mM. and this concentration falls to half the external value at approximately 1000 \textmu m depth.
+\end{figure}
+
+\subsubsection{Discussion on glucose}
+Two extreme cases have been identified based on the spread of experimental values for glucose-related parameters found in the literature on glioma cell lines. In the slow and large case, the chip is fully glucose-depleted at its center after 3 hours. In the fast and small case, the glucose does not fully depleted at the core of the chip but falls at one fifth of the external values.
+
+\subsubsection{Analysis of glucose and oxygen}
+Now that the steady-state distribution of glucose and oxygen has been determiend in the two extreme cases, they are presented in figure \ref{GO_x}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/GOr/cfsys2DGOr_GO_conf5.pdf}
+	\caption{ \label{G_ctr_conf12}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/GOr/cfsys2DGOr_GO_conf12.pdf}
+		\caption{ \label{Gt_conf12}}
+	\end{subfigure}
+	\caption{Steady-state profile of normalised glucose and oxygen concentration in the chip in the "large and slow" case (a), and in the fast and small case (b). The red line delimits the hypoxic zone ([O]<2\%) and the 50 \% mark for glucose concentration. \label{GO_x}}
+	\end{figure}
+	
+The vertical lines are here to represent two limits. In the case of oxygen the threshold was fixated to 2 \% due to the information found in various publication on the subject and specifically the results of Waker and collaborators shown in their 2018 poster.\cite{Waker2018} It delinates the cell that should significantly express HIF1-$\alpha$  and HIF2-$\alpha$ and go into growth arrest. For glucose no known limits for survival or starvation are known so the 50 \% is mostly indicative  but it helps evidence that no matter where the limit lies there will probably a mostly necrotic central area, a mostly quiescent layer and a proliferative layer. However, since the model has focused so far on a maximum timespan of three hours no clear discussion about cell state can be had in this section. This will be the focus of the next part.
+
+\section{Cell growth \& nutrients dynamics in the chip}
+In the previous parts, the nutrient dynamics were explored in the chip. As a results of studying both oxygen and glucose dynamics in the constant supply case under certain hypothesis and using experimental values from different sources, it was found that an hypoxic zone could be delimited and that this hypoxic zone itself contained two areas separated by a limit which defines the glucose level leading to cell death. However, the glucose level leading to cell death so far is unknown. The first part of this third study will thus be a literature review aiming at the determination/estimation of such threshold. Once the threshold is set, the next step will be to include the cell cycle and its potential interaction with the environment in order to assess the proportion of dead, arrested and proliferative.
+
+\subsection{Nutrient starvation impact on cancer cells}
+Most Cancer cells including brain tumor cell lines display some form metabolic plasticity. Metabolic plasticity is the ability of cells to maintain their energy supply by switching from one substrate or metabolic pathway to another when the environment becomes challenging.\cite{Venneti2016}\cite{DeBerardinis2008}\cite{Spinelli2018} In cancer cells, examples include, increased glycolysis in hypoxic condition or the ability to switch between glucose and glutamine in carbon source.\cite{Waker2018}\cite{Natarajan2019} These adaptation often "aim" at the maintenance of the ATP production rate in the absence of the normal/main supply for a given duration.\cite{Piannet1991}
+
+So far, oxygen and glucose have been included, and the model based mostly on the SU-DIPG-XIII and HSIJD-DIPG-0013 observed behavior in hypoxia. The next question in line was to understand how glucose starvation in the hypoxic zone could lead to cell death. Before going further, it should be noted  that Griguer and colleagues showed that this question is far from trivial. Indeed, "The D-54MG and GL261 glioma cell lines displayed an oxidative phosphorylation (OXPHOS)-dependent phenotype, characterized by extremely long survival under glucose starvation, and low tolerance to poisoning of the electron transport chain (ETC). Alternatively, U-251MG and U-87MG glioma cells exhibited a glycolytic-dependent phenotype with functional OXPHOS. These cells displayed low tolerance to glucose starvation and were resistant to a ETC blocker."\cite {Griguer2005} In this study, it is assumed for now that adaptation of cells to glucose scarcity cannot be remediated through an increase in oxydative phosphorylation. The authors are aware of the fact that hypoxia does not equate to complete ETC impairement, and that the assumption "hypoxia = no ETC function" is simplistic.  This hypothesis is mostly made to limit the scope of the study. 
+
+In light of the previous paragraph, in the model the only possible mechanism for cell in response to a scarcity of glucose is to switch to glutamine as a carbon source. In last resort, cells may also resort to fatty acids oxidation and autophagy as well. None of those will not be explictly  included and will be considered to be encompassed in the delay between glucose and oxygen depletion of the environment and the occurence of cell death due to starvation. The delay will be taken to be 8 hours in accordance to experiments made by Piannet on C6 rat glioma cells.\cite{Piannet1991} While a complete modelling of other nutrients such as glutamine would be more satisfactory, there is not enough quantitative data on the diffusion and consumption of glutamine in chip matrix to be able to provide the same modelling as for oxygen and glucose.
 
 
+\subsection{The conditions for cell death}
+Previous models for spheroid growth have accounted for the cells metabolic plasticity by setting a threshold for cell death that depends on both glucose and oxygen.\cite{Kempf2005}\cite{Jagiella2016} This reflects the fact that cell death in a nutrient based model will be linked to an insufficient ATP production. The question then becomes : what would be a realistic threshold of sufficient ATP production to ensure survival ? An experimental from Lieberthal and collaborators gives interesting information on that subject. Indeed, they report in the abstract of their paper: "We found that cells subjected to ATP depletion below approximately 15 \% of control died uniformly of necrosis. In contrast, cells subjected to ATP depletion between approximately 25 and 70 \% of control all died by apoptosis. The rapidity of cell death was proportional to the severity of reduction of cell ATP content and was independent of the mechanism of cell death."\cite{Lieberthal1998}
 
-%\begin{figure}[ht!]
-%	\begin{subfigure}{0.45\textwidth}
-%	\centering
-%	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_conf1.pdf}
-%	\caption{ \label{O_conf1}}
-%	\end{subfigure}
-%	~~
-%	\begin{subfigure}{0.45\textwidth}
-%	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/plots/GO/cfsys2DGO_O_conf2.pdf}
-%		\caption{ \label{O_conf2}}
-%	\end{subfigure}
-%	\caption{Map of the oxygen concentration for for a pellet diameter of 8 mm (a) and 4.5 mm (b) at the rim and center of the pellet. \label{O_map}}
-%\end{figure}
+The previously mentioned  results were obtained on mouse proximal tubular cells, which are not cancerous, brain or even human cells. This means that, assuming that the same mechanisms apply to brain tumors  the threshold may not be the same depending on cell function. However, other studies seem to suport that the mechanism is widespread at least qualitatively.\cite{Martin2001} The following point of interest is the place of apoptosis in the model. Most agent-based model treating tumor growth do not account for apoptosis, and only include necrosis in their cell death mechanism.\cite{Mao2018}\cite{Kempf2005}\cite{Kempf2015}\cite{Bull2020}\cite{Jagiella2016}\cite{Cleri2019}For the sake of simplicity only necrosis will be considered in this study as well.
 
 
+\subsection{The importance of cell cycle}
+Building on the knowledge presented right before a mechanism of cell death that accounts for the ATP level and the cell cycle phase is proposed here. Cells are considered to be able to survive for 8 hours in a depleted environment. In the model, glucose depletion necessarily occurs in zone that are already hypoxic. In that case, keeping in with the values given by Lieberthal, if it assumed that ATP production is almost completely provided by glycolysis in hypoxic cells then a fall below 25 \% on the external concentration for more than 8 hours should lead to cell death. However the possibility of cell cycle arrest should not be overlooked. Therefore, it is proposed to refine the previous statement slightly by including a dependence on the cell cycle phase: 
+\begin{itemize}
+\item If a cell is less than 8 hours before division when the glucose concentration crosses the threshold, then the cell survives and goes into growth arrest immediately after division. 
+\item If a cell is in G1 phase when the concentration crosses the threshold it stops its growth.
+\item If cells is in G2 phase and more than 8 hours before division then the cell dies after 8 hours.
+\end{itemize} 
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{2cm} 
+\begin{tikzpicture}
 
 
-%1 mpH = 3.0 à 2.999
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (0mm,18mm) arc (90:135:18mm) -- (0,0);
+%\filldraw[fill=red!20!white, draw=black] (0,0) -- (0mm,12mm) arc (90:135:12mm) -- (0,0);
+\draw[thick,gray!70!black](-9mm,21mm) node {M};
 
-%Shen2019 is not in hypoxia
 
-%need to make a note on the molecular aspect of HIFs and  the ETC not obvious so far...
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (-18*0.707mm,18*0.707mm) arc (135:180:18mm) -- (0,0);
+%\filldraw[fill=red!20!white, draw=black] (0,0) -- (-12*0.707mm,12*0.707mm) arc (135:180:12mm) -- (0,0);
+\draw[thick,gray!70!black](-21mm,10mm) node {G2};
+
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (-18mm,0mm) arc (180:270:18mm) -- (0,0);
+\filldraw[fill=red!20!white, draw=black] (0,0) -- (-12mm,0mm) arc (180:270:12mm) -- (0,0);
+\draw[thick,gray!70!black](-17mm,-17mm) node {S};
+
+
+\filldraw[fill=green!20!white, draw=black] (0,0) -- (-0mm,-18mm) arc (-90:90:18mm) -- (0,0);
+%\filldraw[fill=cyan!10!white, draw=black] (0,0) -- (18*0.866mm,18*0.5mm) arc (30:90:18mm) -- (0,0);
+\filldraw[fill=orange!10!white, draw=black] (0,0) -- (-90:12mm) arc (-90:90:12mm) -- (0,0);
+%\filldraw[fill=red!20!white, draw=black] (0,0) -- (9*0.866mm,9*0.5mm) arc (30:-90:9mm) -- (0,0);
+\draw[thick,gray!70!black](17mm,-17mm) node {G1};
+
+\draw[draw=green!20!white, dashed,very thick] (0,0) -- (-0mm,-18mm);
+\draw[very thick, ->] (0mm,0mm) -- (22mm,0mm);
+\draw[very thick] (18mm,2mm) -- (18mm,-2mm);
+\draw[thick,gray!70!black](25mm,-4mm) node {$p_{ATP}$};
+%\draw[draw=black, thick] (0,0) -- (18mm,10.2mm);
+%\draw[thick,gray!70!black](20mm,10.5mm) node {R};
+\draw[draw=black, dashed] (0,-18mm) -- (0 mm,-22mm);
+\draw[thick,gray!70!black](0mm,-25mm) node {G1/S};
+
+
+\draw[thick,->] (0mm,21mm) arc(90:70:21mm);
+%\draw[dashed] (0mm,-15mm) arc(-90:30:15mm);
+
+%legend
+\filldraw[fill=green!20!white, draw=black] (35mm,9mm) rectangle (37mm,11mm);
+\draw[thick,gray!70!black](52mm,10mm) node {proliferation};
+\filldraw[fill=red!20!white, draw=black] (35mm,3mm) rectangle (37mm,5mm);
+\draw[thick,gray!70!black](48mm,4mm) node {necrosis};
+\filldraw[fill=orange!10!white, draw=black] (35mm,-2mm) rectangle (37mm,-4mm);
+\draw[thick,gray!70!black](55mm,-3mm) node {arrested growth};
+
+\end{tikzpicture}
+\caption{Cell fate as a function of ATP production and cell cycle phases \label{cell_fate}}
+\end{figure}
+In figure \ref{cell_fate}, the previously mentioned behavior has been slightly simplified in order to let the limits of each behavior coincide with a phase of the cell cycle. Cancer cells doubling time can between 18 and a few days, and more specifically between 20h and 30h for glioblastoma.\cite{Oraiopoulou2017} However, this doubling time has been reported to be of the order of 6 days for SU-DIPG-XIII.\cite{He2021} It should be noted that using the data from Waker's poster the estimate for doubling time is closer to 2.8 days rather 6.6. But the culture conditions are not fully known in that case, and the normal oxygen concentration is known to be different between the two studies which may explain the difference. It is also known that if glucose concentration is higher, the doubling time may change.\cite{Casciari1992}\cite{Yang2021} Considering the fact that the model in this study is based mostly on Waker's results and that the external concentration in the model is 20 \% and not five the doubling time of well-nourished cells is taken to be 3 days.
+
+Accounting for the previous paragraph, the next question becomes :"How long is each phase of the cell cycle ?" Is the lengthening of the cell cycle striclty equivalent to G1-phase lengthening, with the G2, M and S phase having constant duration ? Or is every phase of the cell cycle lengthened in a proportional fashion ? The study of Chao and collaborators indicate that among various cell types the G1-phase is the most variable one compared to more G2,S and M phase, which are more consistent across cell lines.\cite{Chao2019} However, the review by Fisher and Krasinska seem to indicate that at least some cell types exhibit the opposite behavior:"In lymphocytes, the duration of all phases varies considerably and is proportional to the inter-division time, with the majority of cell cycle time variability resulting from the combined length of the S/G2/M phase."\cite{Fisher2022}. The answer is that it probably depends both on the cell type and external conditions.
+
+In this model the answer to that question impacts the results. Indeed, with the hypothesis presented previously, cell can only die in a time window situated in S-phase and/or G2-phase. If all phases are lengthened in a roughly equal fashion when cell cycle length varies then the length of the cell cycle does not change the probability for a cell to die or not. However, if phase lengths do not vary equally then the probability for a cell of being in the phase where it can die may diminish with a lengthening cell cycle. This is why it is important to consider both cases.
+
+\subsection{Cell cycle length and different phases}
+\subsubsection{Cell cycle length}
+First of all, the data presented in Waker's poster and in He and collaborators study give an idea of the variation of the cell cycle duration with oxygen concentration. At 20 \% the SU-DIPG-XIII doubling time can be calculated to be 2.8 days (using the same methods as He and collaborators). In the study of He and collaborators, at 5 \% the doubling time is reported to be 6.6 days on the same cell line.\cite{He2021} This seems coherent as the 5 \% value can be seen as an intermediate between hypoxia and the ambient oxygen level of 20 \%. In hypoxia ($\approx 2$ \%), emulated by addition of 100 \textmu M of CoCl$_2$ in the medium, growth is all but completely stopped.\cite{Waker2018}
+
+Taking into account the previous data, a function linking the observed doubling time on SU-DIPG-XIII and the oxygen concentration can be derived. The function displayed in figure \ref{podbl} is of the form $\frac{a}{b x - c }$ where $a$, $b$ and $c$ were determined with least squares approach. The following values were determined : $a =  13.0612;  b = 0.6694; c = 1.3061$.
+
+\begin{figure}[ht!]
+\vspace{1cm}
+\hspace{4cm} 
+\begin{tikzpicture}[domain=0:4] 
+    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+    %axes
+    \draw[->] (-1.7,0) -- (4.5,0) node[right] {$pO_2$}; 
+    \draw[->] (-1.5,-0.2) -- (-1.5,4.2) node[above] {doubl. time};
+    
+    %ticks
+     \draw[-] (0,-0.2) -- (0,0.2);
+     \draw (0,-0.6) node {2 \%};
+     \draw[-] (4,-0.2) -- (4,0.2);
+     \draw (4,-0.6) node {20 \%};
+     \draw[-] (1,-0.2) -- (1,0.2);
+     \draw (1,-0.6) node {5 \%};
+     
+     %lines
+     \draw[dashed] (0,0.2) -- (0,4.2);
+     \draw[dashed] (4,0.2) -- (4,4.2);
+     \draw[dashed] (1,0.2) -- (1,4.2);
+     
+      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
+      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
+      %\draw[domain=0:3,color=green!30!black] plot (\x,\x);
+      %\draw[domain=3:4.3,color=green!30!black] plot (\x,3);
+      %\draw[color=green!30!black] (5.5,3) node {$v_{max,GF+}$};
+      %\draw[domain=0:3,color=green!60!black] plot (\x,0.5*\x);
+      %\draw[domain=3:4.3,color=green!60!black] plot (\x,1.5);
+      %\draw[color=green!60!black] (5.5,1.5) node {$v_{max,GF-}$};
+  \end{tikzpicture}
+  \caption{Relation doubling time, and oxygen partial pressure \label{podbl}}
+\end{figure}
+
+Once again, in all fairness the impact of glucose on doubling time should also be determined. But such data is not available on SU-DIPG-XIII. Moreover the physical configuration of the model means that an area where oxygen would be plenty and glucose depleted cannot exist in the model. Therefore so far only oxygen can impact the doubling time. There is not a strict equivalence between doubling time, which is measurement made on a whole culture and cell cycle length, which is a property of the individual cell. In the model, though, the doubling time will be equated to the cell cycle length.
+
+\subsubsection{Length of the different phases}
+As explained before, cell cycle phases do not necessarily vary in proportion with the cell cycle length. First of all, it seems to be clear that mitosis duration is an hour at most (including cytokinesis)\cite{Cooper2006}\cite{Araujo2016}\cite{Chao2019} and does not vary when the duration of other phases do.
+
+Even though a first literature review suggested that G1, G2 and S phases may vary independently\cite{Chao2019}\cite{Fisher2022}, a more specific search on the impact of starvation seem to suggest that serum or nutrient starvation leads mostly to G0/G1 phase arrest.\cite{Wang2021}\cite{Chen2012}\cite{Hahn2009} It is thus assumed from this point in the model the only phase that can vary in length is G1-phase. This, however, does not give any information about the respective length of the cell cycle phases in normal conditions.
+
+The best piece of information that was found on that matter in the literature was the respective proportion of patient derived DIPG cells obtained by Sun and collaborators. They reported 80 \% of cells in G1 phase, with 14\% in S-phase and 6\% in G2 phase at low passage and approximately 90 \% in G1, and 5\% in both G2 and S phases.\cite{Sun2019} Assuming that cells are not synchronized, the proportion can be turned into relative length for the cell cycle phases : 
+\begin{itemize}
+\item Mitosis is an hour long (at most 1.4 \% of total cell cycle length)
+\item G2 phase duration will be taken to be 5\% of the whole cell cycle at 20 \% $pO_2$ : 3.3 hours
+\item S phase duration will be taken to be 15\% of the whole cell cycle at 20 \% $pO_2$ : 10 hours
+\item G1-phase duration will be taken to be 80\% of the whole cell cycle at 20 \% $pO_2$ : 53 hours
+\item G1-phase length will evolve concomittantly with the cell cycle length.
+\end{itemize}
+
+Since only the G1-phase length changes with $pO_2$, the previous function is refitted to time data where the duration of all phases but the G1-phase are removed. This new fit yielded the resulting coefficients. $a =  17.9592;  b = 0.9816; c = 1.9184$.
+  
+$a =  0.032594;  b = 5.6239e-07; c = -1.0682e-06$.
+
+
 \section*{Appendix}
 \subsection*{Proof of the validity of the 2D approximation}
 \newpage
