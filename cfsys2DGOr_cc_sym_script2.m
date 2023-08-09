@@ -1,7 +1,8 @@
 clear all
 chip_size = 10000;
 sz = round(chip_size/15);
-conf= [sz 120 4.5 4 0.03 1 15 1/1500 1 7540 8000 30000];
+conf= [sz 10 4.5 4 0.03 1 15 1/12000 1 7540 8000 300000];
+%conf= [sz 120 4.5 8 0.03 1 15 1/12000 1 7540 4500 1200000];
 n_min = conf(2);
 kO_tissue = conf(3);
 kG_tissue = conf(4);
@@ -30,8 +31,8 @@ sycle = [];
 
 %diffusion being physical it is not part of the modifiable parameters
 DOx = ones(round(sz/2)+1,round(sz/2)+1);
-DOx = 120000*DOx;
-DOx_tissue = 120000;
+DOx = 1200000*DOx;
+DOx_tissue = 1200000;
 DG = ones(round(sz/2)+1,round(sz/2)+1);
 DG = conf(12)*DG;
 DG_tissue = conf(12);
@@ -115,9 +116,10 @@ if(isfile(filename))
 endif
 
 tic()
-for i=1:12
-	[Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG] = update_model(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue,ntime,conf)
-	save(['200723_' num2str(2*i) 'hr']);
+for i=1:2
+	i
+	[Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG, Gt, Ot] = update_model(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue,ntime,conf);
+	save(['090823_' num2str(10*i) 'min']);
 endfor
 toc()
 

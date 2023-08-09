@@ -22,7 +22,7 @@
 ## Author: antony <antony.bazir@antony-Latitude-E7450>
 ## Created: 2023-07-20
 
-function [Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG] = update_model(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue,ntime,conf)
+function [Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG, Gt ,Ot] = update_model(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue,ntime,conf)
 n_min = conf(2);
 kO_tissue = conf(3);
 kG_tissue = conf(4);
@@ -38,8 +38,8 @@ Diff_glu = conf(12);
 
 %diffusion being physical it is not part of the modifiable parameters
 DOx = ones(round(sz/2)+1,round(sz/2)+1);
-DOx = 120000*DOx;
-DOx_tissue = 120000;
+DOx = 1200000*DOx;
+DOx_tissue = 1200000;
 DG = ones(round(sz/2)+1,round(sz/2)+1);
 DG = conf(12)*DG;
 DG_tissue = conf(12);
@@ -52,25 +52,30 @@ dsy_s = j-round(sz/2);
 dsx_s = i-round(sz/2);
 sites = find((dsx_s.^2+dsy_s.^2)<rad^2);
 
+ox_stable = 0;
+gluc_stable = 0;
+
 l =1;
 for i=1:ntime
     %G'(round(sz/2),round(sz/2-rad+2))
-    if(mod(i,1000)==0)
-		i
+    if(mod(i,12000)==0)
+		i/12000
 		sycle(find(sycle(:,1)!=-1),1)= sycle(find(sycle(:,1)!=-1),1)+1;
-		for n=1:length(sycle)
-			%n
-			Ox_vals(n) = O(find(Grid==n));
-			if(O(find(Grid==n))>0.015)
-				sycle(n,2) = round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==n)))+864);
-			else
-				sycle(n,2) = round(((400.0000-0.6)*24*60)+864);
-			endif
-			%sycle(n,1)==sycle(n,2)
-			if(sycle(n,1)>=sycle(n,2))
+		if(ox_stable==0)
+			for n=1:length(sycle)
 				%n
-			endif
-		endfor
+				Ox_vals(n) = O(find(Grid==n));
+				if(O(find(Grid==n))>0.015)
+					sycle(n,2) = round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==n)))+864);
+				else
+					sycle(n,2) = round(((400.0000-0.6)*24*60)+864);
+				endif
+				%sycle(n,1)==sycle(n,2)
+				if(sycle(n,1)>=sycle(n,2))
+					%n
+				endif
+			endfor
+		endif
 
 		for k=1:length(sycle)
 			%k
@@ -83,15 +88,38 @@ for i=1:ntime
 				pos(1) = r; pos(2) = c;
 				length(sycle)
 				[Grid,kO,kG,DG,sycle] = divide2D_cc(Grid,pos,k,round(sz/2)+1,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue);
+
+				% if a cell divided, concentration are calculated again
+				ox_stable = 0;
+				gluc_stable = 0;
 				length(sycle)
 			endif
 
+      %if replication is initiated but energy is too low, cell dies
 			if(G(find(Grid==k))<10&&O(find(Grid==k))<0.015&&sycle(k,1)<(sycle(k,2)-480)&sycle(k,1)>(sycle(k,2)-864))
 				kG(find(Grid==k)) = 0;
 				kO(find(Grid==k)) = 0;
 				sycle(k,1) = -1;
+				ox_stable = 0;
+				gluc_stable = 0;
+			endif
+
+      if(G(find(Grid==k))<2)%if too little glucose then housekeeping is impossible
+				kG(find(Grid==k)) = 0;
+				kO(find(Grid==k)) = 0;
+				sycle(k,1) = -1;
+				ox_stable = 0;
+				gluc_stable = 0;
 			endif
 		endfor
+
+		inc_Gx = dt*(DG(3:round(sz/2)+1,1:round(sz/2)+1)-DG(1:round(sz/2)-1,1:round(sz/2)+1))/(4*dx^2).*(G(3:round(sz/2)+1,1:round(sz/2)+1)-G(1:round(sz/2)-1,1:round(sz/2)+1)) + DG(2:round(sz/2),1:round(sz/2)+1)*dt/dx^2.*(G(3:round(sz/2)+1,1:round(sz/2)+1) -2*(G(2:round(sz/2),1:round(sz/2)+1)) + G(1:round(sz/2)-1,1:round(sz/2)+1)) -kG(2:round(sz/2),1:round(sz/2)+1).*(G(2:round(sz/2),1:round(sz/2)+1)./(G(2:round(sz/2),1:round(sz/2)+1)+cG))*dt
+		inc_Gy = dt*(DG(1:round(sz/2)+1,3:round(sz/2)+1)-DG(1:round(sz/2)+1,1:round(sz/2)-1))/(4*dx^2).*(G(1:round(sz/2)+1,3:round(sz/2)+1)-G(1:round(sz/2)+1,1:round(sz/2)-1)) + DG(1:round(sz/2)+1,2:round(sz/2))*dt/dx^2.*(G(1:round(sz/2)+1,3:round(sz/2)+1) -2*(G(1:round(sz/2)+1,2:round(sz/2))) + G(1:round(sz/2)+1,1:round(sz/2)-1))
+
+		inc_Ox = dt*(DOx(3:round(sz/2)+1,1:round(sz/2)+1)-DOx(1:round(sz/2)-1,1:round(sz/2)+1))/(4*dx^2).*(O(3:round(sz/2)+1,1:round(sz/2)+1)-O(1:round(sz/2)-1,1:round(sz/2)+1)) + DOx(2:round(sz/2),1:round(sz/2)+1)*dt/dx^2.*(O(3:round(sz/2)+1,1:round(sz/2)+1) -2*(O(2:round(sz/2),1:round(sz/2)+1)) + O(1:round(sz/2)-1,1:round(sz/2)+1)) -kO(2:round(sz/2),1:round(sz/2)+1).*(O(2:round(sz/2),1:round(sz/2)+1)./(O(2:round(sz/2),1:round(sz/2)+1)+cO))*dt;
+		inc_Oy = dt*(DOx(1:round(sz/2)+1,3:round(sz/2)+1)-DOx(1:round(sz/2)+1,1:round(sz/2)-1))/(4*dx^2).*(O(1:round(sz/2)+1,3:round(sz/2)+1)-O(1:round(sz/2)+1,1:round(sz/2)-1)) + DOx(1:round(sz/2)+1,2:round(sz/2))*dt/dx^2.*(O(1:round(sz/2)+1,3:round(sz/2)+1) -2*(O(1:round(sz/2)+1,2:round(sz/2))) + O(1:round(sz/2)+1,1:round(sz/2)-1));
+
+
 	endif
 
     %G(find((dsx.^2+dsy.^2)>=r^2))= 0.5;
@@ -118,27 +146,49 @@ for i=1:ntime
 ##		O(find(DG==DG_tissue))= 0.15;
 	%endif
 
-	kG(find(and(kG>0,O<0.015))) = kG_tissue*2;
-	kG(find(and(kG>0,O>=0.015))) = kG_tissue;
+	if(ox_stable==0)
+		kG(find(and(kG>0,O<0.015))) = kG_tissue*2;
+		kG(find(and(kG>0,O>=0.015))) = kG_tissue;
+	endif
 
     %explicit  scheme--Gluc
-    %symétrisation
-    G(1:round(sz/2)+1,round(sz/2)+1) = G(1:round(sz/2)+1,round(sz/2)-1);
-    G(round(sz/2)+1,1:round(sz/2)+1) = G(round(sz/2)-1,1:round(sz/2)+1);
-    %x-step
-    G(2:round(sz/2),1:round(sz/2)+1) =  G(2:round(sz/2),1:round(sz/2)+1) + dt*(DG(3:round(sz/2)+1,1:round(sz/2)+1)-DG(1:round(sz/2)-1,1:round(sz/2)+1))/(4*dx^2).*(G(3:round(sz/2)+1,1:round(sz/2)+1)-G(1:round(sz/2)-1,1:round(sz/2)+1)) + DG(2:round(sz/2),1:round(sz/2)+1)*dt/dx^2.*(G(3:round(sz/2)+1,1:round(sz/2)+1) -2*(G(2:round(sz/2),1:round(sz/2)+1)) + G(1:round(sz/2)-1,1:round(sz/2)+1)) -kG(2:round(sz/2),1:round(sz/2)+1).*(G(2:round(sz/2),1:round(sz/2)+1)./(G(2:round(sz/2),1:round(sz/2)+1)+cG))*dt ;
-    %y-step
-    G(1:round(sz/2)+1,2:round(sz/2)) =  G(1:round(sz/2)+1,2:round(sz/2)) + dt*(DG(1:round(sz/2)+1,3:round(sz/2)+1)-DG(1:round(sz/2)+1,1:round(sz/2)-1))/(4*dx^2).*(G(1:round(sz/2)+1,3:round(sz/2)+1)-G(1:round(sz/2)+1,1:round(sz/2)-1)) + DG(1:round(sz/2)+1,2:round(sz/2))*dt/dx^2.*(G(1:round(sz/2)+1,3:round(sz/2)+1) -2*(G(1:round(sz/2)+1,2:round(sz/2))) + G(1:round(sz/2)+1,1:round(sz/2)-1));
 
-    %explicit  scheme--GOx
-    %symétrisation
-    O(1:round(sz/2)+1,round(sz/2)+1) = O(1:round(sz/2)+1,round(sz/2)-1);
-    O(round(sz/2)+1,1:round(sz/2)+1) = O(round(sz/2)-1,1:round(sz/2)+1);
-    %x-step
-    O(2:round(sz/2),1:round(sz/2)+1) =  O(2:round(sz/2),1:round(sz/2)+1) + dt*(DOx(3:round(sz/2)+1,1:round(sz/2)+1)-DOx(1:round(sz/2)-1,1:round(sz/2)+1))/(4*dx^2).*(O(3:round(sz/2)+1,1:round(sz/2)+1)-O(1:round(sz/2)-1,1:round(sz/2)+1)) + DOx(2:round(sz/2),1:round(sz/2)+1)*dt/dx^2.*(O(3:round(sz/2)+1,1:round(sz/2)+1) -2*(O(2:round(sz/2),1:round(sz/2)+1)) + O(1:round(sz/2)-1,1:round(sz/2)+1)) -kO(2:round(sz/2),1:round(sz/2)+1).*(O(2:round(sz/2),1:round(sz/2)+1)./(O(2:round(sz/2),1:round(sz/2)+1)+cO))*dt ;
-    %y-step
-    O(1:round(sz/2)+1,2:round(sz/2)) =  O(1:round(sz/2)+1,2:round(sz/2)) + dt*(DOx(1:round(sz/2)+1,3:round(sz/2)+1)-DOx(1:round(sz/2)+1,1:round(sz/2)-1))/(4*dx^2).*(O(1:round(sz/2)+1,3:round(sz/2)+1)-O(1:round(sz/2)+1,1:round(sz/2)-1)) + DOx(1:round(sz/2)+1,2:round(sz/2))*dt/dx^2.*(O(1:round(sz/2)+1,3:round(sz/2)+1) -2*(O(1:round(sz/2)+1,2:round(sz/2))) + O(1:round(sz/2)+1,1:round(sz/2)-1));
+	if(gluc_stable==0)
+		%symétrisation
+		G(1:round(sz/2)+1,round(sz/2)+1) = G(1:round(sz/2)+1,round(sz/2)-1);
+		G(round(sz/2)+1,1:round(sz/2)+1) = G(round(sz/2)-1,1:round(sz/2)+1);
 
+		inc_Gx = dt*(DG(3:round(sz/2)+1,1:round(sz/2)+1)-DG(1:round(sz/2)-1,1:round(sz/2)+1))/(4*dx^2).*(G(3:round(sz/2)+1,1:round(sz/2)+1)-G(1:round(sz/2)-1,1:round(sz/2)+1)) + DG(2:round(sz/2),1:round(sz/2)+1)*dt/dx^2.*(G(3:round(sz/2)+1,1:round(sz/2)+1) -2*(G(2:round(sz/2),1:round(sz/2)+1)) + G(1:round(sz/2)-1,1:round(sz/2)+1)) -kG(2:round(sz/2),1:round(sz/2)+1).*(G(2:round(sz/2),1:round(sz/2)+1)./(G(2:round(sz/2),1:round(sz/2)+1)+cG))*dt;
+		inc_Gy = dt*(DG(1:round(sz/2)+1,3:round(sz/2)+1)-DG(1:round(sz/2)+1,1:round(sz/2)-1))/(4*dx^2).*(G(1:round(sz/2)+1,3:round(sz/2)+1)-G(1:round(sz/2)+1,1:round(sz/2)-1)) + DG(1:round(sz/2)+1,2:round(sz/2))*dt/dx^2.*(G(1:round(sz/2)+1,3:round(sz/2)+1) -2*(G(1:round(sz/2)+1,2:round(sz/2))) + G(1:round(sz/2)+1,1:round(sz/2)-1));
+
+		%x-step
+		G(2:round(sz/2),1:round(sz/2)+1) =  G(2:round(sz/2),1:round(sz/2)+1) + inc_x ;
+		%y-step
+		G(1:round(sz/2)+1,2:round(sz/2)) =  G(1:round(sz/2)+1,2:round(sz/2)) + inc_y ;
+
+		if(abs(inc_Gx)+abs(inc_Gy)<1e-3)
+			gluc_stable=1;
+		endif
+	endif
+
+	if(ox_stable==0)
+		%explicit  scheme--Ox
+		%symétrisation
+		O(1:round(sz/2)+1,round(sz/2)+1) = O(1:round(sz/2)+1,round(sz/2)-1);
+		O(round(sz/2)+1,1:round(sz/2)+1) = O(round(sz/2)-1,1:round(sz/2)+1);
+
+		inc_Ox = dt*(DOx(3:round(sz/2)+1,1:round(sz/2)+1)-DOx(1:round(sz/2)-1,1:round(sz/2)+1))/(4*dx^2).*(O(3:round(sz/2)+1,1:round(sz/2)+1)-O(1:round(sz/2)-1,1:round(sz/2)+1)) + DOx(2:round(sz/2),1:round(sz/2)+1)*dt/dx^2.*(O(3:round(sz/2)+1,1:round(sz/2)+1) -2*(O(2:round(sz/2),1:round(sz/2)+1)) + O(1:round(sz/2)-1,1:round(sz/2)+1)) -kO(2:round(sz/2),1:round(sz/2)+1).*(O(2:round(sz/2),1:round(sz/2)+1)./(O(2:round(sz/2),1:round(sz/2)+1)+cO))*dt;
+		inc_Oy = dt*(DOx(1:round(sz/2)+1,3:round(sz/2)+1)-DOx(1:round(sz/2)+1,1:round(sz/2)-1))/(4*dx^2).*(O(1:round(sz/2)+1,3:round(sz/2)+1)-O(1:round(sz/2)+1,1:round(sz/2)-1)) + DOx(1:round(sz/2)+1,2:round(sz/2))*dt/dx^2.*(O(1:round(sz/2)+1,3:round(sz/2)+1) -2*(O(1:round(sz/2)+1,2:round(sz/2))) + O(1:round(sz/2)+1,1:round(sz/2)-1));
+
+		%x-step
+		O(2:round(sz/2),1:round(sz/2)+1) =  O(2:round(sz/2),1:round(sz/2)+1) + inc_Ox ;
+		%y-step
+		O(1:round(sz/2)+1,2:round(sz/2)) =  O(1:round(sz/2)+1,2:round(sz/2)) + inc_Oy;
+
+		if(abs(inc_Ox)+abs(inc_Oy)<1e-5)
+			ox_stable=1;
+		endif
+	endif
 
     if(mod(i,1000)==0)
       Ot(l,1) =  O(round(sz/2),round(sz/2));
