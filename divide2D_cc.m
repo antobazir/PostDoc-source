@@ -1,4 +1,4 @@
-function [Grid,kO,kG,DG,sycle] = divide2D_cc(Grid,pos,c_idx,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue)
+function  [Grid,kO,kG,DG,sycle] = divide2D_cc(Grid,pos,c_idx,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue)
 %plr = randi(1:4);
 %pos
 %cas full occupé ou inoccupé 1a et b
