@@ -1,0 +1,615 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+\section{Introduction}
+Metabolism  is a core aspect of cancer cells physiology. Metabolic behaviors observed in cancer cells such as the Warburg effect, a propension to rely on glycolysis in the presence physiological concentration of oxygen, are considered to be among the hallmarks of cancer.\cite{Lunt2011}\\
+
+Biologists have sought to understand the underlying mechanism of the different metabolic behaviors observed in various cell lines. In that, they benefited from the support of accompanying modelling study which aimed at simulating a "simplified" cell population with the aim of trying to capture the main features of the growth characteristics of the cell population.\\ 
+
+To that end, different types of modelling tools, ranging from continuous analytical model with cells represented as function through their density and evolution being encoded solely through ordinary differential equations and partial differential equations. Other studies resorted to discrete, cell-based or agent-based models. In those, each individual is represented and its evolution and interactions with others cells/agents or its environment are encoded through "rules". More specifically models aiming at the study of the link between metabolism tend to mix continuous model to represent the nutrients and other chemical species and a discrete component to represent the individual cells. This is the kind of model that is to be used in this study. \\
+
+Modelling studies in that field generally use experimental growth data in order to design and calibrate their model. It can then be used to possibly extrapolate on some situations that could be difficult to explore thoroughly in an  experimental setting due to time, space and resource constraints.\\
+
+This modelling study focuses on Diffuse Intrinsic Pontine Glioma(DIPG). the localisation, diffuse nature and aggresiveness of these pediatric glioma consistently leads to very poor prognosis in affected young patients as both treatments and sample retrieval are made difficult by this configuration. Research in the last decades has progressed thanks to an improved understanding and an increase in variety and amount of available cell lines for in vitro studies.\\
+
+The used data has been obtained on Diffuse Intrinsic Pontine Glioma cell line by Waker and collaborators \cite{Waker2018}. The specificity of the modelling study presented here is that cells are in a configuration which is neither a spheroid nor a 2D culture but a tumor-on-chip model. First, the structure of the model is presented, then the results in the different configurations are presented.\\ 
+
+\section{Hypotheses \& model structure} 
+In this section, the general structure of the model is to be presented first. This include the physical hypotheses made for the modelling of nutrient dynamics, the rules encoded in the discrete part of the model for cell evolution and interactions.  Most of the choices rely on experimental data that is to be explicitly referred to when used.
+
+\subsection{The tumor-on-chip system}
+The purpose of the tumor-on-chip system was to bridge the experimental gap between the physical reality of \textit{in vivo} configuration and the \textit{in vitro} culture methods such as monolayer and spheroids. Indeed, an important feature of solid and diffuse tumors is the lack of nutrient and oxygen at their core which conditions their physiology and evolution. it also helps in reproducing the actual spatial and mechanical configuration of actual DIPG which is important in order for the experimental results to be as relevant as possible.\\
+
+The tumor-on-chip mixes microfluidics and cell culture. It consists of a cylindrical well with a 10 mm radius and 0.75 mm height, connected to the pumps and other microfluidic devices through two lateral inlets/outlets as shown in figure \ref{toc}. \\
+
+%\vspace{0.5cm}
+%\hspace{2cm}
+\begin{figure}
+\begin{center}
+
+\begin{tikzpicture}
+\label{chip}
+	%inlets
+	\draw(0,-0.5) arc(270:90:0.5);
+	
+	\draw(0,0.5) -- (1,0.5);
+	\draw(0,-0.5) -- (1,-0.5);
+	
+	\draw(8,0.5) arc(90:-90:0.5);
+	
+	\draw(7,0.5) -- (8,0.5);
+	\draw(7,-0.5) -- (8,-0.5);
+	
+	% center 
+	\draw(4,0) circle (3);
+	
+	%annotations 
+	\draw[<->](1.1,0) -- (6.9,0);
+	\draw(4,0.5) node {10 mm};
+	
+\end{tikzpicture}
+\caption{Top view drawing of the central part of the tumor on chip system \label{toc}}
+\end{center}
+\end{figure}
+In the medium-filled well, a prepared mixture of cell and unreticulated extracellular matrix (Matrigel+Hyaluronic acid) at given concentration. This mixture is then left for cross-linking before the chip is placed back into either normoxic or hypoxic cell culture environment.\\
+
+It is interesting to note that the pellet of cell/matrix mixture can vary in size due to possible variations in the cross-linking process. The maximum diameter is taken to be 8 mm, while the minimum diameter is taken here to be 4.5 mm.\\
+
+Fresh medium is then kept in circulation in order to provide nutrients and oxygen to the cell pellet through the medium-filled part of the chip for the duration experiment while different imaging tools can be used in order to monitor different parameters.\\
+
+\subsection{Modelling nutrient dynamics}
+The model in this study is a so-called hybrid model. These models, coupling a grid where partial differential equations in order to know the nutrients dynamics  and the discrete cell based component, have been used in several studies on cancer growth.\cite{Mao2018}\cite{Kempf2015}\cite{Jagiella2016} This subsection focuses on the nutrient modelling.\\
+
+\subsubsection{The reaction-diffusion equation}
+Nutrients dynamics in the model are determined by solving a reaction-diffusion equation system. The general form of the equation is the following : 
+
+\[ \frac{\partial [C](\overrightarrow{r},t)}{\partial t} = \overrightarrow{\nabla}(D_C(\overrightarrow{r})) \cdot \overrightarrow{\nabla}( [C](\overrightarrow{r},t)) + D_C(\overrightarrow{r},t) \nabla^2 [C](\overrightarrow{r},t) -k_C(\overrightarrow{r},t) \] 
+
+with  $C(\overrightarrow{r},t)$ being the concentration field, $D_C(\overrightarrow{r},t)$ the diffusion coefficient, and $k_C(\overrightarrow{r},t)$ the cellular consumption term.\\
+
+On the numerical side of things, the equation is solved with an explicit finite difference written in MATLAB language and solved with GNU/Octave on a square grid with constant timesteps.\\
+
+Following the approach in most of the literature, the reaction-diffusion is solved for oxygen and glucose only. Other studies have model more nutrient and even intracellular chemical species such as ATP and ADP. \cite{Jagiella2016}\cite{Cleri2019} However, this comes with an increased computational cost for a given system size and often requires data that is hardly available. As can be seen here, the modelling of oxygen and glucose alone already requires substantial amounts of assumptions in order to results into a full model. For both glucose and oxygen, data on initial concentration, diffusion,  and cellular consumption rates is to be presented in order to set the physical parameters of the model.
+
+\subsubsection{Modelling oxygen dynamics \label{ox}} 
+As explained earlier, fully modelling oxygen requires to know the concentration, diffusion coefficient in medium and tissue , and the cellular consumption rate.\\
+
+\paragraph{Concentration}
+In the context of the tumor-on-chip experiments at normoxic level are run at 20 \% $p_{O_2}$ ($\approx$ 0.150 mM). As explained in McKeown's review, this is most likely not the physiological partial pressure experienced by cancer cells in \textit{in vivo} tumors, which closer to 5 \%  $p_{O_2}$ ($\approx$ 0.0375 mM) \cite{McKeown2014}. One of the interest of modelling is that both can be tested.\\
+
+\paragraph{Diffusion}
+The easiest approximation would be to assume that the oxygen diffusion coefficient in tissue is the same 37°C water. For water at atmospheric pressure this value would be 180000 \textmu m$^2$/min.\cite{Yin2014} However, several measurements have been performed on matrix-like hydrogel and living tissues in the last decades. Some of those measurements are reported in table \ref{diff_Ox}.\\
+
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{35mm}|p{20mm}|p{7mm}| }
+ \hline
+
+ \textbf{Molecule}  & \textbf{Diffusion medium} & \textbf{Diffusion\ coeff.} \textmu m$^2$/min  & Ref. \\
+ \hline
+  \hline
+      Oxygen & water (25°C) & 120000   & \cite{Hober1947}\\
+ \hline    
+      Oxygen & water (37°C) & 180000   & \cite{Yin2014}\\
+ \hline   
+       Oxygen  & water (37°C) & 210000   & \cite{Wise1966}\\
+ \hline  
+ Oxygen  & Rat liver (37°C) & 216000   & \cite{Macdougall1967}\\
+ \hline
+  Oxygen & DS-Carcinoma (37°C) & 105000   & \cite{Grote1977}\\
+ \hline
+    Oxygen  & 6\% agarose (25°C) & 120000   & \cite{McCabe1975}\\
+ \hline
+      Oxygen  & 6\% agarose + 3.5mg/mL HA (25°C) & 114000   & \cite{McCabe1975}\\
+ \hline
+   Oxygen  & 5\% agarose & 120000   & \cite{Figueiredo2018}\\
+ \hline
+   Oxygen  & Si-HPMC 1\%+HEPES+NaCl & 18000   & \cite{Figueiredo2018}\\
+ \hline
+    Oxygen  & Coll I 0.1\% & 150000   & \cite{Figueiredo2018}\\
+ \hline
+     Oxygen  & agarose 2\% (30°C) & 120000   & \cite{Hulst1987}\\
+     \hline
+\end{tabular}
+\caption{Available data on the diffusion of oxygen in tissues and gels \label{diff_Ox}}   
+\end{center}
+\end{table}
+
+With the exception of specific gels such as the Si-HPMC tested by Figueiredo and collaborators, most value for hydrogels are between 100000 µm$^2$/min and 150000 µm$^2$/min, with temperatures in the range of 25°C-30°C. It is interesting to note that in the work of Hulst, some gels (not in table \ref{diff_Ox}) display a non-monotonous behavior of the diffusion coefficient with respect to concentration.\cite{Hulst1987} It should also be noted that in live tissues case the influence of oxygen consumption may impact the apparent diffusion coefficient as well.\\
+
+There are no measurements of the oxygen diffusion coefficient on the matrix that is used in the experiments. Therefore, no precise value can be given. The choice here is to consider that the coefficient can vary in the range of 100000-200000 \textmu m$^2$/min. The higher bound is due to the fact that the temperature in the model is taken to be 37°C, which has been shown in the data to be associated with significant increases compared to lower temperature value (60 \% in water). The lower bound is acknowledgement that data on the precise gel structure is unavailable and that diffusion may be suboptimal in this polymer construct.\\
+
+It also important to note that contrary to tissue presented in that study, the tumor on chip configuration is not a dense one. Therefore the sparse distribution of cell may mean that the diffusion behavior should logically be closer to that of a gel.
+
+\paragraph{Consumption rate} 
+Cerebral metabolic rate have also been measured for oxygen in brain tissue in both rat and human tissue. Rhodes and collaborators also gave a measured value for CMRO$_2$ which was approximately 0.5 mM/min/cell. (converted from 1.2 mL/100 mL/min and assuming a brain tissue density of 1050 g/L) \cite{Rhodes1983} A more recent set of value was provided by Rodgers on brain tissue with measured value ranging from 0.1 mM/min to 3 mM/min. Measurements by Shalit yielded values of approximately 0.5 mM/min as well.\cite{Shalit1972} In the model the value of 0.5 mM/min will be used. Kirsch and collaborators also noted that  "Calculations made on the basis of known diffusion and solubility coefficients of oxygen plus tumor oxygen uptake indicate that cells over 200 µm from a capillary source are essentially anaerobic" which gives information on the expected behavior.\cite{Kirsch1978}\\
+
+For DIPG cell, in most cases, the oxygen consumption rate is measured in monolayers through the use of the seahorse XF kit.\cite{RomeroAgilent} Value are generally reported in pmol/min/cell. Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 2 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm. In the works of Mbah and Shen, it was reported in a monolayer-like situation as the cells were plated in wells coated in laminin.  Jiang and collaborators also reported on lung cancer cells that oxygen consumption increased in the monolayer situation compared to the spheroid. They showed OCR to be reduced by two thirds in spheroid compared to monolayers.\cite{Jiang2016} The value for OCR is not to be adjusted in this study as it is considered that the contact with the HA/matrigel scaffold produces similar effect to the laminin-coated surfaces used by Shen, Mbah and their collaborators to assess the OCR with the seahorse experiments.\\
+
+The value reported by Shen and collaborators is 4000 pmol/min/$10^6$ cells which corresponds to a consumption of 2 mM/min/cell. This value is reported for HSJD-DIPG-007 cell line cultured as neurospheres.\cite{Shen2019} In the case of Mbah and collaborators, they derived two models from the HSJD-DIPG-007 and SU-DIPG-XIII cell lines: one grown as neurospheres and another cultured as adherent monolayer with serum. The OCR and ECAR were measured in both cases. For HSJD-DIPG-007 the OCR value reported for gliospheres-cultured cells reported is 50 pmol/min/cell. The first thing is to compare this to the value reported by Shen and collaborators which is 0.004 pmol/min/cell. This means that the same experiment on the same cell line yielded results different by 4 orders of magnitude. Other values reported for brain tumor cells by Ruas and collaborators are in the range of 80 pmol/s/$10^6$ cells, which corresponds to 4800 pmol/min/$10^6$ cells measured in suspension on U87 glioma cells. This is much closer to the value of Shen and collaborators. A possible explanation is a conversion error by Mbah and collaborators. If the value reported by Mbah and collaborators is taken not to be 50 pmol/min/cell but 50 pmol/sec/$10^6$ cells then it becomes much closer to the other values. And to further support this point, the results on ECAR are suggested to the same discrepancy and can be corrected in the same way. Now, if the correction is applied to the gliosphere values for HSDJ-DIPG-007 the measured OCR is 50 pmol/s/$10^6$ cells, which corresponds to 3000 pmol/min/$10^6$ cells, and therefore 1.5 mM/min/cell (assuming a 2 pL cell volume). The same operation for SU-DIPG-XIII yields 4.5 mM/min/cell.\\
+
+For the study, it is considered that oxygen consumption can vary between 0.5 and 5 mM/min/cell. This is a broader range than the one found for reported values above. However, it should also be noted that all the reported values were calculated with a constant cell volume of 2 pL. However cell volume for the studied cell line is not precisely known and maybe slightly higher or lower than the previous value.\\
+
+\subsubsection{Modelling glucose dynamics \label{glc}}
+
+\paragraph{Concentration}
+A typical concentration of glucose for off-the-shelf DMEM culture medium is 1 g/L (according to supplier’s website) and this correspond to a 5.5 mM glucose concentration which is the one that willbe used until a measured value is provided. DMEM/F12 mixture have a typically higher glucose concentration of 17.5 mM (3.15 g/L) A concentration of 20 mM are used in the model. 
+
+
+\paragraph{Diffusion}
+For glucose, ideally diffusion values are needed in "dense" tissue and in different matrix type in order to know the range of possible values.\\
+
+Literature review did not provide a glucose diffusion coefficient in human brain tumors. However, a study from 1982 by Li measured a glucose diffusion coefficient of $1.5\cdot 10^{-6}$ cm$^2$/s (9000 \textmu m$^2$/min) for 9L rat brain tumor spheroids.\cite{Li1982} For lack of data closer to the model used in this study, this will be taken as the "packed tissue" value. \\
+
+For the pure matrix value, the results for glucose diffusion in Hyaluronic acid gels in PBS are less straightforward. Indeed, a study from Hadler showed that glucose diffusivity ranged between $0.8\cdot 10^{-5}$ cm$^2$/s and $0.5\cdot 10^{-5}$ cm$^2$/s for concentration of 0.5 \% and 1 \%, but increases to $2.0\cdot 10^{-5}$ cm$^2$/s for concentration of 2.5\%, which is in the range of concentrations used in physiological studies with hydrogels.\cite{Gerecht2007} Therefore, in the model both the normal and enhanced glucose diffusion cases will be treated.\\
+
+To adress the question of the chip not being pure matrix, an estimation of tortuosity can be made. Tortuosity is defined as either the ratio of effective and free diffusion coefficient, the ratio of the square of the previous quantities, the ratio of path length of molecules in the porous medium and in free medium, or the square of that quantity. In their study, Hamad and collaborators asess different models that link tortuosity to porosity.\cite{Hamad2018} With an initial concentration of 10 000 cells per \textmu L in the chip, the porosity ranges between 97\% for the large pellet and 0.90\% for the small one.\\
+
+If the models of Maxwell and Berryman are used, the obtained  are comprised between 1.015 and 1.06. Therefore, it will be considered that cells do not significantly impact the diffusion properties, so the values for glucose diffusion are the matrix values : $0.5\cdot 10^{-5}$ cm$^2$/s (low diffusion case) which corresponds to 30000 \textmu m$^2$/min, and $2.0\cdot 10^{-5}$ cm$^2$/s (enhanced diffusion case) which corresponds to 120000 \textmu m$^2$/min.\\
+
+Cells themselves are still given the lower diffusion value (matrix divided by four to account for tortuosity) so that diffusion is lowered realistically when patch of cells form after multiple division.\\
+
+All the data presented here is summarized in table \ref{diff_glc}.
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{35mm}|p{30mm}|p{7mm}| }
+\hline
+ \textbf{Molecule}  & \textbf{Diffusion medium} & \textbf{Diffusion\ coeff.} \textmu m$^2$/min  & Ref. \\
+ \hline
+ \hline
+ Glucose & Water & 36000  & \cite{Hober1947} \\
+ \hline
+   Glucose & Water 27°C & 42000 & \cite{Suhaimi2016}\\
+  \hline
+   Glucose & Water 37°C & 60000 & \cite{Suhaimi2016}\\
+  \hline
+  Glucose  & EMT6/Ro tissue & 6000  & \cite{Grote1977}\\
+ \hline
+ Glucose  & 0.5\% agarose & 36000  &  \cite{Weng2005}\\
+ \hline
+ Glucose & 2.16 mg /mL(0.21\%) type I \ Coll. gel & 7800  & \cite{Rong2006}\\
+ \hline
+  Glucose  & 0.5-2.5\% agarose/PBS & 36000-48000  & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.5-1\% HA/PBS & 40000-42000 & \cite{Hadler1980}\\
+ \hline
+   Glucose  & 2.5\% HA/PBS & 120000  & \cite{Hadler1980}\\
+ \hline
+    Glucose & Dura Mater (20°C) (Collagen) & 9780 & \cite{Bashkatov2003}\\
+    \hline
+     Glucose & Rat Brain & 8400 & \cite{Pfeuffer2000}\\
+       \hline
+ Glucose & spheroids & 1200-3600 & \cite{Casciari1992}\\
+ \hline    
+  Glucose & spheroids & 1200-3600 & \cite{Casciari1992}\\
+ \hline  
+  Glucose & DMEM 27°C & 30000 & \cite{Suhaimi2016}\\
+  \hline
+   Glucose & DMEM 37°C & 36000 & \cite{Suhaimi2016}\\
+  \hline
+    Glucose & Water 27°C + Coll. & 600000 & \cite{Suhaimi2016}\\
+  \hline
+   Glucose & Water 37°C + Coll. & 660000 & \cite{Suhaimi2016}\\
+  \hline
+   Glucose & DMEM 27°C + Coll. & 220000 & \cite{Suhaimi2016}\\
+  \hline
+   Glucose & DMEM 37°C + Coll. & 220000 & \cite{Suhaimi2016}\\
+  \hline
+    \end{tabular}
+\caption{Available data on the diffusion of glucose in tissues and gels \label{diff_glc}}   
+\end{center}
+\end{table}
+
+\paragraph{Consumption rates}
+Similar to glucose diffusion, no direct glucose consumption measurelents have been performed on in vitro cultures of SU-DIPG-XIII cells. However, measurements have been performed on glioma and glioblastoma cell lines such as GBM39, U251 and A549 cells. In order to progress further, these values will be presented and used in this study.\\
+
+Measurements were usually performed with glucose consumption assay kits and performed on standard 96-well or 6-well plate by plating a density of cells ranging from 10000 to 40000 cells per well. No specific laminin coating are reported and the consumption is generally evaluated by measuring the concentration of glucose after a giving time period (12-24hrs). For all given values, the cells potentially dividing during that period are not accounted for which may make the value slightly overestimated since they are calculated with the initial cell density.\cite{Mai2017}\cite{Shankland2002}\cite{LiuFM2021}\\
+
+Measurements performed by Mai and collaborators on the GBM39 cell line yielded a consumption of 0.006 nmol/cell/12hr which in this study's model translate into 4.15 mM/min assuming a cell volume of 2 pL.\cite{Mai2017} Shankland and collaborators reported a glucose consumption of approximately 1 mM over 200 mn for 70 million A549 cells, which translates into 3.8 mM/min following the same conversion as before. Liu and collaborators reported a consumption of 1 mg/mL over 24 hours in U251 (wt) cells, which translates a value of 8.5 mM/min.\cite{Liu2021}\\
+
+Following the same idea as for the oxygen consumption, the actual consumption of cells can vary of an order of magnitude. For glucose, cellular consumption rates thus ranges between 1 and 10 mM/min .
+
+\subsection{Cell behavior modelling}
+This subsection presents the discrete/agent-based part of the model. This model concerns itself specifically with the biophysical variables that are the proliferation rate/cell cycle length and the nutirent consumption.  The rules and interactions encoded are derived from experimental observations and results that are presented in the following subsections. 
+
+\subsubsection{Hill function for cell consumption}
+The cellular consumption rates discussed in sections \ref{glc} and \ref{ox} are in fact the maximum value measured for nourished cells in "normal conditions". This value can thus vary with nutrient availability and other factors.\\ 
+
+In order to account for the fact that cells cannot consume nutrients that are not there and, to a degree, the molecular reality of the processes, The consumption term is taken to be in the form of a Hill function of the nutrient concentration : 
+
+\[ k_C(\overrightarrow{r},t) = \frac{[C]^n}{[C]^n + [C]^n_{0}}k_{max}  \]
+
+This function has been used in previous studies to model oxygen consumption. \cite{Mao2018}\cite{Kempf2015}\cite{Jagiella2016}. The $k_{max}$ is the maximum consumption value. The $[C]^n_{0}$ is the concentration value for which the consumption is half of the maximum value. The $n$  exponent is a value that changes the behavior of the function from heaviside function (low $n$) to a sigmoid function (high $n$).\\
+
+with $n$ equal to 1, the general behavior of the function is a consumption that decreases slowly until the concentration reaches $[C]^n_{0}$. Below that point, it starts decreasing sharply until it reaches 0.
+
+\paragraph{Hill parameters for oxygen} As in the models cite previously, the value for $n$ is taken to be 1 in the model. The value for $[C]_{0}$ was taken to be 0.00133 mM by Mao and collaborators and 0.031 mM by Jagiella and collaborators.\cite{Mao2018}\cite{Jagiella2016} The 0.03 mM will be chosen as it was fitted to experimental data rather assumed.\\
+
+It is important to note however, that the molecular origin of this behavior is not diffusion-related limitation. As explained by Lee and collaborators in their review, molecular studies on the electron transport chain (ETC) have shown that the expression of hypoxia-inducible factors along with other regulatory mechanisms linked to hypoxia lead to a reduced cellular oxygen consumption at a partial pressure of 2-3 \% in most cell types. That value is higher than the actual "chemical" limit which closer to 0.3\%.\cite{Lee2020} 
+
+\paragraph{Hill parameters for glucose}For glucose, $[C]_{0}$ has been set to 0.1 mM by both Jagiella and Mao and their collaborators in their modelling studies on spheroids.\cite{Mao2018}\cite{Jagiella2016} In both cases, these values were fitted to experimental data. This is the value that is also used in the current study.
+ 
+
+\subsubsection{Response to nutrient starvation}
+In the previous part, the Hill functions were shown to lower consumption  after a certain threshold in nutrient concentration is reached. However, both oxygen and glucose are known to have other adverse effects, the most obvious being potential cell death. In this part, the effects included in the model are presented.
+
+ 
+\paragraph{Oxygen: Hypoxia-induced increase in glycolytic rate} 
+The results of Waker and collaborators show that the glycolytic rate in SU-DIPG-XIII increased from $\approx$ 120 pmoles/min to $\approx$ 240 pmoles/min when hypoxia-mimetics are used through 100 \textmu M of CoCl$_2$. While it is not explicitly stated in the document, it can be assumed that the 100 \textmu M concentration of of CoCl$_2$ should correspond to an oxygen level of 2 \%.\\ %It is also intersting to note that the glycolytic rate before the addition of glucose are quite close, suggesting that very little acidification comes from mitochondrial metabolism or other sources, notably when compared to the SU-DIPG-IV cell line.\\
+
+The increased consumption is included in a straight forward fashion : When oxygen concentration falls below 0.015 mM (2\%), the value of $k_{max,glu}$ is multiplied by 2. It is interesting to note that the consumption of oxygen starts decreasing at 0.03 mM which is above the level where the shift in glycolysis occurs.\\
+
+It is interesting to discuss the mechanism behind the increase. The most straightforward explanation is that since the electron transport chain generate less ATP when oxygen becomes scarce, the needed ATP is provided by glycolysis, which has a significantly lower glucose/ATP ratio than complete oxidative phosporylation. It should also be noted that while than the completion of a cell cycle consumes roughly the same amount of energy in every cell, the time it takes for the cell to gather this energy can vary depending on how fast ATP can be synthesized and made available. The interplay between the rate of glycolysis, proliferation rate, and hypoxia is non trivial and difficult to untangle. \\
+
+First of all, proliferative cancer cells already rely significantly more on glycolysis than healthy cells.\cite{Shen2020}\cite{Ruas2018}\cite{Berg2006} Said glycolysis is upregulated further if the available oxygen decreases in order to maintain the ATP level.\cite{Kierans2020} In many cell lines, including SU-DIPG-XIII, this upregulation of glycolysis is correlated to a decrease in the proliferation rate. There may be various explanation for that decrease and detailed description of the underlying molecular mechanisms is beyond the scope of this study.\\
+
+\paragraph{Glucose: Starvation-induced cell death}
+In this model, the only mechanism for cell death is chosen to be glucose starvation. The authors know that several other mechanism can result in loss of viability. Here, for the sake of simplicity, it is considered that the only mechanism leading to cell death is glucose starvation. More specifically it is considered that only necrosis is possible. Said necrosis occurs is glucose falls below a threshold value.\\
+
+The geometry, and relationship between different physical constants linked to nutrient availability leads to the following fact: it is almost impossible to create a situation where oxygen is present in abundance and glucose falls to zero. Especially for the studied cell line, glucose concentration only gets lower (due to increased consumption) in areas where oxygen is already scarce. This means that cells exposed to reduced glucose availability quickly loose ATP production capacity without any means of replenishing ATP. Accounting for results from various studies on healthy and cancer cells on the subject,\cite{Lieberthal1998}\cite{Why1999}\cite{Yee2021}  the threshold concentration is set at 10\% of the external value (2 mM).\\
+
+The impact of such a straightforward mechanism seems obvious in that it should result in a necrotic core, whose size depends on the level of the threshold. More sophisticated implementation of cell death will be considered in subsequent studies.\\
+
+\subsubsection{Cell cycle length}
+In this model, cell cycle main importance is the timing of divisions. It is especially important because its length depends on the oxygen concentration surrounding the cell. As shown in the data of Waker, and collaborators the cell cycle of hypoxic cells arrests in G1 phase.\cite{Waker2018} In the study of He and collaborators, at 5 \% the doubling time is reported to be 6.6 days on the same cell line.\cite{He2021} This seems coherent as the 5 \% value can be seen as an intermediate between hypoxia and the ambient oxygen level of 20 \%.\\
+
+In order to link the oxygen concentration to the proliferation rate/doubling time in continuous manner, an 1D-interpolation was performed  with the three previous data points. It should be noted that below 2 \% the doubling time is constant and of the order of 40 days which is equivalent to stopped growth in the model since the calculation are run for 5 maximum of 5 days.\\
+
+Once again, in all fairness, the impact of glucose on doubling time should also be determined. But such data is not available on SU-DIPG-XIII. Moreover, the physical configuration of the model means that an area where oxygen would be plenty and glucose depleted cannot exist in the model. Therefore, so far only oxygen can impact the doubling time in the model. It also noted that doubling time is quantity linked to a whole culture which may occult important variability in the cell cycle length, which is a property of the individual cell. In the model, though, the doubling time will be equated to the cell cycle length, which is identical for all cell placed in the same nutritive conditions.
+
+
+\section{Results}
+In this section, the results from the simulations are presented. Rather than a parametric sweep, results are to be presented for two specific configurations. The range of the different relevant parameters are summarized in table \ref{params}.\\
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{20mm}|p{45mm}| }
+\hline 
+\textbf{Parameter} & \textbf{Value}\\
+\hline
+\hline
+$[G]_{ext}$ & 20 mM \\
+\hline
+$[O]_{ext}$ & 0.150 mM\\
+\hline
+$D_{G}$ & 30000-120000 µm$^2$/min \\
+\hline
+$D_{O_2}$ & 100000-200000 µm$^2$/min \\
+\hline
+$k_{G,max}$ & 1 - 20 mM/min/cell \\
+\hline
+$k_{O,max}$ & 0.5 - 5 mM/min/cell \\
+\hline
+$[G]_{0}$ & 0.1 mM\\
+\hline
+$[O]_{0}$ & 0.03 mM\\
+\hline
+$[G]_{nec}$ & 10 mM\\
+\hline
+$[O]_{hypox}$ & 0.0375 mM\\
+\hline 
+$t_{cycle}$ & 2.8 - 40 days\\
+\hline
+$N_{cell,init}$ & 1885\\
+\hline
+$t_{end}$ & 5 days\\
+\hline
+$d_{pellet}$ & 4500 - 8000 µm\\
+\hline
+\end{tabular}
+\caption{Simulation parameters and associated range and values \label{params}}   
+\end{center}
+\end{table}
+In the next sections presenting the results of specific configurations, only the nutritive and other relevant parameters will be reminded.
+
+\newpage
+\subsection{Configuration 1: The dense, nutrient-deprived configuration}
+In the first studied configuration, parameters (shown in table \ref{params1}) are set to values that aim to minimise the availability of nutrients at the center of the chip. In order to ensure that, the pellet is taken to be small to maximise cell density, cell nutrient consumptions are taken to be in the higher range and diffusion is taken to be in the lower ranges in order to minimise diffusive transport away from the rim.
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{20mm}|p{45mm}| }
+\hline 
+\textbf{Parameter} & \textbf{Value}\\
+\hline
+\hline
+$D_{G,matrix}$ & 40000 µm$^2$/min \\
+\hline
+$D_{O_2,matrix}$ & 120000 µm$^2$/min \\
+\hline
+$D_{G,tissue}$ & 8000 µm$^2$/min \\
+\hline
+$D_{O_2,tissue}$ & 100000 µm$^2$/min \\
+\hline
+$k_{G,max}$ & 10 - 20 mM/min/cell \\
+\hline
+$k_{O,max}$ & 5 mM/min/cell \\
+\hline
+$d_{pellet}$ & 4500 µm\\
+\hline
+\end{tabular}
+\caption{Simulation parameters for the first configuration \label{params1}}   
+\end{center}
+\end{table} 
+
+\subsubsection{Cell population}
+The first variable studied is the cell population in both number and spatial repartition. After 5 days, the cell population went from 1885 to 2121 (12.6\% increase) in the modelled layer. \\
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.8]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_tAg.pdf}
+\caption{number of cells vs time in configuration 1\label{cells_t}}
+\end{center}
+\end{figure}
+
+As can be seen in figure \ref{cells_t}, the cell population starts a significant increase after 24 hours. Looking at the spatial distribution  after 5 days in figure \ref{cellsA}, what can be seen is that the proliferative layer is less than 300 µm-thick.\\  
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.55]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_A2g.pdf}
+	\caption{ \label{cellsA2}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.55]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_A120g.pdf}
+		\caption{ \label{cellA120}}
+	\end{subfigure}
+	\caption{a) map of cells in the model at 2 hours b) same at 120 hours.\label{cellsA}}
+	\end{figure}
+	
+It should also be noted that 666 cells at the center are marked as dead because of nutrient deprivation which will be detailed in the next subsection.
+
+\subsubsection{Nutrients}
+In this part, the spatial and temporal evolutions of nutrient distribution are studied for both oxygen and glucose.
+	
+\paragraph{Oxygen}
+As can be seen in figure \ref{O_A}, the oxygen gradient is of a thickness comparable to that of the proliferative rim. Over the 5 days of growth, the hypoxic zone moves 50 µm towards the rim due to the increased cell density. \\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_A120g.pdf}
+	\caption{ \label{O_A120}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.4\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_line_Ag.pdf}
+		\caption{ \label{O_line_A}}
+	\end{subfigure}
+	\caption{a) Map of oxygen concentration after 120 hours b) concentration on the midline at 2 hours and 120 hours.\label{O_A}}
+	\end{figure}	
+
+
+\paragraph{Glucose}
+As can be seen in figure \ref{G_A}, the glucose gradient is approximately 1000 µm wide. It is interesting to note that even at 120 hours, the final concentration at the center is above 0 mM. The difference between beginning and end is less marked than in the case of oxygen. It can be said, however, that if the external concentration was 5 mM as is possible in some medium formulations then the center would likely be completely depleted.\\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_A120g.pdf}
+	\caption{ \label{G_A120}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.4\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_line_Ag.pdf}
+		\caption{ \label{G_line_A}}
+	\end{subfigure}
+	\caption{a) Map of glucose concentration after 120 hours b) concentration on the midline at 2 hours and 120 hours.\label{G_A}}
+	\end{figure}	
+
+\newpage
+\subsection{Configuration 2: The sparse, nutrient-rich configuration}	
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{20mm}|p{45mm}| }
+\hline 
+\textbf{Parameter} & \textbf{Value}\\
+\hline
+\hline
+$D_{G,matrix}$ & 120000 µm$^2$/min \\
+\hline
+$D_{O_2,matrix}$ & 100000 µm$^2$/min \\
+\hline
+$D_{G,tissue}$ & 30000 µm$^2$/min \\
+\hline
+$D_{O_2,tissue}$ & 200000 µm$^2$/min \\
+\hline
+$k_{G,max}$ & 1 - 2 mM/min/cell \\
+\hline
+$k_{O,max}$ & 0.5 mM/min/cell \\
+\hline
+$d_{pellet}$ & 8000 µm\\
+\hline
+\end{tabular}
+\caption{Simulation parameters for the second configuration \label{params2}}   
+\end{center}
+\end{table} 
+
+
+The second configuration parameters, shown in table \ref{params2}, are set to ensure maximal availability of all nutrients for sparse distribution of cells. The aim is to test a configuration with maximum growth.\\
+
+\subsubsection{Cell population}
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.8]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_tBg.pdf}
+\caption{Number of cells vs time in configuration 2\label{cells_tB}}
+\end{center}
+\end{figure}
+
+As can be seen in figure \ref{cells_tB}, the increase in cell number is  more significant (54\%) than in the previous configuration (12\%). Other than the steeper increase, there is no noticeable difference in trend.\\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.55]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_B2g.pdf}
+	\caption{ \label{cellsB2}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[scale=0.55]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_B120g.pdf}
+		\caption{ \label{cellB120}}
+	\end{subfigure}
+	\caption{a) Map of cells in the model at 2 hours b) same at 120 hours.\label{cellsB}}
+	\end{figure}
+
+In figure \ref{cellsB}, it can be seen that the proliferative rim is larger than in the previous configuration as expected. its width is close to 1 mm after 5 days of growth. It can also be noted that the cell density decreases with radial distance. This could be expected due to the continuously varying cell cycle length.\\
+
+\subsubsection{Nutrients}
+
+\paragraph{Oxygen}
+As can be seen in figure \ref{O_B}, the oxygen gradient is 1.5 mm-thick. The difference between day 0 and day 5 is also more pronounced than in the previous configuration, with the hypoxia limit shifting almost 500 µm towards the rim during that timespan. \\ 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_B120g.pdf}
+	\caption{ \label{O_B120}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.4\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_line_Bg.pdf}
+		\caption{ \label{O_line_B}}
+	\end{subfigure}
+	\caption{a) map of oxygen concentration after 120hr b) concentration on the midline at 2hr and 120hr.\label{O_B}}
+	\end{figure}
+		
+\paragraph{Glucose}
+As expected, due to the lower glucose consumption, The glucose level at the center falls by 10\%. The global availability of glucose means that no cell death is to be expected in that specific case.\\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_B120g.pdf}
+	\caption{ \label{G_B120}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.4\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_line_Bg.pdf}
+		\caption{ \label{G_line_B}}
+	\end{subfigure}
+	\caption{a) map of glucose concentration after 120hr b) concentration on the midline at 2hr and 120hr.\label{G_B}}
+	\end{figure}
+	
+
+\subsection{Configuration 3: The dense, oxygen-rich configuration}
+The previous results illustrated how the modelled cell-behavior and its subsequent population characteristics are primarily determined by the availability of oxygen. It is therefore interesting to explore configurations where the oxygen availability is maximised while glucose availability is minimised. The configuration with a small pellet, high oxygen availability and low glucose availability is thus explored. The relevant parameters for this configuration are shown in table \ref{params3}
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{20mm}|p{45mm}| }
+\hline 
+\textbf{Parameter} & \textbf{Value}\\
+\hline
+\hline
+$D_{G,matrix}$ & 40000 µm$^2$/min \\
+\hline
+$D_{O_2,matrix}$ & 100000 µm$^2$/min \\
+\hline
+$D_{G,tissue}$ & 8000 µm$^2$/min \\
+\hline
+$D_{O_2,tissue}$ & 200000 µm$^2$/min \\
+\hline
+$k_{G,max}$ & 10 - 20 mM/min/cell \\
+\hline
+$k_{O,max}$ & 0.5 mM/min/cell \\
+\hline
+$d_{pellet}$ & 4500 µm\\
+\hline
+\end{tabular}
+\caption{Simulation parameters for the third configuration \label{params3}}   
+\end{center}
+\end{table} 
+
+\subsubsection{Cell population}
+
+As shown in figure \ref{cells_tC} the 52\% population increase is similar to the second configuration where both oxygen and glucose availabities were maximised and the increase was 54\%. Meaning that when varied in the aforementioned ranges, both size and glucose availability are less important factors determining the extent of population growth than oxygen availability. There are 465 cells in the center that experienced a glucose concentration below the "housekeeping limit" of 2 mM and were therefore marked as dead.
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.8]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_tCg.pdf}
+\caption{Number of cells vs time in configuration 3\label{cells_tC}}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.55]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_C2g.pdf}
+	\caption{ \label{cellsC2}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.5\textwidth}
+	\includegraphics[scale=0.55]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_C120g.pdf}
+		\caption{ \label{cellC120}}
+	\end{subfigure}
+	\caption{a) Map of cells in the model at 2 hours b) same at 120 hours.\label{cellsC}}
+	\end{figure}
+
+In figure \ref{cellsC}, what can be seen is a noticeable gradient in cell density. The gradient thickness is 650 µm and qualitatively also similar to the one observed in figure \ref{cellsB}. 
+
+\subsubsection{Nutrients}
+As shown in figure \ref{O_C}, the minimum oxygen concentration is 0.025 mM. The hypoxia limit is close to 650 µm depth from the rim, which correlates with the observed proliferative zone.  It is important to note that the proliferative rim limit should in fact be a little further. Indeed, complete growth arrest is not encoded to occur at 5 \% but at 1\%. However, at the concentrations encountered at the center, the cell cycle duration is over 6 days, meaning that on average proliferation is not observed in all the space where nutrient concentrations make it possible.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_C120g.pdf}
+	\caption{ \label{O_C120}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.4\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_line_Cg.pdf}
+		\caption{ \label{O_line_C}}
+	\end{subfigure}
+	\caption{a) Map of oxygen concentration after 120 hours b) concentration on the midline at 2 hours and 120 hours.\label{O_C}}
+	\end{figure}	
+	
+	\begin{figure}[ht!]
+	\begin{subfigure}{0.5\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_C120g.pdf}
+	\caption{ \label{G_C120}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.4\textwidth}
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_line_Cg.pdf}
+		\caption{ \label{G_line_C}}
+	\end{subfigure}
+	\caption{a) Map of glucose concentration after 120 hours b) concentration on the midline at 2 hours and 120 hours.\label{G_C}}
+	\end{figure}	
+
+In that configuration, hypoxia still plays a significant role despite the increased availability. It also confirms what could be expected from the model structure: hypoxia is the only variable that counts, but can already results in certain variability depending on the physical parameters of the model that are diffusion and consumption. 
+
+\newpage
+\section{Discussion \& Perspectives}	
+The impact of nutrient availability has been assessed quantitatively with two "extreme" configurations. Showing the quantitative impact of oxygen a growth-controlling variable. The first obvious caveat is that glucose does not impact the cell cycle duration in that model, while it has been shown to impact proliferation in some cell lines.\cite{Han2011} The rationale behind this is that in the event of glucose scarcity, oxygen is most likely going to be scarce as well. Configuration 3 demonstrates that, with the parameters found in the literature, a situation where glucose becomes to growth limiting  factor in this geometry is unlikely. There would be a quantitative difference due to the presence of the two "cell cycle-arresting" factors but the model would need to run for more than 5 days for a complete assessment of the matter.\\
+
+One of the aspects that could have been pushed further is the modelling of necrosis. At this point, only nutrient starvation has been considered as a possible cause for cell death but there are in fact several other factors that can impact viability especially in that configuration. For example, the accumulation of lactate and its potential impact on extracellular pH can be a factor. There may also be other factors such as ROS or other biochemical consequences of prolonged hypoxia possibly reducing viability at the center.\\
+
+While the two last points were concerned with aspects linking metabolism and viability/proliferation, another next step is obviously to model other phenomenon such as the inclusion of drugs or exposition radiation. The most straightforward option is radiation as the different effect will likely be easier to implement, as the molecular detail of drug action can be more difficult to capture with this simplified model.\\
+
+Another aspect that has been neglected is the migration which should occur for cells in matrix. This has the potential to slightly decouple cell fate from position depending on how it is implemented and is therefore an interesting aspect for potential further studies.
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio_synthese}
+\end{document}

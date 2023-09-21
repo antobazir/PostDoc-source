@@ -1,0 +1,173 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Introduction}
+%Importance of cancer metabolism 
+Cancer metabolism has been a vivid area of study for decaces now. The altered metabolism of cancer cells is important in understanding both how cancer cells can be so resilient and what are the potential therapies that may take advantage of this.\\
+
+%The use of modelling in general and agent-based model
+Modelling of cancer cell growth and tissue has become a dynamic field of study in biophysics. The multiple scales at play makes the study of the relation between metabolism and growth very interesting but also a complex question to tackle. Indeed, the uptake of metabolites is a function of both the environment but also regulatory networks that are themselves influenced by other external factors. For this reason, a complete model metabolism would require complete knowledge of the related regulatory network, of their interaction with their environment, full integration of said network for each cell and within a dynamic environment, and a deep physical knowledge of said environment. Modelling studies thus general focus on one aspect specifically.\\
+
+%intracellular scale
+At the intracellular scale, a frequently used tool for the study of growth and metabolism is "Flux Balance Analysis" (FBA). These models explicitly represent the entire biochemical network starting from the exogenous metabolites and by balancing chemical fluxes between all species in order to derive the fluxes of biomass or any final/intermediate metabolite such as glutamate, succinate or pyruvate.\cite{Orth2010} This type of model has been used in several studies on metabolism and have allowed to match experimental data for some cell types and metabolites but not all.\cite{Ng2022}\cite{Damiani2017}\cite{Shan2018} Limitations of these models include the inability to predict a concentration at given time, difficulties in accounting for regulatory effects and the difficulty to translate this dynamically to the tissue scale due to the extensive size of the represented the network.\\
+
+%cell and tissue scale
+For tissue level representation, either continuous or discrete agent-based or cell-based models will be preferred. Continuous models will represent the cell population or populations as a set of density functions whose evolutions is ruled by an equation which may or may not couple them to other environment variables and between themselves. Agent-based or cell-based model represent each cell individually with specific rules encoded for the evolution and interactions of each agent.\\
+
+%limitations of present studies
+Agent-based models have already been used in various ways and refined to high levels to account for a variety of effect. In those case the model is almost invariably fed directly or designed with heavy reliance on quantitative data on the modelled cell type. The variety of existing metabolic  behaviors and responses means it is difficult to use the results and conclusions on one cell type to model another as the genetic and molecular differences may result in quantitative AND qualitative difference even between cell line that could be considered as close\cite{Waker2018}\cite{Griguer2005}. FBA-based model do not entirely circumvent since they generally do not include regulatory effects.\\
+
+%goal of our study
+The goal of this study is to mix the most interesting aspect of FBA and ABM. The diffusion and consumption of glucose and oxygen in various types of tissues will be studied in order to derive their concentration, not in very precise fashion but more in regimes determined by the balance of diffusion and cellular consumption. From then on, a range of possible response to the different environmental changes will be described in an abstract fashion by focussing on a small number of variables and not trying to untangle the underlying biochemical and regulatory effects at play but looking strictly at the consequences. The final goal being to identify growth "signature" associated with certain behaviors.
+
+\section{Hypotheses \& Modelling choices}
+\subsection{The surrounding environment}
+Before discussing cells and their behavior, it is important to describe the environment and configuration of the models intended in this work. The first "branching point" is the geometry. Drawing inspiration from a previous study the tumor-on-chip will be studied along with a spheroid type model. The main difference between the two will be the tissue structure, which will in turn impact diffusion of glucose in the system. The most obvious consequence of the more packed configuration of the sphere model is the increased tortuosity, but the nature of the matrix can also significantly impact diffusion as will be discussed further.
+
+\subsection{Oxygen and glucose concentration}
+The most straightforward concentrations are the glucose and oxygen concentrations. A typical concentration of glucose for off-the-shelf DMEM culture medium is 1 g/L (according to supplier's website) and this correspond to a 5 mM glucose concentration which is the one we will use until a measured value is provided. For oxygen, the system will be imaged and maintained at 20\% oxygen which corresponds to a concentration of 150 mmHg which can be considered roughly equivalent to a concentration of 0.15 mM according to the conversion performed earlier in the comparative study on oxygen. 
+
+It should be noted that these concentrations, especially that of oxygen, see their relevance question has they are notably higher than those estimated in tissues.\cite{McKeown2014} The scope of this study is to focus on the potential reponse of two in \textit{vitro} models that are spheroids and the tumor-on-chip system, and in both case the concentration are set at the "usual" values.
+
+\subsubsection{Modelling Oxygen diffusion and consumption}
+Oxygen dynamics within the chip are modelled with the reaction-diffusion equation :
+
+\[ \frac{\partial [C](x,y,t)}{\partial t} = \overrightarrow{\nabla}(D_C(x,y)) \cdot \overrightarrow{\nabla}( [C](x,y,t)) + D_C(x,y,t) \nabla^2 [C](x,y,t) -k_C(x,y,t) \] 
+
+The first diffusion term of the equation is taken as zero in the case of oxygen. Indeed, since the concentration outside the pellet is kept constant, the only diffusion that matters is that within the pellet where the diffusion coefficient is considered constant. 
+
+%\begin{table}[t]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{18mm}|p{35mm}|p{25mm}|p{15mm}|p{10mm}| }
+ \hline
+
+ \textbf{Molecule} & \textbf{Mol. wght}(kDa) & \textbf{Diffusion medium} & \textbf{Diffusion coeff.} \textmu m$^2$/min & Tortuosity & Ref. \\
+ \hline
+  \hline
+      Oxygen & 0.03 & water & 1200000 & N.D & \cite{Hober1947}\\
+ \hline
+    Oxygen & 0.03 & 6\% agarose & 1200000 & N.D & \cite{McCabe1975}\\
+ \hline
+   Oxygen & 0.03 & 5\% agarose & 1200000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+      Oxygen & 0.03 & 6\% agarose 0.3\% hyaluronate & 1140000 & N.D & \cite{McCabe1975}\\
+ \hline
+   Oxygen & 0.03 & Si-HPMC 1\%+HEPES+NaCl & 180000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+    Oxygen & 0.03 & Coll I 0.1\% & 1500000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+     Oxygen & 0.03 & agarose 2\% & 1200000 & N.D & \cite{Hulst1987}\\
+ \hline
+      Oxygen & 0.03 & HCT116 & 1200000 & N.D & \cite{Mao2018}\\
+\hline
+    Oxygen & 0.03 & Si-HPMC 1\%+HEPES+NaCl & 180000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+
+\end{tabular}
+%\caption{Available data on the diffusion of growth factors, glucose, and other large molecules in tissues and gels}   
+\end{center}
+
+The value of diffusion coefficient of oxygen in tissue is taken to be 120000 \textmu m$^2$/min in tissue, which is close to the value used in previous modelling studies on spheroids\cite{Mao2018}\cite{Kempf2015} and close to value measured on agarose gels.\cite{McCabe1975}\cite{Figueiredo2018}.
+
+The consumption term is taken to be in the form of a Hill function of the oxygen concentration : 
+
+\[ k_C(x,y,t) = \frac{[C]^n}{[C]^n + [C]^n_{0}}k_{max}  \]
+
+This function has been used in previous studies to model oxygen consumption. \cite{Mao2018}\cite{Kempf2015}\cite{Jagiella2016}. The $k_{max}$ is the maximum consumption value. The $[C]^n_{0}$ is the concentration value for which the consumption is half of the maximum value. The $n$  exponent is a value that changes the behavior of the function from heaviside function (low $n$) to a sigmoid function (high $n$). As in the models taken for reference, the value for $n$ will be 1 in the model. The value for $[C]^n_{0}$ was taken to be 0.00133 mM by Mao and collaborators and 0.031 mM by Jagiella and collaborators.\cite{Mao2018}\cite{Jagiella2016} The 0.03 mM will be chosen as it was fitted to experimental data rather assumed.% The $k_{max}$ value will be taken to be 4.5 mM/min as explained in the previous section. 
+For $k_{max}$, a range of values must be considered.
+
+Cerebral metabolic rate have also been measured for oxygen in brain tissue in both rat and human tissue. Rhodes and collaborators also gave a measured value for CMRO$_2$ which was approximately 0.5 mM/min. (converted from 1.2 mL/100 mL/min and assuming a brain tissue density of 1050 g/L) \cite{Rhodes1983} A more recent set of value was provided by Rodgers on brain tissue with measured value ranging from 0.1 mM/min to 3 mM/min. Measurements by Shalit yielded values of approximately 0.5 mM/min as well.\cite{Shalit1972} In the model the value of 0.5 mM/min will be used. Kirsch and collaborators also noted that  "Calculations made on the basis of known diffusion and solubility coefficients of oxygen plus tumor oxygen uptake indicate that cells over 200 µm from a capillary source are essentially anaerobic" which gives information on the expected behavior \cite{Kirsch1978}
+
+Reported OCR value for DIPG in neurospheres are approxiamtely of 0.003 pmol/min/cell.\cite{Shen2019}\cite{Ruas2018} Conversion from pmol/cell to mM requires knowledge of the cell volume. a cell volume of 3 pL is postulated (after observation of the picture given by L.), corresponding roughly to a cell diamter of 15 µm which translates into 1.6 mM/min for oxygen consumption. (a value of 50 pmol/min/cell has been reported by \cite{Mbah2022}) In the case of Mbah and Shen it was reported in  a monolayer-like situation as the cells were plated in wells coated in laminin. while Ruas measured the consumption in suspension, and is the only one not using DIPG.
+
+
+\subsubsection{Glucose diffusion}%complete with other matrix types
+
+%\begin{table}[t]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{18mm}|p{35mm}|p{25mm}|p{15mm}|p{10mm}| }
+ \hline
+
+ \textbf{Molecule} & \textbf{Mol. wght}(kDa) & \textbf{Diffusion medium} & \textbf{Diffusion coeff.} \textmu m$^2$/min & Tortuosity & Ref. \\
+ \hline
+
+ Glucose & 0.18 & Water & 360000 & & \cite{Weng2005}\\
+ \hline
+ Glucose & 0.18 & 0.5\% agarose & 360000 & & \cite{Hober1947}\\
+ \hline
+ Glucose & 0.18 & HCT116 tissue & 1200 & N.D & \cite{Mao2018}\\
+ \hline
+ Glucose & 0.18 & EMT6/Ro tissue & 6000 & N.D & \cite{Grote1977}\\
+ \hline
+ Glucose & 0.18 & 2.16 mg /mL(0.21\%) type I \ Coll. gel & 7800 & N.D & \cite{Rong2006}\\
+ \hline
+  Glucose & 0.18 & 0.5-2.5\% agarose/PBS & 36000-48000 & N.D & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.18 & 0.5-1\% HA/PBS & 40000-42000 & N.D & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.18 & 2.5\% HA/PBS & 120000 & N.D & \cite{Hadler1980}\\
+ \hline
+\end{tabular}
+%\caption{Available data on the diffusion of growth factors, glucose, and other large molecules in tissues and gels}   
+\end{center}
+This means that values for parameters of diffusion and the consumption are needed in order to perform the simulations. As for oxygen, the glucose outside the pellet is considered to be constant in time and space. Therefore, the only diffusion coefficient needed is that of glucose in matrix and tissue. Indeed, the concentration of cells is important but they are not as tightly packed as they would be in a spheroid. It seems sensible to assume that the effective diffusion coefficient for glucose in that configuration will be lower than that of a pure Hyaluronic acid/matrigel gel and higher than that of a densely packed tissue made of cells and the same matrix.
+
+
+Literature review did not provide a glucose diffusion value human brain tumors. However, a study from 1982  by Li measured a glucose diffusion coefficient of $1.5\cdot 10^{-6}$ cm$^2$/s (9000 \textmu m$^2$/min) for 9L rat brain tumor spheroids.\cite{Li1982} For lack of data closer to the model used in this study, this will be taken as the "packed tissue" value. 
+
+For the pure matrix value, the results for glucose diffusion in Hyaluronic acid gels in PBS are less straightforward. Indeed, a study from Hadler showed that glucose diffusivity ranged between $0.8\cdot 10^{-5}$ cm$^2$/s and $0.5\cdot 10^{-5}$ cm$^2$/s for concentration of 0.5 \% and 1 \%, but increases to $2.0\cdot 10^{-5}$ cm$^2$/s for concentration of 2.5\%, which is in the range of concentrations used in physiological studies with hydrogels.\cite{Gerecht2007} Therefore, in the model both the normal and enhanced glucose diffusion cases will be treated.
+
+To adress the question of chip not being pure matrix, an estimation of tortuosity can be made. Tortuosity is defined as either the ratio of effective and free diffusion coefficient, the ratio of the square of the previous quantities, the ratio of path length of molecules in the porous medium and in free medium, or the square of that quantity. In their study, Hamad and collaborators asess different models that link tortuosity to porosity.\cite{Hamad2018} With an initial concentration of 10 000 cells per \textmu L in the chip, the porosity ranges between 97\% for the large pellet and 0.90\% 
+
+If the models of Maxwell and Berryman are used, the obtained  are comprised between 1.015 and 1.06. Therefore, it will be considered that cells do not significantly impact the diffusion properties, so the values for glucose diffusion are the matrix values : $0.5\cdot 10^{-5}$ cm$^2$/s (low diffusion case) which corresponds to 30000 \textmu m$^2$/min, and $2.0\cdot 10^{-5}$ cm$^2$/s (enhanced diffusion case) which corresponds to 120000 \textmu m$^2$/min.
+%0.97 (8 mm)
+%0.896 (4.5mm) 
+
+\subsubsection{Glucose consumption}%complete with other cell types
+As for the oxygen the parameters of the Hill function for glucose need to be determined. 
+
+The Hill function exponent is taken as unity similar to oxygen. No clear measurements in a low glucose environment performed on the SU-DIPG-XIII of HSJD-DIPG-0013 cell line have been found in the literature. The hypothesis is made that consumption drops to 50 \% when glucose level falls below 1 mM.
+
+Similar to glucose diffusion, no direct glucose consumption measured have been performed on in vitro cultures of SU-DIPG-XIII or HSJD-DIPG-0013 cells. 
+However, measurements have been performed on glioma and glioblastoma cell lines such as GBM39, U251 and A549 cells. In order to progress further these values will be presented and used in this study.
+
+Measurements were usually performed with glucose consumption assay kits and performed on standard 96-well or 6 well plate by plating a density of cells ranging from 10000 to 40000 cells per well. No specific laminin coating are reported and the consumption is generally evaluated by measuring the concentration of glucose after a giving time period (12-24hrs). For all given values, the cells potentially dividing during that period are not accounted for which may make  the value slightly overestimated since they are calculated with the initial cell density.\cite{Mai2017}\cite{Shankland2002}\cite{LiuFM2021}
+
+Measurements performed by Mai and collaborators on the GBM39 cell line yielded a consumption of 0.006 nmol/cell/12hr which in this study's model translate into 4.15 mM/min assuming a cell volume of 2 pL.\cite{Mai2017} Shankland and collaborators reported a glucose consumption of approximately 1 mM over 200 mn for 70 million A549 cells, which translates into 3.8 mM/min following the same conversion as before. Liu and collaborators reported a consumption of 1 mg/mL over 24 hours in U251 (wt) cells, which translates a value of 8.5 mM/min in the model that will be used for this study.\cite{Liu2021}
+
+The scope of values obtained leads to the study of high consumption case (8 mM/min) and a low consumption case (4 mM/min), similar to the case of standard and enhanced diffusion presented in the previous part. 
+ 
+
+\subsection{Cell behavior}
+First of all it should noted that the chosen representation is what is called an on-lattice model, which means that cells will be placed on a grid. In this study, the grid can be two or three dimensional but is always square 
+
+\subsubsection{Response to Hypoxia}
+%glucose consumption 
+
+%proliferation rate 
+
+\subsubsection{Response to glucose starvation}
+% cell death  
+
+% delay 
+
+\section{Results}
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio_synthese}
+
+\end{document}

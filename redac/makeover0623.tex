@@ -233,6 +233,10 @@ The results of Waker and collaborators show that the glycolytic rate in SU-DIPG-
 
 The increased consumption is included in a straight forward fashion : When oxygen concentration falls below 0.015 mM (2\%), the value of $k_{max,glu}$ is multiplied by 2. It is interesting to note that the consumption of oxygen starts decreasing at 0.03 mM which is above the level where the shift in glycolysis occurs.
 
+It is interesting to discuss the mechanism behind the increase. The most straightforward explanation is that since the electron transport chain generate less ATP when oxygen becomes scarce, the needed ATP is provided by glycolysis, which has a significantly lower glucose/ATP ratio than complete oxidative phosporylation. It should also be noted that while than the completion of a cell cycle consumes roughly the same amount of energy in every cell, the time it takes for the cell to gather this energy can vary depending on how fast ATP can be synthesized and made available. The interplay between the rate of glycolysis, proliferation rate, and hypoxia is non trivial and difficult to untangle. 
+
+First of all, proliferative cancer cells already rely significantly more on glycolysis than healthy cells.\cite{Shen2020}\cite{Ruas2018}\cite{Berg2006} Said glycolysis is upregulated further if the available oxygen decreases in order to maintain the ATP level.\cite{Kierans2021} In many cell lines, including SU-DIPG-XIII, this upregulation of glycolysis is correlated to a decrease in the proliferation rate. There may be various explanation for that decrease and detailed description is beyond the scope of this study
+
 \newpage
 \subsection{Results on glucose}
 As explained before due to the absence of glucose measurements on diffusion and consumption in SU-DIPG-XIII and HSJD-DIPG-0013 cell lines, value for the simulation were taken for other cancer tissue or glioma cell line. Since two "regimes" were identified for pellet size, glucose consumption, and glucose diffusion, all those cases will be treated in the following section in the following order :
@@ -409,45 +413,46 @@ In this model the answer to that question impacts the results. Indeed, with the 
 
 \subsection{Cell cycle length and different phases}
 \subsubsection{Cell cycle length}
-First of all, the data presented in Waker's poster and in He and collaborators study give an idea of the variation of the cell cycle duration with oxygen concentration. At 20 \% the SU-DIPG-XIII doubling time can be calculated to be 2.8 days (using the same methods as He and collaborators). In the study of He and collaborators, at 5 \% the doubling time is reported to be 6.6 days on the same cell line.\cite{He2021} This seems coherent as the 5 \% value can be seen as an intermediate between hypoxia and the ambient oxygen level of 20 \%. In hypoxia ($\approx 2$ \%), emulated by addition of 100 \textmu M of CoCl$_2$ in the medium, growth is all but completely stopped.\cite{Waker2018}
+First of all, the data presented in Waker's poster and in He and collaborators study links the variation of the cell cycle duration with oxygen concentration. At 20 \% the SU-DIPG-XIII doubling time can be calculated to be 2.8 days (using the same methods as He and collaborators). In the study of He and collaborators, at 5 \% the doubling time is reported to be 6.6 days on the same cell line.\cite{He2021} This seems coherent as the 5 \% value can be seen as an intermediate between hypoxia and the ambient oxygen level of 20 \%. In hypoxia ( taken to be $\approx 2$ \%), emulated by addition of 100 \textmu M of CoCl$_2$ in the medium, growth is all but completely stopped, which translate into a doubling time of 40 days in the model in order not to deal with infinite quantities.\cite{Waker2018}
 
-Taking into account the previous data, a function linking the observed doubling time on SU-DIPG-XIII and the oxygen concentration can be derived. The function displayed in figure \ref{podbl} is of the form $\frac{a}{b x - c }$ where $a$, $b$ and $c$ were determined with least squares approach. The following values were determined : $a =  13.0612;  b = 0.6694; c = 1.3061$.
+In order to link the oxygen concentration to the proliferation rate/doubling time in continuous manner, an 1D-interpolation was performed  with the three previous data point. It should be noted that below 2 \% the doubling time is constant and of the order of 40 days which is equivalent to stopped growth in the model since the calculation are run for 5 maximum of 5 days 
+%Taking into account the previous data, a function linking the observed doubling time on SU-DIPG-XIII and the oxygen concentration can be derived. The function displayed in figure \ref{podbl} is of the form $\frac{a}{b x - c }$ where $a$, $b$ and $c$ were determined with least squares approach. The following values were determined : $a =  13.0612;  b = 0.6694; c = 1.3061$.
+%
+%\begin{figure}[ht!]
+%\vspace{1cm}
+%\hspace{4cm} 
+%\begin{tikzpicture}[domain=0:4] 
+%    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%    %axes
+%    \draw[->] (-1.7,0) -- (4.5,0) node[right] {$pO_2$}; 
+%    \draw[->] (-1.5,-0.2) -- (-1.5,4.2) node[above] {doubl. time};
+%    
+%    %ticks
+%     \draw[-] (0,-0.2) -- (0,0.2);
+%     \draw (0,-0.6) node {2 \%};
+%     \draw[-] (4,-0.2) -- (4,0.2);
+%     \draw (4,-0.6) node {20 \%};
+%     \draw[-] (1,-0.2) -- (1,0.2);
+%     \draw (1,-0.6) node {5 \%};
+%     
+%     %lines
+%     \draw[dashed] (0,0.2) -- (0,4.2);
+%     \draw[dashed] (4,0.2) -- (4,4.2);
+%     \draw[dashed] (1,0.2) -- (1,4.2);
+%     
+%      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
+%      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
+%      %\draw[domain=0:3,color=green!30!black] plot (\x,\x);
+%      %\draw[domain=3:4.3,color=green!30!black] plot (\x,3);
+%      %\draw[color=green!30!black] (5.5,3) node {$v_{max,GF+}$};
+%      %\draw[domain=0:3,color=green!60!black] plot (\x,0.5*\x);
+%      %\draw[domain=3:4.3,color=green!60!black] plot (\x,1.5);
+%      %\draw[color=green!60!black] (5.5,1.5) node {$v_{max,GF-}$};
+%  \end{tikzpicture}
+%  \caption{Relation doubling time, and oxygen partial pressure \label{podbl}}
+%\end{figure}
 
-\begin{figure}[ht!]
-\vspace{1cm}
-\hspace{4cm} 
-\begin{tikzpicture}[domain=0:4] 
-    %\draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-    %axes
-    \draw[->] (-1.7,0) -- (4.5,0) node[right] {$pO_2$}; 
-    \draw[->] (-1.5,-0.2) -- (-1.5,4.2) node[above] {doubl. time};
-    
-    %ticks
-     \draw[-] (0,-0.2) -- (0,0.2);
-     \draw (0,-0.6) node {2 \%};
-     \draw[-] (4,-0.2) -- (4,0.2);
-     \draw (4,-0.6) node {20 \%};
-     \draw[-] (1,-0.2) -- (1,0.2);
-     \draw (1,-0.6) node {5 \%};
-     
-     %lines
-     \draw[dashed] (0,0.2) -- (0,4.2);
-     \draw[dashed] (4,0.2) -- (4,4.2);
-     \draw[dashed] (1,0.2) -- (1,4.2);
-     
-      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
-      \draw[domain=0.1:4.3,color=blue] plot (\x,{exp(-2*\x+1.5)+1});
-      %\draw[domain=0:3,color=green!30!black] plot (\x,\x);
-      %\draw[domain=3:4.3,color=green!30!black] plot (\x,3);
-      %\draw[color=green!30!black] (5.5,3) node {$v_{max,GF+}$};
-      %\draw[domain=0:3,color=green!60!black] plot (\x,0.5*\x);
-      %\draw[domain=3:4.3,color=green!60!black] plot (\x,1.5);
-      %\draw[color=green!60!black] (5.5,1.5) node {$v_{max,GF-}$};
-  \end{tikzpicture}
-  \caption{Relation doubling time, and oxygen partial pressure \label{podbl}}
-\end{figure}
-
-Once again, in all fairness the impact of glucose on doubling time should also be determined. But such data is not available on SU-DIPG-XIII. Moreover the physical configuration of the model means that an area where oxygen would be plenty and glucose depleted cannot exist in the model. Therefore so far only oxygen can impact the doubling time. There is not a strict equivalence between doubling time, which is measurement made on a whole culture and cell cycle length, which is a property of the individual cell. In the model, though, the doubling time will be equated to the cell cycle length.
+Once again, in all fairness the impact of glucose on doubling time should also be determined. But such data is not available on SU-DIPG-XIII. Moreover the physical configuration of the model means that an area where oxygen would be plenty and glucose depleted cannot exist in the model. Therefore, so far only oxygen can impact the doubling time in the model. There is no strict equivalence between doubling time, which is measurement made on a whole culture and cell cycle length, which is a property of the individual cell. In the model, though, the doubling time will be equated to the cell cycle length.
 
 \subsubsection{Length of the different phases}
 As explained before, cell cycle phases do not necessarily vary in proportion with the cell cycle length. First of all, it seems to be clear that mitosis duration is an hour at most (including cytokinesis)\cite{Cooper2006}\cite{Araujo2016}\cite{Chao2019} and does not vary when the duration of other phases do.
@@ -463,12 +468,246 @@ The best piece of information that was found on that matter in the literature wa
 \item G1-phase length will evolve concomittantly with the cell cycle length.
 \end{itemize}
 
-Since only the G1-phase length changes with $pO_2$, the previous function is refitted to time data where the duration of all phases but the G1-phase are removed. This new fit yielded the resulting coefficients. $a =  17.9592;  b = 0.9816; c = 1.9184$.
-  
-$a =  0.032594;  b = 5.6239e-07; c = -1.0682e-06$.
+Since only the G1-phase length changes with $pO_2$, the previous function interpolation takes this fact into account.
 
+\section{Results}
+In line with previous analyses, only the extreme cases of a small system with rapid diffusion and a large system with slow diffusion will be treated in that section. In both cases, the same amount of cells are initially seeded into the system. All cells are placed within a circular region with pellet diameter. Cells are only placed on open sites, which are collection of sites chosen to be surrounded by 8 closed sites on which a cell cannot be placed at the start of the simulation. Cell can however divide on those site later during the calculation. The calculations were run for 5 days for both system.
+
+\subsection{Small pellet, rapid diffusion}
+The map of cells in displayed in figure \ref{cells_sr} it shows that the spreading algorithm works well as it avoids all cell clots and results in an homoegeneous cell distribution. It also interesting to note that the 1885 cells are closing to filling entirely the open sites as they are defined initially, meaning a higher concentration would results at least locally in dense cell concentration. 
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.7]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_sr.pdf}
+\caption{Map of cells within the simulation \label{cells_sr}}
+\end{center}
+\end{figure}
+
+The next important physical quantities to follow are the time evolution of oxygen and glucose. The simulation results are presented in figure \ref{GOt_sr30} As could be expected considering the magnitude of the consumption and diffusion terms as well as the size of the system, both concentrations "stabilize" in less than 30 minutes. Oxygen stabilizes slightly below the "external" concentration at the rim and at zero near the center. For glucose, however, the high diffusion value along with a comparatively small consumption and high external concentration" means that even at the center of the pellet, the concentration decreases by less than 10 \%. Glucose is thus "available" on on the entire pellet, oxygen making the only critical variable.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/Gt_sr30.pdf}
+	\caption{ \label{Gt_sr30}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/Ot_sr30.pdf}
+		\caption{ \label{Ot_sr30}}
+	\end{subfigure}
+	\caption{a) time evolution of the glucose concentration at the rim and center of the pellet. b) time evolution of the oxygen concentration at the rim and center of the pellet.\label{GOt_sr30}}
+	\end{figure}
+	
+Figure \ref{O_sr30}	presents the spatial data for oxygen. The oxygen level drops below 2\% (10 \% of the external value) at 1.1 mm from the rim, which is in line with measurements and other calculations performed on similar system. While the system is strongly hypoxic at the center, it should be noted that the central value in this configuration is not zero but closer to 0.02 \% $p_{O_2}$
+
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_sr30.pdf}
+	\caption{ }
+	\end{subfigure}
+	~~ \hspace{1cm}
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/kG_sr30.pdf}
+		\caption{ }
+	\end{subfigure}
+	\caption{a) map of the oxyen concentration b) map of cells above (green) and below (yellow) 2\% $p_{O_2}$\label{O_sr30}}
+	\end{figure}
+
+At the beginning of the simulated experiment cells are thus in an environment that presents sufficient glucose availability for all cells as the concentration at the rim is above 90 \% of the initial value. In terms of oxygen, an strongly hypoxic zone with $p_{O_2}$ below 2 \% can be identified in the center. Therefore, divisions and general population will be monitored at different steps. First, the main variables will be monitored after 3 days of simulated time then at 5 days.
+
+Results for the cell population after 3 days of growth are displayed in figure \ref{cells_sr4320}. On the left the cells are marked in yellow without any further details. This already shows divisions occured primarily on the rim of the chip. This was expected as the zone with abundant glucose and oxygen corresponds to the zone of shorter cell cycle. It makes sense then that almost all cells in the zone above 5 \% $p_{O_2}$ have divided after 3 days, while the others deeper in the chip have not. On the right, cells are displayed with their index. Which means the younger cells will be yellow and the older cells will be blue. The apparent cell groups that results from the divisions are in great part due to cells initially placed that divide once, and in a much smaller part due to cells originating from early and dividing themselves later around the third day.
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_sr4320.pdf}
+	\caption{ }
+	\end{subfigure}
+	~~ \hspace{1cm}
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cellsind_sr4320.pdf}
+		\caption{ }
+	\end{subfigure}
+	\caption{a) map of cells b) map of cells with colored index \label{cells_sr4320}}
+	\end{figure}
+	
+Though not represented, it should also be mentioned that the central glucose level does not decrease significantly (less than 0.1 mM) compared to the one presented in figure \ref{Gt_sr30}. It is still not enough to trigger cell death, according to the rules set previously. Results for hypoxia and comparison between the initial oxygen distribution and the one after 3 days of simulated time are presented in figure \ref{O_sr4320}. It can be seen that the concentration profile is slightly steeper than initially which could be expected due to the additional cells. Logically, the line delineating the hypoxic and normoxic zones is slightly shifted towards the rim of the pellet compared to figure \ref{O_30}.\\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_line_sr4320.pdf}
+	\caption{ }
+	\end{subfigure}
+	~~ \hspace{1cm}
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/kG_sr4320.pdf}
+		\caption{ }
+	\end{subfigure}
+	\caption{a) oxygen concentration on median line of the pellet after 3 days (thick solid line) and after 30 min (dashed line) b) map of cells above (green) and below (yellow) 2\% $p_{O_2}$\label{O_sr4320}}
+	\end{figure}
+	
+The next step is to monitor the same quantities at day 5. Once again, the first step is the assess the evolution of the cell population. Figure \ref{cells_sr7200} shows that the density has increased in the entirety of the normoxic zone with a slight decline as the 2 \% limit is approached and growth is completely halted. Therefore the system is split into two zones, the arrested core and the proliferative rim. It can also be seen that between day 3 and 5 division occur both at the rim with daughter cells of the cell that divided first completing their "short" cycle, while more central cells complete their first "long" cycle for the first time.\\
+	
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_sr7200.pdf}
+	\caption{ }
+	\end{subfigure}
+	~~ \hspace{1cm}
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cellsind_sr7200.pdf}
+		\caption{ }
+	\end{subfigure}
+	\caption{a) map of cells b) map of cells with colored index \label{cells_sr7200}}
+	\end{figure}
+
+Once again, in comparison with the available amount, glucose does not experience a signficant decrease despite the increase in cell number. The central glucose concentration decrease from 18.6 mM at day 3 to 18.4 mM, in the meantime cell concentration has increased by 56 \%. The difference in scale between the two variation comes from the fact that with the high value of the diffusion coefficient (the same for glucose and oxygen) and the significant amounts of available glucose, the additional glucose consumption is replenished rapidly within the tissue. Interestingly, since diffusion and consumption values are of the same order as oxygen the main difference is due to the initial supply.
+
+Oxygen results at day 5 are presented in figure\ref{0_sr7200}. The profile is steeper with a more noticeable increase than between day 3 and day 0. The figure also confirms that the density increase gradually vanish as the hypoxic limit is reached. 
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.45]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_line_sr7200.pdf}
+	\caption{ }
+	\end{subfigure}
+	~~ \hspace{1cm}
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.5]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/kG_sr7200.pdf}
+		\caption{ }
+	\end{subfigure}
+	\caption{a) oxygen concentration on median line of the pellet after 5 days (thick solid line) and after 30 min (dashed line) b) map of cells above (green) and below (yellow) 2\% $p_{O_2}$\label{O_sr7200}}
+	\end{figure}
+	
+\subsection{Large pellet, slow diffusion}
+On the larger pellet the initial situation is taken at a time where the glucose and oxygen are stable, which takes  more than 2 hours of simulated time for glucose. Since the modelled seeded concentration is the same but that the pellet has not shrunken has much as in the previous case, the cell density is much lower initially than in the previous case as can be seen in figure \ref{cells_ls390}    \\
+
+\begin{figure}[ht!]
+\begin{center}
+\includegraphics[scale=0.7]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/cells_ls390.pdf}
+\caption{Map of cells within the simulation \label{cells_ls390}}
+\end{center}
+\end{figure}
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/O_ls390.pdf}
+	\caption{ }
+	\end{subfigure}
+	~~ \hspace{1cm}
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.4]{/home/antony/Documents/Post-doc/test_fortran/plots/0823/G_ls390.pdf}
+		\caption{ }
+	\end{subfigure}
+	\caption{a) map of the oxygen concentration b)  map of the glucose concentration\label{OG_ls30}}
+	\end{figure}
 
 \section*{Appendix}
+
+
+\subsection{Diffusion data}
+
+\newpage
+%\begin{table}[t]
+\begin{center}
+\begin{tabular}{ |p{18mm}|p{18mm}|p{35mm}|p{25mm}|p{15mm}|p{10mm}| }
+ \hline
+
+ \textbf{Molecule} & \textbf{Mol. wght}(kDa) & \textbf{Diffusion medium} & \textbf{Diffusion coeff.} \textmu m$^2$/min & Tortuosity & Ref. \\
+ \hline
+  \hline
+      Oxygen & 0.03 & water & 120000 & N.D & \cite{Hober1947}\\
+ \hline
+    Oxygen & 0.03 & 6\% agarose & 120000 & N.D & \cite{McCabe1975}\\
+ \hline
+   Oxygen & 0.03 & 5\% agarose & 120000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+      Oxygen & 0.03 & 6\% agarose 0.3\% hyaluronate & 114000 & N.D & \cite{McCabe1975}\\
+ \hline
+   Oxygen & 0.03 & Si-HPMC 1\%+HEPES+NaCl & 18000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+    Oxygen & 0.03 & Coll I 0.1\% & 150000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+     Oxygen & 0.03 & agarose 2\% & 120000 & N.D & \cite{Hulst1987}\\
+ \hline
+      Oxygen & 0.03 & HCT116 & 120000 & N.D & \cite{Mao2018}\\
+ \hline
+ Glucose & 0.18 & Water & 36000 & & \cite{Weng2005}\\
+ \hline
+ Glucose & 0.18 & 0.5\% agarose & 36000 & & \cite{Hober1947}\\
+ \hline
+ Glucose & 0.18 & HCT116 tissue & 1200 & N.D & \cite{Mao2018}\\
+ \hline
+ Glucose & 0.18 & EMT6/Ro tissue & 6000 & N.D & \cite{Grote1977}\\
+ \hline
+ Glucose & 0.18 & 2.16 mg /mL(0.21\%) type I \ Coll. gel & 7800 & N.D & \cite{Rong2006}\\
+ \hline
+  Glucose & 0.18 & 0.5-2.5\% agarose/PBS & 36000-48000 & N.D & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.18 & 0.5-1\% HA/PBS & 40000-42000 & N.D & \cite{Hadler1980}\\
+ \hline
+   Glucose & 0.18 & 2.5\% HA/PBS & 120000 & N.D & \cite{Hadler1980}\\
+ \hline
+    Glucose & 0.18 & Dura Mater (20°C) (Collagen) & 9780 & N.D & \cite{Bashkatov2003}\\
+ \hline
+    20 \% water Glucose & 0.18 & Dura Mater (37°C) (Collagen) & 15600 & N.D & \cite{Bashkatov2003}\\
+ \hline
+     Glucose & 0.18 & Rat Brain & 8400 & N.D & \cite{Pfeuffer2000}\\
+ \hline
+      Glutamine & 0.18 & Rat Brain & 8400 & N.D & \cite{Pfeuffer2000}\\
+ \hline
+      Lactate & 0.18 & Rat Brain & 10800 & N.D & \cite{Pfeuffer2000}\\
+ \hline
+      Glucose & 0.18 & spheroids & 1200-3600 & N.D & \cite{Pfeuffer2000}\\
+ \hline
+    Oxygen & 0.03 & Si-HPMC 1\%+HEPES+NaCl & 18000 & N.D & \cite{Figueiredo2018}\\
+ \hline
+ EGF & 6.6 & 0.3 \% agarose & 10200 & 1.8 & \cite{Thorne2005}\\
+ \hline
+ EGF & 6.6 & Rat cortex & 3000 & 1.8 & \cite{Thorne2005}\\
+ \hline
+ Dextran & 70 & 0.3 \% agarose & 2400 & 2.25 & \cite{Nicholson1994}\\ 
+ \hline
+ Dextran & 70 & Rat cortex & 450  & 2.25 & \cite{Nicholson1994}\\
+ \hline
+ Dextran & 40 & 0.3 \% agarose & 2520 & 2.16 & \cite{Nicholson1994}\\
+ \hline
+ Dextran & 40 & Rat cortex & 546 & 2.16 & \cite{Nicholson1994}\\
+ \hline
+ Dextran & 40 & 2.1mg/mL coll. gel w/ cells & 2700 & N.D & \cite{Kihara2013} \\
+ \hline
+  Dextran & 69 & 30 mg/mL HA gel & 942 & N.D & \cite{Shenoy1995} \\
+ \hline
+   Dextran & 71 & 5 mg/mL HA gel & 2000 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 71 & 10 mg/mL HA gel & 1500 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 71 & 15 mg/mL HA gel & 1200 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 148 & 5 mg/mL HA gel & 900 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 148 & 10 mg/mL HA gel & 600 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 148 & 15 mg/mL HA gel & 480 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 487 & 5 mg/mL HA gel & 420 & N.D & \cite{DeSmedt1994} \\
+ \hline
+    Dextran & 487 & 10 mg/mL HA gel & 300 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Dextran & 487 & 15 mg/mL HA gel & 180 & N.D & \cite{DeSmedt1994} \\
+ \hline
+   Albumin & 66 & 0.5 \% HA gel & 3420 & N.D & \cite{Winlove1984} \\
+ \hline
+\end{tabular}
+%\caption{Available data on the diffusion of growth factors, glucose, and other large molecules in tissues and gels}   
+\end{center}
+%\end{table}
 \subsection*{Proof of the validity of the 2D approximation}
 \newpage
 \bibliographystyle{unsrt}
