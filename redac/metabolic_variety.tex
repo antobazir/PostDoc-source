@@ -164,32 +164,37 @@ In this part, glucose consumption on various cancer cell lines are presented. Al
  \hline
   %A431 & Liquid phase culture  & 0.45$\pm$0.05 mg mL$^{-1}$ h$^{-1}$ cell$^{-1}$  & 0.042 & \cite{Pilarek2013}\\
  %\hline
-   A431 & Medium measurement/Standard culture  & 4 g/L/24hr/150000cells & 4.5  & 5.4 & \cite{Ang2020}\\
+   A431 & Medium measurement/Standard culture  & 4 g/L/24h/1.5$\cdot$10$^{5}$c & 4.5  & 5.4 & \cite{Ang2020}\\
  \hline
-    U251 &  GAHK20, Glucose (HK) Assay Kit & 1 mg/mL/400000c/24hr & 4.5 (assumed) & 16-48 & \cite{Liu2021}\\
+    U251 &  GAHK20, Glucose (HK) Assay Kit & 1 mg/mL/4$\cdot$10$^{5}$c/24h & 4.5 (assumed) & 16-48 & \cite{Liu2021}\\
  \hline
-    MCF-7 & Medium measurement/Standard culture  & 510 nmol/h/100000cells & 1.0 & 161 & \cite{Mazurek1997}\\
+     MCF-7 & YSI 2700 Biochemistry Analyzer  & 190 fmol/h/c & 4.5 & 5.2 & \cite{Meadows2008}\\
  \hline
-     " & "  & 60 nmol/h/100000cells & 0.09 & 16 & \cite{Mazurek1997}\\
+     48R HMEc & YSI 2700 Biochemistry Analyzer  & 590 fmol/h/c & 1.4 & 16.4 & \cite{Meadows2008}\\
  \hline
-     MDA-MB-453 & "  & 150 nmol/h/250000cells & 1.0 & 16 & \cite{Mazurek1997}\\
+    MCF-7 & Medium measurement/Standard culture  & 43.8 nmol/h/1$\cdot$10$^{5}$c & 1.0 & 12.6 & \cite{Mazurek1997}\\
  \hline
-     " & "  & 50 nmol/h/250000cells & 0.09 & 5.5 & \cite{Mazurek1997}\\
+     " & "  & 13.0 nmol/h/1$\cdot$10$^{5}$c & 0.09 & 3.6 & \cite{Mazurek1997}\\
  \hline
- 	Ishikawa endometrial cancer cells & 2-deoxy-glucose uptake & 5 nmol/min/1000000 cells & 0.9 & 8.3 & \cite{Medina2004}\\
+     MDA-MB-453 & "  & 150 nmol/h/2.5$\cdot$10$^{5}$c & 1.0 & 16 & \cite{Mazurek1997}\\
+ \hline
+     " & "  & 50 nmol/h/2.5$\cdot$10$^{5}$c & 0.09 & 5.5 & \cite{Mazurek1997}\\
+ \hline
+ 	Ishikawa endometrial cancer cells & 2-deoxy-glucose uptake & 5 nmol/min/1$\cdot$10$^{6}$c  & 0.9 & 8.3 & \cite{Medina2004}\\
 \hline
- 	" & " & 6 nmol/min/1000000 cells & 1.8 & 10 & \cite{Medina2004}\\
+ 	" & " & 6 nmol/min/1$\cdot$10$^{6}$c & 1.8 & 10 & \cite{Medina2004}\\
 \hline
- 	" & " & 8 nmol/min/1000000 cells & 5.4 & 13 & \cite{Medina2004}\\
+ 	" & " & 8 nmol/min/1$\cdot$10$^{6}$c & 5.4 & 13 & \cite{Medina2004}\\
 \hline
  HT29 & Medium measurement/Standard culture & 0.55 µmol/hr/mg protein  & 4.5 & 3-6 & \cite{Gauthier1989}\\
  \hline
-  A549(non-SP) & Medium measurement/Standard culture & 250 nmol/24 hr/100000 cells  & 1.26 & 2.9 & \cite{Liu2013}\\
+  A549(non-SP) & Medium measurement/Standard culture & 250 nmol/24 hr/1$\cdot$10$^{5}$c  & 1.26 & 2.9 & \cite{Liu2013}\\
  \hline
-   A549(SP) & " & 320 nmol/24 hr/100000 cells  & 1.26 & 3.7 & \cite{Liu2013}\\
+   A549(SP) & " & 320 nmol/24 hr/1$\cdot$10$^{5}$c  & 1.26 & 3.7 & \cite{Liu2013}\\
  \hline
-  % MCF-7 & Seahorse XF  & 10 pmol/min/1000cells (glycolytic ATP) & 10(*) & \cite{RomeroAgilent}\\
- %\hline
+ \hline
+   MCF-7 &  YSI 2900 biochemistry analyzer  & 10 pmol/min/1$\cdot$10$^{3}$c (glycolytic ATP) & 10(*) & \cite{Prado-Garcia2020}\cite{Gardner2022}\\
+ \hline
   %  SU-DIPG-XIII \& IV & ?  & 100-200 pmoles/min (glycolytic stress test) & 0.5-2(*) & \cite{Waker2018}\\
  %\hline
   %   H460 & high-resolution respirometry (Oroboros Oxygraph-O2K)  & 0.13 µmol/100000cells/hr (lact prod) & 5.5 & \cite{Amoedo2011}\\
@@ -225,8 +230,11 @@ For the MCF-7 cell line, another interesting study is that of Bayar and Bildik, 
 
 The study of Gauthier and collaborators give a value for standard HT29 which is described as highly glycolytic. In order to convert the value given in µmol/hr/mg protein into the same unit used for other studies, the protein content of a cell needs to be known. In that regard, the study of Dolfi and collaborators shows a correlation between cell size and protein content.\cite{Dolfi2013} Tahara and collaborators measured the mean diameter of HT29 cells to be 16.6 µm, which corresponds to a sphere of 2.34 pL of volume.\cite{Tahara2013} which according to Dolfi and collaborators results would match a protein content between 200 pg and 400 pg. This corresponds to a cellular glucose consumption rate between 3 and 6$ \cdot 10^{-17}$ mol/cell/s.
 
-The values obtained by Liu and collaborators on the A549 cell line evidence possible heterogeneity even within a seemingly homogeneous population. However this heterogeneity is not as significant as the differences that can be observed between cell lines.\cite{Liu2013}
+The values obtained by Liu and collaborators on the A549 cell line evidence possible heterogeneity even within a seemingly homogeneous population. However, this heterogeneity is not as significant as the differences that can be observed between cell lines.\cite{Liu2013}
  
+The work of Gardner and collaborators on nutrient depletion in Plasmax was also helpful in data gathering and is therefore mentioned along the source publication in the second part of the table and is therefore duly mentioned.\cite{Gardner2022}
+
+In the study of Prado-Garcia and collaborators 
 %The data from Waker on DIPG cells also requires some assumptions to obtain an approximation. The glycolytic stress test results are given in pmoles/min which could be either a lactate production or (less likely) a glucose consumption measure.\cite{Waker2018} Using the same hypothesis as in the previous paragraph, and assuming a number of cell per well of 10$^5$, which is the order of magnitude given for the proliferation assay, the glucose consumption for both cell line is estimated to be in the range of 0.5 - 2 mM/min for those cell lines.\\
 
 %For Liu, the volume of fluid inside the 4-well used for the glucose consumption is assumed to be 2 mL. In that case the amount of consumed glucose can be deduced from the concentration change can be deduced and be converted the same unit that was used so far (mM/min).\\
@@ -245,6 +253,7 @@ The values obtained by Liu and collaborators on the A549 cell line evidence poss
  %Mazurek est utile pour le lien glucose lactate mais pas plus...Ah si
  
  %3.15 g/L pour  le DMEM /F12 chez Azzalin -> 3150 mg/L -> Donc en gros on perd 15 mg/dL/Mcells
+ %Meadows a aussi le lactate
 \subsubsection{Oxygen cellular consumption rate}
 
 \begin{table}[h!]

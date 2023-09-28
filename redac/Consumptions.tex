@@ -1,0 +1,226 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+\section{Introduction}
+Modelling metabolism accurately has been an important question for physicists and biologists in the last decades. More specifically the question of cancer has put cellular metabolism on center stage. It is well known that cancer cells tend to be more glycolytic than their "healthy counterparts" meaning they tend to extract significant portion of their ATP, and energy in general, from the glycolysis which is normally contributing very little compared to the other main ATP production mechanism, oxydative phosphorylation (OXPHOS). However, many variants of this behavior and sometimes completely different has been observed evidencing the complexity of the metabolic question.\cite{Berg2006}\\
+
+Physicists and biologists often used modelling studies along experiments in order to try and capture the fondamental ingredients linking metabolism and growth. Most models concerned with nutrient availability and its impact on tissues and especially tumors needs two core pieces of information : The diffusive properties of nutrients and the cellular consumption rates. The latter is the core subject of this study.\\
+
+While several models provided consumption rates values based more or less on experiments or other models , it is known that this value can vary significantly depending not only on the cell line and availability of nutrients, but also relative abundance of nutrients and other biological, chemical, or physical variables in the culture medium. In order to constitute a solid basis for further studies, the authors decided to compile and discuss signficant amounts of data on glucose consumption, lactate production and oxygen consumption.\\
+
+The scope of this study is human cancer cell lines of various origins that are commonly used both in the lab and subjected to modelling studies. This is obviously not the first study to focus on in vitro glucose consumption rate and to gather values for several cell lines. It is however, the first to the author knowledge to do it with the intent of discussing this aspect specifically.\\
+
+\section{Glucose}
+First of all, it is necessary to properly define what is referred to as glucose consumption. On a molecular basis the "consumption" of glucose is made up of several intermediary step. In order to clarify this, the initial situation to imagine is that of glucose diffusing freely near a cell embedded in extracellular matrix. Glucose, along with many other molecules cannot cross the bilipid membranes of the cell on its known. Cell internalise glucose through expression of proteins belonging to the glucose transporter family. As of the writing of this document 12 proteins are known in the GLUT family depending on their location, cell line and expression level in the body. The binding and then transport into the cell by GLUT proteins is what is usually referred to as glucose uptake in the literature when it is distinguished from glucose consumption itself.\cite{Berg2006}\\
+
+Glucose consumption (when distinguished from glucose uptake) refers to the actual chemical transformation of glucose into another molecule. One of the main processes consuming glucose in the cell is glycolysis. Other pathways are the pentose phosphate pathway, glycogen synthesis, and the hexosamine biosynthesis pathway.\cite{Bouche2004} It is important to know the distinction as discussion on the glucose consumption usually specifies which pathway is being looked at. This is also the reason why studying glycolysis rate is not equivalent to studying glucose uptake or glucose consumption. In this study the given value are generally obtained at tissue scale and refer to glucose uptake. But when, lactate production is discussed the distinction becomes important.\\
+
+In the next subsections glucose uptake data is presented for various cell lines. The amount of data available and usable per cell line can vary signficantly. For this reason, some cell line are singled out and treated in isolation in dedicated subsection while those with fewer data points are agregated into a single subsection.
+
+
+\subsection{MCF-7}
+The MCF-7 cell line is the most widely mammary cell line. It has been long established and used in cancer studies. This prolonged maintenance and in vitro use has of course led to genetic drift which impacts the relevance of the cell line in some studies. However, those same facts led to this cell line being one of the most characterised. Therefore, a vast amount of data is available on this cell line in terms of glucose and other nutrient uptake and consumption.\\
+
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{45mm}|p{35mm}|p{15mm}|p{10mm}|p{15mm}|p{7mm}| }
+ \hline
+
+  \textbf{Measurement method} & \textbf{Reported  value} & \textbf{Glucose conc. (g/L)} & $p_{O_2}$ &\textbf{Cons. rate} $\cdot$10$^{17}$ mol cell$^{-1}$ s$^{-1}$  & \textbf{Ref}. \\
+ \hline
+     YSI 2700 Biochemistry Analyzer  & 190 fmol/h/c & 4.5-5.5(?) & 21\% & 5.2 & \cite{Meadows2008}\\
+ \hline
+      Medium measurement  & 43.8 nmol/h/1$\cdot$10$^{5}$c & 0.9 & 21\% & 12.6 & \cite{Mazurek1997}\\
+ \hline
+ "  & 13.0 nmol/h/1$\cdot$10$^{5}$c & 0.09 & 21\% & 3.6 & \cite{Mazurek1997}\\
+ \hline
+   YSI 2900 biochemistry analyzer  & 0.29$\pm$ 0.07 & 1.8 & 21 \% & 8.64 & \cite{Prado-Garcia2020}\cite{Gardner2022}\\
+ \hline
+    " & 0.26$\pm$ 0.03 & 1.8 & 21 \% & 7.59(*) & \cite{Prado-Garcia2020}\cite{Gardner2022}\\
+ \hline
+   "  & 0.47$\pm$ 0.085 & 1.8 & 2 \% & 12.8 & \cite{Prado-Garcia2020}\cite{Gardner2022}\\
+ \hline
+     " & 0.35$\pm$ 0.075 & 1.8 & 2 \% & 9.96(*) & \cite{Prado-Garcia2020}\cite{Gardner2022}\\
+ \hline
+      Medium measurement & 5 µmol/24hr/1$\cdot$10$^{6}$c& 1.9 & 21 \% & 5.78 & \cite{Kaplan1990}\cite{Gardner2022}\\
+ \hline
+       GlucCell measurement device  & 796$\pm$46.7 fmol/c/hr & 1.04 & 18 \% & 22.1  & \cite{Gardner2022}\\
+ \hline
+        " & no sig. diff.  & 1.04 & 5 \% & 22.1  & \cite{Gardner2022}\\
+ \hline
+        Medium measurement  & 4.33 mM/24hr & 0.99 & 20 \% & 10.0  & \cite{Bayar2021}\\
+ \hline
+         "  & 8.47 mM/24hr & 2.7 & 20 \% & 17.3(**)  & \cite{Bayar2021}\\
+ \hline
+          " & 96.7 mM/24hr & 9.9  & 20 \% & 128.7(**)  & \cite{Bayar2021}\\
+ \hline
+         "  & 6.94 mM/24hr & 0.99 & 1 \% & 8.9(**)  & \cite{Bayar2021}\\
+ \hline
+         "  & 10.5 mM/24hr & 2.7 & 1 \% & 13.5(**)  & \cite{Bayar2021}\\
+ \hline
+          " & 117.81 mM/24hr & 9.9  & 1 \% & 90(**)  & \cite{Bayar2021}\\
+ \hline
+           " & 0.61 nmol/1$\cdot$10$^{6}$c/24hr & 4.5 & 20 & 7.6(***)  & \cite{SolaPenna2019}\\
+ \hline
+        glucose colorimetric/fluorometric assay kit  & 1.8 pmol/cell/24hr & 2 &  & 2.1  & \cite{Russell2022}\\
+ \hline
+         Cobas 8000 modular analyzer  & 3 mmol/L/OD & 20  & 0.9 & 27.7 & \cite{Bartmann2018}\\
+ \hline
+  "  & 3 mmol/L/OD & 5  & 0.9 & 18.5 & \cite{Bartmann2018}\\
+ \hline
+         "  & 10.3 $\pm$ 1.6 mmol/L/10000c/24hr & 20  & 2.95 & 357 & \cite{Kamerrer2015}\\
+ \hline
+           NMR (spheroids)  &  50 $\pm$ 30 fmol/h/c & N.A & 4.5 & 1.4 & \cite{Patra2021}\\
+ \hline
+            NMR (monolayers)  &  250 $\pm$ 50 fmol/h/c & N.A & 4.5 & 7 & \cite{Patra2021}\\
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+In the works of Kaplan the consumption was measured to establish whether it was impacted by the concentration of epithelial growth factor. While it had a significant effect on the MDA-468 cell line, it did not impact the MCF-7 cell line in any significant way.\\
+
+For MCF-7, EGF concentration has been shown to be irrelevant by Kaplan and collaborators but for other cell lines this parameters is possibly important.\\
+
+The values of Sola-Penna  are outliers as both lactate production and glucose consumption are off by 3 orders of magnitude. It is most likely due to the value being reported as nanomoles when it is in fact much more likely to be micromoles. The corrected value is thus used in this study.\\
+
+Hamadneh and collaborators
+
+The measurement from Bartmann and collaborators were not straightforward to exploit. A probable cell density was calculated from the experimental parameters and the optical density was retrieved from the radiotherapy data in supplemental information however, the duration attached to the results is not mentioned and was assumed to be the same as the proliferation experiment. The final value, however remains largely in the usual range.\\
+
+The value of Kämmerer is surprisingly high compared to other measurements with similar glucose concentration. However, it should be noted that it is one of the only work where DMEM/F12 is used on MCF7 cells.\\
+
+The study of Patra is very interesting because it provides data for both monocultures and spheroids and it shows that glucose consumption is significantly reduced for cells in spheroids.\\
+
+\paragraph{Consumption rate and population growth}
+The experiments of Bartmann and collaborators are also interesting because of its duration. Cell number obviously changes over the course of  5 days and normalising consumption by the final cell number over periods where several division occurs means that the cell that arrived last see their contribution overestimated. for example if a cell divide on day 4 the daughter cell is only there for 24 hr but gets counted as if it was always there while it actually consumed glucose for a fifth of the experiment duration therefore, in normalisation it should count 1/5th. Moreover the possibility that cells lower their consumption when density increase can also skew the results. For instance if a coefficient relative to the cell consumption is applied it can half the effective cell  number, and thereby double the estimated cell consumption rate 
+
+\paragraph{Discussion}
+The relative accuracy of value along with the variety of experimental conditions means that no parameters has a clear correlation with the glucose consumption level. Neither oxygen level, nor glucose concentration yielded very clear correlations.
+
+Two main messages can be taken away. First, quantitatively a good order of magnitude for MCF-7 consumption is 100 amol/cell/s. There is spread around such a value over almost an order of magnitude above and below, which leads to the second point. Comparison of values from different experiment is difficult. The medium formulation and other condition can influence the value quite a bit. The example of the culture in DMEM F12 which is an order of magnitude above the rest, and unusual culture medium for MCF-7 cells illustrates this. 
+
+In the next section, the core idea will be to compare data on different metabolic variables from a given study when there are available. For example, the glucose consumption to lactate production ratio, or the lactate production to oxygen production, or glucose to oxygen consumption.  
+
+%use hamadneh2020 pdf
+%MCF-7 24480191
+% 4days consumption Ariaans 28356082
+% Grashei 35406616 glucose and lactate in MCF7
+
+\subsection{Results on other mammary lines}
+% 29942509 Bartman2018 BT20, BT474, HBL100, MCF-7, MDA-MB 231, MDA-MB 468, and T47D avec tous les ratios lactate ECAR !
+
+%meadows2008 -W 48R
+%MDA-468 chez Kaplan
+%Saulo Penna MCF10A et MDA-MB-231
+%Vander Voorde pour les autres lignées mammaires
+%Gardner regarder les autres lignées
+%WonChoi2014 (pdf) HeLaCells (Glc, O2, Lact)
+\section{Lactate}
+Similarly to glucose, it is necessary to properly define lactate production and or consumption and provide context as to why it is an important  variable in the context of cancer metabolism.\\
+
+Lactate is often described as a by product of glycolysis. There are in  fact several reaction mechanisms which can result in the production of lactate. \\
+
+The mechanism most studied is the reaction converting the pyruvate produced  by the process of glycolysis, in which the pyruvate is reduced to lactate, regenerating NAD+ converted into NADH by the previous step of glycolysis.\cite{Berg2006}\\
+
+It is important to note that the measurements that are reported here are lactate production in a molecular sense and note the extracellular acidfication rate that is often reported with the oxygen consumption rate as marker of glycolytic activity 
+
+\subsection{MCF-7}
+%meadows2008 MCF-7
+%Russell2022 MCF-7
+%Doczi2023 MCF-7/HepG2 PMID: 37402778
+%AL-Humairi2023 MCF-7 (pdf)
+%MCF-7 24480191
+% 15649770 Guppy lactate in hypoxia for MCF-7
+% Patra2021 MCF-7 lactate
+%Shimada 2008 lactate 18298799
+%Vaughan2013 ECAR MCF-7 et MCF-10A 23661584
+% Bartmann 2018
+% lactate glucose ration A549 MCF7 et A427 Prado Garcia
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|p{20mm}|p{10mm}|p{20mm}|p{10mm}|p{7mm}| }
+ \hline
+
+  \textbf{Glc rep. value} & \textbf{Lac rep.  value} & \textbf{Glucose conc. (g/L)} & $p_{O_2}$ &\textbf{Lactate prod. rate} $\cdot$10$^{17}$ mol cell$^{-1}$ s$^{-1}$  & \textbf{Lac /gluc ratio} & \textbf{Ref}. \\
+ \hline
+     190 fmol/h/c  & 370 fmol/h/c & 4.5-5.5(?) & 21\% & 10.27 & 1.95 & \cite{Meadows2008}\\
+ \hline
+      43.8 nmol/h/1$\cdot$10$^{5}$c  & 109.9 nmol/h/1$\cdot$10$^{5}$c & 0.9 & 21\% & 30.5 & 2.51 & \cite{Mazurek1997}\\
+ \hline
+      13.0 nmol/h/1$\cdot$10$^{5}$c  & 20.4 nmol/h/1$\cdot$10$^{5}$c & 0.09 & 21\% & 5.6 & 1.57  & \cite{Mazurek1997}\\
+ \hline
+       10.0 nmol/h/1$\cdot$10$^{5}$c  & 95.6 nmol/h/1$\cdot$10$^{5}$c & 0.9(AMP) & 21\% & 26.5 & 9.56 & \cite{Mazurek1997}\\
+ \hline
+       0.29 µmol/10$^6$c/h  & 0.5 µmol/10$^6$c/h & 1.8 & 21\% & 13.89 & 1.67 & \cite{Prado-Garcia2020}\\
+ \hline
+        0.26 µmol/10$^6$c/h  & 0.44 µmol/10$^6$c/h & 1.8 & 21\% & 12.2(*) & 1.69 & \cite{Prado-Garcia2020}\\
+ \hline
+         0.47 µmol/10$^6$c/h  & 0.89 µmol/10$^6$c/h & 1.8 & 2\% & 24.72 & 1.89 & \cite{Prado-Garcia2020}\\
+ \hline
+          0.35 µmol/10$^6$c/h  & 0.81 µmol/10$^6$c/h & 1.8 & 2\% & 22.5 & 2.31 & \cite{Prado-Garcia2020}\\
+ \hline
+             &  &  &  &  &  & \cite{Bayar2021}\\
+ \hline
+
+\end{tabular}
+\end{center}
+\end{table}
+
+The case of Mazurek and collaborators study needs to be discussed. When calculating a linear regression, they report a 1.7 lactate to glucose ratio. Interestingly taking the value of consumption taken from their table III, the ratio is 2.5 at 5 mM, while it falls to 1.57 at 0.5 mM. Due to the way it is estimated, the value of 1.7 makes sense. However, a target value of 2 with the assumption that it is the maximum value rest on the hypothesis that lactate is only produced by glycolysis. The results with added AMP further supports this.\textbf{vérifier}
+
+In the works of Prado-Garcia and collaborators, the value of 1.7 mentioned by Mazurek is obtained for normoxic cultures of MCF-7. However, for hypoxic culture the value increases, especially at lower pH.
+
+The study of Bayar and Bildik is interesting because the ratio of lactate production to glucose consumption decreases with increased glucose availability and hypoxia decreases the ratio rather significantly at low glcuose (5.5 mM)
+
+In the study of Bartmann the measured ratios are very high compared to other values and the ratio increases in situation of hypoxia. 
+
+
+\section{Oxygen}
+%Russell2022 OCR
+%Gardner basal OCR LNCaP
+% 29942509 Bartman2018 BT20, BT474, HBL100, MCF-7, MDA-MB 231, MDA-MB 468, and T47D (données relatives à cause du OD de merde là) on peut estimer à la louche mais il faudra les autres doubling times
+%Doczi2023 MCF-7/HepG2
+%Lyon2017 28821609 MCF-7 OCR but no ECAR
+%Fiorillo 28411284 basal OCR and ECAR
+%Chu : 33940159 ECAR OCR MCF7
+%Costa 32782546 OCR
+%Radde TAM sensitive MCF7  27515002
+%Makena 35063802 MCF7 OCR
+%Muoio 37461077 ECAR MCF7 en SRB
+% Wang 27559313 ECAR OCR MCF7
+% Parczyk 33931028 MCF7 ECAR OCR
+% Zhong 37267686  MCF7 OCR ECAR
+% Lu 25807077 OCR lactate
+%PPR = proton production rate
+%AL-Humairi2023 et2021 MCF-7 (pdf)
+%Freischel 2021 33649456
+%MCF-7 24480191
+%Gao2020 (pdf) OCR
+%donne des courbes de croissance en fonction de la concentration  de gluose pour MCF-7 et MDA MB machin ET du pH
+%Kim 34876614 OCR MDAmachin
+%Kumar Raut OCR MDA MB 31614178
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio_synthese}
+\end{document}
+
+%Kämmerer bilan global sur beaucoup des lignées étudiées ! 
+% glutamine meadows 2008
+% glutamine cons Mazurek 1997
+
+%growth 
+%Mazurek 1997
+%Kaplan 1990
