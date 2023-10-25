@@ -1,6 +1,6 @@
 %function [Grid,G,O,D,GD,T] = migrate2D_sphere_ctr(Grid,lG,cG,G,O,D,GD,T)
 %function [Grid,kO,kG,DG,sycle] = migrate2D_sphere_ctr2(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue)
-function [Grid,kO,kS,kP,DSm,DOm,DPm,state]  = migrate2D_sphere_metvar(Grid,pos,k,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue)
+function [Grid,kO,kS,kP,DSm,DOm,DPm,state]  = migrate2D_sphere_metvar(Grid,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue)
 %encoding the migration of cells in a sphere in order to make the sphere round
 % *Hypothesis: Cells are allowed to move a few steps every hour.
 % They typically move in order to make the configuration more circular

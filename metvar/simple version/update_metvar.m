@@ -22,25 +22,42 @@
 ## Author: antony <antony.bazir@antony-Latitude-E7450>
 ## Created: 2023-07-20
 
-function [M,kM,DMm,Mt] = update_metvar(M,kM,cM,DMm,d0,tau,ntime,dx,dt)
+function [M,kM,DMm,Mt,delta] = update_metvar(Grid,M,kM,cM,DMm,d0,ntime,tau,dx,dt)
 sz  = size(M,1);
 
-M(find(kM==0))=1;
+Mn = 0:0.01:1;
+V_norm = 1/max(Mn./(cM+ Mn));
 
+Mt = [];
+
+delta = 1;
 % calculate the diffusion and consumption of nutrients
 for i=1:ntime
+%i=0;
+%abs(delta)<1e-6
+%while(abs(delta)>1e-9)
+M(find(Grid==0))=1;
+%delta
+%i++;
 ##    %explicit  scheme
 ##    %x-step
 ##    M(2:sz-1,:) =  M(2:sz-1,:) + dt*(DMm(3:sz,:)-DMm(1:sz-2,:))/(4*dx^2).*(M(3:sz,:)-M(1:sz-2,:)) + DMm(2:sz-1,:)*dt/(dx^2).*(M(3:sz,:) -2*(M(2:sz-1,:)) + M(1:sz-2,:)) -kM(2:sz-1,:).*dt.*M(2:sz-1,:).*GD(2:sz-1,:);
 ##  %y-step
 ##    M(:,2:sz-1) =  M(:,2:sz-1) + DMm(:,2:sz-1)*dt/dx^2.*(M(:,3:sz) -2*(M(:,2:sz-1)) + M(:,1:sz-2));
+
+  %terme intermédiaire pour calculer delta et arrêter la boucle
+  prev_M = M;%
+
     %explicit  scheme non dimensionalised
     %x-step
-    M(2:sz-1,:) =  M(2:sz-1,:) + d0^2*dt/tau*(DMm(3:sz,:)-DMm(1:sz-2,:))/(4*dx^2).*(M(3:sz,:)-M(1:sz-2,:)) + DMm(2:sz-1,:)*d0^2*dt/tau/dx^2.*(M(3:sz,:) -2*(M(2:sz-1,:)) + M(1:sz-2,:)) -kM(2:sz-1,:).*dt.*M(2:sz-1,:)./(cM + M(2:sz-1,:));
+    M(2:sz-1,:) =  M(2:sz-1,:) + d0^2*dt/tau*(DMm(3:sz,:)-DMm(1:sz-2,:))/(4*dx^2).*(M(3:sz,:)-M(1:sz-2,:)) + DMm(2:sz-1,:)*d0^2*dt/tau/dx^2.*(M(3:sz,:) -2*(M(2:sz-1,:)) + M(1:sz-2,:)) -V_norm*kM(2:sz-1,:).*dt.*M(2:sz-1,:)./(cM + M(2:sz-1,:));
   %y-step
     M(:,2:sz-1) =  M(:,2:sz-1) +  d0^2*dt/tau*(DMm(:,3:sz)-DMm(:,1:sz-2))/(4*dx^2).*(M(:,3:sz)-M(:,1:sz-2)) + DMm(:,2:sz-1)*d0^2*dt/tau/dx^2.*(M(:,3:sz) -2*(M(:,2:sz-1)) + M(:,1:sz-2));
 
+   delta = max(max(abs(M-prev_M)));
 	%Mt(i) = M(round(sz/2),round(sz/2));
-	Mt(i) = M(20,20);
-endfor
+	Mt(:,i) = M(1:round(sz/2),round(sz/2));
+
+%endwhile
+  endfor
 endfunction

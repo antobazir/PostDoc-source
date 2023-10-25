@@ -1,0 +1,58 @@
+This specific branch is devoted to a model that keeps the division as simple as possible in terms of timing and cell cycle
+
+therefore the cell has 3 states proliferating, quiescent and dead
+
+Vmax S 4 niveau :
+- prolif comp
+- prolif
+- maint
+- 0
+
+Vmax P trois niveau:
+- prolif : l'augmentation du flux de molécule supposent également davantage de déchets même si une bonne partie devient de la nouvelle matière
+- quiesc: la cellule produit des déchets pour sa survie
+- 0
+
+Vmax O 4 niveau :
+- prolif comp
+- prolif
+- maint
+- 0
+
+cell prolif
+	S manque
+		O compense + prolif
+		O compense + quiesc
+		P compense
+		quiesc
+		mort cell.
+	O manque
+		S compense + prolif
+		S compense + quiesc
+		quiesc
+		mort cell.
+	S & O manquent
+		P compense + quiesc
+		quiesc.
+		mort cell.
+	P en excès
+		diminue VO -> quiesc
+		diminue VS -> quiesc
+		mort cell.
+
+
+On démarre avec un agent au centre. L'agent se dédouble à chaque pas s'il est en prolifération. les sites occupés consomment a priori le calcul sera rapide donc on réactualise très régulièrement les valeurs
+
+metvar0 : dumb cell. Consumes until it dies
+
+
+%22/10/23
+On modifie le code de division : On tente un approche physique du shedding 
+
+d'abord  pour mieux représenter la croissance d'un sphéroïde on ne commence à simuler la dynamique métabolique qu'à partir d'une certaine taille. Avant, c'est inutile. On applique juste la vieille version du code de division
+
+Si la cellule se divise au bord de l'agrégat, celle-ci est perdue.
+
+C'est montré par Landry 1982 expérimentalement 
+Mechon et Casciari expliquent que le shedding ne suffit pas
+Et Menchon explique bien que le shedding n'est pas spécialement lié à la div en tout cas il ne la mentionne pas 

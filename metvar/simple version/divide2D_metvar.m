@@ -1,6 +1,6 @@
 function[Grid,kO,kS,kP,DSm,DOm,DPm,state] = divide2D_metvar(Grid,pos,c_idx,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue)%on autorise la diffusion sur les 8 voisins et plus seulement sur 4
 %plr = randi(1:4);
-pos
+pos;
 
 %grille de zéro et de 1
 Grid_bool = Grid!=0;
