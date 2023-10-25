@@ -293,7 +293,34 @@ For the study, it is considered that oxygen consumption can vary between 0.5 and
 
 \subsection{Lactate}
 
+\section{The model}
+\subsection{The dense radial model}
+the model will be a radial geometry of 10 µm diameter cell on a square grid.
+
+\subsection{The diffusion reaction model}
+In that model, the goal is not so much to model precisely one case as it is to explore possible configurations and their so-called steady-state. In order to do this the nutrients dynamics is heavily simplified based on hypothesis that are detailed in the following
+
+Three species are modelled: Substrate (S),  Product (P) and Oxygen (O)
+Substrate represent anything used by the cell to function, proliferate and move. Product represent one or several species that are rejected into the extracellular medium. Interestingly the product species may also be consumed in some cases. Oxygen is represented specifically for its impact on the electron transport chain both in terms in biosynthesis and energy production 
+
+The equation is usually written as follows : 
+\[ \frac{d [C]}{\partial t}  =  D \Delta [C] + k_C \frac{[C]}{C_m + [C]} \]
+
+It can be non-dimensionalised as by multiplying it a constant homogeneous to a concentration over time. let $d_0$ be the size of the modelled "cell" 
+and $D$ the diffusion coefficient of the medium. Then one can write $\tau  = \frac{d_0^2}{D_{med}}$. The concentration can then be normalized by the external value $[C_{ext}]$. Now if $C = \frac{[C]}{[C_{ext}]}$ then, 
+
+\[ \tau \frac{d C}{\partial t}  = \tau \nabla D \nabla C + \tau  D  \Delta C + \frac{\tau k_C}{C_{ext}} \frac{C}{\frac{Cm}{C_{ext}} + C}  \]
+\[ \rightarrow \tau \frac{d C}{\partial t}  = d_0^2 \nabla \frac{D}{D_{med}} \nabla C + d_0^2 \frac{D}{D_{med}} \Delta C + \frac{\tau k_C}{C_{ext}} \frac{C}{\frac{Cm}{C_{ext}} + C}  \]
+
+written this way $\tau$ is the characteristic diffusion timescale for a cell, $d_0^2$ is the size of square cell and $\frac{\tau k_C}{C_{ext}}$ scales the consumption relative to the external concentration.
+
+
 \section{Metabolic responses} 
+
+
+\section*{Discretization of RD equation}
+\[ \rightarrow \tau \frac{d C}{\partial t}  = d_0^2  \Delta C + \frac{\tau k_C}{C_{ext}} \frac{C}{\frac{Cm}{C_{ext}} + C}  \]  
+\[ \tau C_{i,j,n}  \]
 
 \newpage
 \bibliographystyle{unsrt}

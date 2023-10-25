@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+\section{Introduction}
+Metabolism is one of the core aspect of cancer cell physiology. Indeed it is known that metabolic pathways are part of those undergoing significant reprogramming before during tumorigenesis.
+
+But what is interesting in cancer metabolism is not just the reprogramming itself, but the detail of it. An increased glycolysis rate is one of the most widespread characteristic encountered across cancer cell lines. But the magnitude of it vary between cell lines. MCF-7 cells for example are described as more glycolytic than MDA-MB-435.\cite{Mazurek1997}
+
+The difference can also be qualitative and not just quantitative, so to speak. Indeed while some cells will see their proliferation rate increase when subjected hypoxia, such as the aforementioned MCF-7\cite{Bayar2021}, others will undergo growth arrest.\cite{Waker2018} Some cells may be addicted to a given substrate if they lack the molecular apparatus to make up for its absence.\cite{Jiang2016}
+
+This study aims at using the modelling tool in order to reproduce the main features of the various metabolic behaviors encountered in different cancer cell lines.
+
+
+\section{The model}
+\subsection{The dense radial model}
+the model will be a radial geometry of 10 µm diameter cell on a square grid.
+
+\subsection{The diffusion reaction model}
+In that model, the goal is not so much to model precisely one case as it is to explore possible configurations and their so-called steady-state. In order to do this the nutrients dynamics is heavily simplified based on hypothesis that are detailed in the following
+
+Three species are modelled: Substrate (S),  Product (P) and Oxygen (O)
+Substrate represent anything used by the cell to function, proliferate and move. Product represent one or several species that are rejected into the extracellular medium. Interestingly the product species may also be consumed in some cases. Oxygen is represented specifically for its impact on the electron transport chain both in terms in biosynthesis and energy production 
+
+The equation is usually written as follows : 
+\[ \frac{d [C]}{\partial t}  =  D \Delta [C] + k_C \frac{[C]}{C_m + [C]} \]
+
+It can be non-dimensionalised as by multiplying it a constant homogeneous to a concentration over time. let $d_0$ be the size of the modelled "cell" 
+and $D$ the diffusion coefficient of the medium. Then one can write $\tau  = \frac{d_0^2}{D_{med}}$. The concentration can then be normalized by the external value $[C_{ext}]$. Now if $C = \frac{[C]}{[C_{ext}]}$ then, 
+
+\[ \tau \frac{d C}{\partial t}  = \tau \nabla D \nabla C + \tau  D  \Delta C + \frac{\tau k_C}{C_{ext}} \frac{C}{\frac{Cm}{C_{ext}} + C}  \]
+\[ \rightarrow \tau \frac{d C}{\partial t}  = d_0^2 \nabla \frac{D}{D_{med}} \nabla C + d_0^2 \frac{D}{D_{med}} \Delta C + \frac{\tau k_C}{C_{ext}} \frac{C}{\frac{Cm}{C_{ext}} + C}  \]
+
+written this way $\tau$ is the characteristic diffusion timescale for a cell, $d_0^2$ is the size of square cell and $\frac{\tau k_C}{C_{ext}}$ scales the consumption relative to the external concentration.
+
+\subsection{Modelled Species}
+\subsubsection{Substrate}
+The question of which species to model in that toy model was the first coming to the mind of the author. Glucose seemed like and obvious choice. It is the best known nutrient and the one on which the most data has been gathered both in terms of diffusion and consumption by tissues.\\
+
+However, while all cells consume glucose when it is available, none of them can survive and thrive on glucose only. Cells need sources of glucose, nitrogen, oxygen, phosphate and sulfur in order to maintain and replicate. This is why culture medium for mammalian cells contains many different molecules and vitamin that act both as nutrient sources and also as regulatory toggles that ensure proper survival and proliferation for cultivated cells.\\
+
+All the aforementioned nutrients are present and consumed by living cells for their physiological needs. In some cases, one can replace the other. The most well known case being that glutamine can replace glucose as a carbon source. However, in most cases, if for some reason glucose has depleted significantly, glutamine has also been consumed in the meantime, and even with the switch, is likely to depleted in short order as well. Besides, when medium is supplied it is generally supplied with all nutrients. It can therefore appear irrelevant to treat them separately. But at the same time a model that would model every nutrient would have prohibitive computational cost.\\
+
+In order to account for all the previous fact it has been chosen to encompass all nutrients within a single effective species that diffuses roughly like glucose and is consumed roughly at the same speed. It will be designated as substrate. its role in the model is to support both maintenance and proliferation.\\
+
+\subsubsection{Oxygen}
+Molecular oxygen has a specific role in cell metabolism. It is used as a terminal electron acceptor in the electron transport chain (ETC). Proper function of the electron transport chain is important for ATP production but also for proliferation as some cellular building block synthesis are possible only if the ETC functions.\cite{Martinez2020}\\
+
+It is also known that in case of hypoxia some other molecules can serve as terminal electron acceptor, meaning that proliferation and ATP generation can be maintained in the mitochondria, albeit at a reduced rate.\cite{Spinelli2021}\\
+
+Oxygen is thus modelled due to its role which qualitatively different than that of the substrate in nature.
+
+\subsubsection{Product}
+Cells consume substrate/nutrients in order to generate energy and replicate themselves. However if anabolism can be roughly described as the process of using energy and small molecules in order to form bigger molecules, catabolism is the process by which a molecule is broken in order to extract its chemical potential, possibly through the phosphorylation of ADP into ATP.\\
+
+A good example is the pyruvate that is produced by glycolysis, which is a shorter molecule than glucose. The conversion between the two resulting in the phosphorylation of two ADP into ATP. Glutaminolysis is another possible example.\\
+
+
+\section{Results}
+The goal of this study is to establish qualitative differences more than quantitative ones. Therefore, three configurations are studied. In the first one the distributions of substrate and oxygen in the agregare are set to be relatively similar. In the second case, oxygen is made abundant and in the third case substrate is abundant.\\
+
+In each case growth of the agregate from a single cell is studied for 7 days. In practice after each division the reaction diffusion is solved for both substrate and oxygen until it reaches stability. The oncentration outside of the agregate is kept at the maximum for the sake of simplicity and in order not to model the entirety of the well. Cell states are then updated before the next cycle of divisions.\\
+
+In order to set the relative abundance, only the consumption rates are changed. In reality, it is also likely that substrate diffusion varies between tissue types. Here, it is kept constant for the sake of simplicity. It should \\
+
+\subsection{The "dumb" cell}
+This first case treated is not a realistic one but that is informative nonetheless. The dumb cell is a very simple behavior where the cell consume substrate and oxygen following a Hill function and die when substrate concentration fall beneath a certain concentration. Cell death simply means that consumption is set to zero irreversibly.\\
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/metabolic variety/Simple version/plots/C_dumb.pdf}
+	\caption{number of proliferating and dead cells \label{C_dumb}}
+\end{figure}
+
+First, it is interesting to look at the number of cells. There is a first exponential growth trend, which logically undergoes an inflexion as the cell in the center run out of nutrient and start to die. at long times, a proliferative ring whose width is set by the balance of consumption and diffusion will travel outwards as dead cells fill the available space.\\
+
+\begin{figure}[ht!]
+	\begin{subfigure}{0.45\textwidth}
+	\centering
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/metabolic variety/Simple version/plots/S_dumb.pdf}
+	\caption{ \label{S_dumb}}
+	\end{subfigure}
+	~~
+	\begin{subfigure}{0.45\textwidth}
+	\includegraphics[scale=0.425]{/home/antony/Documents/Post-doc/test_fortran/metabolic variety/Simple version/plots/O_dumb.pdf}
+		\caption{ \label{O_dumb}}
+	\end{subfigure}
+	\caption{Map of the proliferating cells (yellow) with superimposed lines of isoconcentrations of substrate (a) and oxygen (b) \label{dumb}}
+\end{figure}
+
+The consumption values were set so as to obtain similar distribution of substrate and oxygen which is shown to be achieved in figure \ref{dumb}. In order to otbain situations where oxygen and substrate become more available, the consumption are divided by two in order to raise the concentration at the center of the agregate. 
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio_synthese}
+\end{document}
+
+%shedding is approx 100 cells mm² per h 
+%0.5 x 2 donnent une inflexion mais pas une constance... un disque à 2000 cellule doit perde 150 cellules toutes les 24h
+
+% 1mm  de rayon après 21 cycle ce qui donne le bon ordre de grandeur en nb de cellules

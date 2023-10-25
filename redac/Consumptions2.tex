@@ -1,0 +1,408 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+\section{Introduction}
+Modelling metabolism accurately has been an important question for physicists and biologists in the last decades. More specifically the question of cancer has put cellular metabolism on center stage. It is well known that cancer cells tend to be more glycolytic than their "healthy counterparts" meaning they tend to extract significant portion of their ATP, and energy in general, from the glycolysis which is normally contributing very little compared to the other main ATP production mechanism, oxydative phosphorylation (OXPHOS). However, many variants of this behavior and sometimes completely different has been observed evidencing the complexity of the metabolic question.\cite{Berg2006}\\
+
+Physicists and biologists often used modelling studies along experiments in order to try and capture the fondamental ingredients linking metabolism and growth. Most models concerned with nutrient availability and its impact on tissues and especially tumors needs two core pieces of information : The diffusive properties of nutrients and the cellular consumption rates. The latter is the core subject of this study.\\
+
+While several models provided consumption rates values based more or less on experiments or other models , it is known that this value can vary significantly depending not only on the cell line and availability of nutrients, but also relative abundance of nutrients and other biological, chemical, or physical variables in the culture medium. In order to constitute a solid basis for further studies, the authors decided to compile and discuss signficant amounts of data on glucose consumption, lactate production and oxygen consumption.\\
+
+The first logical step before discussing quantitative differences between cell lines is to know how much the studied parameters can vary within a single cell line. This is why this first study is specifically focused on MCF-7 metabolic variables
+
+\section{Glucose consumption \& Lactate production}
+\subsection{Glucose consumption}
+First of all, it is necessary to properly define what is referred to as glucose consumption. On a molecular basis the "consumption" of glucose is made up of several intermediary step. In order to clarify this, the initial situation to imagine is that of glucose diffusing freely near a cell embedded in extracellular matrix. Glucose, along with many other molecules cannot cross the bilipid membranes of the cell on its known. Cell internalise glucose through expression of proteins belonging to the glucose transporter family. As of the writing of this document 12 proteins are known in the GLUT family depending on their location, cell line and expression level in the body. The binding and then transport into the cell by GLUT proteins is what is usually referred to as glucose uptake in the literature when it is distinguished from glucose consumption itself.\cite{Berg2006}\\
+
+Glucose consumption (when distinguished from glucose uptake) refers to the actual chemical transformation of glucose into another molecule. One of the main processes consuming glucose in the cell is glycolysis. Other pathways are the pentose phosphate pathway, glycogen synthesis, and the hexosamine biosynthesis pathway.\cite{Bouche2004} Glycogen synthesis is typically associated with liver, brain and muscle but has been observed in the mCF-7 cell line.\cite{Altemus2019}\cite{Zois2016}\cite{Shen2010} It is important to know the distinction as discussion on the glucose consumption usually specifies which pathway is being looked at. This is also the reason why studying glycolysis rate is not equivalent to studying glucose uptake or glucose consumption. In this study the given value are generally obtained at tissue scale and refer to glucose uptake. But when, lactate production is discussed the distinction becomes important.\\
+
+In the next subsections glucose uptake data is presented for various cell lines. The amount of data available and usable per cell line can vary signficantly. For this reason, some cell line are singled out and treated in isolation in dedicated subsection while those with fewer data points are agregated into a single subsection.
+
+\subsection{Lactate production}
+Similarly to glucose, it is necessary to properly define lactate production and or consumption and provide context as to why it is an important  variable in the context of cancer metabolism.\\
+
+Lactate is often described as a by product of glycolysis. There are in  fact several reaction mechanisms which can result in the production of lactate. \\
+
+The mechanism most studied is the reaction converting the pyruvate produced  by the process of glycolysis, in which the pyruvate is reduced to lactate, regenerating NAD+ converted into NADH by the previous step of glycolysis.\cite{Berg2006}\\
+
+It is important to note that the measurements that are reported here are lactate production in a molecular sense and note the extracellular acidfication rate that is often reported with the oxygen consumption rate as marker of glycolytic activity 
+
+
+\subsection{MCF-7}
+The MCF-7 cell line is the most widely studied mammary cell line. It has been long established and used in cancer studies. This prolonged maintenance and in vitro use has of course led to genetic drift which impacts the relevance of the cell line in some studies. However, those same facts led to this cell line being one of the most characterised. Therefore, a vast amount of data is available on this cell line in terms of glucose and other nutrient uptake and consumption.\\
+
+49 values were found across several studies providing both lactate production  and glucose consumption for different culture conditions. These values will be presented in small groups in different paragraphs  and discussed in that context.
+
+For all studies, the consumption and production values are all reported in mol/cell/s. The ratio are dimensionless. The value of absolute consumption sometimes require assumptions on the working volume and/or cell density
+
+\subsubsection{0.5 mM}
+The parameters that are conserved across all measurements are the following 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\
+\hline
+Gluc. Conc. & 0.5 mM \\
+\hline
+$p_{O_2}$ & 21 \% \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The available results in normoxia at 0.5 mM glucose concentration are presented in the following table 
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{7mm}|p{12mm}|p{12mm}|p{10mm}|p{10mm}|p{21mm}|p{23mm}|p{25mm}| }
+ \hline
+ \textbf{Ref.} & \textbf{Glut. conc.} & \textbf{Serum conc.} (\%) & $p_{CO_2}$ & \textbf{Pyr. conc.} (mM) & \textbf{Glucose cons.} amol/cell/s& \textbf{Lactate prod.} amol/cell/s& \textbf{L/G Ratio} \\
+ \hline
+   \cite{Otto2015} & 0.1 & 2 & 10 & 0  &   6.56 $\pm$  0.77  &19.29  $\pm$  0.77  & 2.94  $\pm$ 0.36  \\
+    \hline
+   \cite{Otto2015} & 1 & 2 & 10 & 0 &   7.72 $\pm$  0.77  & 23.15 $\pm$  0.77& 3 $\pm$  0.32 \\
+   \hline
+  \cite{Mazurek1997} & 2 & 20 & 5 & 4 &   36.11  $\pm$ 0.92 &  56.67 $\pm$  17.78   & 1.57 $\pm$  0.63 \\
+   \hline
+
+\end{tabular}
+\end{center}
+\end{table}
+
+There is a signficant difference in absolute values for consumption and production, which are higher in the study of Mazurek and collaborators (\cite{Mazurek1997}) than in the study of Otto and collaborators (\cite{Otto2015}) for both glucose and lactate.\\
+
+The ratio of lactate production to glucose consumption is, however, lower in the study of Otto and collaborators. So it can be observed that while the concentration of glutamine alone does not significantly impact behavior at low glucose concentration (aside from a slight increase in consumptions), Serum, Pyruvate and potentially CO$_2$ significantly impact the metabolic behavior of MCF-7 by increasing glucose consumption and lactate production but decreasing the amount of lactate relative to glucose consumption.
+
+\subsubsection{1 mM / impact of glutamine}
+The parameters that are conserved across all measurements are the following\\ 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\
+\hline
+Gluc. Conc. & 1 mM \\
+\hline
+$p_{O_2}$ & 21 \% \\
+\hline
+Ser. conc & 2 \% \\
+\hline
+$p_{CO_2}$ & 5 \% \\
+\hline
+Pyr. conc & 0 mM \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The available results in normoxia at 1 mM glucose concentration are presented in the following table 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{7mm}|p{12mm}|p{21mm}|p{23mm}|p{25mm}| }
+ \hline
+ \textbf{Ref.} & \textbf{Glut. conc.}  mM & \textbf{Glucose cons.} amol/cell/s & \textbf{Lactate prod.} amol/cell/s& \textbf{L/G Ratio} \\
+ \hline
+    \cite{Grashei2022} & 0.1 &  18.8 $\pm$  0.9  & 41.4  $\pm$  2.8  & 2.20  $\pm$ 0.18  \\
+    \hline
+   \cite{Gkiouli2019} & 0.1 &  42.6 $\pm$  21.2  & 69.2  $\pm$  34  & 1.62  $\pm$ 0.04  \\
+    \hline
+   \cite{Otto2015} & 0.1 & 11.2 $\pm$  0.08  & 17.7 $\pm$  0.8 & 1.59 $\pm$  0.13 \\
+   \hline
+    \cite{Grashei2022} & 1 &  14.8 $\pm$  0.6  & 31.2  $\pm$  1.9  & 2.10  $\pm$ 0.15  \\
+    \hline
+  \cite{Gkiouli2019} & 1 &   41.8  $\pm$ 26 &  52.3 $\pm$  26   & 1.25 $\pm$  0.06 \\
+   \hline
+  \cite{Otto2015} & 1 &   10.4  $\pm$ 0.7 &  16.2 $\pm$  0.7   & 1.55 $\pm$  0.14 \\
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The absolute values in the experiments of Otto and collaborators (\cite{Otto2015}), Gkiouli(\cite{Gkiouli2019}) and collaborators, and Grashei and collaborators (\cite{Grashei2022}) (which all are from the same group) vary by a factor of 3.\\ 
+
+The experiments of Gkiouli lead to the highest absolute values while the experiments of Otto lead to the smallest values. The main difference identified between the three studies is the point at which the measurement is made. Grashei and Gkiouli used the same protocol but in Gkiouli's paper glucose is measured after 20h and not 3 days. And the lower concentration medium is already glucose depleted depleted. Considering lactate concentration are also practically identical it can be assumed that it would make more sense to normalise in time by a similar duration assuming the system was arrested soon after.\\
+
+%0.8 x 105 cells in 2.5 ml Otto
+%4 × 104 cells/2 mL  Gkiouli (final conc : 0.1|2.05 mM__ 1|1.7 mM)
+%4 × 104 cells/2 mL  Grashei (final conc : 0.1|2.2 mM__ 1|2.1 mM)
+
+The same can be said of lactate to glucose ratio. But it is also interesting to note that increased glutamine decrease the ratio in all cases. if the difference in glucose consumption and lactate production was mostly due to the differences in the experimental protocol, the difference in ratio can only come from the relative variation of both quantities that seems to be inherent to the cell line.
+
+\subsubsection{2.5 mM / impact of glutamine}
+The parameters that are conserved across all measurements are the following\\ 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\
+\hline
+Gluc. Conc. & 2.5 mM \\
+\hline
+$p_{O_2}$ & 21 \% \\
+\hline
+Ser. conc & 2 \% \\
+\hline
+$p_{CO_2}$ & 5 \% \\
+\hline
+Pyr. conc & 0 mM \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The available results in normoxia at 1 mM glucose concentration are presented in the following table 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{7mm}|p{12mm}|p{21mm}|p{23mm}|p{25mm}| }
+ \hline
+ \textbf{Ref.} & \textbf{Glut. conc.}  mM & \textbf{Glucose cons.} amol/cell/s & \textbf{Lactate prod.} amol/cell/s& \textbf{L/G Ratio} \\
+ \hline
+    \cite{Grashei2022} & 0.1 &  32.8 $\pm$  1.5  & 64.5  $\pm$  14.1  & 1.96  $\pm$ 0.43  \\
+    \hline
+   \cite{Gkiouli2019} & 0.1 &  55.1 $\pm$  16.3  & 110.2  $\pm$  0  & 1.24  $\pm$ 0.06  \\
+    \hline
+   \cite{Otto2015} & 0.1 & 23.5 $\pm$  0.8  & 28.9 $\pm$  0.8 & 1.23 $\pm$  0.05 \\
+   \hline
+    \cite{Grashei2022} & 1 &  20.1 $\pm$  0  & 40.9  $\pm$  8  & 2.04  $\pm$ 0.4  \\
+    \hline
+  \cite{Gkiouli2019} & 1 &   61.7  $\pm$ 9.5 &  70.15 $\pm$  0   & 1.14 $\pm$  0.2 \\
+   \hline
+  \cite{Otto2015} & 1 &   16.2  $\pm$ 0.8 &  23.9 $\pm$  0.8   & 1.48 $\pm$  0.08 \\
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+As expected the absolute values of glucose consumption and lactate production increases with the glucose supply and otherwise follow the same dynamic as before.\\
+
+In terms of ratio, what seemed to be a trend of glutamine increasing the lactate to glucose ratio at low glucose concentration is not evident.  
+
+\subsubsection{3-4 mM / impact of glutamine}
+The parameters that are conserved across all measurements are the following\\ 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\
+\hline
+$p_{O_2}$ & 21 \% \\
+\hline
+Ser. conc & 2 \% \\
+\hline
+$p_{CO_2}$ & 5 \% \\
+\hline
+Pyr. conc & 0 mM \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The available results in normoxia at 3-4 mM glucose concentration are presented in the following table 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{7mm}|p{12mm}|p{12mm}|p{21mm}|p{23mm}|p{25mm}| }
+ \hline
+ \textbf{Ref.} & \textbf{Gluc. conc.}  mM & \textbf{Glut. conc.}  mM & \textbf{Glucose cons.} amol/cell/s & \textbf{Lactate prod.} amol/cell/s& \textbf{L/G Ratio} \\
+ \hline
+   \cite{Otto2015} & 3 & 0.1 &   27.0  $\pm$ 0.8 &  28.5 $\pm$  0.8   & 1.06 $\pm$  0.04 \\
+   \hline
+      \cite{Otto2015} & 3 & 1 &   18.1  $\pm$ 0.8 &  27.0 $\pm$  0.8   & 1.67 $\pm$  0.08 \\
+   \hline
+   \cite{Otto2015} & 4 & 0.1 &   36.3  $\pm$ 0.8 &  33.6 $\pm$  0.8   & 0.92 $\pm$  0.03 \\
+   \hline
+      \cite{Otto2015} & 4 & 1 &   26.2  $\pm$ 0.8 &  31.2 $\pm$  0.8   & 1.19 $\pm$  0.04 \\
+   \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+In this concentration range, it is interesting to note that adding glutamine decreases glucose consumption signficantly (and  more at lower glucose concentrations) while lactate production remains at the same level, causing the ratio to increase.
+
+\subsubsection{5-5.5 mM }
+The parameters that are conserved across all measurements are the following\\ 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\
+\hline
+$p_{O_2}$ & 21 \% \\
+\hline
+$p_{CO_2}$ & 5 \% \\ %10 (49 43 32) 5% (2 18 11)
+\hline
+Pyr. conc & 0 mM \\ % 1 (11) 0.5 (18) 4 (20) 
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The available results in normoxia at 3-4 mM glucose concentration are presented in the following table 
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{7mm}|p{11mm}|p{11mm}|p{11mm}|p{11mm}|p{19mm}|p{21mm}|p{21mm}| }
+ \hline
+ \textbf{Ref.} & \textbf{Gluc. conc.}  mM & \textbf{Glut. conc.}  mM & \textbf{Pyr. conc}. (mM) &  \textbf{Ser. conc.}  (\%) & \textbf{Glucose cons.} amol/cell/s & \textbf{Lactate prod.} amol/cell/s& \textbf{L/G Ratio} \\
+ \hline
+ \cite{Otto2015} & 5.5  & 0.1 & 0 & 2 & 46.3 $\pm$ 0.8 & 33.6 $\pm$ 0.8 & 0.73 $\pm$ 0.02 \\
+ \hline
+  \cite{Otto2015} & 5.5 & 1 & 0 & 2 &  34.3 $\pm$ 0.8 & 33.2 $\pm$ 0.8  & 0.96 $\pm$ 0.03 \\
+ \hline
+   \cite{Bayar2021} & 5.5 & 2 & 1 & 10 & 70.4 $\pm$ 35.3 & 128.6 $\pm$ 56.0 & 1.82 $\pm$ 0.8 \\
+ \hline %reprendre tout Bayar
+    \cite{Bartmann2018} & 5 & 2.5 & 0.5 & 10 & 101.3 $\pm$ 38.6 & 332.7 $\pm$ 62.7 & 3.3 $\pm$ 1.4 \\
+ \hline
+     \cite{Mazurek1997} & 5 & 2 & 4 & 20 & 121.7 $\pm$ 0.1 & 305.3 $\pm$ 1.7 & 2.51 $\pm$ 0.03 \\
+ \hline
+      \cite{Hugo1992} & 5 & 2 & 4 & 20 & 1111 & 2778 & 2.5 $\pm$ 2 \\
+ \hline
+ \end{tabular}
+\end{center}
+\end{table}
+Note: in \cite{Hugo1992}, the amount of pyruvate is not reported however pyruvate consumption are given and said data allows to roughly estimate that at least 1-2 mM of pyruvate were present at the beginning of the experiment and considering it was performed by the same group as \cite{Mazurek1997} the concentration of pyruvate will be taken as identical. Same applies for glutamine\\
+
+Note: In \cite{Otto2015}, it is specified that Pyruvate was added in some experiments but it is not specifically mentioned for consumptions exepriments and it is not stated to have any effects on consumption.\\
+
+The increase in Pyruvate, Serum ang glutamine lead to an increase in the lactate production ratio. More specifically the highest ratio is obtained  for 2 mM glutamine, 10 \% and 0.5 Pyruvate.
+
+%use hamadneh2020 pdf
+%MCF-7 24480191 HeLA
+% 
+% Grashei 35406616 glucose and lactate in MCF7
+% Lin2019  30684465 glucose lactate OCR ECAR in mCF7
+% Furman  1525059 ok aussi mais estradiol ?
+%Schornack 2003 (pdf) glucose cons mais MCF-7/s (low serum conditio d'après google)
+%Zancan 2010 (pdf) glucose lactate 
+%Hugo Mazurek 1992 glc (pdf) lactate pdf
+%Robey2005 (pdf) pour la variation sous hypoxie
+%Chen2019 (pdf)
+
+% 29942509 Bartman2018 BT20, BT474, HBL100, MCF-7, MDA-MB 231, MDA-MB 468, and T47D avec tous les ratios lactate ECAR !
+
+%meadows2008 -W 48R
+%MDA-468 chez Kaplan
+%Saulo Penna MCF10A et MDA-MB-231
+%Vander Voorde pour les autres lignées mammaires
+%Gardner regarder les autres lignées
+%WonChoi2014 (pdf) HeLaCells (Glc, O2, Lact)
+\section{Lactate}
+Similarly to glucose, it is necessary to properly define lactate production and or consumption and provide context as to why it is an important  variable in the context of cancer metabolism.\\
+
+Lactate is often described as a by product of glycolysis. There are in  fact several reaction mechanisms which can result in the production of lactate. \\
+
+The mechanism most studied is the reaction converting the pyruvate produced  by the process of glycolysis, in which the pyruvate is reduced to lactate, regenerating NAD+ converted into NADH by the previous step of glycolysis.\cite{Berg2006}\\
+
+It is important to note that the measurements that are reported here are lactate production in a molecular sense and note the extracellular acidfication rate that is often reported with the oxygen consumption rate as marker of glycolytic activity 
+
+\subsection{MCF-7}
+%meadows2008 MCF-7
+%Russell2022 MCF-7
+%Doczi2023 MCF-7/HepG2 PMID: 37402778
+%AL-Humairi2023 MCF-7 (pdf)
+%MCF-7 24480191
+% 15649770 Guppy lactate in hypoxia for MCF-7
+% Patra2021 MCF-7 lactate
+%Shimada 2008 lactate 18298799
+%Vaughan2013 ECAR MCF-7 et MCF-10A 23661584
+% Bartmann 2018
+% lactate glucose ration A549 MCF7 et A427 Prado Garcia
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{ |p{25mm}|p{25mm}|p{20mm}|p{10mm}|p{20mm}|p{10mm}|p{7mm}| }
+ \hline
+
+  \textbf{Glc rep. value} & \textbf{Lac rep.  value} & \textbf{Glucose conc. (g/L)} & $p_{O_2}$ &\textbf{Lactate prod. rate} $\cdot$10$^{17}$ mol cell$^{-1}$ s$^{-1}$  & \textbf{Lac /gluc ratio} & \textbf{Ref}. \\
+ \hline
+     190 fmol/h/c  & 370 fmol/h/c & 4.5-5.5(?) & 21\% & 10.27 & 1.95 & \cite{Meadows2008}\\
+ \hline
+      43.8 nmol/h/1$\cdot$10$^{5}$c  & 109.9 nmol/h/1$\cdot$10$^{5}$c & 0.9 & 21\% & 30.5 & 2.51 & \cite{Mazurek1997}\\
+ \hline
+      13.0 nmol/h/1$\cdot$10$^{5}$c  & 20.4 nmol/h/1$\cdot$10$^{5}$c & 0.09 & 21\% & 5.6 & 1.57  & \cite{Mazurek1997}\\
+ \hline
+       10.0 nmol/h/1$\cdot$10$^{5}$c  & 95.6 nmol/h/1$\cdot$10$^{5}$c & 0.9(AMP) & 21\% & 26.5 & 9.56 & \cite{Mazurek1997}\\
+ \hline
+       0.29 µmol/10$^6$c/h  & 0.5 µmol/10$^6$c/h & 1.8 & 21\% & 13.89 & 1.67 & \cite{Prado-Garcia2020}\\
+ \hline
+        0.26 µmol/10$^6$c/h  & 0.44 µmol/10$^6$c/h & 1.8 & 21\% & 12.2(*) & 1.69 & \cite{Prado-Garcia2020}\\
+ \hline
+         0.47 µmol/10$^6$c/h  & 0.89 µmol/10$^6$c/h & 1.8 & 2\% & 24.72 & 1.89 & \cite{Prado-Garcia2020}\\
+ \hline
+          0.35 µmol/10$^6$c/h  & 0.81 µmol/10$^6$c/h & 1.8 & 2\% & 22.5 & 2.31 & \cite{Prado-Garcia2020}\\
+ \hline
+             &  &  &  &  &  & \cite{Bayar2021}\\
+ \hline
+
+\end{tabular}
+\end{center}
+\end{table}
+
+The case of Mazurek and collaborators study needs to be discussed. When calculating a linear regression, they report a 1.7 lactate to glucose ratio. Interestingly taking the value of consumption taken from their table III, the ratio is 2.5 at 5 mM, while it falls to 1.57 at 0.5 mM. Due to the way it is estimated, the value of 1.7 makes sense. However, a target value of 2 with the assumption that it is the maximum value rest on the hypothesis that lactate is only produced by glycolysis. The results with added AMP further supports this.\textbf{vérifier}
+
+In the works of Prado-Garcia and collaborators, the value of 1.7 mentioned by Mazurek is obtained for normoxic cultures of MCF-7. However, for hypoxic culture the value increases, especially at lower pH.
+
+The study of Bayar and Bildik is interesting because the ratio of lactate production to glucose consumption decreases with increased glucose availability and hypoxia decreases the ratio rather significantly at low glcuose (5.5 mM)
+
+In the study of Bartmann the measured ratios are very high compared to other values and the ratio increases in situation of hypoxia. 
+
+
+\section{Oxygen}
+%Russell2022 OCR
+%28356082 Ariaans OCR/ECAR
+%Gardner basal OCR LNCaP
+% 29942509 Bartman2018 BT20, BT474, HBL100, MCF-7, MDA-MB 231, MDA-MB 468, and T47D (données relatives à cause du OD de merde là) on peut estimer à la louche mais il faudra les autres doubling times
+%Doczi2023 MCF-7/HepG2
+%Lyon2017 28821609 MCF-7 OCR but no ECAR
+%Fiorillo 28411284 basal OCR and ECAR
+%Chu : 33940159 ECAR OCR MCF7
+%Costa 32782546 OCR
+%Radde TAM sensitive MCF7  27515002
+%Makena 35063802 MCF7 OCR
+%Muoio 37461077 ECAR MCF7 en SRB
+% Wang 27559313 ECAR OCR MCF7
+% Parczyk 33931028 MCF7 ECAR OCR
+% Zhong 37267686  MCF7 OCR ECAR
+% Lu 25807077 OCR lactate
+%PPR = proton production rate
+%AL-Humairi2023 et2021 MCF-7 (pdf)
+%Freischel 2021 33649456
+%Reboredo Rodriguez ECAR+OCR MCF-7 2018 Pistachio
+%Radde 2015 OCR EAR (pdf)
+%MCF-7 24480191
+%Gao2020 (pdf) OCR
+%donne des courbes de croissance en fonction de la concentration  de gluose pour MCF-7 et MDA MB machin ET du pH
+%Kim 34876614 OCR MDAmachin
+%Kumar Raut OCR MDA MB 31614178
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio_synthese}
+\end{document}
+
+%Kämmerer bilan global sur beaucoup des lignées étudiées ! 
+% glutamine meadows 2008
+% glutamine cons Mazurek 1997
+
+%growth 
+%Mazurek 1997
+%Kaplan 1990
+
+%garder ça (NADH-Linked Metabolic Plasticity of MCF-7 Breast Cancer Cells Surviving in a Nutrient-Deprived Microenvironment) en tête au moment des discussions
