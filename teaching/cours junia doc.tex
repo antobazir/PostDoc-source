@@ -373,7 +373,7 @@ Soit les quatres fonctions suivantes :
 	\end{tikzpicture}
 \end{center}
 
-On a représenté grahiquement les quatres fonctions précédentes dans la figure ci-dessus. On va maintenant représenter les coefficients de leur série de Fourier dans un graphique comprenant la fréquence de l'harmonique en abscisses et son amplitude en ordonnée.
+On a représenté graphiquement les quatre fonctions précédentes dans la figure ci-dessus. On va maintenant représenter les coefficients de leur série de Fourier dans un graphique comprenant la fréquence de l'harmonique en abscisses et son amplitude en ordonnée.
 
 \begin{center}
 \begin{tikzpicture}
@@ -690,22 +690,73 @@ Le codage consiste à \textbf{quantifier} le signal avec une \textbf{dynamique} 
 	\end{tikzpicture}
 \end{center}
 
-On voit dans la figure précédente deux exemples de quantification de la fonction rampe sur une dynamique à 6 quantas sur la gamme [-3;3]. Dans un cas, on échantillonne par arrondi (vert) et dans l'autre on arrondit par troncature (rouge). On peut aussi imaginer un cas intermédiaire où la valeur du quanta correspondrait au milieu de l'intervalle.\\
+On voit dans la figure précédente deux exemples de quantification de la fonction rampe avec une \textbf{amplitude de crête} de 3 unités et un \textbf{échelon de quantification} d'une unité Dans un cas, on échantillonne par arrondi (vert) et dans l'autre on arrondit par troncature (rouge). On peut aussi imaginer un cas intermédiaire où la valeur de quantification correspondrait au milieu de l'intervalle.\\
 
-Cette approximation systématique induit une erreur et donc un bruit de quantification. Ce bruit de quantification dépend donc de paramètres très important du processus de codage. L'amplitude de codage, l'échelon de quantification et le bruit de quantification.\\
+Généralement, le codage se fait sur des nombres binaires. le nombre de valeurs disponibles est alors généralement donné par le nombre de bit utilisé pour le codage.\\
+
+\textbf{Exercice: Si on code un signal d'une amplitude de crête de 5 volts sur 4 bits, quelle est la valeur de l'échelon de quantification ?}
+
+4 bits binaires permettent de représenter 16 valeurs. L'intervalle [-5; 5] couvre 10 V au total. La solution la plus directe est de diviser la gamme en 10 secteurs égaux et de faire correspondre une des 16 valeurs binaires à chacun. Les secteurs ont une étendue de 0.625 V chacun et on peut diviser la gamme en 2N secteurs.
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|p{20mm}|p{10mm}|p{25mm}|}
+ \hline
+ code binaire &  valeur & amplitude \\
+ \hline
+ 0000 & 0 &  [-5.000;-4.375] \\
+ \hline
+ 0001 & 1 & [-4.375; -3.750]\\
+ \hline
+ 0010 & 2 & [-3.750;-3.125]\\
+ \hline
+ 0011 & 3 & [-3.125;-2.500]\\
+ \hline
+ 0100 & 4 & [-2.500;-1.875]\\
+ \hline
+ 0101 & 5 & [-1.875;-1.250]\\
+ \hline
+ 0110 & 6 & [-1.250;-0.625]\\
+ \hline
+ 0111 & 7 & [-0.625;0.000]\\
+ \hline
+ 1000 & 8 &  [0.000;0.625]\\
+ \hline
+ 1001 & 9 &  [0.625;1.250]\\
+ \hline
+ 1010 & 10 & [1.250;1.875]\\
+ \hline
+ 1011 & 11 & [1.875;2.500]\\
+ \hline
+ 1100 & 12 & [2.500;3.125]\\
+ \hline
+ 1101 & 13 & [3.125;3.750]\\
+ \hline
+ 1110 & 14 & [3.750;4.375]\\
+ \hline
+ 1111 & 15 & [4.375;5.000]\\
+ \hline 
+\end{tabular}
+\end{center}
+\end{table}
+
+Le principe présenté dans la figure précédente s'applique de nouveau ici puisque chaque intervalle ne correspondra qu'à une valeur finale qui peut être sa borne inférieure, sa borne supérieure, ou une valeur intermédiaire. Mais il est important de comprendre qu'à ce stade on a aucun moyen de connaître la valeur plus précisément que ce que permet l'échelon de quantification.\\
+
+
+L'approximation systématique du au codage induit une erreur et donc un bruit de quantification. Ce bruit de quantification dépend donc de paramètres très important du processus de codage. L'amplitude de codage, et l'échelon de quantification.\\
 
 \subsubsection{L'échantillonnage}
+
 \textbf{Question : En quoi consiste pour vous l'opération d'échantillonnage ?}
 
 D'après le livre de Maurice Bellanger : "L’échantillonnage consiste à représenter un signal fonction du temps $s(t)$ par ses
-valeurs $s(nT)$ à des instants multiples entiers d’une durée $T$, appelée période
-d’échantillonnage."\\
+valeurs $s(nT_e)$ à des instants multiples entiers d’une durée $T_e$, appelée période d’échantillonnage."\\
 
 Mathématiquement, l'opération d'échantillonnage s'appuie sur la distribution appelée "peigne de Dirac" et qui est définie comme suit: 
 
-\[ u_T(t) = \sum_{n = -\infty}^{\infty} \delta(t-nT) \]\\
+\[ u_{T_e}(t) = \sum_{n = -\infty}^{\infty} \delta(t-nT_e) \]\\
 
-Le signal échantillonné avec une période $T$ peut alors s'exprimer comme le produit $u_T(t) s(t)$.\\
+Le signal échantillonné avec une période $T_e$ peut alors s'exprimer comme le produit $u_{T_e}(t) s(t)$.\\
 
 \begin{center}
 \begin{tikzpicture}
@@ -728,7 +779,7 @@ Le signal échantillonné avec une période $T$ peut alors s'exprimer comme le p
 \draw (-0.3,-0.3) node {0};
 \draw[->] (0,-3)-- (0,3);
 \draw (5.1,0.25) node {$f$};
-\draw (0,3.5) node {$u_T(t)$};
+\draw (0,3.5) node {$u_{T_e}(t)$};
 %\draw (4.5,-0.3) node {1};
 
 \draw[thick,blue] (-4,-0)-- (-4,1);
@@ -750,7 +801,7 @@ Le signal échantillonné avec une période $T$ peut alors s'exprimer comme le p
 \draw (-0.3,-0.3) node {0};
 \draw[->] (0,-3)-- (0,3);
 \draw (5.1,0.25) node {$f$};
-\draw (0,3.5) node {$u_T(t)s(t)$};
+\draw (0,3.5) node {$u_{T_{e}}(t)s(t)$};
 %\draw (4.5,-0.3) node {1};
 
 \draw[dashed,domain=-4.9:4.9,color=blue,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
@@ -769,13 +820,13 @@ Le signal échantillonné avec une période $T$ peut alors s'exprimer comme le p
 
 Une des premières choses à aborder dans ce cas est l'impact de l'opération d'échantillonnage sur le spectre du signal:\\
 
-\[ TF (\sum_{n = -\infty}^{\infty} s(t)\delta(t-nT)) = \sum_{n = -\infty}^{\infty} TF(s(t)\delta(t-nT) ) \]
+\[ TF (\sum_{n = -\infty}^{\infty} s(t)\delta(t-nT_e)) = \sum_{n = -\infty}^{\infty} TF(s(t)\delta(t-nT_e) ) \]
 
-\[ \sum_{n = -\infty}^{\infty} TF(s(t)\delta(t-nT) ) = \sum_{n = -\infty}^{\infty} S(f) \star e^{- 2j\pi n T f} \]\\
+\[ \sum_{n = -\infty}^{\infty} TF(s(t)\delta(t-nT_e) ) = \sum_{n = -\infty}^{\infty} S(f) \star e^{- 2j\pi n T_e f} \]\\
 
 Pour aller plus loin il faut savoir que : 
 
-\[ \sum_{n = -\infty}^{\infty} e^{- 2j\pi n T f} = \frac{1}{T} \sum_{n = -\infty}^{\infty} \delta(f - \frac{n}{T}) \]\\
+\[ \sum_{n = -\infty}^{\infty} e^{- 2j\pi n T_e f} = \frac{1}{T_e} \sum_{n = -\infty}^{\infty} \delta(f - \frac{n}{T}) \]\\
 
 Et que 
 
@@ -783,9 +834,9 @@ Et que
 
 Ce qui mène à 
 
-\[ TF (\sum_{n = -\infty}^{\infty} s(t)\delta(t-nT)) = \frac{1}{T}\sum_{n = -\infty}^{\infty} S(f) \star \delta(f - \frac{n}{T})\]
+\[ TF (\sum_{n = -\infty}^{\infty} s(t)\delta(t-nT_e)) = \frac{1}{T}\sum_{n = -\infty}^{\infty} S(f) \star \delta(f - \frac{n}{T_e})\]
 
-La dernière expression traduit le fait que le spectre se répète dans l'espace des fréquences avec une période de $\frac{1}{T}$.\\
+La dernière expression traduit le fait que le spectre se répète dans l'espace des fréquences avec une période de $\frac{1}{T_e}$.\\
 
 On va continuer avec l'exemple de la fonction $ g_5(t) = \cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3})$ dont on retrace le module du spectre dans  la figure suivante.
 
@@ -814,12 +865,202 @@ On va continuer avec l'exemple de la fonction $ g_5(t) = \cos(2 t) + 0.45 \cos(4
 	\end{tikzpicture}
 \end{center}
 
-\textbf{Question: Que doit-on avoir à l'esprit  lors du choix de la période d’échantillonnage ?}
+\textbf{Question: Que doit-on avoir à l'esprit  lors du choix de la période d’échantillonnage ?}\\
 
 Lors de l'échantillonnage, on doit conserver l'information, mais aussi optimiser la quantité de données à gérer dans la plupart des cas.\\
 
-Le théorème de Nyquist-Shannon dit : \textbf{"La représentation discrète d'un signal exige des échantillons régulièrement espacés à une fréquence d'échantillonnage supérieure au double de la fréquence maximale présente dans ce signal."}
+Le théorème de Nyquist-Shannon dit : \textbf{"La représentation discrète d'un signal exige des échantillons régulièrement espacés à une fréquence d'échantillonnage supérieure au double de la fréquence maximale présente dans ce signal."}\\
 
-Visuellement, il faut se figurer que la fréquence la plus élevée dans la norme du spectre donne la largeur du spectre et que ce spectre est répliqué avec sa largeur complète à TOUS les multiples de la fréquence d'échantillonnage
+Visuellement, il faut se figurer que la fréquence la plus élevée dans la norme du spectre donne la largeur du spectre. Dans le domaine temporel, cela se comprend de la façon suivante la variation avec la plus petite échelle temporelle n'est conservée que si la période d'échantillonnage permet d'en isoler au moins 2 points.\\
+
+Lors de l'échantillonnage, le spectre est répliqué avec sa largeur complète à TOUS les multiples de la fréquence d'échantillonnage.\\
+
+\textbf{Question: Quelle est la gamme de fréquences d'échantillonnage garantissant le respect de Nyquist-Shannon pour le signal $g5(t)$?}\\
+
+Dans le cas de la fonction $g_5(t) = \cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3})$, on a vu dans la figure précédente que le spectre en amplitude présente deux raies. la fréquence maximale correspond donc à celle de la 2e raie : $\frac{2}{\pi}$. Le double de cette fréquence maximale donne donc $f_e = \frac{4}{\pi}$, et donc une période de $\frac{\pi}{4}$\\
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-5,0)-- (5,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {$f$};
+\draw (0,3.5) node {$u_{T_{e}}(t)s(t)$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[dotted,domain=-4.9:4.9,color=blue,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+
+\draw[thick,blue] (-4.74,-0)-- (-4.74,-0.55);
+\draw[thick,blue] (-3.95,-0)-- (-3.95,-0.60);
+\draw[thick,blue] (-3.16,-0)-- (-3.16,1.6);
+\draw[thick,blue] (-2.37,-0)-- (-2.37,-0.45);
+\draw[thick,blue] (-1.58,-0)-- (-1.58,-0.65);
+\draw[thick,blue] (-0.79,-0)-- (-0.79,-0.65);
+\draw[thick,blue] (0,-0)-- (0,1.5);
+\draw[thick,blue] (0.79,-0)-- (0.79,-0.45);
+\draw[thick,blue] (1.58,-0)-- (1.58,-0.6);
+\draw[thick,blue] (2.37,-0)-- (2.37,-0.25);
+\draw[thick,blue] (3.16,-0)-- (3.16,1.55);
+\draw[thick,blue] (3.95,-0)-- (3.95,-0.45);
+\draw[thick,blue] (4.74,-0)-- (4.74,-0.7);
+
+\draw[dashed,cyan] (-4.74,-0.55)-- (-3.95,-0.6)--(-3.95,-0.6)--(-3.16,1.6)--(-2.37,-0.45)--(-1.58,-0.65)--(-0.79,-0.65)--(0,1.5)--(0.79,-0.45)--(1.58,-0.6)--(2.37,-0.25)--(3.16,1.55)--(3.95,-0.45)--(4.74,-0.7);
+
+	\end{tikzpicture}
+\end{center}
+
+On voit bien si on représente la fonction échantillonnée que le respect strict ou minimal de la condition de Nyquist-Shannon donne lieu à une reconstruction qui peut paraître assez éloignée de la fonction initiale.  
+\\
+
+On peut également représenter le spectre en amplitude du signal échantillonnée. On rappelle que l'échantillonnage à une fréquence consiste à périodiser le spectre en fréquence avec une période de $f_e$. On va donc représenter ce spectre en amplitude dans la figure suivante.\\
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-7,0)-- (7,0);
+\draw (-0,-0.3) node {0};
+\draw[->] (0,0)-- (0,3);
+\draw (7.1,0.25) node {$f$};
+\draw (0,3.5) node {$|S(f)|$};
+%\draw (4.5,-0.3) node {1};
+
+
+\draw[thick,blue] (1.05,0)-- (1.05,2.5*0.55);
+\draw[thick,blue] (2.05,0)-- (2.05,2.5*0.45);
+\draw (2.1,-0.4) node {$\frac{2}{\pi}$};
+\draw (1.1,-0.4) node {$\frac{1}{\pi}$};
+
+\draw[thick,blue] (-1.05,0)-- (-1.05,2.5*0.55);
+\draw[thick,blue] (-2.05,0)-- (-2.05,2.5*0.45);
+\draw (-2.1,-0.4) node {$-\frac{2}{\pi}$};
+\draw (-1.1,-0.4) node {$-\frac{1}{\pi}$};
+
+
+%replica 1
+\draw[thick,cyan] (5.05,0)-- (5.05,2.5*0.55);
+\draw[thick,cyan] (6.05,0)-- (6.05,2.5*0.45);
+\draw (5.1,-0.4) node {$\frac{5}{\pi}$};
+\draw (6.1,-0.4) node {$\frac{6}{\pi}$};
+
+\draw[thick,cyan] (3.05,0)-- (3.05,2.5*0.55);
+\draw[thick,cyan] (2.08,0)-- (2.08,2.5*0.45);
+\draw (3.1,-0.4) node {$\frac{3}{\pi}$};
+%\draw (2.1,-0.4) node {$\frac{1}{\pi}$};
+\draw (4.1,-0.4) node {$\frac{4}{\pi}$};
+
+
+%replica 2
+\draw[thick,cyan] (-5.05,0)-- (-5.05,2.5*0.55);
+\draw[thick,cyan] (-6.05,0)-- (-6.05,2.5*0.45);
+\draw (-5.1,-0.4) node {$-\frac{5}{\pi}$};
+\draw (-6.1,-0.4) node {$-\frac{6}{\pi}$};
+
+\draw[thick,cyan] (-3.05,0)-- (-3.05,2.5*0.55);
+\draw[thick,cyan] (-2.08,0)-- (-2.08,2.5*0.45);
+\draw (-3.1,-0.4) node {$-\frac{3}{\pi}$};
+%\draw (2.1,-0.4) node {$\frac{1}{\pi}$};
+\draw (-4.1,-0.4) node {$-\frac{4}{\pi}$};
+
+
+	\end{tikzpicture}
+\end{center}
+
+Le spectre en amplitude permet de comprendre la notion de \textbf{repliement spectral}. Si on respecte le théorème de Nyquist-Shannon strictement on voit que les extrémités des répliques dues à l'échantillonnage sont quasiment confondues. Et donc si on choisit une fréquence d'échantillonnage inférieure, on va se retrouver avec des spectres qui se mélangent. Dans le domaine temporel cela va évidemment correspondre à des échantillons ne permettant pas de capturer toutes les caractéristiques du signal.\\
+
+\subsubsection{Propriétés des signaux échantillonnés: Cas usuels}
+% Kronecker
+% signal échelon 
+% etc...
+
+\subsection{La transformée en Z}
+Une outil mathématique particulièrement important en traitement du signal/filtrage numérique est la transformée en Z .\\
+
+\textbf{Question: Que vous évoque la notion de transformée en Z ?}\\
+
+La transformée en Z est définie de la façon suivante :
+
+\[\sum_{n = 0}^{\infty} s_{T_e}(n) z^{-n}\] 
+
+On la compare généralement à la transformée de Laplace. L'intégrale (somme continue) est remplacée par une somme discrète, et le terme exponentiel est remplacé par $z^{-n}$ C'est ce terme qui donne son à la transformée en Z. Tout comme $p$ dans la transformée de Laplace, $z$  est une variable \textbf{complexe}. Il est important de noter que le fait que la somme soit infinie oblige la variable $z$ à avoir un module inférieur à 1 pour converger.\\
+
+La comparaison avec la transformée de Laplace vient surtout du fait que la transformée en Z a des propriétés sur des signaux discrets très similaires à celle de la transformée de Laplace pour les signaux continus. C'est ce qu'on va illustrer dans les sous-parties suivantes.\\
+
+\subsubsection{Transformée en Z des fonctions usuelles}
+
+\textbf{Exercice: Calculez les transformées en Z des quatre suites suivantes}
+\begin{enumerate}
+\item $\delta[n]$
+\item $u[n]$
+\item $nu[n]$
+\item $sin(\omega_0 n)u(n)$
+\end{enumerate} 
+
+\textbf{1. $\delta[n]$}
+\[\sum_{n = 0}^{\infty} \delta[n] z^{-n}\] \\
+
+$\delta[n]$ est la suite définie comme prenant la valeur 1 pour l'échantillon d'index 0 et 0 sur tous les autres points. Donc,\\
+
+\[\sum_{n = 0}^{\infty} \delta[n] z^{-n} = z^0 = 1 \]\\
+
+\textbf{2. $u[n]$}
+
+$u[n]$ est la suite définie comme prenant la valeur 1 pour l'échantillon d'index 0 et tous les suivants. Donc,\\
+
+\[\sum_{n = 0}^{\infty} u[n] z^{-n} = \sum_{n = 0}^{\infty} z^{-n}  = \frac{1}{1-z^{-1}} \]\\
+
+La dernière étape est un résultat connu sur la série géométrique convergente. Ce résultat n'est d'ailleurs vraie que si la valeur absolue ou le module de la raison de la suite (ici, $z$) est strictement inférieur à 1. 
+
+\textbf{3. $nu[n]$}
+
+ $nu[n]$ est l'équivalent discret de la fonction rampe.\\
+ 
+
+\[\sum_{n = 0}^{\infty} n u[n] z^{-n} = \sum_{n = 0}^{\infty} n z^{-n}  = \frac{z^{-1}}{(1-z^{-1})^2} \]\\ 
+
+Dans ce cas, la valeur de la somme peut se démontrer en utilisant une méthode analogue au cas précédent mais cette fois dans le cas d'une suite arithmético-géométrique.
+
+%proof : https://en.wikipedia.org/wiki/Arithmetico-geometric_sequence#Sum_of_the_terms
+
+
+\subsubsection{Propriétés de la transformée en Z}
+
+\textbf{Exercice : démontrer la linéarité de la transformée en Z}\\
+
+soit $x(n) = a x_1(n) + b x_2(n)$, alors,
+
+\[X(z) = \sum_{n = 0}^{\infty} x(n) z^{-n}\] 
+
+\[X(z) = \sum_{n = 0}^{\infty} (a x_1(n) + b x_2(n)) z^{-n}\] 
+
+\[X(z) = a \sum_{n = 0}^{\infty} x_1(n)  z^{-n} + b \sum_{n = 0}^{\infty} x_2(n) \] 
+
+\[X(z) = a X_1(z)+ b X_2(z) \] 
+
+\textbf{Exercice : Calcular la trasnformée en Z de $x_1(t) \star x_2(t)$}\\
+
+
+\subsection{La transformée de Fourier discrète (TFD)}
+
+\textbf{Question: Que vous évoque la notion de transformée de Fourier Discrète ?}
+
+Dans la sous-partie précédente on a présenté la transformée en Z. La transformée de Fourier discrète est une notion un peu différente.
+
+
+
+\subsubsection{Les convertisseurs}
+
+\subsection{Conclusion Rappels}
+Dans cette section sur les fondamentaux, on a rappelé des définitions importantes en traitement du signal et on les replacés dans le contexte du traitement du signal numérique et des chaînes d'instrumentation.\\
+
+On a rappelé les notions d'invariance dans le temps et de linéarité des filtres et leur importance dans l'établissement de la relation de convolution.\\
+
+On a rappelé les définitions des transformées de Fourier et de Laplace, leur propriétés ainsi que quelques transformées usuelles par le biais d'exemple.\\
+
+On a ensuite abordé les notions importantes de codage et d'échantillonnage pour passer un signal du domaine temporel continu au domaine temporel discret. On a pu voir l'impact de l'échantillonnage sur le spectre en amplitude et on a rappelé l'importance du théorème de Nyquist-Shannon. \\
+pur finir on a discuté des propriétés particulières des signaux échantillonnés et on a les comparés à celles de signaux continus équivalents.\\
+
+
+
 
 \end{document}
