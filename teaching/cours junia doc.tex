@@ -157,6 +157,8 @@ Les fonctions d'entrée et de sortie et la réponse impulsionnelle, sont alors r
 
 Les concepts mathématiques introduits dans les paragraphes précédents constituent la base sur laquelle reposent presque intégralement les notions qui vont être présentées dans les sections suivantes de ce cours.
 
+\section{Outils et concepts Mathématiques}
+
 \subsection{Transformée de Laplace} 
 
 \textbf{Question: Que vous évoque la transformée de Laplace ? à quoi sert-elle ?}\\
@@ -1037,14 +1039,59 @@ soit $x(n) = a x_1(n) + b x_2(n)$, alors,
 
 \[X(z) = a X_1(z)+ b X_2(z) \] 
 
-\textbf{Exercice : Calcular la trasnformée en Z de $x_1(t) \star x_2(t)$}\\
+\textbf{Exercice : Calculer la transformée en Z de $x_1(n) \star x_2(n)$}\\
 
+Dans un premier temps il faut établir ce qu'est la convolution  de deux signaux discrets.
+
+\[ x_1(n) \star x_2(n)=  \sum_{k = -\infty}^{\infty} x_1(n-k)x_2(n) \]
+
+Cette définition est analogue à celle de la convolution dans le domaine continu. On peut ensuite appliquer la transformée en Z. La démonstration est simple mais pas forcément intuitive.
+
+\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} \sum_{k = -\infty}^{\infty} x_1(n-k)x_2(n) z^{-n}\]
+
+On peut alors réécrire la variable de la transformée en z sous une autre forme sans changer l'égalité.
+
+\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} \sum_{k = -\infty}^{\infty} x_1(n-k)x_2(k) z^{-k}  z^{-(n-k)}\]
+
+Puisque $k$ peut prendre n'importe quelle valeur on peut le réécrire sous la forme d'un entier unique $m$ 
+
+\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} \sum_{m = -\infty}^{\infty} x_1(m)x_2(k) z^{-k}  z^{-(m)}\]
+
+On a donc une expression où on peut regrouper les sommes dans deux produits.
+
+\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} x_2(k)z^{-k} \sum_{m = -\infty}^{\infty} x_1(m)   z^{-(m)}\]
+
+\[ TZ(x_1(n) \star x_2(n)) = TZ(x_1) TZ(x_2)\]
 
 \subsection{La transformée de Fourier discrète (TFD)}
 
-\textbf{Question: Que vous évoque la notion de transformée de Fourier Discrète ?}
+\textbf{Question: Que vous évoque la notion de transformée de Fourier Discrète ?}\\
 
-Dans la sous-partie précédente on a présenté la transformée en Z. La transformée de Fourier discrète est une notion un peu différente.
+Dans la sous-partie précédente on a présenté la transformée en Z. La transformée de Fourier discrète est une notion un peu différente. En effet la transformée de Fourier Discrète est utilisée spécifiquement dans le cadre des calculs de transformée de Fourier à l'aide de calculateur numérique et découle d'un fait simple: \textbf{Les calculateurs numériques ne peuvent pas sommer à l'infini.}\\
+
+En effet sur un calculateur numérique on doit numériser le signal, mais cela veut dire que si on fait des calculs sur son spectre ce dernier doit également être numérisé, c'est-à-dire échantillonné et codé. Donc si on repart de la transformée de Fourier d'un signal $s(t)$ :\\
+
+\[TF{s}(\omega) = S(f) = \int^{\infty}_{-\infty} s(t) e^{-j 2\pi f t} \; dt\]\\
+
+Cette transformée continue devient alors :
+
+
+\[ S*(k \Delta f) = \sum_{n = 0}^{N-1} s(nT_e) e^{-j 2\pi k \delta f t} \; dt\]\\
+
+à ce stade, aucune relation explicite n'est établie entre le pas en fréquence $\Delta f$ et la période d'échantillonnage...\\
+
+\textbf{Question: Quelle expression vous semble la plus appropriée pour $\delta f$ ?}\\
+
+Pour rappel, il s'agit de l'échantillonnage du \textbf{spectre d'un signal échantillonné.} Cela signifie le spectre du signal $s(t)$ est dupliqué intégralement à intervalles de $\frac{1}{T_e}$. De la même manière qu'il semble logique d'échantillonné un signal périodique avec plus d'un point par période dans le domaine temporel, un échantillonnage en fréquence doit également fournir au moins deux points par "période de spectre".\\
+
+Par ailleurs, si on dispose de $N$ valeurs pour le signal temporel, il semble logique d'avoir également $N$ valeurs pour la fréquence. Dans ce cas la valeur la plus logique est : $\Delta f = \frac{1}{NT}$\\
+
+Une perspective intéressante est alors de s'intéresser à l'échantillonnage en fréquence. De la même manière qu'un signal échantillonné voit son spectre périodisé dans l'espace des fréquence, un spectre échantillonné correspond à la périodisation du signal temporel. Quand on échantillonne à une période $T_e$ on période le spectre à $\frac{1}{T_e}$. Quand on échantillonne un spectre à $\frac{1}{NT_e}$, on périodise le signal à $NT_e$, ce qui correspond en général à la fenêtre de capture du signal.\\
+
+Il est également intéressant de noter que puisqu'on travaille désormais sur des spectres échantillonnés, on travail sur des signaux périodisés. Et dans ce cas la TFD, redevient équivalente à la série de Fourier introduite plutôt.\\
+
+
+\textbf{Schém}
 
 
 
@@ -1059,6 +1106,244 @@ On a rappelé les définitions des transformées de Fourier et de Laplace, leur 
 
 On a ensuite abordé les notions importantes de codage et d'échantillonnage pour passer un signal du domaine temporel continu au domaine temporel discret. On a pu voir l'impact de l'échantillonnage sur le spectre en amplitude et on a rappelé l'importance du théorème de Nyquist-Shannon. \\
 pur finir on a discuté des propriétés particulières des signaux échantillonnés et on a les comparés à celles de signaux continus équivalents.\\
+
+\section{Filtres numériques : Généralités}
+On rappelle qu'un filtre numérique va lier une entrée $x(n)$ à une sortie $y(n)$. On avait discuté plus tôt l'importance capitale des propriétés de linéarité et de l'invariance dans le temps puisque ces conditions sont des pré-requis au fait que le filtre/système puisse être décrit par sa seule réponse impulsionnelle.\\
+
+\textbf{Question: Rappelez pour une filtre linéaire invariant dans le temps discret l'équation liant l'entrée et la sortie}\\
+
+\[ y(n) = \sum_{m = 0}^{N-1} h(m) x(n-m) \]\\
+
+On rappelle que dans le cadre des systèmes linéaires et invariants dans le temps, $h(m)$ est la réponse impulsionnelle du filtre discret qui le caractérise entièrement.
+
+
+\subsection{Notion de récursivité et équation de récurrence} 
+La réponse impulsionnelle peut faire intervenir des valeurs de la suite d'entrée $x(n)$, mais aussi la suite de sortie $y(n)$.\\
+
+
+\begin{center}
+	\begin{tikzpicture}
+	%\draw (2.15,-1.5) node {Glc};
+	%\draw[->] (2.15,-1)-- (2.15,-0.5);
+	%\draw (1.25,-0.5) rectangle(3,0.5);
+	\draw (2.15,0) node {$x(n)$};
+	%\draw[->] (2.15,0.5)-- (2.15,1);
+	%\draw (2.15,1.5) node {ATP};
+	
+	\draw[->] (2.75,0)-- (3.5,0);
+	\draw (3.5,-0.5) rectangle(5.5,0.5) ;
+	\draw (4.5,0) node {$h(n)$};
+	%\draw[->] (4.5,0.5) arc(90:60:0.5);
+	%\draw[->] (4.5,-0.5) arc(-90:-120:0.5);
+	%\draw[->] (4.5,-1)-- (4.5,-0.5);
+	%\draw (4.5,-1.5) node {Glt};
+	%\draw[->] (4.5,0.5)-- (4.5,1);
+	%\draw (4.5,1.5) node {ATP};
+	
+	\draw[->] (5.5,0)-- (6,0);
+	%\draw[->] (6,-0.5) rectangle(7,0.5); 
+	\draw (6.5,0) node {$y(n)$};
+	%\draw[->] (6.5,-1)-- (6.5,-0.5);
+	%\draw (6.5,-1.5) node {O$_2$};
+	%\draw[->] (6.5,0.5)-- (6.5,1);
+	%\draw (6.5,1.5) node {ATP};
+	\draw (4.5,-2) node {filtre non-récursif};
+	
+	
+		%\draw (2.15,-1.5) node {Glc};
+	%\draw[->] (2.15,-1)-- (2.15,-0.5);
+	%\draw (1.25,-0.5) rectangle(3,0.5);
+	\draw (8.15,0) node {$x(n)$};
+	%\draw[->] (2.15,0.5)-- (2.15,1);
+	%\draw (2.15,1.5) node {ATP};
+	
+	\draw[->] (8.75,0)-- (9.5,0);
+	\draw (9.5,-0.5) rectangle(11.5,0.5) ;
+	\draw (10.5,0) node {$h(n)$};
+	%\draw[->] (4.5,0.5) arc(90:60:0.5);
+	%\draw[->] (4.5,-0.5) arc(-90:-120:0.5);
+	%\draw[->] (4.5,-1)-- (4.5,-0.5);
+	%\draw (4.5,-1.5) node {Glt};
+	%\draw[->] (4.5,0.5)-- (4.5,1);
+	%\draw (4.5,1.5) node {ATP};
+	
+	\draw[->] (11.5,0)-- (12,0);
+	%\draw[->] (6,-0.5) rectangle(7,0.5); 
+	\draw (12.5,0) node {$y(n)$};
+	%\draw[->] (6.5,-1)-- (6.5,-0.5);
+	%\draw (6.5,-1.5) node {O$_2$};
+	%\draw[->] (6.5,0.5)-- (6.5,1);
+	%\draw (6.5,1.5) node {ATP};
+	\draw (10.5,-2) node {filtre récursif};
+	
+	\draw[-] (11.75,0)-- (11.75,-1);
+	\draw[-] (11.75,-1)-- (10.5,-1);
+	\draw[->] (10.5,-1)-- (10.5,-0.5);
+	\end{tikzpicture}
+\end{center}
+
+Un exemple très simple de filtre non-récursif est le filtre défini par la relation :
+
+\[ y(n) = \frac{x(n) + x(n-1)}{2}  \]\\
+
+De la même manière une filtre récursif très simple peut être défini de la manière suivante.\\
+
+\[ y(n) = \frac{x(n) + y(n-1)}{2}  \]\\
+
+Cette catégorisation va rester importante tout au long de ce cours car ces deux familles de filtres ont des propriétés assez différentes, notamment en terme de stabilité.\\
+
+Cette façon d'écrire la sortie du filtre à l'échantillon $n$ en fonction des échantillons de sortie et d'entrée à d'autres instants s'appelle \textbf{l'équation de récurrence du filtre} et c'est une des trois manières de définir un filtre linéaire invariant dans le temps.  
+
+\subsection{Notion de fonction de transfert et réponse impulsionnelle} 
+
+\textbf{Question: Que vous évoque la notion de fonction de transfert ?}\\
+
+Pour les systèmes continus invariant linéaires dans le temps, la fonction de transfert est définie comme le rapport de la transformée de Laplace du signal de sortie et du signal d'entrée : $H(s) = \frac{Y(s)}{X(s)}$. Dans le cas d'un système discret on définit la fonction de transfert comme le rapport de la transformée en Z de la suite de sortie et de la suite d'entrée: $H(z) = \frac{Y(z)}{X(z)}$\\
+
+Il s'avère par ailleurs que la fonction de transfert du filtre est tout simplement la transformée de Fourier de sa réponse impulsionnelle. En effet, les systèmes discrets linéaires invariants dans le temps sont définis comme suit:\\
+
+\[ y(n) = \sum_{m = 0}^{N-1} h(m) x(n-m) =  h(n)\star x(n) \]\\ 
+
+Si on prend la transformée en Z de cette relation on obtient l'équation suivante :
+
+\[ Y(z) = TZ(h(n)\star x(n)) =  H(z) X(z) \rightarrow  H(z) = \frac{Y(z)}{X(z)}\]\\ 
+
+\textbf{Exercice: Calculer la fonction de transfert des filtres caractérisés par les équations de récurrence suivantes :}\\
+\begin{enumerate}
+\item  $y_1(n) = \frac{x_1(n) + x_1(n-1)}{2}$
+\item  $y_2(n) = \frac{x_2(n) + y_2(n-1)}{2}$
+\end{enumerate}
+
+
+\textbf{1. $y_1(n) = \frac{x_1(n) + x_1(n-1)}{2}$}
+
+
+On sait déjà que la fonction de transfert s'établit, non pas sur les suites, mais sur la transformée en Z dans le cas des signaux discrets. On commence donc par appliqué la transformée en Z à l'équation de récurrence:\\
+
+\[ y_1(n) = \frac{x_1(n) + x_1(n-1)}{2} \rightarrow Y_1(z) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \]
+
+\[ Y_1(z) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \rightarrow Y_1(z) = X_1(z)\frac{(1 + z^{-1})}{2}  \]
+
+\[  \rightarrow \frac{Y_1(z)}{X_1(z)} = H_1(z) = \frac{(1 + z^{-1})}{2}  \]\\
+
+\textbf{2. $y_2(n) = \frac{x_2(n) + y_2(n-1)}{2}$}
+
+
+On sait déjà que la fonction de transfert s'établit, non pas sur les suites, mais sur la transformée en Z dans le cas des signaux discrets. On commence donc par appliqué la transformée en Z à l'équation de récurrence:\\
+
+\[ y_2(n) = \frac{x_2(n) + y_2(n-1)}{2} \rightarrow Y_2(z) = \frac{X_2(z) + Y_2(z)z^{-1}}{2} \]
+
+\[ Y_2(z) = \frac{X_2(z) + Y_2(z)z^{-1}}{2} \rightarrow Y_2(z)(1-\frac{z^{-1}}{2}) = \frac{X_2(z)}{2}  \]
+
+\[  \rightarrow \frac{Y_2(z)}{X_2(z)} = H_2(z) = \frac{1}{2}\frac{1}{(1 - \frac{z^{-1}}{2})}  \]\\
+
+
+Arrêtons nous quelques instants pour discuter de la forme des fonctions de transferts de ces deux filtres. Dans le cas du filtre non-récursif, on constate que les termes en $z$ (qui traduisent l'intervention d'échantillons plus ou moins retardés dans la réponse du système) sont tous au numérateur. alors que dans le cas du filtre récursif récursive, il y en a également au dénominateur. On note alors que dans le cas du filtre récursif, si $z{-1}$ prend un valeur qui annule le dénominateur la fonction de transfert diverge. C'est une des signes d'instabilité. 
+
+\textbf{Exercice: Calculer la réponse impulsionnelle des filtres au fonction de transferts suivantes :}
+\begin{enumerate}
+\item  $H_1(z) = \frac{(1 + z^{-1})}{2}$
+\item  $H_2(z) = \frac{1}{2}\frac{1}{(1 - \frac{z^{-1}}{2})}$
+\end{enumerate}
+
+\textbf{1. $H_1(z) = \frac{(1 + z^{-1})}{2}$}\\
+
+La transformée en Z étant linéaire, on peut traiter chaque terme de la somme séparément.\\
+
+On sait que la fonction dont la transformée en Z est la fonction unité est l'impulsion de Kronecker $\delta(n)$. Le premier terme correspond donc à $\frac{\delta(n)}{2}$.\\
+
+On sait également que la transformée d'un signal retardé de k échantillon revient à multiplier $ z^{-k}$. Ce terme en $ z^{-k}$ correspond donc à une terme dont la transformée en Z est la fonction unité retardé d'un échantillon, c'est-à-dire $\frac{\delta(n-1)}{2}$.\\
+
+Donc au final on obtient : 
+
+\[h_1(n) = \frac{\delta(n)}{2} - \frac{\delta(n-1)}{2}\]\\
+
+Dans ce cas précis, il est intéressant de faire le même exercice en partant cette fois de l'équation de récurrence. Pour ce faire on reprend l'équation de récurrence en remplaçant $x(n)$, le signal d'entrée par une impulsion de Kronecker. On obtient alors exactement la même expression que précédemment.\\ 
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (-0,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.5);
+\draw (3.1,0.25) node {$n$};
+\draw (0,2) node {$h_1(n)$};
+%\draw (4.5,-0.3) node {1};
+
+
+
+\draw[->,blue,thick](-3,0)--(-3,0);
+\draw[->,blue,thick](-2,0)--(-2,0);
+\draw[->,blue,thick](-1,0)--(-1,0);
+\draw[->,blue,thick](0,0)--(0,0.5);
+\draw[->,blue,thick](1,0)--(1,0.5);
+\draw[->,blue,thick](2,0)--(2,0);
+\draw[->,blue,thick](3,0)--(3,0);
+
+
+\end{tikzpicture}
+\end{center}
+
+
+\textbf{2. $H_2(z) = \frac{1}{2}\frac{1}{(1 - \frac{z^{-1}}{2})}$}\\
+
+Dans ce cas, si on reprend le tableau des transformées usuelles on constate que $H_2(z)$ est à un facteur près, précisément la transformée en Z de la fonction échelon unité $u(n)$. Donc, 
+
+\[h_2(n) = \frac{-0.5^n u(n)}{2}\]\\
+
+Dans ce cas calculer cette réponse directement à partir de l'équation de récurrence est moins direct que dans le cas du filtre non-récursif. En effet si on remplace $x(n)$, le signal d'entrée par une impulsion de Kronecker dans l'équation de récurrence, on obtient :
+
+\[h_2(n) = \frac{\delta(n) + h_2(n-1)}{2}\]\\
+
+Pour pouvoir poursuivre il faut calculer $h_2(n)$ sur quelques échantillons. Pour $n$ négatif, on sait que l'entrée est nulle et l'échantillon précédent également. Pour $n=0$, l'entrée prend la valeur 1 mais l'échantillon précédent vaut toujours zéro donc la sortie vaut vaut 1/2 au temps zéro. Pour l'échantillon 1, l'entrée revient à la valeur nulle mais la sortie précédente vaut 1/2 et la facteur$ \frac{1}{2}$ donne $h_2(1) = \frac{1}{4}$. à l'échantillon suivant la valeur précédente est à nouveau divisée par deux et ainsi de suite.
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (-0,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.5);
+\draw (3.1,0.25) node {$n$};
+\draw (0,2) node {$h_1(n)$};
+%\draw (4.5,-0.3) node {1};
+
+
+
+\draw[->,blue,thick](-3,0)--(-3,0);
+\draw[->,blue,thick](-2,0)--(-2,0);
+\draw[->,blue,thick](-1,0)--(-1,0);
+\draw[->,blue,thick](0,0)--(0,1);
+\draw[->,blue,thick](1,0)--(1,0.5);
+\draw[->,blue,thick](2,0)--(2,0.25);
+\draw[->,blue,thick](3,0)--(3,0.125);
+
+
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Réponse impulsionnelle finie et infinie}
+Dans les deux exercices précédents, on a traité un filtre non-récursif et un filtre non-récursif. On a pu constater que dans le cadre du filtre non-récursif, la réponse impulsionnelle présentait un nombre fini d'échantillons non nul. \`A l'inverse le filtre récursif, du fait de la contribution de l'échantillon précédente à une réponse impulsionnelle comportant un nombre infini d'échantillons non nul.\\
+
+Cette observation peut se généraliser à l'ensemble des filtres récursifs et non-récursifs. On dit alors que les filtres récursifs sont des \textbf{filtres à réponse impulsionnelles infinie} (RII) et les filtres non-récursifs sont des \textbf{filtres à réponse impulsionnelle finie} (RIF). Dans les sous-sections suivantes nous allons aborder les implications de cette distinction.
+
+\section{Filtres à réponse impulsionnelle finie}
+Un filtre à réponse impulsionnelle finie ou récursif est un filtre qui ne fait appel pour le calcul de la sortie qu'au coefficient de l'entrée. On dit qu'il ne comporte pas de \textbf{rétroaction}. Soit $x[n]$ et $y[n]$  respectivement les signaux d'entrée et de sortie d'un filtre à réponse impulsionnelle finie, on peut écrire la relation suivante : 
+
+\[ y[n] =  \sum_{k = 0}^{N-1} a_k \; x[n-k]\] 
+
+où $N$ est le nombre de coefficient et les $a_k$ sont les coefficients de la fonction de transferts. Maintenant, si on écrit la transformée en Z de cette équation, on obtient :
+
+\[ Y(z) =  \sum_{k = 0}^{N-1} a_k \; X(z)z^{-k} \] 
+
+On va d'abord étudier deux exemples simples de filtres à réponse impulsionnelle finie :
+
+
+
+Les filtres à réponse impulsionnelle ont deux avantages principaux: Ils sont inconditionnellement stables et permettent le filtrage à phase linéaire. Pour la stabilité on résumera simplement en disant qu'une entrée bornée (au sens de son amplitude) résulte forcément en une sortie bornée, mais cette notion sera abordée plus en détail dans la partie sur les filtres à réponse impulsionnelle infinie. La prochaine partie portera   
+
+
+\subsection{Filtre à réponse impulsionnelle infinie}
+
 
 
 
