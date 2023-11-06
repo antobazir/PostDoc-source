@@ -8,7 +8,7 @@ close all;
 pkg load image%needed for the migration code
 
 
-filename = 'starv_only/metvar1';
+filename = 'hypoxia/metvar1';
 
 %conf Vector contains the values main parameters of the simulation
 %conf= [40 3000 200 4e-3 ... %param gén
@@ -121,7 +121,7 @@ l=1
 	n_cy =0;
 
 while(n_cy<n_div) % loop to stop at a given size
-  disp('******************')
+   disp('******************')
 	n_cy++
 	div =0;
 
@@ -131,7 +131,7 @@ while(n_cy<n_div) % loop to stop at a given size
 ##		[Grid,kO,kS,kP,DSm,DOm,DPm,state] = shedding_metvar(Grid,state,kO,kS,kP,DOm,DSm,DPm,DS_med,DP_med,shed_prob);
 ##		[Grid,kO,kS,kP,DSm,DOm,DPm,state] = shedding_metvar(Grid,state,kO,kS,kP,DOm,DSm,DPm,DS_med,DP_med,shed_prob);
 ##	endif
-  check_div1 = length(find(kS==kS_tissue))
+
 	for k = 1:size(state,1)%for each cell check if it should divide
 		if(state(k,2)>0)
 			%DIVISION ROUTINE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -190,10 +190,8 @@ while(n_cy<n_div) % loop to stop at a given size
 	##		endif
 		endif
 	endfor
-
+  check_div = length(find(kS==kS_tissue))
 	n_cell = size(state,1)
-  %state
-  %waitforbuttonpress
 	n_spher = 4/(3*sqrt(pi))*n_cell^(3/2)
 	%les sphéroïdes humain saturent normalement vers 20000 cellules en 20 jours
 
@@ -217,8 +215,8 @@ while(n_cy<n_div) % loop to stop at a given size
 		tic
 		[S,kS,DSm,St] = update_metvar(Grid,S,kS,cS,DSm,d0,ntime,tau,dx,dt);
 		[O,kO,DOm,Ot] = update_metvar(Grid,O,kO,cO,DOm,d0,ntime,tau,dx,dt);
-		%[P,kP,DPm,Pt,delta] = updateprod_metvar(Grid,S,P,kP,cP,DPm,d0,ntime,tau,dx,dt);
-		%delta
+		[P,kP,DPm,Pt,delta] = updateprod_metvar(Grid,S,P,kP,cP,DPm,d0,ntime,tau,dx,dt);
+		delta
     toc
 
 
@@ -235,15 +233,14 @@ while(n_cy<n_div) % loop to stop at a given size
 ##		kS(find(and(S<S_prol,S>=S_maint,O<O_norm,Grid!=0)))=0;
 ##		kO(find(and(S<S_prol,S>=S_maint,O<O_norm,Grid!=0)))=0;
 ##
-##		%normoxia + lack of sub
-##		kS(find(and(S<S_prol,S>=S_maint,O>=O_norm,Grid!=0)))=kS_tissue_maint;
-##		kO(find(and(S<S_prol,S>=S_maint,O>=O_norm,Grid!=0)))=kO_maint;
+		%normoxia + lack of sub
+		kS(find(and(S<S_prol,S>=S_maint,O>=O_norm,Grid!=0)))=kS_tissue_maint;
+		kO(find(and(S<S_prol,S>=S_maint,O>=O_norm,Grid!=0)))=kO_maint;
 ##
 		%starvation (onlly possible w/substrate)
 		kS(find(and(S<S_maint,Grid!=0)))=0;
 		kO(find(and(S<S_maint,Grid!=0)))=0;
 		state(Grid(find(and(S<S_maint,Grid!=0))),2)=-1;
-    check_div2 = length(find(kS==kS_tissue))
 
 
 		%readouts
