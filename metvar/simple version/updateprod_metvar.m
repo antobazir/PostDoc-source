@@ -38,7 +38,7 @@ for i=1:ntime
 %i=0;
 %abs(delta)<1e-6
 %while(abs(delta)>1e-9)
-%M(find(Grid==0))=1;
+M(find(Grid==0))=0;
 %delta
 %i++;
 ##    %explicit  scheme
@@ -49,6 +49,11 @@ for i=1:ntime
 
   %terme intermédiaire pour calculer delta et arrêter la boucle
   prev_M = M;%
+
+##  M(1,:) = M(2,:);
+##  M(sz,:) = M(sz-1,:);
+##  M(:,1) = M(:,2);
+##  M(:,sz) = M(:,sz-1);
 
     %explicit  scheme non dimensionalised
     %x-step

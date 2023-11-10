@@ -31,6 +31,8 @@ V_norm = 1/max(Mn./(cM+ Mn));
 Mt = [];
 
 delta = 1;
+
+
 % calculate the diffusion and consumption of nutrients
 for i=1:ntime
 %i=0;
@@ -47,6 +49,11 @@ M(find(Grid==0))=1;
 
   %terme intermédiaire pour calculer delta et arrêter la boucle
   prev_M = M;%
+
+##    M(1,:) = M(2,:);
+##  M(sz,:) = M(sz-1,:);
+##  M(:,1) = M(:,2);
+##  M(:,sz) = M(:,sz-1);
 
     %explicit  scheme non dimensionalised
     %x-step
