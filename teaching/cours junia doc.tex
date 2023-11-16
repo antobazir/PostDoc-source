@@ -548,7 +548,7 @@ Ici on a représenté le module du spectre mais pas son argument. On a donc un s
 
 On va donc partir d'un second signal :
 
-\[ g_5(t) = \cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) \] 
+\[ g_5(t) = 0.55b\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) \] 
 
 Il s'agit de la fonction $g_2(t)$ mais légèrement modifiée. On a introduit un déphasage de $\frac{\pi}{3}$. On peut visualiser ce déphasage dans la figure où on a représenté les fonctions $g_2(t)$ et $g_5(t)$.
 
@@ -584,15 +584,11 @@ On peut alors en déduire facilement la transformée de Fourier de $g_5(t)$
 
 Si $TF{g_2}(f)$ était une fonction réelle (pas de partie complexe), $TF{g_5}(f)$ a clairement une partie imaginaire non nulle. On note également que dans ce cas le module et l'argument sont déjà présentées de façon évidente.\\
 
-Le module des deux fonctions est identique. En effet, on sait que $|e^{-2 j \pi \frac{pi}{3} f }|=1$. Et donc, les modules des deux fonctions sont identiques. Ce qui distingue les deux fonctions dans ce cas est leur phase, soit l'argument de la transformée de Fourier.  Et effet, 
+Le module des deux fonctions est identique. En effet, on sait que $|e^{-2 j \pi \frac{pi}{3} f }|=1$. Et donc, les modules des deux fonctions sont identiques. Ce qui distingue les deux fonctions dans ce cas est leur phase, soit l'argument de la transformée de Fourier. 
 
-\[ arg(TF{g_2}(f)) =   0 \]
+On peut utiliser MATLAB ou GNU/Octave pour représenter les modules de ces fonctions. Ceci sera l'objet d'une de nos activités en salle info
 
-et
 
-\[ arg(TF{g_5}(f)) =   -\frac{2}{3} f\]
-
-On peut alors représenter graphiquement la phase des deux fonctions
 
 \begin{center}
 \begin{tikzpicture}
@@ -1335,12 +1331,271 @@ où $N$ est le nombre de coefficient et les $a_k$ sont les coefficients de la fo
 
 \[ Y(z) =  \sum_{k = 0}^{N-1} a_k \; X(z)z^{-k} \] 
 
-On va d'abord étudier deux exemples simples de filtres à réponse impulsionnelle finie :
+On va d'abord étudier deux exemples simples de filtres à réponse impulsionnelle finie et analyser leur caractéristiques pour en tirer des concepts généraux sur ce type de filtre.
+
+\subsection{Exemple de filtres à réponse impulsionnelle finie}
+Le premier exemple est le filtre suivant : 
+
+\[ y(nT_e) = \frac{1}{2}[x(nT_e) + x((n-1)T_e)  ] \]\\
+
+\textbf{Questions : Quel est l'outil mathématique utilisée ici pour définir le filtre ? Quels sont les autres définitions possibles pour un filtre linéaire invariant dans le temps ?  }\\
+
+L'équation de récurrence du filtre a été donné mais on aurait également pu donner sa fonction de transfert ou sa réponse impulsionnelle afin de décrire sa réponse.\\
+
+\textbf{Exercice : Calculer la fonction de transfert du filtre précédent. }\\
+
+Pour calculer la fonction de transfert on calcule la transformée en Z de l'équation de récurrence 
+
+\[ Y(z) = \frac{1}{2}[X(z) + X(z)z^{-1}  ] \]
+\[ Y(z) = X(z)\frac{1}{2}[1 + z^{-1}  ] \]
+\[ H(z) = \frac{Y(z)}{X(z)} = \frac{1}{2}[1 + z^{-1}  ] \]\\
+
+Ici, pour aller plus loin dans l'analyse du système, on passe de la transformée en z à la transformée de Fourier  en effectuant un changement de variable $z = e^{j\pi f T_e}$. \\
+
+\[ H(z) = \frac{Y(z)}{X(z)} = \frac{1}{2}[1 + z^{-1}  ] \rightarrow H(f) = \frac{1}{2}[1 + e^{j2\pi f T_e}]\]\\
+
+\textbf{Exercice : Calculer le spectre}\\
+
+Le spectre du signal est, on le  rappelle, le couple module et argument de la fonction complexe que représente la transformée de  Fourier. à ce stade il est important de réaliser que bien que la fonction soit discrète la transformée de Fourier est ici bien une fonction continue.\\
+
+On commence par calculer le module :\\
+
+\[ |H(f)| = |\frac{1}{2}[1 + e^{-j2\pi f T_e}]| = |\frac{1}{2}e^{-j\pi f T_e}[e^{j\pi f T_e} + e^{-j\pi f T_e}]|   \]
+
+\[ |H(f)| = |e^{-j\pi f T_e}\cos(\pi f T_e)|  = |\cos(\pi f T_e)|   \]
+
+à partir de l'expression précédente on peut également extraire le module facilement : 
+
+\[ arg(H(f)) = arg(e^{-j\pi f T_e}\cos(\pi f T_e)) = \pi f T_e\]
+
+On constate que la phase du filtre dépend linéairement de la fréquence pour  ce type de filtre.
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-5,0)-- (5,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.5);
+\draw (5.1,0.25) node {$f$};
+\draw (0,2) node {$|H(f)|$};
+\draw (0.5,-0.4) node {$\frac{f_e}{Z}$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=300] plot (\x,{abs(cos(3.14 *\x r))});
+\end{tikzpicture}
+\end{center}
+
+On constate que ce filtre coupe complètement les composantes du signal dont la fréquence est égale au double de la fréquence d'échantillonnage. Cela provient de l'effet de moyennage sur deux échantillons.
+
+On note que la phase du filtre évolue linéairement avec la fréquence d'excitation. Ceci va nous permettre d'introduire la notion de filtre à phase linéaire.
+
+\subsection{Notion de phase linéaire et filtrage à déphasage linéaire}
+Un filtre est dit à phase linéaire si sa fonction de transfert peut s'écrire de la façon suivante: 
+
+\[ H(f) = R(f)e^{-j(2\pi f \tau +\phi_0)} \]
+
+Le fait que la phase soit une fonction affine de la fréquence a des conséquences importantes pour le traitement du signal qu'on va illustrer par un exemple :
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-1.5)-- (0,1.5);
+\draw (3.1,0.25) node {$f$};
+\draw (0,2) node {$g(t)$};
+%\draw (0.5,-0.4) node {$\frac{2}{T_e}$};
+
+\draw[domain=-2.9:2.9,color=blue,samples=300] plot (\x,{0.5*cos(2*\x r) + 0.5*cos(4*\x r)});
+\end{tikzpicture}
+\end{center}
+
+On a tracé ici la fonction suivante : 
+
+\[ g(t) = \frac{1}{2} \cos(2 x) + \cos(4 x) \]\\
+
+Appliquons maintenant un déphasage de $\pi/6$ aux  deux composantes fréquentielles que contient ce signal : $\frac{1}{pi}$  et $\frac{2}{pi}$. La fonction devient alors : \\
+
+\[ g_1(t) = \frac{1}{2} \cos(2 x + \pi/6) + \cos(4 x +  \pi/6) \]\\
+
+Si on trace $g_1(t)$, on fait le constat suivant.
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-1.5)-- (0,1.5);
+\draw (3.1,0.25) node {$f$};
+\draw (0,2) node {$g_1(t)$};
+%\draw (0.5,-0.4) node {$\frac{2}{T_e}$};
+
+\draw[dotted, domain=-2.9:2.9,color=blue,samples=300] plot (\x,{0.5*cos(2*\x r  ) + 0.5*cos(4*\x r )});
+
+\draw[domain=-2.9:2.9,color=blue,samples=300] plot (\x,{0.5*cos(2*\x r +3.14/6 r ) + 0.5*cos(4*\x r + 3.14/6 r)});
+\end{tikzpicture}
+\end{center}
+
+Si on compare le signal avec ces deux composantes déphasées de la même valeur au signal original on se rend compte que le signal n'a pas simplement été décalé vers la droite ou vers la gauche, mais qu'il a également subit une légère distorsion.\\
+
+Prenons un le signal $g_2(t)$ suivant: 
+\[ g_2(t) = \frac{1}{2} \cos(2 x + \pi/6 + \pi/6*\frac{1}{\pi}) + \cos(4 x +  \pi/6 + \pi/6*\frac{2}{\pi})  \]
+
+Cette fois-ci, on a introduit un déphasage proportionnel à la fréquence de chaque composante. Cette fois ci, on constate en traçant la fonction que ce déphasage linéaire induit un décalage sans distorsion du signal.
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-1.5)-- (0,1.5);
+\draw (3.1,0.25) node {$t$};
+\draw (0,2) node {$g_1(t)$};
+%\draw (0.5,-0.4) node {$\frac{2}{T_e}$};
+
+\draw[dotted, domain=-2.9:2.9,color=blue,samples=300] plot (\x,{0.5*cos(2*\x r  ) + 0.5*cos(4*\x r )});
+
+\draw[domain=-2.9:2.9,color=blue,samples=300] plot (\x,{0.5*cos(2*\x r +2/6 r) + 0.5*cos(4*\x r  + 4/6 r)});
+\end{tikzpicture}
+\end{center}
+
+Donc en traitement du signal, avoir une phase linéaire en fréquence permet de transporter le signal à travers le filtre \textbf{sans distorsion.}\\
+
+Maintenant que les implications de la linéarité de la phase ont été rappelé, on peut se poser la question de ses implications notamment dans le cadre de l'étude des filtres à réponse impulsionnelle finie (RIF).\\
+
+La principale implication de la linéarité de la phase dans le filtrage est que si le signal met un temps $\tau$ à se propager à travers le filtre, alors, la réponse impulsionnelle du filtre, c'est-à-dire dans le domaine \textit{temporel} doit être \textbf{symétrique par rapport à $\tau$}. Le détail précis de cette démonstration est technique sur le plan mathématique et n'apporte que peu à la compréhension globale de la notion on va donc se concentrer dans la suite sur la synthèse de filtres RIF.\\ 
+
+Les filtres à réponse impulsionnelle ont deux avantages principaux: Ils sont inconditionnellement stables et permettent le filtrage à phase linéaire. Pour la stabilité on résumera simplement en disant qu'une entrée bornée (au sens de son amplitude) résulte forcément en une sortie bornée, mais cette notion sera abordée plus en détail dans la partie sur les filtres à réponse impulsionnelle infinie.\\
+
+\subsection{Synthèse de filtres non récursif/filtres à réponse impulsionnelle finie} 
+Avant toute chose on va discuter la notion même de synthèse de filtre.\\
+
+\textbf{Question: Que vous évoque la notion de synthèse de filtre ?}\\
+
+Comme dans beaucoup de problèmes d'ingénierie, la synthèse de filtre va consister à atteindre un objectif chiffré avec une certaine tolérance autour de cette objectif. Dans le cadre des filtres, il s'agit d'obtenir un filtre avec des caractéristiques dans une certaine tolérance.\\
+
+On rappelle qu'un filtre, s'il est linéaire invariant dans le temps, est caractérisé de façon équivalente par sa fonction de transfert (domaine de Fourier/Laplace/Z), sa réponse impulsionnelle, ou bien une équation (domaine temporel), différentielle pour les filtres continues ou de récurrence pour les filtres numériques.\\
+
+En général pour définir le filtre qu'on souhaite synthétiser on part du domaine fréquentielle. C'est donc la fonction de transfert (sa partie réelle ET sa partie imaginaire) qu'on va chercher à définir et sur lesquelles on va appliquer des contraintes et des tolérances.\\
+
+Le point de départ est donc généralement ce qu'on va appeler un \textbf{gabarit} qui va définir les contraintes et tolérances sur le module de la fonction de transfert $H(f)$ à déterminer.
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-0.5,0)-- (4,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3);
+\draw (4.1,0.25) node {$f$};
+\draw (0,3.5) node {$|H(f)|$};
+\draw (1,-0.3) node {$f_1$};
+\draw (2,-0.3) node {$f_2$};
+\draw (-0.6,1.7) node {$1 - \delta_1$};
+\draw (-0.6,2.3) node {$1 + \delta_1$};
+\draw (-0.3,0.3) node {$\delta_2$};
+\draw (3.5,-0.3) node {$f_e/2$};
 
 
+\draw[thick,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[thick,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[thick,blue](2,3)--(2,0.3)--(3.7,0.3);
 
-Les filtres à réponse impulsionnelle ont deux avantages principaux: Ils sont inconditionnellement stables et permettent le filtrage à phase linéaire. Pour la stabilité on résumera simplement en disant qu'une entrée bornée (au sens de son amplitude) résulte forcément en une sortie bornée, mais cette notion sera abordée plus en détail dans la partie sur les filtres à réponse impulsionnelle infinie. La prochaine partie portera   
+\end{tikzpicture}
+\end{center}
 
+\textbf{Question: Pourquoi ce gabarit s'arrête-t-il à $f_e/2$ ?}
+
+Ici, si on considère qu'on travaille avec un filtre numérique avec une fréquence d'échantillonnage $f_e$, alors on sait que le spectre du signal échantillonné correspond au spectre du signal continu dupliqué dans son intégralité à chaque $f_e$ dans le domaine fréquentiel. En d'autres termes le fonction $|H(f)|$ est périodique de période $f_e$ et donc il est inutile de représenter plus que l'intervalle [$-f_e/2;f_e/2$].\\
+
+Dans les faits, pour les filtres numériques, on règle généralement les échantillons $h_i$ du filtre dans le domaine \textbf{temporel} afin que la fonction périodique $|H(f)|$ ait les caractéristiques correspondant au gabarit. Une fois le gabarit établi, il existe plusieurs méthodes pour calculer une réponse impulsionnelle remplissant ses conditions, dont :
+\begin{itemize}
+\item Développement en série de Fourier
+\item Méthode des moindres carrés
+\item Méthode par Transformée de Fourier Discrète (TFD)
+\item Méthode par approximation de Tchebychev
+\end{itemize}
+
+On va à minima présenter ces méthodes, mais avant on va fixer les idées en travaillant sur un premier exemple: le filtre passe-bas idéal. Le but étant ici de fixer les idées et concept qui seront remis en oeuvre pour des synthèse de filtres plus complexes
+
+\subsubsection{Étude du filtre passe-bas idéal}
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-0.5,0)-- (3,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.5);
+\draw (3.1,0.25) node {$f$};
+\draw (0,2) node {$|H(f)|$};
+\draw (1.5,-0.3) node {$f_e/4$};
+\draw (3.5,-0.3) node {$f_e/2$};
+
+
+\draw[thick,red](0,1)--(1.5,1)--(1.5,0)--(3,0);
+
+
+\end{tikzpicture}
+\end{center}
+
+Le filtre numérique représenté juste au-dessus coupe intégralement toutes les fréquences supérieure à $f_e/4$. Maintenant on peut connaître la forme de la réponse impulsionnelle échantillonnée à partir de cette fonction de transfert.\\
+
+Puisque la fonction de transfert est périodique de période $f_e$, elle correspond forcément à un signal échantillonné. il faut maintenant savoir quel est ce signal. Et en l'occurrence on sait, que la transformée de  Fourier du signal rectangulaire est la fonction sinus cardinal. Donc en connaissant les propriétés de la transformée de Fourier et les transformées usuelles on peut en déduire les échantillons de la forme de la réponse impulsionnelle.\\
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-0.5,0)-- (3,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.5);
+\draw (3.1,0.25) node {$f$};
+\draw (0,2) node {$|H(f)|$};
+\draw (1.5,-0.3) node {$f_e/4$};
+\draw (3.5,-0.3) node {$f_e/2$};
+
+
+\draw[thick,red](0,1)--(1.5,1)--(1.5,0)--(3,0);
+
+\draw[->] (3.5,1)-- (4.5,1);
+
+\draw[->] (7.5,0)-- (7.5,1.5);
+\draw (7.5,-0.3) node {0};
+\draw[->] (5,0)-- (10,0);
+\draw (10.1,0.25) node {$t$};
+\draw (7.5,2) node {$h(t)$};
+\draw[dotted, domain=4.9:9.9,color=red,samples=80] plot (\x,{80*sin(5*3.14*\x r -5*3.14*7.5r )/(5*3.14*\x r-5*3.14*7.5 r)});
+
+\draw[red] (7.5,0)-- (7.5,1.4);
+\draw[red] (7.75,0)-- (7.75,-0.25);
+\draw[red] (7.25,0)-- (7.25,-0.25);
+\draw[red] (8,0)-- (8,0.17);
+\draw[red] (7,0)-- (7,0.17);
+\draw[red] (8.25,0)-- (8.25,-0.1);
+\draw[red] (6.75,0)-- (6.75,-0.1);
+\draw[red] (8.5,0)-- (8.5,0.01);
+\draw[red] (6.5,0)-- (6.5,0.01);
+\draw[red] (8.75,0)-- (8.75,0.07);
+\draw[red] (6.25,0)-- (6.25,0.07);
+\draw[red] (9,0)-- (9,-0.075);
+\draw[red] (6,0)-- (6,-0.075);
+\draw[red] (9.25,0)-- (9.25,0.03);
+\draw[red] (5.75,0)-- (5.75,0.03);
+\draw[red] (9.5,0)-- (9.5,-0.01);
+\draw[red] (5.5,0)-- (5.5,-0.01);
+\draw[red] (9.75,0)-- (9.75,-0.02);
+\draw[red] (5.25,0)-- (5.25,-0.02);
+\end{tikzpicture}
+\end{center}
+
+La réponse impulsionnelle de ce filtre correspond donc à l'échantillonnage de la fonction \textbf{sinus cardinal}. Cependant, cette réponse impulsionnelle ne correspond pas à un filtre à réponse impulsionnelle finie. Elle peut s'en approcher mais ne l'est pas rigoureusement.\\
+
+Afin de rendre la réponse impulsionnelle finie, on peut fenêtrer la fonction $h(t)$ dans le domaine temporel. Cela veut dire qu'on va la multiplier par une fonction rectangulaire de la largeur souhaitée. Cela signifie quand dans le domaine de Fourier, la fonction de transfert va être convoluée à la transformée de Fourier de la fonction fenêtre choisie.\\
+
+\textbf{ILLUSTRER}
+
+Cet exemple est très bien illustré par le fait que si on cherche à tracer la fft de la fonction sinus cardinal dans MATLAB on obtient pas la fonction rectangulaire, mais une fonction approchée comportant des oscillations.\\
+
+Ici, la fenêtre temporelle qui rend la réponse impulsionnelle finie a été prise rectangulaire et cela a eu un impact sur la fonction de transfert du spectre en y ajoutant des oscillations d'une certaine amplitude et avec une certaine période dans le spectre. Si une fonction différente était choisie, ces oscillations aurait des caractéristiques différentes. C'est le principe de la \textbf{méthode des fenêtres.}\\
+
+Ce qu'il faut comprendre avant d'aller plus loin, c'est que si la fonction correspondant parfaitement à un gabarit existe \textit{mathématiqument}, elle ne peut pas correspondre à un filtre réel, c'est-à-dire avec un nombre fini d'échantillons dans sa réponse impulsionnelle. Les oscillations dans la fonction de transfert du filtre réel sont la conséquence du nombre fini d'échantillons.
 
 \subsection{Filtre à réponse impulsionnelle infinie}
 
