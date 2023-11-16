@@ -1,4 +1,4 @@
-function[Grid,kO,kS,kP,DSm,DOm,DPm,state] = divide2D_metvar(Grid,pos,c_idx,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue)%on autorise la diffusion sur les 8 voisins et plus seulement sur 4
+function[Grid,kO,kS,kP,DSm,DOm,DPm,DKm,state] = divide2D_metvar(Grid,pos,c_idx,sz,S,P,O,K,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue)%on autorise la diffusion sur les 8 voisins et plus seulement sur 4
 %plr = randi(1:4);
 pos;
 
@@ -43,6 +43,7 @@ switch(plr)
 				DSm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DS_tissue;
 				Dpm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DP_tissue;
 				DOm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DOx_tissue;
+				DKm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DK_tissue;
 			endfor
 
 			Grid(pos(1)-1,pos(2)-1) = size(state,1)+1;
@@ -52,7 +53,8 @@ switch(plr)
 			DSm(pos(1)-1,pos(2)-1) = DS_tissue;
 			DPm(pos(1)-1,pos(2)-1) = DP_tissue;
 			DOm(pos(1)-1,pos(2)-1) = DOx_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			DKm(pos(1)-1,pos(2)-1) = DK_tissue;
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		else
@@ -64,7 +66,8 @@ switch(plr)
 			DSm(pos(1)-1,pos(2)-1) = DS_tissue;
 			DPm(pos(1)-1,pos(2)-1) = DP_tissue;
 			DOm(pos(1)-1,pos(2)-1) = DOx_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			DKm(pos(1)-1,pos(2)-1) = DK_tissue;
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		endif
@@ -87,6 +90,7 @@ switch(plr)
 				kS(shift_vec(i,1)-1,shift_vec(i,2)) = kS_tissue;
 				kP(shift_vec(i,1)-1,shift_vec(i,2)) = kP_tissue;
 				DOm(shift_vec(i,1)-1,shift_vec(i,2)) = DOx_tissue;
+				DKm(shift_vec(i,1)-1,shift_vec(i,2)) = DK_tissue;
 				DPm(shift_vec(i,1)-1,shift_vec(i,2)) = DP_tissue;
 				DSm(shift_vec(i,1)-1,shift_vec(i,2)) = DS_tissue;
 			endfor
@@ -96,9 +100,10 @@ switch(plr)
 			kS(pos(1)-1,pos(2)) = kS_tissue;
 			kP(pos(1)-1,pos(2)) = kP_tissue;
 			DOm(pos(1)-1,pos(2)) = DOx_tissue;
+			DKm(pos(1)-1,pos(2)) = DK_tissue;
 			DSm(pos(1)-1,pos(2)) = DS_tissue;
 			DPm(pos(1)-1,pos(2)) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		else
@@ -108,9 +113,10 @@ switch(plr)
 			kS(pos(1)-1,pos(2)) = kS_tissue;
 			kP(pos(1)-1,pos(2)) = kP_tissue;
 			DOm(pos(1)-1,pos(2)) = DOx_tissue;
+			DKm(pos(1)-1,pos(2)) = DK_tissue;
 			DSm(pos(1)-1,pos(2)) = DS_tissue;
 			DPm(pos(1)-1,pos(2)) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		endif
@@ -136,6 +142,7 @@ switch(plr)
 				DSm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DS_tissue;
 				DPm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DP_tissue;
 				DOm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DOx_tissue;
+				DKm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DK_tissue;
 			endfor
 
 			Grid(pos(1)-1,pos(2)+1) = size(state,1)+1;
@@ -145,7 +152,8 @@ switch(plr)
 			DSm(pos(1)-1,pos(2)+1) = DS_tissue;
 			DPm(pos(1)-1,pos(2)+1) = DP_tissue;
 			DOm(pos(1)-1,pos(2)+1) = DOx_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			DKm(pos(1)-1,pos(2)+1) = DK_tissue;
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		else
@@ -157,7 +165,8 @@ switch(plr)
 			DSm(pos(1)-1,pos(2)+1) = DS_tissue;
 			DPm(pos(1)-1,pos(2)+1) = DP_tissue;
 			DOm(pos(1)-1,pos(2)+1) = DOx_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			DKm(pos(1)-1,pos(2)+1) = DK_tissue;
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -185,6 +194,7 @@ switch(plr)
 				DSm(shift_vec(i,1),shift_vec(i,2)-1) = DS_tissue;
 				DPm(shift_vec(i,1),shift_vec(i,2)-1) = DP_tissue;
 				DOm(shift_vec(i,1),shift_vec(i,2)-1) = DOx_tissue;
+				DKm(shift_vec(i,1),shift_vec(i,2)-1) = DK_tissue;
 			endfor
 
 			Grid(pos(1),pos(2)-1) = size(state,1)+1;
@@ -194,7 +204,8 @@ switch(plr)
 			DSm(pos(1),pos(2)-1) = DS_tissue;
 			DPm(pos(1),pos(2)-1) = DP_tissue;
 			DOm(pos(1),pos(2)-1) = DOx_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			DKm(pos(1),pos(2)-1) = DK_tissue;
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -207,7 +218,8 @@ switch(plr)
 			DSm(pos(1),pos(2)-1) = DS_tissue;
 			DPm(pos(1),pos(2)-1) = DP_tissue;
 			DOm(pos(1),pos(2)-1) = DOx_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			DKm(pos(1),pos(2)-1) = DK_tissue;
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -232,6 +244,7 @@ switch(plr)
 				kS(shift_vec(i,1),shift_vec(i,2)+1) = kS_tissue;
 				kP(shift_vec(i,1),shift_vec(i,2)+1) = kP_tissue;
 				DOm(shift_vec(i,1),shift_vec(i,2)+1) = DOx_tissue;
+				DKm(shift_vec(i,1),shift_vec(i,2)+1) = DK_tissue;
 				DSm(shift_vec(i,1),shift_vec(i,2)+1) = DS_tissue;
 				DPm(shift_vec(i,1),shift_vec(i,2)+1) = DP_tissue;
 			endfor
@@ -241,9 +254,10 @@ switch(plr)
 			kS(pos(1),pos(2)+1) = kS_tissue;
 			kP(pos(1),pos(2)+1) = kP_tissue;
 			DOm(pos(1),pos(2)+1) = DOx_tissue;
+			DKm(pos(1),pos(2)+1) = DK_tissue;
 			DSm(pos(1),pos(2)+1) = DS_tissue;
 			DPm(pos(1),pos(2)+1) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -254,9 +268,10 @@ switch(plr)
 			kS(pos(1),pos(2)+1) = kS_tissue;
 			kP(pos(1),pos(2)+1) = kP_tissue;
 			DOm(pos(1),pos(2)+1) = DOx_tissue;
+			DKm(pos(1),pos(2)+1) = DK_tissue;
 			DSm(pos(1),pos(2)+1) = DS_tissue;
 			DPm(pos(1),pos(2)+1) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -281,6 +296,7 @@ switch(plr)
 				kS(shift_vec(i,1)+1,shift_vec(i,2)-1) = kS_tissue;
 				kP(shift_vec(i,1)+1,shift_vec(i,2)-1) = kP_tissue;
 				DOm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DOx_tissue;
+				DKm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DK_tissue;
 				DSm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DS_tissue;
 				DPm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DP_tissue;
 			endfor
@@ -290,9 +306,10 @@ switch(plr)
 			kS(pos(1)+1,pos(2)-1) = kS_tissue;
 			kP(pos(1)+1,pos(2)-1) = kP_tissue;
 			DOm(pos(1)+1,pos(2)-1) = DOx_tissue;
+			DKm(pos(1)+1,pos(2)-1) = DK_tissue;
 			DSm(pos(1)+1,pos(2)-1) = DS_tissue;
 			DPm(pos(1)+1,pos(2)-1) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -303,9 +320,10 @@ switch(plr)
 			kS(pos(1)+1,pos(2)-1) = kS_tissue;
 			kP(pos(1)+1,pos(2)-1) = kP_tissue;
 			DOm(pos(1)+1,pos(2)-1) = DOx_tissue;
+			DKm(pos(1)+1,pos(2)-1) = DK_tissue;
 			DSm(pos(1)+1,pos(2)-1) = DS_tissue;
 			DPm(pos(1)+1,pos(2)-1) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 
@@ -330,6 +348,7 @@ switch(plr)
 				kS(shift_vec(i,1)+1,shift_vec(i,2)) = kS_tissue;
 				kP(shift_vec(i,1)+1,shift_vec(i,2)) = kP_tissue;
 				DOm(shift_vec(i,1)+1,shift_vec(i,2)) = DOx_tissue;
+				DKm(shift_vec(i,1)+1,shift_vec(i,2)) = DK_tissue;
 				DSm(shift_vec(i,1)+1,shift_vec(i,2)) = DS_tissue;
 				DPm(shift_vec(i,1)+1,shift_vec(i,2)) = DP_tissue;
 			endfor
@@ -339,9 +358,10 @@ switch(plr)
 			kS(pos(1)+1,pos(2)) = kS_tissue;
 			kP(pos(1)+1,pos(2)) = kP_tissue;
 			DOm(pos(1)+1,pos(2)) = DOx_tissue;
+			DKm(pos(1)+1,pos(2)) = DK_tissue;
 			DSm(pos(1)+1,pos(2)) = DS_tissue;
 			DPm(pos(1)+1,pos(2)) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		else
@@ -351,9 +371,10 @@ switch(plr)
 			kS(pos(1)+1,pos(2)) = kS_tissue;
 			kP(pos(1)+1,pos(2)) = kP_tissue;
 			DOm(pos(1)+1,pos(2)) = DOx_tissue;
+			DKm(pos(1)+1,pos(2)) = DK_tissue;
 			DSm(pos(1)+1,pos(2)) = DS_tissue;
 			DPm(pos(1)+1,pos(2)) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		endif
@@ -377,6 +398,7 @@ switch(plr)
 				kS(shift_vec(i,1)+1,shift_vec(i,2)+1) = kS_tissue;
 				kP(shift_vec(i,1)+1,shift_vec(i,2)+1) = kP_tissue;
 				DOm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DOx_tissue;
+				DKm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DK_tissue;
 				DSm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DS_tissue;
 				DPm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DP_tissue;
 			endfor
@@ -386,9 +408,10 @@ switch(plr)
 			kS(pos(1)+1,pos(2)+1) = kS_tissue;
 			kP(pos(1)+1,pos(2)+1) = kP_tissue;
 			DOm(pos(1)+1,pos(2)+1) = DOx_tissue;
+			DKm(pos(1)+1,pos(2)+1) = DK_tissue;
 			DSm(pos(1)+1,pos(2)+1) = DS_tissue;
 			DPm(pos(1)+1,pos(2)+1) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		else
@@ -398,9 +421,10 @@ switch(plr)
 			kS(pos(1)+1,pos(2)+1) = kS_tissue;
 			kP(pos(1)+1,pos(2)+1) = kP_tissue;
 			DOm(pos(1)+1,pos(2)+1) = DOx_tissue;
+			DKm(pos(1)+1,pos(2)+1) = DK_tissue;
 			DSm(pos(1)+1,pos(2)+1) = DS_tissue;
 			DPm(pos(1)+1,pos(2)+1) = DP_tissue;
-			cycle_duration = 1440; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
+			cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
 			state(size(state,1)+1,:) = [0 cycle_duration];
 
 		endif

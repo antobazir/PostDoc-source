@@ -24,47 +24,56 @@
 
 %08/11 This script is now turned into a function since only two parameters change for
 % for each study. This makes it possible to use a script to generate the data
-
+%15/11 on décale le Kine en diffusion APRES application de la mort cellulaire... à noter que ça peut décaler d'un cran la réponse
 function a = metvar_f (kO_arg, kS_arg, behavior, filename)
 
 %declaration des paramètres à partir de conf %%%%%%%%%%%%
 j=0;
 % paramètres généraux
 sz = 100; % 100  conf(j+1); j++; %size of the square domain in which the simulation is ran
-n_min = 120; %  15 conf(j+1);j++; % simulated time in minutes
-dx = 100; % 20  conf(j+1);j++;
-dt =  3e-2;%conf(j+1);j++;
+n_min = 60; %  15 conf(j+1);j++; % simulated time in minutes
+dx = 60; % 20  conf(j+1);j++;
+dt =  1.5e-2;%conf(j+1);j++;
 cell_diam = 20;
 
 %paramètres diffusion
-d0 = 100;%conf(j+1);j++;
-tau = 0.1%j++; % characteristic diff time in minues
+d0 = 60;%conf(j+1);j++;
+tau = 0.036%j++; % characteristic diff time in minues
 DS_med = 0.3%conf(j+1);j++;
 DP_med = 0.4%conf(j+1);j++;
+DK_med = 0.4%conf(j+1);j++;
 
 %paramètres métaboliques %0.40 et 0.1 donne une abondance relative similaire dans l'agrégat
 %consumption
-kO_tissue = 49*(cell_diam^2)/(dx^2)%conf(j+1);j++; %maxi value of consumption term for oxygen
+kO_tissue = kO_arg*(cell_diam^2)/(dx^2)%conf(j+1);j++; %maxi value of consumption term for oxygen
 kO_maint = 0.3*kO_tissue%conf(j+1);j++; %maxi value of consumption term for oxygen
-kS_tissue = 7*(cell_diam^2)/(dx^2)%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
+kS_tissue = kS_arg*(cell_diam^2)/(dx^2)%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
 kS_comp = 2*kS_tissue%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
-kS_tissue_maint =0.3*kS_tissue%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
-kP_tissue =-0.5*kS_tissue%conf(j+1);j++; % max value of consumption term for Product (produced/consumed)
+kS_maint =0.3*kS_tissue%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
+kP_tissue =-1*kS_tissue%conf(j+1);j++; % max value of consumption term for Product (produced/consumed)
+kP_maint =-0.5*kS_maint%conf(j+1);j++; % max value of consumption term for Product (produced/consumed)
 cO =  0.1%conf(j+1);j++; %Michaelis Menten constant for Oxygen hill function for cons.
 cS = 0.2%conf(j+1);j++; %" constant for Substrate hill function for cons.
 cP = 0.1%conf(j+1);j++; %" constant for Product hill function for /prod
 DOx_tissue = 0.6%conf(j+1); j++;% oxygen diffusion constant in tissue
 DS_tissue = 0.06%conf(j+1);j++; % Substrate diffusion constant in tissue
 DP_tissue = 0.1%conf(j+1);j++; % Product diffusion constant in tissue
-S_prol = 0.6 % 40 % of ext value needed to proliferate.
+DK_tissue = 0.1%conf(j+1);j++; % Kine diffusion constant in tissue
+S_prol = 0.5 % 40 % of ext value needed to proliferate.
 S_maint = 0.2 % 40 % of ext value needed to proliferate.
 O_norm = 0.4 % 40 % of ext value needed to proliferate.
+K_prom = 0.2 % 40 % of ext value needed to proliferate.
+K_death = 0.4 % 40 % of ext value needed to proliferate.
+P_prom = 0.2 % 40 % of ext value needed to proliferate.
+P_death = 0.4 % 40 % of ext value needed to proliferate.
+rel_K = 0.2 % 40 % of ext value needed to proliferate.
+
 
 %Paramètres cellulaires
 %n_cells0 = conf(j+1);
 %pellet_size = conf(j+1);
 %Diff_glu = conf(j+1);
-n_div = 10; %nombre max de div.
+n_div = 12; %nombre max de div.
 n_init = 4; %nombre de division pour initialiser le système
 shed_prob = 0.9; %proba limite pour le shedding
 %behavior = 1; %encodes the different behavior
@@ -74,9 +83,11 @@ shed_prob = 0.9; %proba limite pour le shedding
 S = ones(sz,sz); %substrate matrix
 P = zeros(sz,sz); % product matrix
 O = ones(sz,sz); % oxygen matrix
+K = zeros(sz,sz); % kine matrix
 kO = zeros(sz,sz); % oxygen consumption maatrix
 kS = zeros(sz,sz); % Substrate consumption matrix
 kP = zeros(sz,sz); % Product consumption matrix
+kK = zeros(sz,sz); % Product consumption matrix
 Grid = zeros(sz,sz); % Grilles de gestions des cellules
 %initialisation
 Grid(round(sz/2),round(sz/2))=1; %cellule unique au centre au départ
@@ -85,6 +96,7 @@ Grid(round(sz/2),round(sz/2))=1; %cellule unique au centre au départ
 DOm = ones(sz,sz); %oxygen diffusion in medium is the ref
 DSm = DS_med*ones(sz,sz); %glucose diffusion in water
 DPm = DP_med*ones(sz,sz); %product is supposed to be smaller chains so it's higher
+DKm = DK_med*ones(sz,sz); %product is supposed to be smaller chains so it's higher
 %  33207661 : D = kB T / ( 6  pi  r eta_0) : both glucose and lactate calculated
 % then lactate renormalised to be above glucose by 20% (ratio found with formula)
 
@@ -95,9 +107,10 @@ kP(round(sz/2),round(sz/2)) = kP_tissue;
 DSm(round(sz/2),round(sz/2))=DS_tissue;
 DOm(round(sz/2),round(sz/2))=DOx_tissue;
 DPm(round(sz/2),round(sz/2))=DP_tissue;
+DKm(round(sz/2),round(sz/2))=DK_tissue;
 
 %cell state  1: cell time 2: cell cycle duration
-state = [randi(1440) 1440];
+state = [0 1];
 l=1
 
 
@@ -107,10 +120,12 @@ l=1
 	S_r  = [];
 	O_r  = [];
 	P_r  = [];
+	K_r  = [];
 	Grid_r = [];
 	Ot_r = [];
 	St_r = [];
 	Pt_r = [];
+	Kt_r = [];
 	state_mat_r = [];
 
 	n_cy =0;
@@ -122,24 +137,24 @@ while(n_cy<n_div) % loop to stop at a given size
 
   check_div1 = length(find(kS==kS_tissue))
 	for k = 1:size(state,1)%for each cell check if it should divide
-		if(state(k,2)>0)
+		if(state(k,2)>0)%ne divise que les cellules en prolifération
 			%DIVISION ROUTINE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			[r,c] = ind2sub([sz,sz],find(Grid==k));
 			pos(1) = r; pos(2) = c;
-
-			if(kS(find(Grid==k))==kS_tissue||kS(find(Grid==k))==kS_comp)
+			%state(k,2)
+			for j=1:state(k,2)% accounts for division score
 				div++;
-				%pos
-				[Grid,kO,kS,kP,DSm,DOm,DPm,state] = divide2D_metvar(Grid,pos,k,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue);
-			endif
-
-
-			Grid;
-			grid_stable = 0;
-			prev_Grid =  Grid;
-
+				[Grid,kO,kS,kP,DSm,DOm,DPm,DKm,state] = divide2D_metvar(Grid,pos,k,sz,S,P,O,K,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue);
+				%[Grid,kO,kS,kP,DSm,DOm,DPm,state] = divide2D_metvar(Grid,pos,k,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue);
+			endfor
 		endif
 	endfor
+
+
+
+	Grid;
+	grid_stable = 0;
+	prev_Grid =  Grid;
 
 	n_cell = size(state,1)
   %state
@@ -151,7 +166,7 @@ while(n_cy<n_div) % loop to stop at a given size
 	%migration moves the cell to favor sphericity
 	prev_Grid = Grid;
 	if(grid_stable==0)
-		[Grid,kO,kS,kP,DSm,DOm,DPm,state] = migrate2D_sphere_metvar(Grid,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue);
+		[Grid,kO,kS,kP,DSm,DOm,DPm,DKm,state] = migrate2D_sphere_metvar(Grid,sz,S,P,O,K,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue);
 		%isokay2  = find(((Grid!=0)==(D!=0))==0)
 		if(Grid==prev_Grid)
 			grid_stable=1;%skip migration
@@ -166,12 +181,16 @@ while(n_cy<n_div) % loop to stop at a given size
 		[S,kS,DSm,St] = update_metvar(Grid,S,kS,cS,DSm,d0,ntime,tau,dx,dt);
 		[O,kO,DOm,Ot] = update_metvar(Grid,O,kO,cO,DOm,d0,ntime,tau,dx,dt);
 		[P,kP,DPm,Pt,delta] = updateprod_metvar(Grid,S,P,kP,cP,DPm,d0,ntime,tau,dx,dt);
+		%[K,kK,DKm,Kt,delta] = updateprod_metvar(Grid,K,P,kK,cP,DKm,d0,ntime,tau,dx,dt);
 		%delta
     toc
 
 
 		%BEHAVIOR DETERMINATION%%%%%%%%
-    [kS,kO,kP,state,state_mat] = behav(behavior,Grid,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,S_prol,S_maint,O_norm);
+		[kS,kO,kP,K,state,state_mat] = behav(behavior,Grid,S,P,O,K,state,kO,kS,kP,kO_tissue,kO_maint,kS_tissue,kS_maint,kP_tissue,kP_maint,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,S_prol,S_maint,O_norm,P_prom,P_death,K_prom,K_death,rel_K);
+
+		[K,kK,DKm,Kt,delta] = updateprod_metvar(Grid,K,P,kK,cP,DKm,d0,ntime,tau,dx,dt);
+		%delta
 
     check_div2 = length(find(kS==kS_tissue))
 
@@ -185,6 +204,8 @@ while(n_cy<n_div) % loop to stop at a given size
 		Ot_r  = [Ot_r Ot];
 		P_r  = [P_r P];
 		Pt_r  = [Pt_r Pt];
+		K_r  = [K_r K];
+		Kt_r  = [Kt_r Kt];
 		Grid_r = [Grid_r Grid];
 		state_mat_r = [state_mat_r state_mat];
 
@@ -194,8 +215,11 @@ endwhile
 
 S_r = reshape(S_r, [sz sz n_cy-n_init]);
 St_r = reshape(St_r, [round(sz/2) round(ntime) n_cy-n_init]);
+Kt_r = reshape(Kt_r, [round(sz/2) round(ntime) n_cy-n_init]);
+Pt_r = reshape(Pt_r, [round(sz/2) round(ntime) n_cy-n_init]);
 O_r = reshape(O_r, [sz sz n_cy-n_init]);
 P_r = reshape(P_r, [sz sz n_cy-n_init]);
+K_r = reshape(K_r, [sz sz n_cy-n_init]);
 kS_r = reshape(kS_r, [sz sz n_cy-n_init]);
 kO_r = reshape(kO_r, [sz sz n_cy-n_init]);
 Grid_r = reshape(Grid_r, [sz sz n_cy-n_init]);
@@ -205,7 +229,7 @@ state_mat_r = reshape(state_mat_r, [sz sz n_cy-n_init]);
 all_prol = [li, co, pr];
 [li co pr] = ind2sub([sz sz n_cy-n_init],find(and(kS_r==0,Grid_r!=0)));
 all_necr = [li, co, pr];
-[li co pr] = ind2sub([sz sz n_cy-n_init],find(kS_r==kS_tissue_maint));
+[li co pr] = ind2sub([sz sz n_cy-n_init],find(kS_r==kS_maint));
 all_quiesc = [li, co, pr];
 
 for k = 1:n_cy-n_init

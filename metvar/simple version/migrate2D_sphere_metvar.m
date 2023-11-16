@@ -1,6 +1,6 @@
 %function [Grid,G,O,D,GD,T] = migrate2D_sphere_ctr(Grid,lG,cG,G,O,D,GD,T)
 %function [Grid,kO,kG,DG,sycle] = migrate2D_sphere_ctr2(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue)
-function [Grid,kO,kS,kP,DSm,DOm,DPm,state]  = migrate2D_sphere_metvar(Grid,sz,S,P,O,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue)
+function [Grid,kO,kS,kP,DSm,DOm,DPm,DKm,state] = migrate2D_sphere_metvar(Grid,sz,S,P,O,K,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue)
 %encoding the migration of cells in a sphere in order to make the sphere round
 % *Hypothesis: Cells are allowed to move a few steps every hour.
 % They typically move in order to make the configuration more circular
@@ -72,6 +72,8 @@ while(stable_bool==0)
 			DPm(pos_p(i,1),pos_p(i,2))=DP_tissue;
 			DOm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DOm(idx_p(i));
 			DOm(pos_p(i,1),pos_p(i,2))=DOx_tissue;
+			DKm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DOm(idx_p(i));
+			DKm(pos_p(i,1),pos_p(i,2))=DK_tissue;
 
 			%mise à jour des cartes de diffusion intracellulaires
 
