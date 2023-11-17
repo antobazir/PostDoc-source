@@ -45,7 +45,8 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 
   %shedding
   perim = im2double(bwperim(Grid));
-  sheddable = and(perim,O<O_norm);
+  sheddable_ox = and(perim,hypox);
+  sheddable_prod = and(perim,or(Prod_rct,Prod_lth));
 
 
   switch(behavior)
@@ -61,10 +62,6 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       kS(find(well_fed))=kS_tissue;
       kO(find(well_fed))=kO_tissue;
       kP(find(well_fed))=kP_tissue;
-
-
-	  %all intermediates
-
 
 
       %starvation (onlly possible w/surctrate)
@@ -113,7 +110,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 	case 'compens'
-
+	% oxygen can provide boost in energy if substrate is in lower amounts but does not maintain prolifs
 	  %enough of both
       kS(find(well_fed))=kS_tissue;
       kO(find(well_fed))=kO_tissue;
@@ -181,7 +178,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  %state vector update
 	  state(Grid(find(well_fed)),2)=1;
 	  state(Grid(find(hypox)),2)=1;
-	  state(Grid(find(hypos)),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(hypos)),2)=1; %
 	  state(Grid(find(hypox_hypos)),2)=0; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
 
@@ -199,12 +196,12 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       kO(find(well_fed))=kO_tissue;
       kP(find(well_fed))=kP_tissue;
 
-	  %not enough surctrate
+	  %not enough surctrate -> no change
 	  kS(find(hypos))=kS_tissue;
       kO(find(hypos))=kO_tissue;
       kP(find(hypos))=kP_tissue;
 
-	  %hypoxia
+	  %hypoxia -> just reduces consmption
 	  kS(find(hypox))=kS_tissue;
       kO(find(hypox))=kO_maint;
       kP(find(hypox))=kP_tissue;
@@ -233,13 +230,13 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 	case 'loc_hypox_comp'
-
+	%hypoxia reduces consumption AND provokes compensation
 	%enough of both
       kS(find(well_fed))=kS_tissue;
       kO(find(well_fed))=kO_tissue;
       kP(find(well_fed))=kP_tissue;
 
-	  %not enough surctrate
+	  %not enough substrate -> no change
 	  kS(find(hypos))=kS_tissue;
       kO(find(hypos))=kO_tissue;
       kP(find(hypos))=kP_tissue;
@@ -266,14 +263,14 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  state(Grid(find(well_fed)),2)=1;
 	  state(Grid(find(hypox)),2)=1;
 	  state(Grid(find(hypos)),2)=1; %no proliferation when surctrate is missing
-	  state(Grid(find(hypox_hypos)),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(hypox_hypos)),2)=2; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
 
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 	case 'loc_hypox_comp_prol'
-
+	%hypoxia reduces consumption AND provokes compensation AND boost prolif
 	%enough of both
       kS(find(well_fed))=kS_tissue;
       kO(find(well_fed))=kO_tissue;
@@ -305,7 +302,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  %state vector update
 	  state(Grid(find(well_fed)),2)=1;
 	  state(Grid(find(hypox)),2)=2;
-	  state(Grid(find(hypos)),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(hypos)),2)=1; %no proliferation when substrate is missing
 	  state(Grid(find(hypox_hypos)),2)=1; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
 
@@ -313,7 +310,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 	case 'loc_hypox_comp_arr'
-
+	%hypoxia reduces consumption AND provokes compensation AND stops prolif
 	%enough of both
       kS(find(well_fed))=kS_tissue;
       kO(find(well_fed))=kO_tissue;
@@ -352,9 +349,49 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
+	case 'loc_hypox_comp_prol_mig'
+	%hypoxia reduces consumption AND provokes compensation AND boost prolif AND triggers shedding
+	%enough of both
+      kS(find(well_fed))=kS_tissue;
+      kO(find(well_fed))=kO_tissue;
+      kP(find(well_fed))=kP_tissue;
 
-	case 'loc_hypox_comp_arr'
+	  %not enough surctrate
+	  kS(find(hypos))=kS_tissue;
+      kO(find(hypos))=kO_tissue;
+      kP(find(hypos))=kP_tissue;
 
+	  %hypoxia
+	  kS(find(hypox))=2*kS_tissue;
+      kO(find(hypox))=kO_maint;
+      kP(find(hypox))=2*kP_tissue;
+
+	  %hypoxia+hyposubia
+	  kS(find(hypox_hypos))=2*kS_tissue;
+      kO(find(hypox_hypos))=kO_maint;
+      kP(find(hypox_hypos))=2*kP_tissue;
+
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(starv))=0;
+      kO(find(starv))=0;
+      kP(find(starv))=0;
+	  K(find(starv)) = K(find(starv)) + rel_K;
+
+
+	  %state vector update
+	  state(Grid(find(well_fed)),2)=1;
+	  state(Grid(find(hypox)),2)=2;
+	  state(Grid(find(hypos)),2)=1; %no proliferation when substrate is missing
+	  state(Grid(find(hypox_hypos)),2)=1; %no proliferation when surctrate is missing
+      state(Grid(find(starv)),2)=-1;
+	  state(Grid(find(sheddable_ox)),2)=0;
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
+
+	  case 'loc_hypox_comp_arr_mig'
+	%hypoxia reduces consumption AND provokes compensation AND stops prolif
 	%enough of both
       kS(find(well_fed))=kS_tissue;
       kO(find(well_fed))=kO_tissue;
@@ -389,6 +426,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  state(Grid(find(hypos)),2)=1; %no proliferation when surctrate is missing
 	  state(Grid(find(hypox_hypos)),2)=0; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
+      state(Grid(find(sheddable_ox)),2)=0;
 
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
@@ -439,8 +477,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
-
-	case 'OS_hypos_tol'
+	  	case 'OS_fragile_mig'
 	%anything but  well fed stop proliferation & shortage of both kills
 
 	%enough of both
@@ -448,7 +485,50 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       kO(find(well_fed))=kO_tissue;
       kP(find(well_fed))=kP_tissue;
 
-	  %not enough surctrate -> compensate with oxy keeps proli
+	  %not enough surctrate -> stops proliferation
+	  kS(find(hypos))=kS_maint;
+      kO(find(hypos))=kO_maint;
+      kP(find(hypos))=kP_maint;
+
+	  %hypoxia -> compensates but does not compensate enough to proliferate
+	  kS(find(hypox))=2*kS_tissue;
+      kO(find(hypox))=kO_maint;
+      kP(find(hypox))=2*kP_tissue;
+
+	  %hypoxia+hyposubia  -> the conjunction of two energy reductions kills the cell
+	  kS(find(hypox_hypos))=0;
+      kO(find(hypox_hypos))=0;
+      kP(find(hypox_hypos))=0;
+
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(starv))=0;
+      kO(find(starv))=0;
+      kP(find(starv))=0;
+	  K(find(starv)) = K(find(starv)) + rel_K;
+
+
+	  %state vector update
+	  state(Grid(find(well_fed)),2)=1;
+	  state(Grid(find(hypox)),2)=0;
+	  state(Grid(find(hypos)),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(hypox_hypos)),2)=-1; %no proliferation when surctrate is missing
+      state(Grid(find(starv)),2)=-1;
+	  state(Grid(find(sheddable_ox)),2)=0;
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
+
+
+	case 'OS_hypos_tol'
+	%the cell tolerates hyposubemia
+
+	%enough of both
+      kS(find(well_fed))=kS_tissue;
+      kO(find(well_fed))=kO_tissue;
+      kP(find(well_fed))=kP_tissue;
+
+	  %not enough surctrate -> compensate with oxy and keeps proli
 	  kS(find(hypos))=kS_maint;
       kO(find(hypos))=2*kO_tissue;
       kP(find(hypos))=kP_maint;
@@ -524,7 +604,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 	case 'OS_hypox_boost'
-	%anything but  well fed stop proliferation & shortage of both kills
+	%hypoxia boost prolif
 
 	%enough of both
       kS(find(well_fed))=kS_tissue;
@@ -601,11 +681,11 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  state(Grid(find(hypos)),2)=0; %no proliferation when surctrate is missing
 	  state(Grid(find(hypox_hypos)),2)=1; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
-      state(Grid(find(sheddable)),2)=0;
+      state(Grid(find(sheddable_ox)),2)=0;
 
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
 	  prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
-	  length(find(sheddable))
+	  length(find(sheddable_ox))
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%Oxygen, Substrate & Product response
@@ -695,6 +775,93 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
+		case 'OS_fragile_P_detr_mig'
+	%Now reaction to P is added and is simply detrimental
+
+	%enough of both
+      kS(find(and(well_fed,No_eff)))=kS_tissue;
+      kO(find(and(well_fed,No_eff)))=kO_tissue;
+      kP(find(and(well_fed,No_eff)))=kP_tissue;
+
+	  %product stops prolif
+	  kS(find(and(well_fed,Prod_rct)))=kS_maint;
+      kO(find(and(well_fed,Prod_rct)))=kO_maint;
+      kP(find(and(well_fed,Prod_rct)))=kP_maint;
+
+	  % too much product kills the cell
+	  kS(find(and(well_fed,Prod_lth)))=0;
+      kO(find(and(well_fed,Prod_lth)))=0;
+      kP(find(and(well_fed,Prod_lth)))=0;
+
+	  %not enough substrate -> stops proliferation
+	  kS(find(and(hypos,No_eff)))=kS_maint;
+      kO(find(and(hypos,No_eff)))=kO_maint;
+      kP(find(and(hypos,No_eff)))=kP_maint;
+
+	  % cell does not tolerate medium product amounts with low energy
+	  kS(find(and(hypos,Prod_rct)))=0;
+      kO(find(and(hypos,Prod_rct)))=0;
+      kP(find(and(hypos,Prod_rct)))=0;
+
+	 % cell does not tolerate high product amounts with low energy
+	  kS(find(and(hypos,Prod_lth)))=0;
+      kO(find(and(hypos,Prod_lth)))=0;
+      kP(find(and(hypos,Prod_lth)))=0;
+
+	  %hypoxia -> compensates but does not compensate enough to proliferate
+	  kS(find(and(hypox,No_eff)))=2*kS_tissue;
+      kO(find(and(hypox,No_eff)))=kO_maint;
+      kP(find(and(hypox,No_eff)))=2*kP_tissue;
+
+	  kS(find(and(hypox,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox,Prod_rct)))=kO_maint;
+      kP(find(and(hypox,Prod_rct)))=2*kP_tissue;
+
+	  kS(find(and(hypox,Prod_lth)))=0;
+      kO(find(and(hypox,Prod_lth)))=0;
+      kP(find(and(hypox,Prod_lth)))=0;
+
+
+	  %hypoxia+hyposubia  -> the conjunction of two energy reductions kills the cell
+	  kS(find(and(hypox_hypos,No_eff)))=0;
+      kO(find(and(hypox_hypos,No_eff)))=0;
+      kP(find(and(hypox_hypos,No_eff)))=0;
+
+	  kS(find(and(hypox_hypos,Prod_rct)))=0;
+      kO(find(and(hypox_hypos,Prod_rct)))=0;
+      kP(find(and(hypox_hypos,Prod_rct)))=0;
+
+	  kS(find(and(hypox_hypos,Prod_lth)))=0;
+      kO(find(and(hypox_hypos,Prod_lth)))=0;
+      kP(find(and(hypox_hypos,Prod_lth)))=0;
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(starv))=0;
+      kO(find(starv))=0;
+      kP(find(starv))=0;
+	  K(find(starv)) = K(find(starv)) + rel_K;
+
+
+	  %state vector update
+	  state(Grid(find(and(well_fed,No_eff))),2)=1;
+	  state(Grid(find(and(well_fed,Prod_rct))),2)=0;
+	  state(Grid(find(and(well_fed,Prod_lth))),2)=-1;
+	  state(Grid(find(and(hypox,No_eff))),2)=0;
+	  state(Grid(find(and(hypox,Prod_rct))),2)=0;
+	  state(Grid(find(and(hypox,Prod_lth))),2)=-1;
+	  state(Grid(find(and(hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_rct))),2)=-1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_lth))),2)=-1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,No_eff))),2)=-1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_rct))),2)=-1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_lth))),2)=-1; %no proliferation when surctrate is missing
+      state(Grid(find(starv)),2)=-1;
+	  state(Grid(find(sheddable_prod)),2)=0; %product can trigger shedding
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
+
+
 	case 'OS_hypox_boost_P_detr'
 	%Now reaction to P is added and is simply detrimental
 
@@ -776,6 +943,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  state(Grid(find(and(hypox_hypos,Prod_rct))),2)=-1; %no proliferation when surctrate is missing
 	  state(Grid(find(and(hypox_hypos,Prod_lth))),2)=-1; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
+
 
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
@@ -951,7 +1119,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 	case 'Prod_mediated_hypox_resp'
-	%Now reaction to P is added and is simply detrimental
+	%Case where hypoxia is mediated entirely by the product
 
 	%enough of both
       kS(find(and(well_fed,No_eff)))=kS_tissue;
@@ -1035,6 +1203,392 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
       prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
+
+		case 'Prod_mediated_hypox_resp_mig'
+	%same as before but with migration
+
+	%enough of both
+      kS(find(and(well_fed,No_eff)))=kS_tissue;
+      kO(find(and(well_fed,No_eff)))=kO_tissue;
+      kP(find(and(well_fed,No_eff)))=kP_tissue;
+
+	  %product boosts prolif and provokes glyco switch
+	  kS(find(and(well_fed,Prod_rct)))=2*kS_tissue;
+      kO(find(and(well_fed,Prod_rct)))=kO_maint;
+      kP(find(and(well_fed,Prod_rct)))=2*kP_tissue;
+
+	  % too much product kills the cell
+	  kS(find(and(well_fed,Prod_lth)))=0;
+      kO(find(and(well_fed,Prod_lth)))=0;
+      kP(find(and(well_fed,Prod_lth)))=0;
+
+	  %not enough substrate -> stops proliferation
+	  kS(find(and(hypos,No_eff)))=kS_maint;
+      kO(find(and(hypos,No_eff)))=kO_maint;
+      kP(find(and(hypos,No_eff)))=kP_maint;
+
+	  % product restores prolif
+	  kS(find(and(hypos,Prod_rct)))=kS_tissue;
+      kO(find(and(hypos,Prod_rct)))=kO_tissue;
+      kP(find(and(hypos,Prod_rct)))=kP_tissue;
+
+	 % cell does not tolerate high product amounts with low energy
+	  kS(find(and(hypos,Prod_lth)))=0;
+      kO(find(and(hypos,Prod_lth)))=0;
+      kP(find(and(hypos,Prod_lth)))=0;
+
+	  %hypoxia -> compensates but does not compensate enough to proliferate
+	  kS(find(and(hypox,No_eff)))=kS_tissue;
+      kO(find(and(hypox,No_eff)))=kO_maint;
+      kP(find(and(hypox,No_eff)))=kP_tissue;
+
+	  kS(find(and(hypox,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox,Prod_rct)))=kO_tissue;
+      kP(find(and(hypox,Prod_rct)))=2*kP_tissue;
+
+	  kS(find(and(hypox,Prod_lth)))=0;
+      kO(find(and(hypox,Prod_lth)))=0;
+      kP(find(and(hypox,Prod_lth)))=0;
+
+
+	  %hypoxia+hyposubia  -> the conjunction of two energy reductions kills the cell
+	  kS(find(and(hypox_hypos,No_eff)))=kS_maint;
+      kO(find(and(hypox_hypos,No_eff)))=kO_maint;
+      kP(find(and(hypox_hypos,No_eff)))=kP_maint;
+
+	  kS(find(and(hypox_hypos,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox_hypos,Prod_rct)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_rct)))=2*kP_maint;
+
+	  kS(find(and(hypox_hypos,Prod_lth)))=0;
+      kO(find(and(hypox_hypos,Prod_lth)))=0;
+      kP(find(and(hypox_hypos,Prod_lth)))=0;
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(starv))=0;
+      kO(find(starv))=0;
+      kP(find(starv))=0;
+	  K(find(starv)) = K(find(starv)) + rel_K;
+
+
+	  %state vector update
+	  state(Grid(find(and(well_fed,No_eff))),2)=1;
+	  state(Grid(find(and(well_fed,Prod_rct))),2)=2;
+	  state(Grid(find(and(well_fed,Prod_lth))),2)=-1;
+	  state(Grid(find(and(hypox,No_eff))),2)=1;
+	  state(Grid(find(and(hypox,Prod_rct))),2)=2;
+	  state(Grid(find(and(hypox,Prod_lth))),2)=-1;
+	  state(Grid(find(and(hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_lth))),2)=-1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_lth))),2)=-1; %no proliferation when surctrate is missing
+      state(Grid(find(starv)),2)=-1;
+	  state(Grid(find(sheddable_prod)),2)=0;
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
+
+
+
+	case 'Prod_cons_in_hypos'
+	%Now reaction to P is added and is simply detrimental
+
+	%enough of both
+      kS(find(and(well_fed,No_eff)))=kS_tissue;
+      kO(find(and(well_fed,No_eff)))=kO_tissue;
+      kP(find(and(well_fed,No_eff)))=kP_tissue;
+
+	  %product does nothing
+	  kS(find(and(well_fed,Prod_rct)))=kS_tissue;
+      kO(find(and(well_fed,Prod_rct)))=kO_tissue;
+      kP(find(and(well_fed,Prod_rct)))=kP_maint; %product is moderately consumed and gives a boost in prolif
+
+	  % nada
+	  kS(find(and(well_fed,Prod_lth)))=kS_tissue;
+      kO(find(and(well_fed,Prod_lth)))=kO_tissue;
+      kP(find(and(well_fed,Prod_lth)))=kP_maint;
+
+	  %not enough substrate -> stops proliferation
+	  kS(find(and(hypos,No_eff)))=kS_maint;
+      kO(find(and(hypos,No_eff)))=kO_maint;
+      kP(find(and(hypos,No_eff)))=kP_maint;
+
+	  % product restores prolif  by consuming moderate amount of Prod
+	  kS(find(and(hypos,Prod_rct)))=kS_maint;
+      kO(find(and(hypos,Prod_rct)))=kO_tissue;
+      kP(find(and(hypos,Prod_rct)))=-kP_maint;
+
+	 % cell does not tolerate high product amounts with low energy
+	  kS(find(and(hypos,Prod_lth)))=kS_maint;
+      kO(find(and(hypos,Prod_lth)))=kO_tissue;
+      kP(find(and(hypos,Prod_lth)))=-kP_maint;
+
+	  %hypoxia -> compensates but does not compensate enough to proliferate
+	  kS(find(and(hypox,No_eff)))=kS_tissue;
+      kO(find(and(hypox,No_eff)))=kO_tissue;
+      kP(find(and(hypox,No_eff)))=kP_tissue;
+
+	  kS(find(and(hypox,Prod_rct)))=kS_tissue;
+      kO(find(and(hypox,Prod_rct)))=kO_tissue;
+      kP(find(and(hypox,Prod_rct)))=kP_maint; %product is moderately consumed and gives a boost in prolif
+
+	  kS(find(and(hypox,Prod_lth)))=kS_tissue;
+      kO(find(and(hypox,Prod_lth)))=kO_tissue;
+      kP(find(and(hypox,Prod_lth)))=kP_maint;
+
+
+	  %hypoxia+hyposubia  -> the conjunction of two energy reductions kills the cell
+	  kS(find(and(hypox_hypos,No_eff)))=kS_maint;
+      kO(find(and(hypox_hypos,No_eff)))=kO_maint;
+      kP(find(and(hypox_hypos,No_eff)))=kP_maint;
+
+	  kS(find(and(hypox_hypos,Prod_rct)))=kS_maint;
+      kO(find(and(hypox_hypos,Prod_rct)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_rct)))=-kP_tissue;
+
+	  kS(find(and(hypox_hypos,Prod_lth)))=kS_maint;
+      kO(find(and(hypox_hypos,Prod_lth)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_lth)))=-kP_tissue;
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(and(starv,No_eff)))=0;
+      kO(find(and(starv,No_eff)))=0;
+      kP(find(and(starv,No_eff)))=0;
+	  K(find(and(starv,No_eff))) = K(find(and(starv,No_eff))) + rel_K;
+
+	  %product can rescue from starvation
+	  kS(find(and(starv,Prod_rct)))=0;
+      kO(find(and(starv,Prod_rct)))=kO_tissue;
+      kP(find(and(starv,Prod_rct)))=-2*kP_tissue;
+	  K(find(and(starv,Prod_rct))) = K(find(and(starv,Prod_rct))) + rel_K;
+
+	  %product can rescue from starvation
+	  kS(find(and(starv,Prod_lth)))=0;
+      kO(find(and(starv,Prod_lth)))=kO_tissue;
+      kP(find(and(starv,Prod_lth)))=-2*kP_tissue;
+	  K(find(and(starv,Prod_lth))) = K(find(and(starv,Prod_lth))) + rel_K;
+
+	  %state vector update
+	  state(Grid(find(and(well_fed,No_eff))),2)=1;
+	  state(Grid(find(and(well_fed,Prod_rct))),2)=2;
+	  state(Grid(find(and(well_fed,Prod_lth))),2)=2;
+	  state(Grid(find(and(hypox,No_eff))),2)=1;
+	  state(Grid(find(and(hypox,Prod_rct))),2)=2;
+	  state(Grid(find(and(hypox,Prod_lth))),2)=2;
+	  state(Grid(find(and(hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_lth))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_lth))),2)=1; %no proliferation when surctrate is missing
+      state(Grid(find(and(starv,No_eff))),2)=-1;
+      state(Grid(find(and(starv,Prod_rct))),2)=1;
+      state(Grid(find(and(starv,Prod_lth))),2)=1;
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
+
+
+
+
+	case 'Prod_cons_in_hypos_hypox_resp'
+	%Now reaction to P is added and is simply detrimental
+
+	%enough of both
+      kS(find(and(well_fed,No_eff)))=kS_tissue;
+      kO(find(and(well_fed,No_eff)))=kO_tissue;
+      kP(find(and(well_fed,No_eff)))=kP_tissue;
+
+	  %product does nothing
+	  kS(find(and(well_fed,Prod_rct)))=kS_tissue;
+      kO(find(and(well_fed,Prod_rct)))=kO_tissue;
+      kP(find(and(well_fed,Prod_rct)))=kP_maint; %product is moderately consumed and gives a boost in prolif
+
+	  % too much product kills the cell
+	  kS(find(and(well_fed,Prod_lth)))=kS_tissue;
+      kO(find(and(well_fed,Prod_lth)))=kO_tissue;
+      kP(find(and(well_fed,Prod_lth)))=kP_maint;
+
+	  %not enough substrate -> stops proliferation
+	  kS(find(and(hypos,No_eff)))=kS_maint;
+      kO(find(and(hypos,No_eff)))=kO_maint;
+      kP(find(and(hypos,No_eff)))=kP_maint;
+
+	  % product restores prolif  by consuming moderate amount of Prod
+	  kS(find(and(hypos,Prod_rct)))=kS_maint;
+      kO(find(and(hypos,Prod_rct)))=kO_tissue;
+      kP(find(and(hypos,Prod_rct)))=-kP_maint;
+
+	 % cell does not tolerate high product amounts with low energy
+	  kS(find(and(hypos,Prod_lth)))=kS_maint;
+      kO(find(and(hypos,Prod_lth)))=kO_tissue;
+      kP(find(and(hypos,Prod_lth)))=-kP_maint;
+
+	  %hypoxia -> compensates but does not compensate enough to proliferate
+	  kS(find(and(hypox,No_eff)))=kS_tissue;
+      kO(find(and(hypox,No_eff)))=kO_maint;
+      kP(find(and(hypox,No_eff)))=kP_tissue;
+
+	  kS(find(and(hypox,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox,Prod_rct)))=kO_tissue;
+      kP(find(and(hypox,Prod_rct)))=kP_tissue; %product is moderately consumed and gives a boost in prolif
+
+	  kS(find(and(hypox,Prod_lth)))=2*kS_tissue;
+      kO(find(and(hypox,Prod_lth)))=kO_tissue;
+      kP(find(and(hypox,Prod_lth)))=kP_tissue;
+
+
+	  %hypoxia+hyposubia  -> the conjunction of two energy reductions kills the cell
+	  kS(find(and(hypox_hypos,No_eff)))=kS_maint;
+      kO(find(and(hypox_hypos,No_eff)))=kO_maint;
+      kP(find(and(hypox_hypos,No_eff)))=kP_maint;
+
+	  kS(find(and(hypox_hypos,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox_hypos,Prod_rct)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_rct)))=-kP_tissue;
+
+	  kS(find(and(hypox_hypos,Prod_lth)))=2*kS_tissue;
+      kO(find(and(hypox_hypos,Prod_lth)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_lth)))=-kP_tissue;
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(and(starv,No_eff)))=0;
+      kO(find(and(starv,No_eff)))=0;
+      kP(find(and(starv,No_eff)))=0;
+	  K(find(and(starv,No_eff))) = K(find(and(starv,No_eff))) + rel_K;
+
+	  %product can rescue from starvation
+	  kS(find(and(starv,Prod_rct)))=0;
+      kO(find(and(starv,Prod_rct)))=kO_tissue;
+      kP(find(and(starv,Prod_rct)))=-2*kP_tissue;
+	  K(find(and(starv,Prod_rct))) = K(find(and(starv,Prod_rct))) + rel_K;
+
+	  %product can rescue from starvation
+	  kS(find(and(starv,Prod_lth)))=0;
+      kO(find(and(starv,Prod_lth)))=kO_tissue;
+      kP(find(and(starv,Prod_lth)))=-2*kP_tissue;
+	  K(find(and(starv,Prod_rct))) = K(find(and(starv,Prod_rct))) + rel_K;
+
+	  %state vector update
+	  state(Grid(find(and(well_fed,No_eff))),2)=1;
+	  state(Grid(find(and(well_fed,Prod_rct))),2)=2;
+	  state(Grid(find(and(well_fed,Prod_lth))),2)=2;
+	  state(Grid(find(and(hypox,No_eff))),2)=2;
+	  state(Grid(find(and(hypox,Prod_rct))),2)=3;
+	  state(Grid(find(and(hypox,Prod_lth))),2)=3;
+	  state(Grid(find(and(hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_lth))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_lth))),2)=1; %no proliferation when surctrate is missing
+      state(Grid(find(and(starv,No_eff))),2)=-1;
+      state(Grid(find(and(starv,Prod_rct))),2)=1;
+      state(Grid(find(and(starv,Prod_lth))),2)=1;
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
+
+	case 'Prod_cons_in_hypos_hypox_resp_mig'
+	%Now reaction to P is added and is simply detrimental
+
+	%enough of both
+      kS(find(and(well_fed,No_eff)))=kS_tissue;
+      kO(find(and(well_fed,No_eff)))=kO_tissue;
+      kP(find(and(well_fed,No_eff)))=kP_tissue;
+
+	  %product does nothing
+	  kS(find(and(well_fed,Prod_rct)))=kS_tissue;
+      kO(find(and(well_fed,Prod_rct)))=kO_tissue;
+      kP(find(and(well_fed,Prod_rct)))=kP_maint; %product is moderately consumed and gives a boost in prolif
+
+	  % too much product kills the cell
+	  kS(find(and(well_fed,Prod_lth)))=kS_tissue;
+      kO(find(and(well_fed,Prod_lth)))=kO_tissue;
+      kP(find(and(well_fed,Prod_lth)))=kP_maint;
+
+	  %not enough substrate -> stops proliferation
+	  kS(find(and(hypos,No_eff)))=kS_maint;
+      kO(find(and(hypos,No_eff)))=kO_maint;
+      kP(find(and(hypos,No_eff)))=kP_maint;
+
+	  % product restores prolif  by consuming moderate amount of Prod
+	  kS(find(and(hypos,Prod_rct)))=kS_maint;
+      kO(find(and(hypos,Prod_rct)))=kO_tissue;
+      kP(find(and(hypos,Prod_rct)))=-kP_maint;
+
+	 % cell does not tolerate high product amounts with low energy
+	  kS(find(and(hypos,Prod_lth)))=kS_maint;
+      kO(find(and(hypos,Prod_lth)))=kO_tissue;
+      kP(find(and(hypos,Prod_lth)))=-kP_maint;
+
+	  %hypoxia -> compensates but does not compensate enough to proliferate
+	  kS(find(and(hypox,No_eff)))=kS_tissue;
+      kO(find(and(hypox,No_eff)))=kO_maint;
+      kP(find(and(hypox,No_eff)))=kP_tissue;
+
+	  kS(find(and(hypox,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox,Prod_rct)))=kO_tissue;
+      kP(find(and(hypox,Prod_rct)))=kP_tissue; %product is moderately consumed and gives a boost in prolif
+
+	  kS(find(and(hypox,Prod_lth)))=2*kS_tissue;
+      kO(find(and(hypox,Prod_lth)))=kO_tissue;
+      kP(find(and(hypox,Prod_lth)))=kP_tissue;
+
+
+	  %hypoxia+hyposubia  -> the conjunction of two energy reductions kills the cell
+	  kS(find(and(hypox_hypos,No_eff)))=kS_maint;
+      kO(find(and(hypox_hypos,No_eff)))=kO_maint;
+      kP(find(and(hypox_hypos,No_eff)))=kP_maint;
+
+	  kS(find(and(hypox_hypos,Prod_rct)))=2*kS_tissue;
+      kO(find(and(hypox_hypos,Prod_rct)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_rct)))=-kP_tissue;
+
+	  kS(find(and(hypox_hypos,Prod_lth)))=2*kS_tissue;
+      kO(find(and(hypox_hypos,Prod_lth)))=kO_maint;
+      kP(find(and(hypox_hypos,Prod_lth)))=-kP_tissue;
+
+      %starvation (onlly possible w/surctrate)
+      kS(find(and(starv,No_eff)))=0;
+      kO(find(and(starv,No_eff)))=0;
+      kP(find(and(starv,No_eff)))=0;
+	  K(find(and(starv,No_eff))) = K(find(and(starv,No_eff))) + rel_K;
+
+	  %product can rescue from starvation
+	  kS(find(and(starv,Prod_rct)))=0;
+      kO(find(and(starv,Prod_rct)))=kO_tissue;
+      kP(find(and(starv,Prod_rct)))=-2*kP_tissue;
+	  K(find(and(starv,Prod_rct))) = K(find(and(starv,Prod_rct))) + rel_K;
+
+	  %product can rescue from starvation
+	  kS(find(and(starv,Prod_lth)))=0;
+      kO(find(and(starv,Prod_lth)))=kO_tissue;
+      kP(find(and(starv,Prod_lth)))=-2*kP_tissue;
+	  K(find(and(starv,Prod_rct))) = K(find(and(starv,Prod_rct))) + rel_K;
+
+	  %state vector update
+	  state(Grid(find(and(well_fed,No_eff))),2)=1;
+	  state(Grid(find(and(well_fed,Prod_rct))),2)=2;
+	  state(Grid(find(and(well_fed,Prod_lth))),2)=2;
+	  state(Grid(find(and(hypox,No_eff))),2)=2;
+	  state(Grid(find(and(hypox,Prod_rct))),2)=3;
+	  state(Grid(find(and(hypox,Prod_lth))),2)=3;
+	  state(Grid(find(and(hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypos,Prod_lth))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,No_eff))),2)=0; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_rct))),2)=1; %no proliferation when surctrate is missing
+	  state(Grid(find(and(hypox_hypos,Prod_lth))),2)=1; %no proliferation when surctrate is missing
+      state(Grid(find(and(starv,No_eff))),2)=-1;
+      state(Grid(find(and(starv,Prod_rct))),2)=1;
+      state(Grid(find(and(starv,Prod_lth))),2)=1;
+	  state(Grid(find(sheddable_prod)),2)=0;
+
+      state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
+      prod_mat = 9.*No_eff +8.*Prod_rct+7.*Kine_rct+6.*ProdKine_rct+5.*Prod_lth+4.*Kine_lth+3.*P_rct_K_lth+2.*P_lth_K_rct+1.*ProdKine_lth;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
