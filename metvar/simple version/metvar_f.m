@@ -30,7 +30,7 @@ function a = metvar_f (kO_arg, kS_arg, behavior, filename)
 %declaration des paramètres à partir de conf %%%%%%%%%%%%
 j=0;
 % paramètres généraux
-sz = 100; % 100  conf(j+1); j++; %size of the square domain in which the simulation is ran
+sz = 200; % 100  conf(j+1); j++; %size of the square domain in which the simulation is ran
 n_min = 60; %  15 conf(j+1);j++; % simulated time in minutes
 dx = 60; % 20  conf(j+1);j++;
 dt =  1.5e-2;%conf(j+1);j++;
@@ -89,6 +89,8 @@ kS = zeros(sz,sz); % Substrate consumption matrix
 kP = zeros(sz,sz); % Product consumption matrix
 kK = zeros(sz,sz); % Product consumption matrix
 Grid = zeros(sz,sz); % Grilles de gestions des cellules
+state_mat = zeros(sz,sz); % Grilles d'état nutriments exogènes
+prod_mat = zeros(sz,sz); % Grilles d'état produit
 %initialisation
 Grid(round(sz/2),round(sz/2))=1; %cellule unique au centre au départ
 
@@ -127,6 +129,7 @@ l=1
 	Pt_r = [];
 	Kt_r = [];
 	state_mat_r = [];
+	prod_mat_r = [];
 
 	n_cy =0;
 
@@ -187,7 +190,7 @@ while(n_cy<n_div) % loop to stop at a given size
 
 
 		%BEHAVIOR DETERMINATION%%%%%%%%
-		[kS,kO,kP,K,state,state_mat] = behav(behavior,Grid,S,P,O,K,state,kO,kS,kP,kO_tissue,kO_maint,kS_tissue,kS_maint,kP_tissue,kP_maint,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,S_prol,S_maint,O_norm,P_prom,P_death,K_prom,K_death,rel_K);
+		[kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,state,kO,kS,kP,kO_tissue,kO_maint,kS_tissue,kS_maint,kP_tissue,kP_maint,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,S_prol,S_maint,O_norm,P_prom,P_death,K_prom,K_death,rel_K,state_mat,prod_mat);
 
 		[K,kK,DKm,Kt,delta] = updateprod_metvar(Grid,K,P,kK,cP,DKm,d0,ntime,tau,dx,dt);
 		%delta
@@ -208,6 +211,7 @@ while(n_cy<n_div) % loop to stop at a given size
 		Kt_r  = [Kt_r Kt];
 		Grid_r = [Grid_r Grid];
 		state_mat_r = [state_mat_r state_mat];
+		prod_mat_r = [prod_mat_r prod_mat];
 
 	endif
 
@@ -224,6 +228,7 @@ kS_r = reshape(kS_r, [sz sz n_cy-n_init]);
 kO_r = reshape(kO_r, [sz sz n_cy-n_init]);
 Grid_r = reshape(Grid_r, [sz sz n_cy-n_init]);
 state_mat_r = reshape(state_mat_r, [sz sz n_cy-n_init]);
+prod_mat_r = reshape(prod_mat_r, [sz sz n_cy-n_init]);
 
 [li co pr] = ind2sub([sz sz n_cy-n_init],find(or(kS_r==kS_tissue,kS_r==kS_comp)));
 all_prol = [li, co, pr];

@@ -52,19 +52,27 @@ full_study('OS_fragile_P_boost','OS_fragile_P_boost');
 full_study('OS_hypox_boost_P_boost','OS_hypox_boost_P_boost');
 
 full_study('Prod_mediated_hypox_resp','Prod_mediated_hypox_resp');
+
+full_study('Prod_mediated_hypox_resp_mig','Prod_mediated_hypox_resp_mig');
+
+full_study('Prod_cons_in_hypos','Prod_cons_in_hypos');
+
+full_study('Prod_cons_in_hypos_hypox_resp','Prod_cons_in_hypos_hypox_resp');
+
+full_study('Prod_cons_in_hypos_hypox_resp_mig','Prod_cons_in_hypos_hypox_resp_mig');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%OSK models%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-full_study('OS_fragile_K_detr','OS_fragile_K_detr');
-
-full_study('OS_hypox_boost_K_detr','OS_hypox_boost_K_detr');
-
-full_study('OS_fragile_K_boost','OS_fragile_K_boost');
-
-full_study('OS_hypox_boost_K_boost','OS_hypox_boost_K_boost');
-
-full_study('Kine_mediated_hypox_resp','Kine_mediated_hypox_resp');
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##%OSK models%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##full_study('OS_fragile_K_detr','OS_fragile_K_detr');
+##
+##full_study('OS_hypox_boost_K_detr','OS_hypox_boost_K_detr');
+##
+##full_study('OS_fragile_K_boost','OS_fragile_K_boost');
+##
+##full_study('OS_hypox_boost_K_boost','OS_hypox_boost_K_boost');
+##
+##full_study('Kine_mediated_hypox_resp','Kine_mediated_hypox_resp');
+##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 

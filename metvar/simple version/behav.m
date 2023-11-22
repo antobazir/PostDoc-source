@@ -23,25 +23,25 @@
 ## Created: 2023-11-08
 
 %14/11/2023 state keeps division score
-function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,state,kO,kS,kP,kO_tissue,kO_maint,kS_tissue,kS_maint,kP_tissue,kP_maint,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,S_prol,S_maint,O_norm,P_prom,P_death,K_prom,K_death,rel_K)
+function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,state,kO,kS,kP,kO_tissue,kO_maint,kS_tissue,kS_maint,kP_tissue,kP_maint,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,S_prol,S_maint,O_norm,P_prom,P_death,K_prom,K_death,rel_K,state_mat,prod_mat)
 
   % state_mat
-  well_fed = and(S>=S_prol,O>=O_norm,Grid!=0);
-  hypox = and(S>=S_prol,O<O_norm,Grid!=0);
-  hypos = and(S<S_prol,S>=S_maint,O>=O_norm,Grid!=0);
-  hypox_hypos = and(S<S_prol,S>=S_maint,O<O_norm,Grid!=0);
-  starv = and(S<S_maint,Grid!=0);
+  well_fed = and(S>=S_prol,O>=O_norm,Grid!=0,kS>0,kO>0);
+  hypox = and(S>=S_prol,O<O_norm,Grid!=0,kS>0,kO>0);
+  hypos = and(S<S_prol,S>=S_maint,O>=O_norm,Grid!=0,kS>0,kO>0);
+  hypox_hypos = and(S<S_prol,S>=S_maint,O<O_norm,Grid!=0,kS>0,kO>0);
+  starv = or(and(S<S_maint,Grid!=0),and(Grid!=0,kS==0,kO==0));
 
   %prod_mat
-  No_eff = and(P<P_prom,K<K_prom,Grid!=0);
-  Prod_rct = and(P>=P_prom,P<P_death,K<K_prom,Grid!=0);
-  Prod_lth = and(P>=P_death,K<K_prom,Grid!=0);
-  Kine_rct = and(P<P_prom,K>=K_prom,K<K_death,Grid!=0);
-  Kine_lth = and(P<P_prom,K>=K_death,Grid!=0);
-  ProdKine_rct = and(P>=P_prom,P<P_death,K>=K_prom,K<K_death,Grid!=0);
-  ProdKine_lth = and(P>=P_death,K>=K_death,Grid!=0);
-  P_rct_K_lth = and(P>=P_prom,P<P_death,K>=K_death,Grid!=0);
-  P_lth_K_rct = and(P>=P_death,K>=K_prom,K<K_death,Grid!=0);
+  No_eff = and(P<P_prom,K<K_prom,Grid!=0,kS>0,kO>0);
+  Prod_rct = and(P>=P_prom,P<P_death,K<K_prom,Grid!=0,kS>0,kO>0);
+  Prod_lth = and(P>=P_death,K<K_prom,Grid!=0,kS>0,kO>0);
+  Kine_rct = and(P<P_prom,K>=K_prom,K<K_death,Grid!=0,kS>0,kO>0);
+  Kine_lth = and(P<P_prom,K>=K_death,Grid!=0,kS>0,kO>0);
+  ProdKine_rct = and(P>=P_prom,P<P_death,K>=K_prom,K<K_death,Grid!=0,kS>0,kO>0);
+  ProdKine_lth = and(P>=P_death,K>=K_death,Grid!=0,kS>0,kO>0);
+  P_rct_K_lth = and(P>=P_prom,P<P_death,K>=K_death,Grid!=0,kS>0,kO>0);
+  P_lth_K_rct = and(P>=P_death,K>=K_prom,K<K_death,Grid!=0,kS>0,kO>0);
 
   %shedding
   perim = im2double(bwperim(Grid));
@@ -52,7 +52,8 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
   switch(behavior)
       case 'ref'
       disp('nada');
-	  state_mat = Grid!=0;
+	  %state_mat = Grid!=0;
+	  %prod_mat = Grid!=0;
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%Surctrate response only
@@ -263,7 +264,7 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  state(Grid(find(well_fed)),2)=1;
 	  state(Grid(find(hypox)),2)=1;
 	  state(Grid(find(hypos)),2)=1; %no proliferation when surctrate is missing
-	  state(Grid(find(hypox_hypos)),2)=2; %no proliferation when surctrate is missing
+	  state(Grid(find(hypox_hypos)),2)=1; %no proliferation when surctrate is missing
       state(Grid(find(starv)),2)=-1;
 
       state_mat = 5.*well_fed+4.*hypox+3.*hypos+2.*hypox_hypos+starv;
