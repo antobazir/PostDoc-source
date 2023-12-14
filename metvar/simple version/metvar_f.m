@@ -25,29 +25,32 @@
 %08/11 This script is now turned into a function since only two parameters change for
 % for each study. This makes it possible to use a script to generate the data
 %15/11 on décale le Kine en diffusion APRES application de la mort cellulaire... à noter que ça peut décaler d'un cran la réponse
+%09/12 On remplace update metvar par update metvar master pour le glucose car ça permet d'avoir une vraie condition de stabilité
+%10/12 on calcule n_min à chaque boucle
 function a = metvar_f (kO_arg, kS_arg, behavior, filename)
 
 %declaration des paramètres à partir de conf %%%%%%%%%%%%
 j=0;
 % paramètres généraux
-sz = 200; % 100  conf(j+1); j++; %size of the square domain in which the simulation is ran
-n_min = 60; %  15 conf(j+1);j++; % simulated time in minutes
+sz = 50; % 100  conf(j+1); j++; %size of the square domain in which the simulation is ran
+%n_min = 100; %  15 conf(j+1);j++; % simulated time in minutes
 dx = 60; % 20  conf(j+1);j++;
-dt =  1.5e-2;%conf(j+1);j++;
+dt =  0.5*dx^2/(2*100000);%conf(j+1);j++; dt = 1.666e-2 par critère CFL
 cell_diam = 20;
+Radius_agg=0;
 
 %paramètres diffusion
-d0 = 60;%conf(j+1);j++;
-tau = 0.036%j++; % characteristic diff time in minues
+d0 = dx%conf(j+1);j++;
+tau = d0^2/100000%j++; % characteristic diff time in minues
 DS_med = 0.3%conf(j+1);j++;
 DP_med = 0.4%conf(j+1);j++;
 DK_med = 0.4%conf(j+1);j++;
 
 %paramètres métaboliques %0.40 et 0.1 donne une abondance relative similaire dans l'agrégat
 %consumption
-kO_tissue = kO_arg*(cell_diam^2)/(dx^2)%conf(j+1);j++; %maxi value of consumption term for oxygen
+kO_tissue = kO_arg%*(cell_diam^2)/(dx^2)%conf(j+1);j++; %maxi value of consumption term for oxygen
 kO_maint = 0.3*kO_tissue%conf(j+1);j++; %maxi value of consumption term for oxygen
-kS_tissue = kS_arg*(cell_diam^2)/(dx^2)%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
+kS_tissue = kS_arg%*(cell_diam^2)/(dx^2)%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
 kS_comp = 2*kS_tissue%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
 kS_maint =0.3*kS_tissue%conf(j+1);j++; %max value of consumption term for Substrate (consumed only)
 kP_tissue =-1*kS_tissue%conf(j+1);j++; % max value of consumption term for Product (produced/consumed)
@@ -55,8 +58,8 @@ kP_maint =-0.5*kS_maint%conf(j+1);j++; % max value of consumption term for Produ
 cO =  0.1%conf(j+1);j++; %Michaelis Menten constant for Oxygen hill function for cons.
 cS = 0.2%conf(j+1);j++; %" constant for Substrate hill function for cons.
 cP = 0.1%conf(j+1);j++; %" constant for Product hill function for /prod
-DOx_tissue = 0.6%conf(j+1); j++;% oxygen diffusion constant in tissue
-DS_tissue = 0.06%conf(j+1);j++; % Substrate diffusion constant in tissue
+DOx_tissue = 0.5%conf(j+1); j++;% oxygen diffusion constant in tissue
+DS_tissue = 0.05%conf(j+1);j++; % Substrate diffusion constant in tissue
 DP_tissue = 0.1%conf(j+1);j++; % Product diffusion constant in tissue
 DK_tissue = 0.1%conf(j+1);j++; % Kine diffusion constant in tissue
 S_prol = 0.5 % 40 % of ext value needed to proliferate.
@@ -73,8 +76,8 @@ rel_K = 0.2 % 40 % of ext value needed to proliferate.
 %n_cells0 = conf(j+1);
 %pellet_size = conf(j+1);
 %Diff_glu = conf(j+1);
-n_div = 12; %nombre max de div.
-n_init = 4; %nombre de division pour initialiser le système
+n_div = 11; %nombre max de div.
+n_init = 3; %nombre de division pour initialiser le système
 shed_prob = 0.9; %proba limite pour le shedding
 %behavior = 1; %encodes the different behavior
 
@@ -93,6 +96,7 @@ state_mat = zeros(sz,sz); % Grilles d'état nutriments exogènes
 prod_mat = zeros(sz,sz); % Grilles d'état produit
 %initialisation
 Grid(round(sz/2),round(sz/2))=1; %cellule unique au centre au départ
+state_story =  cell(1,1); %cell structure stroring the vector states
 
 %matrices de diffusion
 DOm = ones(sz,sz); %oxygen diffusion in medium is the ref
@@ -133,7 +137,7 @@ l=1
 
 	n_cy =0;
 
-while(n_cy<n_div) % loop to stop at a given size
+while(Radius_agg<1000) % loop to stop at a given size
   disp('******************')
 	n_cy++
 	div =0;
@@ -177,13 +181,20 @@ while(n_cy<n_div) % loop to stop at a given size
 		endif
 	endif
 
-	ntime = n_min/dt;
+  Area_patch = length(find(Grid!=0))*(dx^2);
+  Radius_agg = sqrt(Area_patch/pi);
+  n_min = round(Area_patch/5000);
+  disp(['diffusion time :' num2str(n_min) ' mn'])
+	ntime = floor(n_min/dt)+1;
 
 	if(n_cy>n_init)
+    %cnt=0;
 		tic
-		[S,kS,DSm,St] = update_metvar(Grid,S,kS,cS,DSm,d0,ntime,tau,dx,dt);
+##		[S,kS,DSm,St,cnt] = update_metvar_master(Grid,S,kS,cS,DSm,d0,250,tau,dx,dt);
+##    cnt
+    [S,kS,DSm,St] = update_metvar(Grid,S,kS,cS,DSm,d0,ntime,tau,dx,dt);
 		[O,kO,DOm,Ot] = update_metvar(Grid,O,kO,cO,DOm,d0,ntime,tau,dx,dt);
-		[P,kP,DPm,Pt,delta] = updateprod_metvar(Grid,S,P,kP,cP,DPm,d0,ntime,tau,dx,dt);
+		%[P,kP,DPm,Pt,delta] = updateprod_metvar(Grid,S,P,kP,cP,DPm,d0,ntime,tau,dx,dt);
 		%[K,kK,DKm,Kt,delta] = updateprod_metvar(Grid,K,P,kK,cP,DKm,d0,ntime,tau,dx,dt);
 		%delta
     toc
@@ -192,7 +203,7 @@ while(n_cy<n_div) % loop to stop at a given size
 		%BEHAVIOR DETERMINATION%%%%%%%%
 		[kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,state,kO,kS,kP,kO_tissue,kO_maint,kS_tissue,kS_maint,kP_tissue,kP_maint,DOm,DSm,DPm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,S_prol,S_maint,O_norm,P_prom,P_death,K_prom,K_death,rel_K,state_mat,prod_mat);
 
-		[K,kK,DKm,Kt,delta] = updateprod_metvar(Grid,K,P,kK,cP,DKm,d0,ntime,tau,dx,dt);
+		%[K,kK,DKm,Kt,delta] = updateprod_metvar(Grid,K,P,kK,cP,DKm,d0,ntime,tau,dx,dt);
 		%delta
 
     check_div2 = length(find(kS==kS_tissue))
@@ -205,25 +216,26 @@ while(n_cy<n_div) % loop to stop at a given size
 		St_r  = [St_r St];
 		O_r  = [O_r O];
 		Ot_r  = [Ot_r Ot];
-		P_r  = [P_r P];
-		Pt_r  = [Pt_r Pt];
-		K_r  = [K_r K];
-		Kt_r  = [Kt_r Kt];
+##		P_r  = [P_r P];
+##		Pt_r  = [Pt_r Pt];
+##		K_r  = [K_r K];
+##		Kt_r  = [Kt_r Kt];
 		Grid_r = [Grid_r Grid];
 		state_mat_r = [state_mat_r state_mat];
 		prod_mat_r = [prod_mat_r prod_mat];
-
+		state_story(n_cy-1) = state;
 	endif
 
 endwhile
 
 S_r = reshape(S_r, [sz sz n_cy-n_init]);
-St_r = reshape(St_r, [round(sz/2) round(ntime) n_cy-n_init]);
-Kt_r = reshape(Kt_r, [round(sz/2) round(ntime) n_cy-n_init]);
-Pt_r = reshape(Pt_r, [round(sz/2) round(ntime) n_cy-n_init]);
+%St_r = reshape(St_r, [round(sz/2) round(ntime) n_cy-n_init]);
+%Ot_r = reshape(Ot_r, [round(sz/2) round(ntime) n_cy-n_init]);
+##Kt_r = reshape(Kt_r, [round(sz/2) round(ntime) n_cy-n_init]);
+##Pt_r = reshape(Pt_r, [round(sz/2) round(ntime) n_cy-n_init]);
 O_r = reshape(O_r, [sz sz n_cy-n_init]);
-P_r = reshape(P_r, [sz sz n_cy-n_init]);
-K_r = reshape(K_r, [sz sz n_cy-n_init]);
+##P_r = reshape(P_r, [sz sz n_cy-n_init]);
+##K_r = reshape(K_r, [sz sz n_cy-n_init]);
 kS_r = reshape(kS_r, [sz sz n_cy-n_init]);
 kO_r = reshape(kO_r, [sz sz n_cy-n_init]);
 Grid_r = reshape(Grid_r, [sz sz n_cy-n_init]);

@@ -65,10 +65,6 @@ M(find(Grid==0))=1;
 	%Mt(i) = M(round(sz/2),round(sz/2));
 	Mt(:,i) = M(1:round(sz/2),round(sz/2));
 
-    if(mod(i,10000)==0)
-    disp([num2str(i) '/' num2str(ntime)])
-  endif
-
 %endwhile
   endfor
 endfunction

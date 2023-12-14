@@ -1,3 +1,5 @@
+%07/12 on modifie le code pour que le shiftage e
+
 function[Grid,kO,kS,kP,DSm,DOm,DPm,DKm,state] = divide2D_metvar(Grid,pos,c_idx,sz,S,P,O,K,state,kO,kS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue)%on autorise la diffusion sur les 8 voisins et plus seulement sur 4
 %plr = randi(1:4);
 pos;
@@ -24,8 +26,10 @@ endif
 plr;
 switch(plr)
 	case 1
+    % Si la case d'à côté est vide on définit une position intermédiaire
 		if(Grid(pos(1)-1,pos(2)-1)!=0)
 			int_pos = [pos(1)-1,pos(2)-1];
+      % on parcours tous les points dans la direction
 			while(Grid(int_pos(1),int_pos(2))!=0)
 				%vecteur des positions parcourues dans la direction choisies
 				shift_vec = [shift_vec; int_pos];
@@ -37,13 +41,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1)-1,shift_vec(i,2)-1) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1)-1,shift_vec(i,2)-1) = kO_tissue;
-				kS(shift_vec(i,1)-1,shift_vec(i,2)-1) = kS_tissue;
-				kP(shift_vec(i,1)-1,shift_vec(i,2)-1) = kP_tissue;
-				DSm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DS_tissue;
-				Dpm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DP_tissue;
-				DOm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DOx_tissue;
-				DKm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DK_tissue;
+				kO(shift_vec(i,1)-1,shift_vec(i,2)-1) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1)-1,shift_vec(i,2)-1) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1)-1,shift_vec(i,2)-1) = kP(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DSm(shift_vec(i,1),shift_vec(i,2));
+				Dpm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DPm(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1)-1,shift_vec(i,2)-1) = DKm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1)-1,pos(2)-1) = size(state,1)+1;
@@ -86,13 +90,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1)-1,shift_vec(i,2)) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1)-1,shift_vec(i,2)) = kO_tissue;
-				kS(shift_vec(i,1)-1,shift_vec(i,2)) = kS_tissue;
-				kP(shift_vec(i,1)-1,shift_vec(i,2)) = kP_tissue;
-				DOm(shift_vec(i,1)-1,shift_vec(i,2)) = DOx_tissue;
-				DKm(shift_vec(i,1)-1,shift_vec(i,2)) = DK_tissue;
-				DPm(shift_vec(i,1)-1,shift_vec(i,2)) = DP_tissue;
-				DSm(shift_vec(i,1)-1,shift_vec(i,2)) = DS_tissue;
+				kO(shift_vec(i,1)-1,shift_vec(i,2)) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1)-1,shift_vec(i,2)) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1)-1,shift_vec(i,2)) = kP(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1)-1,shift_vec(i,2)) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1)-1,shift_vec(i,2)) = DKm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1)-1,shift_vec(i,2)) = DPm(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1)-1,shift_vec(i,2)) = DSm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1)-1,pos(2)) = size(state,1)+1;
@@ -136,13 +140,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1)-1,shift_vec(i,2)+1) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1)-1,shift_vec(i,2)+1) = kO_tissue;
-				kS(shift_vec(i,1)-1,shift_vec(i,2)+1) = kS_tissue;
-				kP(shift_vec(i,1)-1,shift_vec(i,2)+1) = kP_tissue;
-				DSm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DS_tissue;
-				DPm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DP_tissue;
-				DOm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DOx_tissue;
-				DKm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DK_tissue;
+				kO(shift_vec(i,1)-1,shift_vec(i,2)+1) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1)-1,shift_vec(i,2)+1) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1)-1,shift_vec(i,2)+1) = kP(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DSm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DPm(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1)-1,shift_vec(i,2)+1) = DKm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1)-1,pos(2)+1) = size(state,1)+1;
@@ -188,13 +192,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1),shift_vec(i,2)-1) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1),shift_vec(i,2)-1) = kO_tissue;
-				kS(shift_vec(i,1),shift_vec(i,2)-1) = kS_tissue;
-				kP(shift_vec(i,1),shift_vec(i,2)-1) = kP_tissue;
-				DSm(shift_vec(i,1),shift_vec(i,2)-1) = DS_tissue;
-				DPm(shift_vec(i,1),shift_vec(i,2)-1) = DP_tissue;
-				DOm(shift_vec(i,1),shift_vec(i,2)-1) = DOx_tissue;
-				DKm(shift_vec(i,1),shift_vec(i,2)-1) = DK_tissue;
+				kO(shift_vec(i,1),shift_vec(i,2)-1) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1),shift_vec(i,2)-1) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1),shift_vec(i,2)-1) = kP(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1),shift_vec(i,2)-1) = DSm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1),shift_vec(i,2)-1) = DPm(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1),shift_vec(i,2)-1) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1),shift_vec(i,2)-1) = DKm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1),pos(2)-1) = size(state,1)+1;
@@ -240,13 +244,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1),shift_vec(i,2)+1) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1),shift_vec(i,2)+1) = kO_tissue;
-				kS(shift_vec(i,1),shift_vec(i,2)+1) = kS_tissue;
-				kP(shift_vec(i,1),shift_vec(i,2)+1) = kP_tissue;
-				DOm(shift_vec(i,1),shift_vec(i,2)+1) = DOx_tissue;
-				DKm(shift_vec(i,1),shift_vec(i,2)+1) = DK_tissue;
-				DSm(shift_vec(i,1),shift_vec(i,2)+1) = DS_tissue;
-				DPm(shift_vec(i,1),shift_vec(i,2)+1) = DP_tissue;
+				kO(shift_vec(i,1),shift_vec(i,2)+1) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1),shift_vec(i,2)+1) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1),shift_vec(i,2)+1) = kP(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1),shift_vec(i,2)+1) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1),shift_vec(i,2)+1) = DKm(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1),shift_vec(i,2)+1) = DSm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1),shift_vec(i,2)+1) = DPm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1),pos(2)+1) = size(state,1)+1;
@@ -292,13 +296,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1)+1,shift_vec(i,2)-1) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1)+1,shift_vec(i,2)-1) = kO_tissue;
-				kS(shift_vec(i,1)+1,shift_vec(i,2)-1) = kS_tissue;
-				kP(shift_vec(i,1)+1,shift_vec(i,2)-1) = kP_tissue;
-				DOm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DOx_tissue;
-				DKm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DK_tissue;
-				DSm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DS_tissue;
-				DPm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DP_tissue;
+				kO(shift_vec(i,1)+1,shift_vec(i,2)-1) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1)+1,shift_vec(i,2)-1) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1)+1,shift_vec(i,2)-1) = kP(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DKm(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DSm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1)+1,shift_vec(i,2)-1) = DPm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1)+1,pos(2)-1) = size(state,1)+1;
@@ -344,13 +348,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1)+1,shift_vec(i,2)) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1)+1,shift_vec(i,2)) = kO_tissue;
-				kS(shift_vec(i,1)+1,shift_vec(i,2)) = kS_tissue;
-				kP(shift_vec(i,1)+1,shift_vec(i,2)) = kP_tissue;
-				DOm(shift_vec(i,1)+1,shift_vec(i,2)) = DOx_tissue;
-				DKm(shift_vec(i,1)+1,shift_vec(i,2)) = DK_tissue;
-				DSm(shift_vec(i,1)+1,shift_vec(i,2)) = DS_tissue;
-				DPm(shift_vec(i,1)+1,shift_vec(i,2)) = DP_tissue;
+				kO(shift_vec(i,1)+1,shift_vec(i,2)) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1)+1,shift_vec(i,2)) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1)+1,shift_vec(i,2)) = kP(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1)+1,shift_vec(i,2)) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1)+1,shift_vec(i,2)) = DKm(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1)+1,shift_vec(i,2)) = DSm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1)+1,shift_vec(i,2)) = DPm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1)+1,pos(2)) = size(state,1)+1;
@@ -394,13 +398,13 @@ switch(plr)
 
 			for i=1:size(shift_vec,1)
 				Grid(shift_vec(i,1)+1,shift_vec(i,2)+1) = Grid(shift_vec(i,1),shift_vec(i,2));
-				kO(shift_vec(i,1)+1,shift_vec(i,2)+1) = kO_tissue;
-				kS(shift_vec(i,1)+1,shift_vec(i,2)+1) = kS_tissue;
-				kP(shift_vec(i,1)+1,shift_vec(i,2)+1) = kP_tissue;
-				DOm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DOx_tissue;
-				DKm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DK_tissue;
-				DSm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DS_tissue;
-				DPm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DP_tissue;
+				kO(shift_vec(i,1)+1,shift_vec(i,2)+1) = kO(shift_vec(i,1),shift_vec(i,2));
+				kS(shift_vec(i,1)+1,shift_vec(i,2)+1) = kS(shift_vec(i,1),shift_vec(i,2));
+				kP(shift_vec(i,1)+1,shift_vec(i,2)+1) = kP(shift_vec(i,1),shift_vec(i,2));
+				DOm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DOm(shift_vec(i,1),shift_vec(i,2));
+				DKm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DKm(shift_vec(i,1),shift_vec(i,2));
+				DSm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DSm(shift_vec(i,1),shift_vec(i,2));
+				DPm(shift_vec(i,1)+1,shift_vec(i,2)+1) = DPm(shift_vec(i,1),shift_vec(i,2));
 			endfor
 
 			Grid(pos(1)+1,pos(2)+1) = size(state,1)+1;

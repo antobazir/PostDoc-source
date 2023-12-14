@@ -52,8 +52,8 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
   switch(behavior)
       case 'ref'
       disp('nada');
-	  %state_mat = Grid!=0;
-	  %prod_mat = Grid!=0;
+	  state_mat = Grid!=0;
+	  prod_mat = Grid!=0;
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	%Surctrate response only
@@ -92,6 +92,17 @@ function [kS,kO,kP,K,state,state_mat,prod_mat] = behav(behavior,Grid,S,P,O,K,sta
 	  kS(find(hypos))=kS_maint;
       kO(find(hypos))=kO_maint;
       kP(find(hypos))=kP_maint;
+
+      	  %hypoxia
+	  kS(find(hypox))=kS_tissue;
+      kO(find(hypox))=kO_tissue;
+      kP(find(hypox))=kP_tissue;
+
+	  %hypoxia+hyposubia
+	  kS(find(hypox_hypos))=kS_maint;
+      kO(find(hypox_hypos))=kO_maint;
+      kP(find(hypox_hypos))=kP_maint;
+
 
 
       %starvation (onlly possible w/surctrate)
