@@ -980,7 +980,7 @@ La transformée en Z est définie de la façon suivante :
 
 \[\sum_{n = 0}^{\infty} s_{T_e}(n) z^{-n}\] 
 
-On la compare généralement à la transformée de Laplace. L'intégrale (somme continue) est remplacée par une somme discrète, et le terme exponentiel est remplacé par $z^{-n}$ C'est ce terme qui donne son à la transformée en Z. Tout comme $p$ dans la transformée de Laplace, $z$  est une variable \textbf{complexe}. Il est important de noter que le fait que la somme soit infinie oblige la variable $z$ à avoir un module inférieur à 1 pour converger.\\
+On la compare généralement à la transformée de Laplace. L'intégrale (somme continue) est remplacée par une somme discrète, et le terme exponentiel est remplacé par $z^{-n}$ C'est ce terme qui donne son nom à la transformée en Z. Tout comme $p$ dans la transformée de Laplace, $z$  est une variable \textbf{complexe}. Il est important de noter que le fait que la somme soit infinie oblige la variable $z$ à avoir un module inférieur à 1 pour converger.\\
 
 La comparaison avec la transformée de Laplace vient surtout du fait que la transformée en Z a des propriétés sur des signaux discrets très similaires à celle de la transformée de Laplace pour les signaux continus. C'est ce qu'on va illustrer dans les sous-parties suivantes.\\
 
@@ -1063,35 +1063,127 @@ On a donc une expression où on peut regrouper les sommes dans deux produits.
 
 \textbf{Question: Que vous évoque la notion de transformée de Fourier Discrète ?}\\
 
-Dans la sous-partie précédente on a présenté la transformée en Z. La transformée de Fourier discrète est une notion un peu différente. En effet la transformée de Fourier Discrète est utilisée spécifiquement dans le cadre des calculs de transformée de Fourier à l'aide de calculateur numérique et découle d'un fait simple: \textbf{Les calculateurs numériques ne peuvent pas sommer à l'infini.}\\
+Dans la sous-partie précédente on a présenté la transformée en Z. La transformée en Z est un outil "général" permettant l'analyse de système  opérant sur des temps discrets. On peut alors calculer la transformée de Fourier d'un signal discret en faisant le changement de variable suivant : $z = e^{j2\pi f T_e}$ avec $T_e$ la période d'échantillonnage du signal discret. Soit $s[n]$ un signal discret, La transformée de Fourier d'un signal discret s'écrit alors : 
 
-En effet sur un calculateur numérique on doit numériser le signal, mais cela veut dire que si on fait des calculs sur son spectre ce dernier doit également être numérisé, c'est-à-dire échantillonné et codé. Donc si on repart de la transformée de Fourier d'un signal $s(t)$ :\\
+\[ TF\lbrace s \rbrace(f) = S(f) = \sum_{k = 0}^{\infty} s[k] \; e^{-j 2 \pi k f T_e}\] \\
 
-\[TF{s}(\omega) = S(f) = \int^{\infty}_{-\infty} s(t) e^{-j 2\pi f t} \; dt\]\\
+Or cette transformée de Fourier, strictement équivalent à la transformée en z au changement de variable de près jusqu'ici, n'est pas calculable par un ordinateur, ou un système à mémoire finie quelconque.\\
 
-Cette transformée continue devient alors :
+\textbf{Question: Pourquoi ? Et secondement,  comment ce "problème" est-il contourné ?}\\
 
+On doit numériser le signal, mais cela veut dire que si on fait des calculs sur son spectre ce dernier doit également être numérisé, c'est-à-dire échantillonné et codé même si on laissera de côté la question du codage pour l'instant. Donc on repart de la transformée de Fourier $S(f)$ d'un signal discret $s[n]$ :\\
 
-\[ S*(k \Delta f) = \sum_{n = 0}^{N-1} s(nT_e) e^{-j 2\pi k \delta f t} \; dt\]\\
-
-à ce stade, aucune relation explicite n'est établie entre le pas en fréquence $\Delta f$ et la période d'échantillonnage...\\
-
-\textbf{Question: Quelle expression vous semble la plus appropriée pour $\delta f$ ?}\\
-
-Pour rappel, il s'agit de l'échantillonnage du \textbf{spectre d'un signal échantillonné.} Cela signifie le spectre du signal $s(t)$ est dupliqué intégralement à intervalles de $\frac{1}{T_e}$. De la même manière qu'il semble logique d'échantillonné un signal périodique avec plus d'un point par période dans le domaine temporel, un échantillonnage en fréquence doit également fournir au moins deux points par "période de spectre".\\
-
-Par ailleurs, si on dispose de $N$ valeurs pour le signal temporel, il semble logique d'avoir également $N$ valeurs pour la fréquence. Dans ce cas la valeur la plus logique est : $\Delta f = \frac{1}{NT}$\\
-
-Une perspective intéressante est alors de s'intéresser à l'échantillonnage en fréquence. De la même manière qu'un signal échantillonné voit son spectre périodisé dans l'espace des fréquence, un spectre échantillonné correspond à la périodisation du signal temporel. Quand on échantillonne à une période $T_e$ on période le spectre à $\frac{1}{T_e}$. Quand on échantillonne un spectre à $\frac{1}{NT_e}$, on périodise le signal à $NT_e$, ce qui correspond en général à la fenêtre de capture du signal.\\
-
-Il est également intéressant de noter que puisqu'on travaille désormais sur des spectres échantillonnés, on travail sur des signaux périodisés. Et dans ce cas la TFD, redevient équivalente à la série de Fourier introduite plutôt.\\
+\[ TF\lbrace s \rbrace(f) = S(f) = \sum_{k = 0}^{\infty} s[k] \; e^{-j 2 \pi k f T_e} \rightarrow S^{\star} (f) =  \sum_{k = 0}^{N-1} s[k] \; e^{-j 2 \pi k f T_e} \]\\
 
 
-\textbf{Schém}
+\textbf{Question : à ce stade, compte tenu de la problématique initial il manque encore une étape. Laquelle ?}\\
+
+Et oui... Même si le nombre de termes de la somme reste fini la fonction continue au membre de gauche signifie que cette fonction sera continue. On peut d'ailleurs s'en rendre compte avec l'exemple de la fonction rectangle discrétisée. Sa transformée de Fourier n'a pas un nombre infini de terme non nuls et pourtant elle est une fonction continue et contenant donc une infinité de valeurs à représenter. Il faut donc également échantillonner le spectre.\\
+
+\[\sum_{k = 0}^{N-1} s[k] \; e^{-j 2 \pi k f T_e} \rightarrow S^{\star} (m \Delta f) = \sum_{k = 0}^{N-1} s[k] \; e^{-j 2 \pi k m \Delta f T_e} \]\\
+
+à ce stade, il nous faut encore déterminer la valeur de $\Delta f$, l'incrément en fréquence.\\
+
+\textbf{Question : Quelle valeur suggérez-vous et pourquoi ?}\\
+
+Un choix évident, notamment en terme de mémoire est de se dire que si on dispose de $N$ valeurs pour le signal temporel, on va également prendre $N$ valeurs pour le spectre du signal.On rappelle ici que l'échantillonnage d'un signal dans le domaine temporelle conduit à la périodisation de son spectre dans le domaine fréquentiel avec une fréquence $f_e$. On doit donc prendre un nombre discret de valeurs sur un intervalle de fréquence de largeur $f_e$ pour avoir tout le spectre. Donc, $\Delta f = \frac{f_e}{N}$ et\\
+
+\[S^{\star} (m \frac{f_e}{N}) = \sum_{k = 0}^{N-1} s[k] \; e^{-j 2 \pi k m \frac{f_e}{N} T_e} \]\\
+
+On insiste bien ici sur le fait que pour avoir le terme d'indice $m$ de la suite du spectre, il faut sommer $N$ terme de la suite correspondant au signal temporel avec le bon indice $m$ dans le terme exponentiel.\\
+
+Afin de bien illustrer le lien entre toutes les notions evoquées jusqu'ici on va reprendre le cas de la fonction rectangulaire.
+
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.5);
+\draw (3.1,0.25) node {$t$};
+\draw (0,2) node {$e(t)$};
 
 
+\draw[thick,blue](-3,0)--(-1.5,0)--(-1.5,1)--(-1.5,1)--(0,1)--(1.5,1)--(1.5,0)--(3,0);
 
-\subsubsection{Les convertisseurs}
+
+\draw[->] (3.5,1)-- (4.5,1);
+
+\draw[->] (7.5,0)-- (7.5,1.5);
+\draw (7.5,-0.3) node {0};
+\draw[->] (5,0)-- (10,0);
+\draw (10.1,0.25) node {$f$};
+\draw (7.5,2) node {$E(f)$};
+\draw[ domain=4.9:9.9,color=blue,samples=160] plot (\x,{80*sin(5*3.14*\x r -5*3.14*7.5r )/(5*3.14*\x r-5*3.14*7.5 r)});
+
+
+\end{tikzpicture}
+\end{center}
+
+La fonction rectangulaire en temporel continu va correspondre à un sinus cardinal continu en fréquence.  
+\begin{center}
+\begin{tikzpicture}
+
+	\draw[->] (-3,0)-- (3,0);
+\draw (0,-0.3) node {0};
+\draw (0.5,-0.3) node {$_{T_e}$};
+\draw[->] (0,0)-- (0,1.5);
+\draw (3.1,0.25) node {$t$};
+\draw (0,2) node {$e(t)$};
+
+\foreach \x in {-3,-2.5,...,-2} \draw[->,thick,blue](\x,0)--(\x,0);
+\foreach \x in {-1.5,-1,...,1.5} \draw[->,thick,blue](\x,0)--(\x,1);
+\foreach \x in {2,2.5,...,3} \draw[->,thick,blue](\x,0)--(\x,0);
+%\draw[->,thick,blue](-3,0)--(-3,0);
+
+\draw[->] (3.5,1)-- (4.5,1);
+
+\draw[->] (7.5,0)-- (7.5,1.5);
+\draw (7.5,-0.3) node {0};
+\draw[->] (5,0)-- (10,0);
+\draw (10.1,0.25) node {$f$};
+\draw (7.5,2) node {$E(f)$};
+\draw[ domain=6.4:8.4,color=blue,samples=80] plot (\x,{80*sin(7*3.14*\x r -7*3.14*7.5r )/(7*3.14*\x r-7*3.14*7.5 r)});
+\draw[ domain=4.4:6.4,color=blue,samples=80] plot (\x,{80*sin(7*3.14*\x r -7*3.14*5.5r )/(7*3.14*\x r-7*3.14*5.5 r)});
+\draw[ domain=8.4:10.4,color=blue,samples=80] plot (\x,{80*sin(7*3.14*\x r -7*3.14*9.5r )/(7*3.14*\x r-7*3.14*9.5 r)});
+\draw (5.4,-0.3) node {$_{-f_e}$};
+\draw (9.4,-0.3) node {$_{f_e}$};
+
+\end{tikzpicture}
+\end{center}
+
+L'échantillonage à période $T_e$ en temporel périodise le spectre avec une période de $f_e$. Mais ça ce stade on a toujours un signal et un spectre infinis.\\ 
+
+Pour passer à un spectre compatible avec un stockage numérique il faut échantillonner et stocker une des périodes. Or on rappelle qu'échantillonner dans un domaine, c'est périodiser dans l'autre.
+% combed sinc
+%\draw[->] (7.5,0)-- (7.5,1.5);
+%\draw (7.5,-0.3) node {0};
+%\draw[->] (5,0)-- (10,0);
+%\draw (10.1,0.25) node {$f$};
+%\draw (7.5,2) node {$e(f)$};
+%\draw[ domain=4.9:9.9,color=blue,samples=80] plot[ycomb] (\x,{80*sin(5*3.14*\x r -5*3.14*7.5r )/(5*3.14*\x r-5*3.14*7.5 r)});
+%
+
+%fct ech
+%\draw[red] (7.5,0)-- (7.5,1.4);
+%\draw[red] (7.75,0)-- (7.75,-0.25);
+%\draw[red] (7.25,0)-- (7.25,-0.25);
+%\draw[red] (8,0)-- (8,0.17);
+%\draw[red] (7,0)-- (7,0.17);
+%\draw[red] (8.25,0)-- (8.25,-0.1);
+%\draw[red] (6.75,0)-- (6.75,-0.1);
+%\draw[red] (8.5,0)-- (8.5,0.01);
+%\draw[red] (6.5,0)-- (6.5,0.01);
+%\draw[red] (8.75,0)-- (8.75,0.07);
+%\draw[red] (6.25,0)-- (6.25,0.07);
+%\draw[red] (9,0)-- (9,-0.075);
+%\draw[red] (6,0)-- (6,-0.075);
+%\draw[red] (9.25,0)-- (9.25,0.03);
+%\draw[red] (5.75,0)-- (5.75,0.03);
+%\draw[red] (9.5,0)-- (9.5,-0.01);
+%\draw[red] (5.5,0)-- (5.5,-0.01);
+%\draw[red] (9.75,0)-- (9.75,-0.02);
+%\draw[red] (5.25,0)-- (5.25,-0.02);
 
 \subsection{Conclusion Rappels}
 Dans cette section sur les fondamentaux, on a rappelé des définitions importantes en traitement du signal et on les replacés dans le contexte du traitement du signal numérique et des chaînes d'instrumentation.\\
@@ -1514,7 +1606,7 @@ Dans les faits, pour les filtres numériques, on règle généralement les écha
 \item Méthode par approximation de Tchebychev
 \end{itemize}
 
-On va à minima présenter ces méthodes, mais avant on va fixer les idées en travaillant sur un premier exemple: le filtre passe-bas idéal. Le but étant ici de fixer les idées et concept qui seront remis en oeuvre pour des synthèse de filtres plus complexes
+On va à minima présenter ces méthodes, mais avant on va fixer les idées en travaillant sur un premier exemple: le filtre passe-bas idéal. Le but étant ici de fixer les idées et concepts qui seront remis en oeuvre pour des synthèse de filtres plus complexes.\\
 
 \subsubsection{Étude du filtre passe-bas idéal}
 
@@ -1589,14 +1681,149 @@ La réponse impulsionnelle de ce filtre correspond donc à l'échantillonnage de
 
 Afin de rendre la réponse impulsionnelle finie, on peut fenêtrer la fonction $h(t)$ dans le domaine temporel. Cela veut dire qu'on va la multiplier par une fonction rectangulaire de la largeur souhaitée. Cela signifie quand dans le domaine de Fourier, la fonction de transfert va être convoluée à la transformée de Fourier de la fonction fenêtre choisie.\\
 
-\textbf{ILLUSTRER}
+\begin{center}
+\begin{tikzpicture}
 
-Cet exemple est très bien illustré par le fait que si on cherche à tracer la fft de la fonction sinus cardinal dans MATLAB on obtient pas la fonction rectangulaire, mais une fonction approchée comportant des oscillations.\\
+\draw[->] (7.5-7,0)-- (7.5-7,1.5);
+\draw (7.5-7,-0.3) node {0};
+\draw[->] (5-7,0)-- (10-7,0);
+\draw (10.1-7,0.25) node {$t$};
+\draw (7.5-7,2) node {$h(t)$};
+\draw[dotted, domain=4.9-7:9.9-7,color=red,samples=80] plot (\x,{80*sin(5*3.14*\x r -5/2*3.14 r )/(5*3.14*\x r - 5/2*3.14 r)});
+
+\draw[red] (7.5-7,0)-- (7.5-7,1.2);
+\draw[red] (7.75-7,0)-- (7.75-7,-0.25);
+\draw[red] (7.25-7,0)-- (7.25-7,-0.25);
+\draw[red] (8-7,0)-- (8-7,0.17);
+\draw[red] (7-7,0)-- (7-7,0.17);
+\draw[red] (8.25-7,0)-- (8.25-7,-0.1);
+\draw[red] (6.75-7,0)-- (6.75-7,-0.1);
+\draw[red] (8.5-7,0)-- (8.5-7,0.01);
+\draw[red] (6.5-7,0)-- (6.5-7,0.01);
+\draw[red] (8.75-7,0)-- (8.75-7,0.07);
+\draw[red] (6.25-7,0)-- (6.25-7,0.07);
+\draw[red] (9-7,0)-- (9-7,-0.075);
+\draw[red] (6-7,0)-- (6-7,-0.075);
+\draw[red] (9.25-7,0)-- (9.25-7,0.03);
+\draw[red] (5.75-7,0)-- (5.75-7,0.03);
+\draw[red] (9.5-7,0)-- (9.5-7,-0.01);
+\draw[red] (5.5-7,0)-- (5.5-7,-0.01);
+\draw[red] (9.75-7,0)-- (9.75-7,-0.02);
+\draw[red] (5.25-7,0)-- (5.25-7,-0.02);
+
+\draw[->] (10.5-7,1)-- (11.5-7,1);
+\draw(11-7,0.5) node {fenêtre};
+
+\draw[->] (7.5,0)-- (7.5,1.5);
+\draw (7.5,-0.3) node {0};
+\draw[->] (5,0)-- (10,0);
+\draw (10.1,0.25) node {$t$};
+\draw (7.5,2) node {$h(t)$};
+\draw[dotted, domain=6.75:8.25,color=red,samples=80] plot (\x,{80*sin(5*3.14*\x r -5*3.14*7.5 r )/(5*3.14*\x  r-5*3.14*7.5 r)});
+
+\draw[red] (7.5,0)-- (7.5,1.3);
+\draw[red] (7.75,0)-- (7.75,-0.25);
+\draw[red] (7.25,0)-- (7.25,-0.25);
+\draw[red] (8,0)-- (8,0.17);
+\draw[red] (7,0)-- (7,0.17);
+\draw[red] (8.25,0)-- (8.25,-0.1);
+\draw[red] (6.75,0)-- (6.75,-0.1);
+\draw[blue,dashed,thick] (5,0)--(6.75,0)--(6.75,1.7)--(8.25,1.7)--(8.25,0)--(10,0);
+
+
+\end{tikzpicture}
+\end{center}
+
+Dans la figure précédente, on a rendu la réponse impulsionnelle finie dans le temps en utilisant une fenêtre rectangulaire. Si on se rappelle de la relation entre multiplication et convolution sur les espaces dual que sont les espaces de Fourier et l'espace direct, on sait que multiplier la réponse impulsionnelle par une fonction rectangulaire revient à convoluer la transformée de Fourier de la réponse impulsionnelle par la transformée de Fourier de la fenêtre.\\
+
+\[ H(f) =  \int^{\infty}_{-\infty} \frac{\sin(\phi)}{\phi } \Pi_L(f- \phi) d \phi \]
+\[ H(f) =  \int^{L/2+f}_{-(L/2+ f)} \frac{\sin(\phi)}{\phi }  d \phi \]
+
+Cette quantité peut se calculer assez facilement sous MATLAB. la forme de cette fonctioin a été tracée dans la figure suivante:\\ %integral(@sinc,-8,12)
+
+
+\usetikzlibrary {datavisualization}
+\input{convoplot}
+%
+%\begin{center}
+%\begin{tikzpicture}
+%  \datavisualization [scientific axes, x axis={length=4 cm}, visualize as smooth line = hf, hf ={style = blue}]
+%	data [read from file=HF.csv];
+%\end{tikzpicture}
+%\end{center}
+
+%\usetikzlibrary {datavisualization.formats.functions}
+%\begin{tikzpicture}
+%  \datavisualization [scientific axes,x axis={length=3cm, ticks=few}, visualize as smooth line]
+%    data [format=function] {var x : interval [-1.5:1.5] samples 7;
+%      func y = \value x*\value x; };
+%\end{tikzpicture}
+
+Par ailleurs, cette propriété est très bien illustrée par le fait que si on cherche à tracer la fft de la fonction sinus cardinal dans MATLAB, on obtient pas la fonction rectangulaire, mais une fonction approchée comportant des oscillations.\\
 
 Ici, la fenêtre temporelle qui rend la réponse impulsionnelle finie a été prise rectangulaire et cela a eu un impact sur la fonction de transfert du spectre en y ajoutant des oscillations d'une certaine amplitude et avec une certaine période dans le spectre. Si une fonction différente était choisie, ces oscillations aurait des caractéristiques différentes. C'est le principe de la \textbf{méthode des fenêtres.}\\
 
-Ce qu'il faut comprendre avant d'aller plus loin, c'est que si la fonction correspondant parfaitement à un gabarit existe \textit{mathématiqument}, elle ne peut pas correspondre à un filtre réel, c'est-à-dire avec un nombre fini d'échantillons dans sa réponse impulsionnelle. Les oscillations dans la fonction de transfert du filtre réel sont la conséquence du nombre fini d'échantillons.
+Ce qu'il faut comprendre avant d'aller plus loin, c'est que si la fonction correspondant parfaitement à un gabarit existe \textit{mathématiquement}, elle ne peut pas correspondre à un filtre réel, c'est-à-dire avec un nombre fini d'échantillons dans sa réponse impulsionnelle. Les oscillations dans la fonction de transfert du filtre réel sont la conséquence du nombre fini d'échantillons.\\
 
+\subsubsection{Méthodes basées sur la réponse impulsionnelle}
+On peut procéder de plusieurs façon pour passer du gabarit d'un filtre à se réponse en fréquence "concrète". On va surtout se concentrer ici sur les principes généraux inhérents à la synthèse de filtres numériques non-récursifs.
+
+\begin{enumerate}
+\item On fixe une contrainte sur la suite  représentant spectre échantillonné $H_k$ ou sur $H(f)$ 
+\item On en déduit une la suite  $h_i$ correspondant à la réponse impulsionnelle du filtre numérique correspondant
+\item Cette suite $h_i$ déduite directement ne respecte généralement pas toutes les contraintes souhaitées 
+\item On change alors le nombre d'échantillons  et/ou on pondère la réponse impulsionnelle pour obtenir une suite ayant une transformée de Fourier $H*(f)$ qui aura les bonnes caractéristiques.
+\end{enumerate}
+
+Toutes les méthodes suivent ce principe général. Il faut donc comprendre qu'elles reposent gloabelement toutes sur l'enchaînement suivant détaillé dans le schéma suivant :
+
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H_k$};
+		\node[rectangle,draw,align=center] (D) at (4,0) {$h_i$};
+		\node[rectangle,draw,align=center] (N) at (7,0) {$h_i*$};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H*(f)$};	
+		
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(N);
+		\draw[->] (N)--(B);
+\end{tikzpicture}
+\end{center}
+On passe donc des échantillons  prédeterminés $H_k$ à la réponse impulsionnelle "préliminaire" $h_i$ qui ne correspondra pas aux contraintes, qu'on modifie en $h_i*$ afin de satisfaire les dites contraintes, et qui aura elle une transformée de Fourier $H*(f)$ avec les bonnes propriétés.\\
+
+Maintenant qu'on a présenté le principe général, on va pouvoir détailler quelques unes de ces méthodes et expliquer leur propriétés.
+
+\paragraph{Méthodes des fenêtres} 
+La méthode des fenêtres est la plus "directe", et historiquement la première. C'est généralement avec cette dernière  qu'on présente le principe de la synthèse de filtre. Avec cette méthode, une fois la suite des $h_i$ obtenues, on applique une fenêtre pour obtenir une suite des $h_i*$ correspondant à une gabarit.\\
+
+\textbf{[schéma]}\\
+
+En revanche, une caractéristique des filtres numériques synthétisés par le biais de cette méthode est que l'amplitude des oscillations en bande passante et affaiblie est reliée à la largeur de la bande de transition. Ainsi si on souhaite avoir une amplitude faible en bande de transition, on aura nécessairement une bande de transition large. On notera également que les oscillations d'amplitude non constante et similaire en bande passante et affaiblie.\\
+
+De façon plus général, il faut comprendre que la fenêtre "fixe" des caractéristiques tels que les fréquences de transition de la bande passante et de la bande affaiblie et qu'il n'y a pas de méthode simple pour faire évoluer un seul de ces paramètres en conservant les autres.
+
+\paragraph{Méthode de l'échantillonnage en fréquence}
+Cette méthode consiste à passer par des calculs dans le domaine fréquentiel pour obtenir les $h_i$ correspondant à une fonction $H(f)$ satisfaisant les critères souhaités.\\
+
+Le principe général de la méthode consiste à fixer/choisir des échantillons sur spectre $H_k$ avec les bonnes valeurs sur la bande de transition. Les échantillons en bandes passantes et affaiblies sont alors fixés à 1 et 0 respectivement. La fonction globale $H(f)$ est alors obtenue par interpolation entre les valeurs fixées.\\
+
+Les fréquences doivent être espacées de façon égale ce qui peut rendre délicat l'imposition de contraintes précises sur la bande de transition. Qui plus est, cette méthode par interpolation présente des oscillations d'amplitudes variables en bande passante et affaiblie (mais qui ne sont pas identiques comme c'était le cas avec la méthodes des fenêtres).\\
+
+La principale limite de cette méthode est que si on arrive à optimiser les caractéristiques de la bande de transition, les tolérances en amplitude, elles ne peuvent pas être contrainte avec cette méthode.\\
+
+\paragraph{Méthodes des moindres carrés}
+La méthode des moindres carrés est en quelque sorte une variante de la méthode de l'échantillonnage en fréquence. On cherche également à déterminer directement la fonction $H(f)$. Mais au lieu d'interpoler à l'aide d'une fonction des valeurs connues, on fixe sur certaines bandes de fréquences un certains nombre de contraintes en les "pondérant. On peut par exemple imposer qu'une réponse soit particulièrement faible sur une certaine bande et chercher le filtre qui maximise ce critère (sans forcément le réaliser complètement). On peut alors obtenir les $h_i$ par transformée de Fourier inverse.\\
+
+Les limites inhérentes à cette méthode sont les mêmes que la précédente. Si le gabarit donné spécifie une contrainte sur les fréquences de la bande de transition ET sur l'amplitude des oscillations alors cette méthode ne peut pas en général pas satisfaire les deux.\\
+
+\textbf{Question : Pourquoi est-il utile d'avoir une amplitude faible d'oscillations dans la réponse en fréquence d'un filtre ?}\\
+
+Une amplitude trop importante d'oscillation peut résulter dans la perte de fréquences jugées importantes (puisque dans la bande passante) et en pratique par une distorsion non souhaitée du signal.\\
+
+\paragraph{Méthode par approximation de Tchebychev}
+Cette méthode est celle qui répond à la problématique posée précedemment. En effet elle permet d'obtenir un filtre dont on peut fixer séparément les fréquences importantes de la bande de transition ainsi que les tolérances en amplitude. Cette méthode utilise un algorithme itératif permettant à partir des caractéristiques données au départ d'obtenir un filtre optimal. Si détailler les aspects mathématiques aurait peu d'intérêt ici il est important de savoir qu'elle existe et où elle s'insère dans le contexte générale de la synthèse de filtre.\\
+
+ 
 \subsection{Filtre à réponse impulsionnelle infinie}
 
 
