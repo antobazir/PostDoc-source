@@ -1823,6 +1823,17 @@ Une amplitude trop importante d'oscillation peut résulter dans la perte de fré
 \paragraph{Méthode par approximation de Tchebychev}
 Cette méthode est celle qui répond à la problématique posée précedemment. En effet elle permet d'obtenir un filtre dont on peut fixer séparément les fréquences importantes de la bande de transition ainsi que les tolérances en amplitude. Cette méthode utilise un algorithme itératif permettant à partir des caractéristiques données au départ d'obtenir un filtre optimal. Si détailler les aspects mathématiques aurait peu d'intérêt ici il est important de savoir qu'elle existe et où elle s'insère dans le contexte générale de la synthèse de filtre.\\
 
+\subsubsection{Nombre de coefficients et gabarits de filtre}
+La nature des opérateurs mathématiques ainsi que des observations ont permis d'établir qu'il y avait une relation entre le nombre de coefficients d'un filtre numérique.\\
+
+\textbf{Question: Lorsqu'on évoque le nombre de coefficients du filtre, à quelle méthode(s) de définitions du filtre fait-on référence ?}\\
+
+La relation est la suivante : \\
+
+\[ N_e =  \frac{2}{3}\log(\frac{1}{10 \delta_1 delta_2}) \frac{f_e}{\Delta f}\]\\
+
+Avec $N_e$ l'estimation du nombre de coefficient nécessaire, $\delta_1$ la tolérance en amplitude de la bande 1,  $\delta_2$ la tolérance en amplitude de la bande 2, $f_e$ la fréquence d'échantillonnage et $\Delta_f$ la largeur de la bande de transition.\\ 
+
  
 \subsection{Filtre à réponse impulsionnelle infinie}
 
