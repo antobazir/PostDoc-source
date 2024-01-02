@@ -1007,7 +1007,11 @@ $u[n]$ est la suite définie comme prenant la valeur 1 pour l'échantillon d'ind
 
 \[\sum_{n = 0}^{\infty} u[n] z^{-n} = \sum_{n = 0}^{\infty} z^{-n}  = \frac{1}{1-z^{-1}} \]\\
 
-La dernière étape est un résultat connu sur la série géométrique convergente. Ce résultat n'est d'ailleurs vraie que si la valeur absolue ou le module de la raison de la suite (ici, $z$) est strictement inférieur à 1. 
+La dernière étape est un résultat connu sur la série géométrique convergente. Ce résultat n'est d'ailleurs vraie que si la valeur absolue ou le module de la raison de la suite (ici, $z$) est strictement inférieur à 1.  Dans le cas de l'analyse de Fourier la question ne se pose jamais car $z$ est remplacé par $e^{j\frac{2 \pi k }{N}}$, un nombre complexe qui est toujours de  module 1.\\
+
+Ce résultat est important à la fois du point de vue purement mathématique des suites mais aussi en analyse de stablilité pour les filtres.\\
+
+En effet on rappelle qu'avec l'analyse de  Laplace la variable $p$ est en général décomposée en $p = \sigma + j \omega$.  $\sigma$ décrit alors les régimes transitoires (décroissance exponentielle, etc...) alors que la partie imaginaire $\omega$ est la réponse à une excitation periodique (et donc sinusoïdale)
 
 \textbf{3. $nu[n]$}
 
@@ -1835,10 +1839,72 @@ La relation est la suivante : \\
 Avec $N_e$ l'estimation du nombre de coefficient nécessaire, $\delta_1$ la tolérance en amplitude de la bande 1,  $\delta_2$ la tolérance en amplitude de la bande 2, $f_e$ la fréquence d'échantillonnage et $\Delta_f$ la largeur de la bande de transition.\\ 
 
  
-\subsection{Filtre à réponse impulsionnelle infinie}
+\section{Filtre à réponse impulsionnelle infinie/Filtre récursifs}
+Les filtres à réponse impulsionnelle infinie sont des filtres numériques dont l'équation aux différences a la forme suivante:\\
+
+\[ y(n) = \sum a_k x(n-k) + \sum b_k y(n-k)\]\\
 
 
+En d'autres termes, l'équation fait intervenir un somme pondérée d'échantillons d'entrées et d'échantillons de sortie.\\
 
+\textbf{Question: Quelle est la forme de la fonction de transfert en Z d'un filtre à réponse impulsionnelle infinie ?}\\
+
+Pour obtenir la fonction de transfert, il faut partir de l'équation précédente et prendre sa transformée en Z:
+
+\[ Y(z)  = \sum a_k X(k)z^{-k} + \sum b_k Y(z)z^{-k}\]  \\
+
+On peut alors factoriser et réunir les termes de façons à obtenir : 
+
+\[  H(z) = \frac{Y(z)}{X(z)} \frac{\sum a_k z^{-k}}{1 + \sum b_k z^{-k}}  \]
+
+Ceci implique qu'une réponse à une impulsion d'entrée va s'étendre sur un nombre d'échantillon infini. Cette somme infinie pose la question des conditions de stabilité de la transformée en Z qui a déjà été abordée auparavant. Cela induit notamment que contrairement aux filtres à réponse impulsionnelle finie qui ne possèdent pas de pôles ces derniers peuvent posséder des pôles en plus des zéros.\\
+
+\textbf{Question: Quelle est le comportement d'un système lorsqu'on "approche" de ses zéros ? Même questions pour ses pôles}
+
+On rappelle que la fonction de transfert des systèmes linéaire et invariant dans le temps prennent généralement la forme de fractions : 
+
+\[ H(v) =  \frac{Y(v)}{X(v)} = \frac{a_0 + a_1 v + a_2 v^2 + ... + \ldots + a_n v^n}{ b_0 +b_1 v + b_2 v^2 + ... + \ldots + b_m v^m} \]\\
+
+Les pôles sont les racines du polynôme au dénominateur et les zéros sont les racines du polynômes au numérateur. Un pôle va annuler le dénominateur. Et une valeur finie diviser par quelque chose de proche de zéro va faire croître fortement la norme de la fonction de transfert ce qui se traduit par une instabilité du système. A l'inverse, un zéro va faire tendre la norme de la fonction de transfert vers zéro.\\
+
+Avant de se pencher sur les méthodes de synthèse de filtres numériques non récursifs, nous allons traiter 3 cas simples de filtres numériques à réponse impulsionnelle infinie. Ils permettront de comprendre le comportement de ces systèmes. On abordera ensuite les méthodes de synthèses des filtres numériques dans une seconde sous-partie.\\
+
+\subsection{Exemples de filtres numériques récursifs simples}
+Dans cette sous-partie on va présenter brièvement les 3 cellules récursive présenté par Bellanger dans son ouvrage afin de mettre en évidence les spécificités des filtres récursifs.\\
+\subsubsection{Cellule élémentaire du premier ordre}
+La cellule élémentaire du premier du ordre est une cellule dont l'équation de récurrence est la suivante :\\
+
+\[ y(n) =  x(n) + b y(n-1)\]\\
+
+\textbf{ Question : Déterminez la réponse impulsionnelle et la fonction de transfert d'un tel filtre.}\\
+
+On rappelle que la réponse impulsionnelle est la sortie du système lorsque son entrée est une impulsion. Dans ce cas, on obtient : \\
+\[ h(0) = \delta(0) + b h(-1) = 1 + 0 = 1\]
+\[ h(1) = \delta(1) + b h(0) = 0 + b  = b \]
+\[ \ldots \]
+\[ h(n) = \delta(n) + b h(n-1) = 0 + b b^{n-1} = b^{n}\]\\
+
+Donc si $n > 0$, $h(n) = b^{n}$.\\
+
+Pour la fonction de transfert, on prend la transformée en Z de l'équation de récurrence du filtre : \\
+
+\[ Y(z)  = X(z) + b Y(z) z^-1 \] 
+\[ Y(z) (1 -bz^{-1}) =  X(z)  \]
+\[ H(z) = \frac{Y(z)}{X(z)} = \frac{1}{1 - b z^{-1}} = \frac{z}{z-b} \]
+
+\textbf{ Question : Ce filtre est-il stable ? }\\
+
+Un filtre est dit instable si sa fonction de trasnfert peut diverger. Dans le cas observé ici, la fonction de transfert peut diverger si la variable $z$ approche de la valeur $b$. La fonction de transfert possède également un zéro à la valeur $z = 0$.\\
+
+Si on s'intéresse à la réponse en fréquence en remplaçant $z$ par $e^{j 2 \pi f}$, on obtient: \\
+
+\[ H(f) =  \frac{e^{j2 \pi f}}{e^{j 2 \pi f}-b} \]\\
+
+On peut alors calculer la norme et la phase en fonction de la fréquence : 
+
+\[ |H(f)| = \frac{|e^{j2 \pi f}|}{|e^{j 2 \pi f}-b|} \]
+\[ |H(f)| = \frac{1}{|b + \cos(2 \pi f) + j \sin(2 \pi f)|} \]
+\[ |H(f)| = \frac{1}{\sqrt{(\cos(2 \pi f) - b)^2 +  \sin(2 \pi f))^2}} \]
 
 
 \end{document}
