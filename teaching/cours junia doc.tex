@@ -1871,8 +1871,9 @@ Avant de se pencher sur les méthodes de synthèse de filtres numériques non r�
 
 \subsection{Exemples de filtres numériques récursifs simples}
 Dans cette sous-partie on va présenter brièvement les 3 cellules récursive présenté par Bellanger dans son ouvrage afin de mettre en évidence les spécificités des filtres récursifs.\\
+
 \subsubsection{Cellule élémentaire du premier ordre}
-La cellule élémentaire du premier du ordre est une cellule dont l'équation de récurrence est la suivante :\\
+La cellule élémentaire du premier ordre est une cellule dont l'équation de récurrence est la suivante :\\
 
 \[ y(n) =  x(n) + b y(n-1)\]\\
 
@@ -1890,21 +1891,168 @@ Pour la fonction de transfert, on prend la transformée en Z de l'équation de r
 
 \[ Y(z)  = X(z) + b Y(z) z^-1 \] 
 \[ Y(z) (1 -bz^{-1}) =  X(z)  \]
-\[ H(z) = \frac{Y(z)}{X(z)} = \frac{1}{1 - b z^{-1}} = \frac{z}{z-b} \]
+\[ H(z) = \frac{Y(z)}{X(z)} = \frac{1}{1 - b z^{-1}} = \frac{z}{z-b} \]\\
 
 \textbf{ Question : Ce filtre est-il stable ? }\\
 
 Un filtre est dit instable si sa fonction de trasnfert peut diverger. Dans le cas observé ici, la fonction de transfert peut diverger si la variable $z$ approche de la valeur $b$. La fonction de transfert possède également un zéro à la valeur $z = 0$.\\
 
+\textbf{ Question : Déterminer la réponse en fréquence du filtre }\\
+
 Si on s'intéresse à la réponse en fréquence en remplaçant $z$ par $e^{j 2 \pi f}$, on obtient: \\
 
 \[ H(f) =  \frac{e^{j2 \pi f}}{e^{j 2 \pi f}-b} \]\\
 
-On peut alors calculer la norme et la phase en fonction de la fréquence : 
+On peut alors calculer la norme et la phase en fonction de la fréquence : \\
 
 \[ |H(f)| = \frac{|e^{j2 \pi f}|}{|e^{j 2 \pi f}-b|} \]
 \[ |H(f)| = \frac{1}{|b + \cos(2 \pi f) + j \sin(2 \pi f)|} \]
-\[ |H(f)| = \frac{1}{\sqrt{(\cos(2 \pi f) - b)^2 +  \sin(2 \pi f))^2}} \]
+\[ |H(f)| = \frac{1}{\sqrt{(\cos(2 \pi f) - b)^2 +  \sin(2 \pi f))^2}} \]\\
+
+\textbf{Question: La fonction $|H(f)|$ est-elle périodique ?}\\
+
+La fonction est l'inverse d'une somme de fonction périodique de période $2\pi$. De fait la fonction a donc une période de $2 \pi$. Donc si on cherche à la représenter, pas besoin de tracer au delà de l'intervalle $f = [0,1]$. On peut encore réduire de moitié puisque lorsqu'on échantillonne un signal à la fréquence $f_e = \frac{1}{T_e}$ le spectre est symmétrique par rapport au point 0 ou $f_e/2$. \\
+
+Pour la phase, on doit prendre l'argument de la fonction complexe $H(f)$. $H(f)$ est un quotient de fonction complexe. Dans ce cas l'argument est la différence entre l'argument du numérateur et l'argument du dénominateur.
+
+\begin{tikzpicture}
+\begin{scope}[scale =2]
+\draw[->,thick] (0,0)--(0,1.5) node[left]{$|H(f)|$};
+\draw[->,thick] (0,0)--(1.5,0) node[below]{$f$};
+\draw (-0.2,1.1) node {$\frac{1}{1-b}$};
+\draw (-0.2,0.1) node {$\frac{1}{1+b}$};
+\draw[color=blue,thick](0,1.1) .. controls (0.35,1.1) and (0.35,0.1) .. (0.75,0.1);
+%\draw[color=blue,thick](0.75,0.1) .. controls (1.1,0.1) and (1.1,1.1) .. (1.5,1.1);
+\end{scope}
 
 
+\begin{scope}[scale =2,xshift=5cm, yshift=0.7 cm]
+\draw[->,thick] (0,-0.7)--(0,0.7) node[left]{$arg(H(f))$};
+\draw[->,thick] (-1.2,0)--(1.2,0) node[below]{$f$};
+\draw (-1,-0.2) node {$- \pi$};
+\draw (1,-0.2) node {$\pi$};
+\draw (0.3,-0.2) node {$\arccos(b)$};
+\draw[color=blue,thick](-1.0,0) .. controls (-0.4,-0.5) and (-0.2,-0.5) .. (0,0);
+\draw[color=blue,thick](0,0) .. controls (0.2,0.5) and (0.4,0.5) .. (1.0,0) ;
+\end{scope}
+%\draw[domain=4:0,color=red] plot (\x,{\x^4/(1^4+\x^4)});
+%\draw[domain=4:0,color=red,dashed] plot (\x,{(\x+1)^4/(2^4+(\x+1)^4)});
+\end{tikzpicture}\\
+
+On rappelle que la phase est le décalage temporel observé dans le signal en sortie du système par rapport à l'entrée. Par exemple si le déphasage à une fréquence donné vaut $\pi/2$, alors un cosinus en entrée deviendra un sinus en sortie. Dans ce cas, l'argument du numérateur est 0 et l'argument du dénominateur est: \\
+
+\[ \arctan(\frac{-b \sin(2 \pi f)}{1-b \cos(2 \pi fT_e)})\]\\
+
+Ce qui mène à :\\
+
+\[ \arg(H(f)) = \phi(f) = 0 - \arctan(\frac{-b \sin(2 \pi f T_e)}{1-b \cos(2 \pi f T_e)}) = \arctan(\frac{b \sin(2 \pi f T_e)}{1-b \cos(2 \pi f T_e)})\]\\
+
+\subsubsection{Cellule élémentaire du second ordre purement récursive}
+La cellule élémentaire du second ordre a l'équation de récurrence est la suivante :\\
+
+\[ y(n) =  x(n) + b_1 y(n-1) +b_2 y(n-2)\]\\
+
+\textbf{ Question : Déterminez la fonction de transfert d'un tel filtre.}\\
+
+On suit les mêmes étapes que précédemment et on obtient : \\
+
+\[ H(z)= \frac{z^2}{z^2 + b_1 z + b_2}\]\\
+
+\textbf{Question :Combien de zéros et de pôle la fonction de transfert précédente possède-t-elle ?}\\
+
+La fonction de transfert possède un zéro en $z=0$. Pour ce qui est des pôles, cela revient à déterminer les zéros d'un polynôme du second degré de type $ax^2 + bx + c$. C'est à partir de cette analyse que la discussion va se compliquer légèrement 
+
+\textbf{Question :Quelles sont les valeurs possibles pour les pôles de la fonction ?}\\
+
+La valeur des racines d'un polynôme dépend de ses coefficients. Pour un polynôme de degré 2  ($ax^2 + bx + c$), 3 cas sont possibles :
+
+\begin{itemize}
+\item Si $\Delta = b^2 -4ac >0$, les racines sont réelles et de valeur r = $-\frac{b}{2a} \pm \frac{1}{2}\sqrt(b^2 -4ac)$
+\item Si $\Delta = b^2 -4ac = 0$, la racine est dite "double" et de valeur r = $-\frac{b}{2a}$
+\item Si $\Delta = b^2 -4ac < 0$, les racines sont réelles et de valeur r = $-\frac{b}{2a} \frac{1}{2} \pm j\sqrt(-(b^2 -4ac))$
+\end{itemize}
+
+Maintenant, si  ces résultats sont appliqués au dénominateur de la fonction de transfert précédente, on obtient :
+
+\begin{itemize}
+\item Si $\Delta = b_1^2 -4b_2 >0$, les racines sont réelles et de valeur r = $-\frac{b_1}{2} \pm \frac{1}{2}\sqrt(b_1^2 -4b_2)$
+\item Si $\Delta = b_1^2 -4b_2 = 0$, la racine est dite "double" et de valeur r = $-\frac{b_1}{2}$
+\item Si $\Delta = b_1^2 -4b_2 < 0$, les racines sont complexes conjuguées et de valeur r = $-\frac{b_1}{2} \frac{1}{2} \pm j\sqrt(-(b_1^2 -4b_2))$
+\end{itemize}
+
+\textbf{FINIR PLUS TARD \label{to be finished IIR}}
+
+\subsection{Synthèse de filtres récursifs/filtres à réponse impulsionnelle infinie}
+Si dans la sous-partie précédente, le comportement de filtres récursifs simples a été étudié, il faut maintenant comprendre comment faire correspondre la réponse en fréquence d'un filtre à un gabarit ou à des contraintes précises comme cela a été fait pour les filtres à réponse impulsionnelle finie/récursifs.\\
+
+\textbf{Question: Quel était le principe général de la synthèse de filtre non-récursifs ? Et pourquoi ce dernier ne fonctionne pas avec les filtres récursifs ?}\\
+
+Dans le cas des filtres récursifs, on partait d'une contrainte sur la réponse en fréquence pour déterminer une réponse impulsionnelle qui correspond aux contraintes à la réponse en fréquence. Or, dans le cas des filtres récursifs, la réponse impuslionnelle est inifinie ce qui rend la détermination des coefficients correspondants impossible.\\
+
+La méthode qui est historiquement la plus connue est celle de la transformation bilinéaire. Le principe général est de partir de la fonction  de transfert visée en analogique (avec la variable de Laplace $s$) et de la convertir en numérique (avec la variable $z$) mathématiquement. La principale difficulté  vient alors du fait que le lien entre la variable de Laplace et la variable $z$ n'est pas trivial.\\ 
+
+Pour comprendre, il est intéresant de faire une première tentative dans un cas simple.
+
+\subsubsection{Invariance Impulsionnelle}
+ Prenons le filtre analogique suivant :\\
+ 
+ \[ H(s) = \frac{1}{s-b} \]\\
+ 
+ \textbf{Question : Quelle est comportement en fréquence de ce filtre ? }\\
+ 
+ Si on pose $s = j\omega = j2 \pi f$, on constate que $H(s)$ va tendre vers $1/b$ quand $f$ tend vers 0 et vers $0$ si $f$ tend vers l'infini. C'est donc un filtre passe-bas.\\
+ 
+Depuis le début du cours, la conversion fréquemment utilisée est celle qui donne $z = e^{j2 \pi fT_e }$ pour obtenir la réponse en fréquence. Logiquement le lien entre la variable $z$ est alors $z = e^{sT_e}$, ce qui avait déjà été évoqué lors de la première présentation des différentes transformées. On peut remplacer alors $s$ par $\frac{ln(z)}{T_e}$. Le problème est alors qu'on obtient pas une fonction prenant la forme d'une fraction rationnelle ce qui rend inopérant tous les outils de traitement du signal vu jusqu'ici.\\
+
+Une autre méthode plus directe qui peut être employée dans ce cas est d'échantillonner la réponse impulsionnelle du filtre analogique, quand celle-ci est facile à obtenir, pour obtenir une formule pour celle du filtre discret et par suite en déduire sa réponse en fréquence.
+
+ \textbf{Question : Quelle est la réponse impulsionnelle du filtre précédent ? }\\
+ 
+ Ici, une fois n'est pas coutume, on travaille en analogique, donc en continu, ET avec un filtre à réponse impulsionnelle infinie. L'approche "par recurrence" n'est donc pas un bon moyen  d'obtenir rapidement la réponse voulue. Pour se faire on peut, par exemple, prendre la transformée inverse de la fonction de transfert que l'on peut déduire directement de la table des transformée usuelles:\\
+ 
+\[ H(s) = \frac{1}{s-b} \rightarrow h(t) = e^{bt} \cdot u(t)  \]\\
+
+avec $u(t)$ la fonction échelon. On peut alors échantillonner cette réponse implusionnelle et prendre sa transformée en $z$:\\
+
+\[ h(t) = e^{bt} \rightarrow h(nt_e) = e^{bnT_e} \rightarrow H(z) = \sum h(k)z^-k =  \sum e^{bkT_e} z^{-k}\]
+\[ H(z) = \frac{1}{1 -  e^{bT_e} z^{-1}}\]\\
+
+Le problème inhérent à cette méthode va être explicité ici dans les deux figures suivantes
+
+\begin{tikzpicture}
+\begin{scope}[scale =2]
+\draw[->,thick] (0,0)--(0,1.5) node[left]{$|H_a(f)|$};
+\draw[->,thick] (0,0)--(1.5,0) node[below]{$f$};
+\draw[color=blue,thick](0,1.1) .. controls (0.2,1.1) and (0.2,0.2) .. (1.5,0.1);
+%\draw[color=blue,thick](0.75,0.1) .. controls (1.1,0.1) and (1.1,1.1) .. (1.5,1.1);
+\end{scope}
+
+\begin{scope}[scale =2,xshift=3cm]
+\draw[->,thick] (0,0)--(0,1.5) node[left]{$|H_{ech}(f)|$};
+\draw[->,thick] (0,0)--(1.5,0) node[below]{$f$};
+\draw[color=blue,thick](0,1.1) .. controls (0.1,1.1) and (0.1,0.4) .. (0.75,0.4);
+\draw[color=blue,thick](0.75,0.4) .. controls (1.4,0.4)  and  (1.4,1.1).. (1.5,1.1);
+%\draw[color=blue,thick](0.75,0.1) .. controls (1.1,0.1) and (1.1,1.1) .. (1.5,1.1);
+\end{scope}
+
+\end{tikzpicture}\\
+
+Dans un cas le  spectre analogique décroît sur l'ensemble de l'espace des fréquences (passe-bas). Dans l'autre casla fonction de transfert d'un système discret  est limité à $[0, f_e/2]$. L'implication étant que le comportement haute fréquence peut être "coupé" ou "replié" lors du passage en discret.\\
+
+Pour cette raison, Cette méthode ne fonctionne que si le filtre analogique choisi a une réponse en fréquence très faible ou nulle pour la bande de fréquence supérieure à $(0, f_e/2]$. Une autre méthode qui permet de contourner ce problème est la \textbf{transformation bilinéaire.}
+
+\subsubsection{Transformation bilinéaire}
+Dans la sous-partie précédente on a pu voir qu'une conversion directe n'était pas possible car elle ne conservait pas les bonnes propriétés mathématiques de la fonction de transfert (fraction rationnelle) et que l'invariance impulsionnelle n'était applicable directement qu'à un certain type de fonction de transfert à cause du repliement spectral. Le principe de la trasnformation bilinéaire est d'\textit{approximer} la variable de Laplace dans le filtre analogique utilisé comme base.\\
+
+Avant d'entrer dans le détail de la réalisation de ce changement de variable dans le cas spécifique de la transformation bilinéaire, il est important de préciser que cette dernière répond spécifiquement à trois critères important lorsque le passage d'une filtre continu à un filtre discret est effectué : \\
+
+\begin{itemize}
+\item Une fraction rationnelle de la variable $s$ doit devenir une fonction rationnelle de la variable $z$
+\item Un filtre stable dans le domaine $s$ doit être stable dans le domaine $z$
+\item Il doit y avoir une correspondance entre les régions de stabilité du domaine $s$ et du domaine $z$
+\end{itemize}
+
+Sur ce dernier point, la formulation choisie par Bellanger est "Transformer l’axe imaginaire en le cercle unité". En effet dans le domaine de Laplace si les pôles d'un système sont à gauche de l'axe imaginaire, le filtre est stable, s'ils sont à droite alors le régime transitoire est une exponentielle croissante et la sortie divergera forcément vers l'infini. La limite entre ces deux régimes dans le domaine de Laplace est l'axe imaginaire par la valeur réel 0. Dans le cas de la transformée en $z$, cette limite entre les système instables et stable est le cercle unité de la variable $z$ et donc une bonne transformation doit établir une correspondance entre ces deux régions d'espace.
+
+ 
 \end{document}
