@@ -30,11 +30,13 @@ Le traitement du signal est le champ de l'ingénierie qui concerne les outils ph
 
 On peut définir le signal de la façon suivante: "Le signal est le support de l’information émise par une source et destinée à un récepteur." (M. Bellanger, \textit{Traitement numérique du signal, 2012}). La problématique de base étant que, bien souvent, l'information peut voir son contenu dégradé par divers mécanismes entre la source et le récepteur. Le traitement du signal, qu'il soit analogique ou numérique, va alors souvent consister à extraire ou conserver l'information entre ces deux points d'intérêt.\\
 
-L'information peut ici prendre plusieurs formes physiques différentes. Il peut s'agir d'une onde électromagnétique se propageant dans le vide, l'air ou encore un cable. Il peut également s'agir d'un champ de pression ou de déformation. L'information peut également être "codée" comme c'est le cas des signaux numériques par opposition aux signaux analogiques.\\
+L'information peut ici prendre plusieurs formes physiques différentes. Il peut s'agir d'une onde électromagnétique se propageant dans le vide, l'air ou encore un cable. Il peut également s'agir d'un champ de pression ou de déformation. L'information peut également être "codée" comme c'est le cas pour les signaux numériques par opposition aux signaux analogiques.\\
 
 \textbf{Question: Exemple de traitement du signal analogique et numérique dans la vide quotidienne ?}\\
 
-Le traitement du signal est basé sur la connaissance des mécanismes physiques à l’œuvre dans la propagation du signal (acoustique, électromagnétisme, etc...) et sur des outils mathématiques (statistiques, analyse de fonctions) permettant à la fois d'extraire des caractéristiques du signal ou de les modifier de manière contrôlée. Cette opération est souvent réalisée à l'aide de ce qu'on appelle des filtres. \\
+Le traitement du signal en général peut être analogique, numérique ou bien faire intervenir les deux types de signaux dans la chaîne d'instrumentation. Certains dispositifs en traitement du son sont entièrement analogiques. Les signaux gérés par nos téléphones/ordinateurs sont eux entièrement numériques. Et certains dispostifs vont détecter un signal analogique et le convertir en numérique pour effectuer des traitement ou inversement.\\
+
+Le traitement du signal est basé sur la connaissance des mécanismes physiques à l’œuvre dans la propagation du signal (acoustique, électromagnétisme, etc...) et sur des outils mathématiques (statistiques, analyse de fonctions) permettant à la fois d'extraire des caractéristiques du signal ou de les modifier de manière contrôlée. Cette opération est souvent réalisée à l'aide de ce qu'on appelle des filtres. \\ 
  
 \subsection{Qu'est ce qu'un filtre ?}
 "En traitement du signal, un filtre est un dispositif ou un processus permettant de retirer des composantes ou des parties indésirables d'un signal." (/en.wikipedia.org/wiki/Filter (signal processing))\\
@@ -79,16 +81,16 @@ On note que, dans le cadre plus large de l'ingénierie des systèmes, ce formali
 
 De nombreuses notions plus ou moins intuitives peuvent être employées pour décrire l'action, souhaitée ou effective, d'un filtre/système, et ces dernières sont souvent au cœur de la conception du filtre/système en question.\\
 
-La notion la plus évidente, déjà abordée par le passé, est la question analogique/numérique. Et cette première subdivision en conditionne d'autres. Dans le cas des signaux analogiques, on distingue régulièrement les filtres "actifs" des filtres "passifs". Un filtre actif est un filtre qui utilise une source d'énergie externe pour amplifier tout ou partie du signal. L'objectif est souvent d'obtenir un meilleur rapport signal-sur-bruit. Dans le cas des filtres numériques, on peut prendre comme premier exemple la notion de causalité. Un filtre numérique non-causal est un filtre qui va utiliser des échantillons du "futur" dans son algorithme de traitement. Un tel filtre ne peut évidemment effectuer un traitement en temps réel et n'est réalisable qu'à l'aide d'une mémoire embarquée associée.\\
+La notion la plus évidente est la question analogique/numérique, et cette première subdivision en conditionne d'autres. Dans le cas des signaux analogiques, on distingue régulièrement les filtres "actifs" des filtres "passifs". Un filtre actif est un filtre qui utilise une source d'énergie externe pour amplifier tout ou partie du signal . L'objectif est souvent d'obtenir un meilleur rapport signal-sur-bruit ou d'adapter la gamme dynamique du signal entre deux parties d'une chaine de traitement. Dans le cas des filtres numériques, on peut prendre comme premier exemple la notion de causalité. Un filtre numérique non-causal est un filtre qui va utiliser des échantillons du "futur" dans son algorithme de traitement. Un tel filtre ne peut évidemment effectuer un traitement en temps réel et n'est réalisable qu'à l'aide d'une mémoire embarquée associée.\\
 
 Mais avant ces deux notions plutôt intuitives, il y a deux caractéristiques importantes des filtres qui sous-tendent une grande partie des outils mathématiques présentés dans ce cours. Au vu de leur importance globale et de leur aspect moins intuitif (car plus mathématique et calculatoire) on prendra le temps de présenter et de discuter en détail ces deux notions: la \textbf{linéarité} et l'\textbf{invariance dans le temps}.
 
 \subsection{Notion de linéarité}
-\textbf{Question: Que veut dire linéaire en ingénierie des systèmes/automatique/traitement du signal ?}\\
+\textbf{Question: Que veut dire linéaire en ingénierie des systèmes/automatique/traitement du signal ? \label{linéaire ?} }\\
 
-La notion de linéarité est un concept majeur en mathématiques et aussi en physique où l'outil mathématique est régulièrement utilisé. Elle peut s'écrire mathématiquement comme suit: soit $f$ une fonction 1D d'une variable réelle,  et soit $x_1$ et $x_2$ et $a$, trois nombres réels, alors:
+La notion de linéarité est un concept majeur en mathématiques et aussi en physique où l'outil mathématique est régulièrement utilisé. un exemple de linéarité peut s'écrire mathématiquement comme suit: soit $f$ une fonction 1D d'une variable réelle,  et soit $x_1$ et $x_2$ et $a$, trois nombres réels, alors:\\
 
-\[f(a x_1 + x_2) = a f(x_1) + f(x_2)  \] 
+\[f(a x_1 + x_2) = a f(x_1) + f(x_2)  \] \\
 
 \textbf{Linéarité : application}
 \textbf{Soit $x$ une variable réelle, les fonctions suivantes sont-elles linéaires ?}:
@@ -1980,7 +1982,7 @@ Maintenant, si  ces résultats sont appliqués au dénominateur de la fonction d
 \item Si $\Delta = b_1^2 -4b_2 < 0$, les racines sont complexes conjuguées et de valeur r = $-\frac{b_1}{2} \frac{1}{2} \pm j\sqrt(-(b_1^2 -4b_2))$
 \end{itemize}
 
-\textbf{FINIR PLUS TARD \label{to be finished IIR}}
+\textbf{FINIR PLUS TARD \label{**to be finished IIR}}
 
 \subsection{Synthèse de filtres récursifs/filtres à réponse impulsionnelle infinie}
 Si dans la sous-partie précédente, le comportement de filtres récursifs simples a été étudié, il faut maintenant comprendre comment faire correspondre la réponse en fréquence d'un filtre à un gabarit ou à des contraintes précises comme cela a été fait pour les filtres à réponse impulsionnelle finie/récursifs.\\
@@ -2052,7 +2054,49 @@ Avant d'entrer dans le détail de la réalisation de ce changement de variable d
 \item Il doit y avoir une correspondance entre les régions de stabilité du domaine $s$ et du domaine $z$
 \end{itemize}
 
-Sur ce dernier point, la formulation choisie par Bellanger est "Transformer l’axe imaginaire en le cercle unité". En effet dans le domaine de Laplace si les pôles d'un système sont à gauche de l'axe imaginaire, le filtre est stable, s'ils sont à droite alors le régime transitoire est une exponentielle croissante et la sortie divergera forcément vers l'infini. La limite entre ces deux régimes dans le domaine de Laplace est l'axe imaginaire par la valeur réel 0. Dans le cas de la transformée en $z$, cette limite entre les système instables et stable est le cercle unité de la variable $z$ et donc une bonne transformation doit établir une correspondance entre ces deux régions d'espace.
+Sur ce dernier point, la formulation choisie par Bellanger est "Transformer l’axe imaginaire en le cercle unité". En effet dans le domaine de Laplace si les pôles d'un système sont à gauche de l'axe imaginaire, le filtre est stable, s'ils sont à droite alors le régime transitoire est une exponentielle croissante et la sortie divergera forcément vers l'infini. La limite entre ces deux régimes dans le domaine de Laplace est l'axe imaginaire par la valeur réel 0. Dans le cas de la transformée en $z$, cette limite entre les système instables et stable est le cercle unité de la variable $z$ et donc une bonne transformation doit établir une correspondance entre ces deux régions d'espace.\\
 
+Le changement de variable mathématique qui permet de passer de la variable $s$ à la variable $z$ dans le cas de la transformation bilinéaire est le suivant: \\
+
+\[ s = \frac{2}{T_e} \frac{1-z^{-1}}{1+z^{-1}}\]\\
+
+Cette relation vérifie bel et bien les 3 points précédents. Mais cette propriété vient avec un "coût", si on considère que $s$ et $z$ sont imaginaires purs afin d'étudier la réponse en fréquence on constate la chose suivante:\\
+
+\[j2 \pi f_a T_e = \frac{2}{T_e} \frac{1-e^{-j2 \pi f_n}}{1+e^{-j2 \pi f_n}}\]
+\[\rightarrow \pi f_a  = \frac{1}{T_e} \tan(\pi f_n T_e)\]\\
+
+Autrement dit, la relation liant les fréquences analogiques aux fréquences numériques n'est pas linéaire. la figure suivante illustre la relation en représentant la fréquence analogique $f_a$ en fonction de la fréquence numérique $f_n$
+
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-2,0)-- (2,0) node[right] {$f_a$};
+\draw (0.3,-0.3) node {0};
+\draw[->] (0,-2)-- (0,2) node[right] {$f_n$};
+%\draw (0.5,-0.4) node {$\frac{2}{T_e}$};
+
+\draw[thick, domain=-1.25:1.25,color=blue,samples=30] plot (\x,{2*tan(0.75*\x r });
+\end{tikzpicture}
+\end{center}
+
+Cela veut dire qu'un filtre analogique dont les caractéristiques aurait été choisies convenablement verrait ses fréquences déformées et se retrouverait donc potentiellement en dehors du gabarit initialement fixé.\\
+
+\textbf{Question: Selon vous, Comment résoudre ce problème ?}\\
+
+Ce problème  est résolu en prédéformant le gabarit analogique. C'est-à-dire qu'une relation mathématique est appliqué au gabarit analogique initial de sorte que, lorsque la conversion de fréquence est effectuée, les fréquences numériques finales correspondent bien au gabarit visé.\\
+
+\subsubsection{Résumé de la synthèse de filtres numériques récursifs}
+Les principes de synthèse de filtres numériques récursifs présentés ici peuvent se résumer globalement de la façon suivante :\\
+
+\begin{enumerate}
+\item Sélection d'une fonction/ d'un filtre analogique respectant le gabarit souhaité
+\item Application d'une prédéformation des fréquences du gabarit analogique
+\item Changement de variable pour passer de l'analogique au numérique
+\end{enumerate}
+
+La fonction utilisée dans l'étape 1 va dépendre des contraintes sur le gabarit. Les filtres de Butterworth (i.e qui utilisent une fonction de Butterworth comme point de départ) sont simples à calculer mais ne présentent pas toujours de caractéristiques de selectivité suffisante. Les fonctions dites "ellpitiques" sont un autre type de fonction qui sont plus complexe d'un point de vue mathématique mais qui permettent de mieux contrôler les caractéristiques finales du filtre.\\
+
+La transformation bilinéaire ou une fonction proche de cette dernière est généralement utilisée pour la conversion. Par exemple dans le cadre des des filtres de Butterworth on utiliser la même fonction mais avec une facteur d'échelle différent.\\
+
+\textbf{Add bibliography \label{**BIBLIO!}}
  
 \end{document}
