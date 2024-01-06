@@ -171,13 +171,19 @@ Les concepts mathématiques introduits dans les paragraphes précédents constit
 
 \textbf{Question: Que vous évoque la transformée de Laplace ? à quoi sert-elle ?}\\
 
-La transformée de Laplace qui transforme une fonction (ici $f$) d'une \textbf{variable réelle} (ici $t$) en une fonction $L{f}$ d'une \textbf{variable complexe} (ici $s$) et définie par la relation mathématique suivante :
+La transformée de Laplace qui transforme une fonction (ici $f$) d'une \textbf{variable réelle} (ici $t$) en une fonction $L\{ f \}$ d'une \textbf{variable complexe} (ici $s$) et définie par la relation mathématique suivante :\\
 
-\[L{f}(s) = \int^{\infty}_{0} f(t) e^{-st} \; dt\] 
+\[L\{f \}(s) = \int^{\infty}_{0} f(t) e^{-st} \; dt\] \\
+
+Il s'agit de la transformée de Laplace monolatérale. Il existe également une transformée de Laplace bilatérale.\\
+
+\[L\{f \}(s) = \int^{\infty}_{-\infty} f(t) e^{-st} \; dt\]\\
+
+En général, si ce n'est pas précisé la transformée de Laplace désigne plutôt la transformée monolatérale.\\
 
 Avant d'aller plus loin dans le développement mathématique de cette notion, on va d'abord évoquer son utilité. L'intérêt principal de la transformée de Laplace est de simplifier des opérations mathématiques. Elle permet notamment de remplacer une opération de \textbf{convolution} entre deux fonctions par une multiplication. Elle permet également de simplifier la résolution d'un grand nombre d'équations différentielles ordinaires. On peut être tenté de dire que le problème est simplement déplacé, puisqu'au lieu d'intégrer l'équation différentielle en elle-même on calcule une autre intégrale pour obtenir sa transformée. Cependant il faut comprendre que l'obtention de la transformée est souvent bien plus simple que le calcul direct, et ce car les transformées d'un grand nombre de fonctions sont connues.\\
 
-Pour donner un peu de sens à tout cela, les transformées de Laplace de quelques fonctions usuelles vont être calculées. Ce calcul explicite a plus pour but de manipuler les concepts et les outils mathématiques. Par la suite les transformées seront dans un tableau qu'on pourra consulter quand elle ne seront pas directement calculées par  ordinateur.\\
+On va d'abord revenir sur les propriétés de la transformée de Laplace, puis on calculera les transformées de Laplace de quelques fonctions usuelles. Ce calcul explicite a plus pour but de travailler avec les concepts et les outils mathématiques. Par la suite, les transformées les plus usuelles seront dans un tableau qu'on pourra consulter quand elle ne seront pas directement calculées par  ordinateur.\\
 
 \subsubsection{Propriétés de la transformée de Laplace}
 Dans cette section, les propriétés utiles dans le transformée de Laplace vont être abordées.\\
@@ -200,7 +206,7 @@ soit deux fonctions $f(t)$ et $g(t)$ et $f \star g$ le produit de convolution de
 
 \[L \{f \star g\} (s) =  \int^{\infty}_{0}\{f \star g\} e^{-st} \; dt = L\{f\}L\{g\} (s)  \]
 
-Pour démontrer cette propriété, on part du produit des transformées de Laplace.L'intégrale étant une somme, on peut écrire une des deux à l'intérieur de la seconde, ce qui permet de réécrire le produit d'exponetielles. De là, on effectue un changement de variable sur les intégrales en introduisant une variable qui est la somme des deux précédentes. Ce changement de variable fait alors apparaître une expression qui est le produit de convolution des deux fonctions.
+Pour démontrer cette propriété, on part du produit des transformées de Laplace. L'intégrale étant une somme, on peut écrire une des deux à l'intérieur de la seconde, ce qui permet de réécrire le produit d'exponetielles. De là, on effectue un changement de variable sur les intégrales en introduisant une variable qui est la somme des deux précédentes. Ce changement de variable fait alors apparaître une expression qui est le produit de convolution des deux fonctions.
 
 \subsubsection{Transformées Usuelles}
 \textbf{Exercice: Calculer les transformées de Laplace suivantes}\\
@@ -384,7 +390,7 @@ Soit les quatres fonctions suivantes :
 	\end{tikzpicture}
 \end{center}
 
-On a représenté graphiquement les quatre fonctions précédentes dans la figure ci-dessus. On va maintenant représenter les coefficients de leur série de Fourier dans un graphique comprenant la fréquence de l'harmonique en abscisses et son amplitude en ordonnée.
+On a représenté graphiquement les quatre fonctions précédentes dans la figure ci-dessus. On va maintenant représenter les coefficients de leur série de Fourier dans un graphique comprenant la fréquence de l'harmonique en abscisses et son amplitude en ordonnée.\\
 
 \begin{center}
 \begin{tikzpicture}
@@ -427,9 +433,9 @@ Une dernière chose importante: La représentation graphique ici ne sera pas qua
 
 \subsubsection{Transformée de Fourier}
 
-\textbf{Question: Quelle est pour vous le lien entre transformée de Laplace et transformée de Fourier}
+\textbf{Question: Quelle est pour vous le lien entre transformée de Laplace et transformée de Fourier}\\
 
-Puisqu'on a défini auparavant la transformée de Laplace on peut définir la transformée de Fourier en se basant sur cette dernière. On rappelle la définition de la transformée de Laplace :
+Puisqu'on a défini auparavant la transformée de Laplace on peut définir la transformée de Fourier en se basant sur cette dernière. On rappelle la définition de la transformée de Laplace :\\
 
 \[L\{ g \}(s) = \int^{\infty}_{-\infty} g(t) e^{-st} \; dt\]\\ 
 
@@ -462,48 +468,49 @@ On rappelle que la période de toutes ces fonctions est $\pi$
  \[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} g_1(t) e^{-2\pi j f t} \; dt\]
  \[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} \cos(2 t) e^{-2\pi j f t} \; dt\]
 \[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} (\frac{e^{2jt} +  e^{-2jt}}{2}) e^{-2\pi j f t} \; dt\]
-\[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f -2)t}}{2}) \; dt + \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f +2)t}}{2}) \; dt\]
+\[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f -2)t}}{2}) \; dt + \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f +2)t}}{2}) \; dt\]\\
 
-pour aller plus loin il faut savoir que : 
+pour aller plus loin il faut savoir que : \\
 
  \[\int^{\infty}_{-\infty}  e^{-2\pi j f t} \; dt = \delta(f)\]
  
-Ce qui mène à :
+Ce qui mène à :\\
 
 \[TF\{ g_1 \}(f) = \frac{1}{2}(\delta(f+2) + \delta(f-2))\]
 
 \paragraph{2. $g_2(t) = 0.55 \cos(2 t) + 0.45 \cos(4 t)$}
-En repartant du résultat précédent on en déduit le résultat suivant:
+En repartant du résultat précédent on en déduit le résultat suivant:\\
 
-\[TF\{ g_2 \}(f) = \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]
+\[TF\{ g_2 \}(f) = \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]\\
 
 On a donc la somme de 4 diracs, 2 par composantes.
 
 \paragraph{3. $g_3(t) = 0.6 \cos(2 t) + 0.3 \cos(4 t) + 0.1 \cos(6 t)$}
-En repartant du résultat précédent on en déduit le résultat suivant:
+En repartant du résultat précédent on en déduit le résultat suivant:\\
 
-\[TF{g_3}(f) = \frac{0.6}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.1}{2}(\delta(f+6) + \delta(f-6))\]
+\[TF{g_3}(f) = \frac{0.6}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.1}{2}(\delta(f+6) + \delta(f-6))\]\\
 
 \paragraph{4. $g_4(t) = 0.4 \cos(2 t) + 0.3 \cos(4 t) + 0.2 \cos(6 t) + 0.1 \cos(8 t)$}
-En repartant du résultat précédent on en déduit le résultat suivant:
+En repartant du résultat précédent on en déduit le résultat suivant:\\
 
 \[TF\{ g_4 \}(f) = \frac{0.4}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.2}{2}(\delta(f+6) + \delta(f-6))\]
-\[ + \frac{0.1}{2}(\delta(f+8) + \delta(f-8)) \]
+\[ + \frac{0.1}{2}(\delta(f+8) + \delta(f-8)) \]\\
 
 
 On peut alors tracer le \textbf{spectre} de ces fonctions. Le spectre d'un signal est toujours représenté par deux graphes. Le premier, et celui qu'on se figure plus fréquemment quand on parle de spectre est le spectre en amplitude du signal, qui équivaut au module de la transformée de Fourier du signal.\\
 
-\underline{\textbf{Rappel:}} Soit un complexe $z$ = $a + ib$, alors le module de $z$ est un réel $\rho$ défini comme :
+\underline{\textbf{Rappel:}} Soit un complexe $z$ = $a + ib$, alors le module de $z$ est un réel $\rho$ défini comme :\\
 
-\[ \rho = \sqrt{a^2 + b^2}  \]
+\[ \rho = \sqrt{a^2 + b^2}  \]\\
 
-On définit également l'argument de $z$ est un réel $\theta$ défini comme:
+On définit également l'argument de $z$ est un réel $\theta$ défini comme:\\
 
-\[ \theta =  \arctan\frac{b}{a} = \arccos{\frac{a}{\rho}} = \arcsin{\frac{b}{\rho}} \] 
+\[ \theta =  \arctan\frac{b}{a} = \arccos{\frac{a}{\rho}} = \arcsin{\frac{b}{\rho}} \] \\
 
-On peut alors écrire le complexe $z$ sous la forme $\rho e^{i \theta}$\\s
+On peut alors écrire le complexe $z$ sous la forme $\rho e^{i \theta}$\\
 
-Donc si on trace le module du spectre de nos fonctions sinusoïdales précédentes, on obtient le spectre suivant. On note quand dans le cas de la  transformée de Fourier le spectre comporte des composantes positives ET négatives en fréquences ce qui n'était pas le cas dans le représentation en série de Fourier. 
+Donc si on trace le module du spectre de nos fonctions sinusoïdales précédentes, on obtient le spectre suivant. On note quand dans le cas de la  transformée de Fourier le spectre comporte des composantes positives ET négatives en fréquences ce qui n'était pas le cas dans le représentation en série de Fourier.\\
+ 
 \begin{center}
 \begin{tikzpicture}
 
@@ -555,11 +562,11 @@ Donc si on trace le module du spectre de nos fonctions sinusoïdales précédent
 
 Ici on a représenté le module du spectre mais pas son argument. On a donc un spectre d'amplitude mais pas un spectre de phase or ces deux aspects sont importants dans la représentation d'un signal c'est pourquoi on doit se pencher sur un second exemple pour pouvoir mettre en évidence cette notion de phase.\\
 
-On va donc partir d'un second signal :
+On va donc partir d'un second signal :\\
 
-\[ g_5(t) = 0.55b\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) \] 
+\[ g_5(t) = 0.55b\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) \] \\
 
-Il s'agit de la fonction $g_2(t)$ mais légèrement modifiée. On a introduit un déphasage de $\frac{\pi}{3}$. On peut visualiser ce déphasage dans la figure où on a représenté les fonctions $g_2(t)$ et $g_5(t)$.
+Il s'agit de la fonction $g_2(t)$ mais légèrement modifiée. On a introduit un déphasage de $\frac{\pi}{3}$. On peut visualiser ce déphasage dans la figure où on a représenté les fonctions $g_2(t)$ et $g_5(t)$.\\
 
 
 \begin{center}
@@ -583,19 +590,19 @@ Il s'agit de la fonction $g_2(t)$ mais légèrement modifiée. On a introduit un
 \end{center}
 On voit que l'ajout du terme de déphasage a un impact visible sur la forme de la fonction et que le déphasage de la composante "haute fréquence" change la forme du signal.\\
 
-On rappelle la transformée de Fourier du signal précédent :
+On rappelle la transformée de Fourier du signal précédent :\\
 
-\[ TF\{ g_2 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]
+\[ TF\{ g_2 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]\\
 
-On peut alors en déduire facilement la transformée de Fourier de $g_5(t)$
+On peut alors en déduire facilement la transformée de Fourier de $g_5(t)$\\
 
-\[ TF\{ g_5 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))e^{-2 j \pi \frac{pi}{3} f }\]
+\[ TF\{ g_5 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))e^{-2 j \pi \frac{pi}{3} f }\]\\
 
 Si $TF\{ g_2 \}(f)$ était une fonction réelle (pas de partie complexe), $TF{g_5}(f)$ a clairement une partie imaginaire non nulle. On note également que dans ce cas le module et l'argument sont déjà présentées de façon évidente.\\
 
-Le module des deux fonctions est identique. En effet, on sait que $|e^{-2 j \pi \frac{pi}{3} f }|=1$. Et donc, les modules des deux fonctions sont identiques. Ce qui distingue les deux fonctions dans ce cas est leur phase, soit l'argument de la transformée de Fourier. 
+Le module des deux fonctions est identique. En effet, on sait que $|e^{-2 j \pi \frac{pi}{3} f }|=1$. Et donc, les modules des deux fonctions sont identiques. Ce qui distingue les deux fonctions dans ce cas est leur phase, soit l'argument de la transformée de Fourier. \\
 
-On peut utiliser MATLAB ou GNU/Octave pour représenter les modules de ces fonctions. Ceci sera l'objet d'une de nos activités en salle info
+On peut utiliser MATLAB ou GNU/Octave pour représenter les modules de ces fonctions. Ceci sera l'objet d'une de nos activités en salle info.\\
 
 
 
@@ -617,6 +624,58 @@ On peut utiliser MATLAB ou GNU/Octave pour représenter les modules de ces fonct
 
 Cette exemple démontre bien l'importance générale de la phase des signaux et pas seulement de leur spectre d'amplitude qui est souvent ce que les étudiants gardent à l'esprit lorsqu'on leur présente ces notions. Cette notion de phase reprendra de l'importance plus tard lorsqu'on présentera certains types de filtres.
 
+\subsection{Notion de spectre en amplitude et en phase}
+
+\subsection{Remarques sur la transformée de Fourier}
+Dans cette sous-partie, l'accent va être mis sur certains points importants et certaines propriétés de la transformée de Fourier.\\
+
+On va insister plus particulièrement sur certaines règles qu'il est utile d'avoir à l'esprit lorsqu'on manipule des fonctions et leur transformée de Fourier.\\
+
+\subsubsection{Extension temporelle vs. extension fréquentielle}
+La première est qu'il y a un lien entre l'extension temporelle du signal et l'extension fréquentielle du spectre correspondant.\\
+
+\begin{center} 
+\textbf{Si un signal a une extension temporelle finie, alors son spectre a une extension fréquentielle infinie}\\
+
+et, 
+
+\textbf{Si un signal a une extension temporelle infinie, alors son spectre a une extension fréquentielle finie}\\
+
+\end{center}
+Cela s'explique par le fait que la transformée de Fourier de la constante 1 soit égal à l'exponentielle complexe et réciproquement. Pour illustrer ce point, il est utile d'étudier le cas des fonctions sinusoïdales.\\
+
+Les fonctions sinus et cosinus sont des fonctions \textbf{périodiques}, ce qui signifie que leur extension temporelle est infinie. Et dans les deux cas, leur spectre en amplitude sont deux diracs placés de part et d'autre. (Il est aussi intéressant de noter qu'ils sont rigoureusement identique, la différence se faisant au niveau de la phase). Leur spectre a donc une extension fréquentielle finie et relativement faible.\\
+
+\`A l'inverse un dirac dans le domaine temporel mènera à un spectre en fréquence d'une valeur de 1 quelque soit la fréquence. Le spectre aura donc une extension fréquentielle infinie.\\
+
+\subsubsection{Périodicité temporelle vs. périodicité fréquentielle}
+On a évoqué plus haut la notion de série de Fourier. Cet outil mathématique permet de décomposer les fonctions périodiques en une combinaison linéaire/somme pondérés de sinus et de cosinus.\\
+
+On présente alors souvent la transformée de Fourier comme l'extension de la série de Fourier au cas des fonctions non périodiques. On appuie souvent cette analogie en présentant une fonction continue non périodique comme une fonction périodique de période infinie. Les raies de spectre correspondant aux fréquences multiples du fondamental dans le cas d'une fonction périodique se rapprochent alors jusqu'à former un spectre continue.\\
+
+
+\begin{tikzpicture}
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
+\draw[->] (0,0)-- (5,0) node[right] {$f$};
+
+\begin{scope}[xshift=5cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
+\draw[->] (0,0)-- (5,0) node[right] {$f$};
+\draw[ domain=0.1:4.9,color=blue,samples=80] plot[ycomb] (\x,{80*sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r)});
+\end{scope}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
+\draw[->] (0,0)-- (5,0) node[right] {$f$};
+
+\begin{scope}[xshift=5cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
+\draw[->] (0,0)-- (5,0) node[right] {$f$};
+\draw[ domain=0.1:4.9,color=blue,samples=80] plot[ycomb] (\x,{80*sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r)});
+\end{scope}
+\end{tikzpicture}
+
 \subsection{Signaux numériques}
 
 \textbf{Question: En quoi consiste la numérisation d'un signal ?} \\
@@ -627,7 +686,7 @@ La numérisation d'un signal analogique initial est constitué de deux parties: 
 
 \textbf{Question: Que vous évoque la notion de codage ?} \\
 
-Le codage consiste à \textbf{quantifier} le signal avec une \textbf{dynamique} donnée. Un exemple simple est celui d'une fonction rampe $r(t)$.\\
+Le codage consiste à \textbf{quantifier} le signal avec une \textbf{dynamique} donnée. Un exemple simple est celui d'une fonction rampe $r(t)$. Ce signal est initialement continu en temps et en amplitude et on cherche à coder son ampltiude. On peut procéder de différentes manières, dont deux qui sont illustrées dans la figure suivante \\
 
 \begin{center}
 \begin{tikzpicture}
@@ -701,9 +760,9 @@ On voit dans la figure précédente deux exemples de quantification de la foncti
 
 Généralement, le codage se fait sur des nombres binaires. le nombre de valeurs disponibles est alors généralement donné par le nombre de bit utilisé pour le codage.\\
 
-\textbf{Exercice: Si on code un signal d'une amplitude de crête de 5 volts sur 4 bits, quelle est la valeur de l'échelon de quantification ?}
+\textbf{Exercice: Si on code un signal d'une amplitude de crête de 5 volts sur 4 bits, quelle est la valeur de l'échelon de quantification ?}\\
 
-4 bits binaires permettent de représenter 16 valeurs. L'intervalle [-5; 5] couvre 10 V au total. La solution la plus directe est de diviser la gamme en 10 secteurs égaux et de faire correspondre une des 16 valeurs binaires à chacun. Les secteurs ont une étendue de 0.625 V chacun et on peut diviser la gamme en 2N secteurs.
+4 bits binaires permettent de représenter 16 valeurs. L'intervalle [-5; 5] couvre 10 V au total. La solution la plus directe est de diviser la gamme en 10 secteurs égaux et de faire correspondre une des 16 valeurs binaires à chacun. Les secteurs ont une étendue de 0.625 V chacun et on peut diviser la gamme en 2N secteurs.\\
 
 \begin{table}[h!]
 \begin{center}
@@ -754,7 +813,7 @@ L'approximation systématique du au codage induit une erreur et donc un bruit de
 
 \subsubsection{L'échantillonnage}
 
-\textbf{Question : En quoi consiste pour vous l'opération d'échantillonnage ?}
+\textbf{Question : En quoi consiste pour vous l'opération d'échantillonnage ?}\\
 
 D'après le livre de Maurice Bellanger : "L’échantillonnage consiste à représenter un signal fonction du temps $s(t)$ par ses
 valeurs $s(nT_e)$ à des instants multiples entiers d’une durée $T_e$, appelée période d’échantillonnage."\\
