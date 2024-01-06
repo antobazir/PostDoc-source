@@ -76,6 +76,11 @@ Le traitement du signal est basé sur la connaissance des mécanismes physiques 
 
 On note que, dans le cadre plus large de l'ingénierie des systèmes, ce formalisme entrée-sortie est régulièrement employé comme par exemple en automatique, où le but est cette fois d'arriver à obtenir une variable de sortie précise en agissant sur la variable d'entrée. D'ailleurs, les éléments de bases du formalisme mathématique sont les mêmes. Qu'il s'agisse d'un "filtre" ou d'un "système" la base théorique a pour objectif de prédire la réponse du système. Cette notion de prédiction/traitement/commande amène naturellement à la grande question suivante.
 
+\subsection{Utilisation actuelle des principes de traitement du signal en recherche}
+Un domaine de recherche qui a traditionnellement beaucoup utilisé le traitement du signal depuis son avènement est le domaine biomédical.
+
+\label{**illustrer} 
+
 \subsection{Comment caractériser un filtre ou un système ?}  
 \textbf{Question: Quelles notions/mots clés sont associées pour vous à la caractérisation d'un filtre ou d'un système ?}\\
 
@@ -646,7 +651,7 @@ Cela s'explique par le fait que la transformée de Fourier de la constante 1 soi
 
 Les fonctions sinus et cosinus sont des fonctions \textbf{périodiques}, ce qui signifie que leur extension temporelle est infinie. Et dans les deux cas, leur spectre en amplitude sont deux diracs placés de part et d'autre. (Il est aussi intéressant de noter qu'ils sont rigoureusement identique, la différence se faisant au niveau de la phase). Leur spectre a donc une extension fréquentielle finie et relativement faible.\\
 
-\`A l'inverse un dirac dans le domaine temporel mènera à un spectre en fréquence d'une valeur de 1 quelque soit la fréquence. Le spectre aura donc une extension fréquentielle infinie.\\
+\`A l'inverse un Dirac dans le domaine temporel mènera à un spectre en fréquence d'une valeur de 1 quelque soit la fréquence. Le spectre aura donc une extension fréquentielle infinie.\\
 
 \subsubsection{Périodicité temporelle vs. périodicité fréquentielle}
 On a évoqué plus haut la notion de série de Fourier. Cet outil mathématique permet de décomposer les fonctions périodiques en une combinaison linéaire/somme pondérés de sinus et de cosinus.\\
@@ -655,26 +660,69 @@ On présente alors souvent la transformée de Fourier comme l'extension de la s�
 
 
 \begin{tikzpicture}
-\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
-\draw[->] (0,0)-- (5,0) node[right] {$f$};
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(t)$};
+\draw[->] (0,0)-- (5,0) node[right] {$t$};
 
-\begin{scope}[xshift=5cm]
-\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+
+\begin{scope}[xshift=1cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\draw[dashed,black] (2.5,0) node[below]{$T$}--(2.5,1);
+\end{scope}
+
+\begin{scope}[xshift=2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+\begin{scope}[xshift=-1cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+\begin{scope}[xshift=-2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+
+\begin{scope}[xshift=7cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$E(f)$};
 \draw[->] (0,0)-- (5,0) node[right] {$f$};
-\draw[ domain=0.1:4.9,color=blue,samples=80] plot[ycomb] (\x,{80*sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r)});
+\draw[ domain=0.1:4.9,color=blue,samples=24] plot[ycomb] (\x,{80*abs(sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r))});
+\draw[<->] (3.25,-0.3)--(3.45,-0.3) node[below left] {$\frac{1}{T}$};
 \end{scope}
 \end{tikzpicture}
+
 
 \begin{tikzpicture}
-\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
-\draw[->] (0,0)-- (5,0) node[right] {$f$};
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(t)$};
+\draw[->] (0,0)-- (5,0) node[right below] {$t$};
 
-\begin{scope}[xshift=5cm]
-\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(f)$};
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+
+
+\begin{scope}[xshift=2cm]
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+\end{scope}
+
+
+\begin{scope}[xshift=-2cm]
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+\end{scope}
+
+
+
+\begin{scope}[xshift=7cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$E(f)$};
 \draw[->] (0,0)-- (5,0) node[right] {$f$};
-\draw[ domain=0.1:4.9,color=blue,samples=80] plot[ycomb] (\x,{80*sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r)});
+\draw[ domain=0.1:4.9,color=blue,samples=96] plot[ycomb] (\x,{80*abs(sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r))});
+%\draw[<->] (3.25,-0.3)--(3.45,-0.3) node[below left] {$\frac{1}{T}$};
 \end{scope}
 \end{tikzpicture}
+
+On peut donc retenir ici que la périodicité d'un signal temporelle se traduit par un spectre de raies lorsqu'on prend le module de sa transformée de Fourier. La réciproque de cette propriété est également vraie et nous emmène à discuter le cas des signaux numériques.\\
+
+
 
 \subsection{Signaux numériques}
 
