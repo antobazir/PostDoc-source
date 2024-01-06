@@ -111,7 +111,7 @@ Afin de discuter la notion d'invariance dans le temps il est utile de rappeler l
 
 \textbf{Question: Comment s'exprime la notion de retard en mathématiques ?}\\
 
-Un exemple simple est de prendre la fonction exponentielle: exp$(x)$. On sait que exp$(0) = 1$ et exp$(1) = e$. Si on s'intéresse maintenant à la fonction exp$(x-\tau)$ et qu'on recherche les mêmes points particuliers, on retrouve la valeur 1 pour $x = \tau$ et la valeur $e$ pour $x= \tau + 1$. On se rend compte qu'en remplaçant exp$(x)$ par exp$(x-\tau)$, on décale la fonction de $\tau$ suivant les $x$ croissants.  
+Un exemple simple est de prendre la fonction exponentielle: exp$(x)$. On sait que exp$(0) = 1$ et exp$(1) = e$. Si on s'intéresse maintenant à la fonction exp$(x-\tau)$ et qu'on recherche les mêmes points particuliers, on retrouve la valeur 1 pour $x = \tau$ et la valeur $e$ pour $x= \tau + 1$. On se rend compte qu'en remplaçant exp$(x)$ par exp$(x-\tau)$, on décale la fonction de $\tau$ suivant les $x$ croissants.  \\
 
 De façon plus générale, soit $f$ une fonction d'une variable réelle $x$. alors la fonction $g(x) = f(x-\tau)$ correspond à $f(x)$ avec un retard $\tau$. Cette définition correspond aux fonctions continues mais s'applique de façon analogue aux signaux discrets. L'équivalent discret d'une fonction est généralement appelé "suite". Soit $u(n)$, une suite pouvant représenter un signal, la suite $u(n-m)$, où $m$ est un entier, correspond à la suite $u(n)$ décalée de $m$ échantillons. \\
 
@@ -126,7 +126,13 @@ Un autre domaine très lié au traitement du signal et où la linéarité est im
 
 La linéarité d'un capteur est équivalente à celle présentée pour celle d'un filtre/système. Si on injecte la somme de deux signaux d'entrée $x_1(t)$ et $x_2(t)$, alors la sortie mesurée doit être la somme des sorties $y_1(t)$ et $y_2(t)$ qu'on mesurerait séparément. Dans les faits, un grand nombre de capteurs ne remplissent cette condition que sur une certaines plages de valeur d'entrée.\\
 
-\textbf{Discussion: Plage de linéarité : exemple du ressort}
+\textbf{Discussion: Plage de linéarité : exemple du ressort \label{ressort}}
+
+Si on comprime un ressort au repos, sa longueur va varier de $\Delta L$. La variation $\Delta L$ va dépendre de la constante de raideur du ressort $k$ et de la force appliqué $F$ en suivant la loi: \\
+
+\[ F = k \Delta L\]\\
+
+Sous réserve que $k$ reste constant, on peut donc établir une proportionnalité entre la force appliquéée et la déformation du ressort. La mesure de la déformation permet alors de mesurer la force. Or, passé un certain degré de compression les spires du ressort vont se retrouver en contact. Dans ce cas de figure, augmenter la force ne donnera plus lieu à une déformation comensurée. La relation de proportionnalité mentionnée juste avant n'a alor plus court. On peut dire qu'on est sorti de la plage de linéarité du ressort.
 
 \subsection{Système linéaire et invariant dans le temps, et réponse impulsionnelle}
 Pour démarrer cette partie, on doit définir la notion d'impulsion de Dirac noté $\delta(t)$. Cette dernière peut être vu que comme le cas limite mathématique d'une impulsion de largeur finie. Sur un plan purement mathématique la distribution de Dirac (et la notion de distribution en général) permet de définir la dérivée de fonction comme l'échelon de Heaviside.  De cette définition mathématique découle une possibilité très signifiante dans le cadre de l'ingénierie des systèmes. Elle permet, pour les systèmes linéaires  et invariants dans le temps, d'écrire la relation suivante:\\  
@@ -165,29 +171,51 @@ Les concepts mathématiques introduits dans les paragraphes précédents constit
 
 \textbf{Question: Que vous évoque la transformée de Laplace ? à quoi sert-elle ?}\\
 
-La transformée de Laplace qui transforme une fonction (ici $f$) d'une \textbf{variable réelle} (ici $t$) en une fonction $L{f}$ d'une \textbf{variable complexe} (ici $p$) et définie par la relation mathématique suivante :
+La transformée de Laplace qui transforme une fonction (ici $f$) d'une \textbf{variable réelle} (ici $t$) en une fonction $L{f}$ d'une \textbf{variable complexe} (ici $s$) et définie par la relation mathématique suivante :
 
-\[L{f}(p) = \int^{\infty}_{0} f(t) e^{-pt} \; dt\] 
+\[L{f}(s) = \int^{\infty}_{0} f(t) e^{-st} \; dt\] 
 
 Avant d'aller plus loin dans le développement mathématique de cette notion, on va d'abord évoquer son utilité. L'intérêt principal de la transformée de Laplace est de simplifier des opérations mathématiques. Elle permet notamment de remplacer une opération de \textbf{convolution} entre deux fonctions par une multiplication. Elle permet également de simplifier la résolution d'un grand nombre d'équations différentielles ordinaires. On peut être tenté de dire que le problème est simplement déplacé, puisqu'au lieu d'intégrer l'équation différentielle en elle-même on calcule une autre intégrale pour obtenir sa transformée. Cependant il faut comprendre que l'obtention de la transformée est souvent bien plus simple que le calcul direct, et ce car les transformées d'un grand nombre de fonctions sont connues.\\
 
 Pour donner un peu de sens à tout cela, les transformées de Laplace de quelques fonctions usuelles vont être calculées. Ce calcul explicite a plus pour but de manipuler les concepts et les outils mathématiques. Par la suite les transformées seront dans un tableau qu'on pourra consulter quand elle ne seront pas directement calculées par  ordinateur.\\
 
+\subsubsection{Propriétés de la transformée de Laplace}
+Dans cette section, les propriétés utiles dans le transformée de Laplace vont être abordées.\\
+
+\textbf{Exercices : } 
+
+\[L\{af+g\}(s) = \int^{\infty}_{0}( a f(t) + g(t)) e^{-st} \; dt = \; a L\{ f\}(s) + L \{ g \} (s) \]\\
+
+Avec le résultat de ce calcul on démontre la linéarité de la transformée de Laplace.\\
+
+\[L\{f'\}(s) = \int^{\infty}_{0}f'(t) e^{-st} \; dt = \; s L\{f \}(s)\]\\
+
+Ici en réutilisant l'intégration par partie on déduit une règle générale pour la transformée d'une dérivée. Soit $F(t) = \int^{t}_{0} f(\tau)  \; d\tau$,\\
+
+\[L\{F\}(s) = \int^{\infty}_{0}F(t) e^{-st} \; dt = \; \frac{1}{s} L\{f \}(s)\]\\
+
+Pour finir, un des intérêts principaux de ces transformées est sa relation avec la convolution.
+
+soit deux fonctions $f(t)$ et $g(t)$ et $f \star g$ le produit de convolution de ces fonctions, alors on peut écrire :
+
+\[L \{f \star g\} (s) =  \int^{\infty}_{0}\{f \star g\} e^{-st} \; dt = L\{f\}L\{g\} (s)  \]
+
+Pour démontrer cette propriété, on part du produit des transformées de Laplace.L'intégrale étant une somme, on peut écrire une des deux à l'intérieur de la seconde, ce qui permet de réécrire le produit d'exponetielles. De là, on effectue un changement de variable sur les intégrales en introduisant une variable qui est la somme des deux précédentes. Ce changement de variable fait alors apparaître une expression qui est le produit de convolution des deux fonctions.
+
+\subsubsection{Transformées Usuelles}
 \textbf{Exercice: Calculer les transformées de Laplace suivantes}\\
 
 \begin{itemize}
-\item $\delta (t)$ (impulsion de dirac) 
 \item $u(t)$ (échelon de heaviside)
 \item $r(t) = t$ (rampe)
 \item $f(t) = e^{-at}$ (exponentielle décroissante)
+\item $\delta (t)$ (impulsion de dirac) 
 \item $sin(\omega t)$
 \end{itemize}
 
-\paragraph{\textbf{1.} $\delta (t)$}
-\[L{\delta}(p) = \int^{\infty}_{0} \delta(t) e^{-pt} \; dt = 1\] 
-La démonstration de cette dernière est laissée de côté à cause des spécificités de la distribution de Dirac et de la nature de la transformée de Laplace. Ceci requiert donc beaucoup d'étape pour être rigoureux pour obtenir cela dit un résultat relativement facile à intuiter, si on sait que $\int^{\infty}_{-\infty}f(\tau)\delta(\tau) d\tau = f(0)$
 
-\paragraph{\textbf{2.} $u (t)$}
+
+\paragraph{\textbf{1.} $u (t)$}
 On définit $u(t)$ comme la fonction nulle si $t < 0$ et égale à sinon:
 
 \begin{center}
@@ -209,15 +237,15 @@ On définit $u(t)$ comme la fonction nulle si $t < 0$ et égale à sinon:
 
 Sa transformée de Laplace s'écrit donc comme suit :
 
-\[L{u}(p) = \int^{\infty}_{0} u(t) e^{-pt} \; dt\] 
+\[L\{u\}(s) = \int^{\infty}_{0} u(t) e^{-st} \; dt\] 
 
 Suivant la définition de la fonction on peut alors écrire : 
 
-\[L{u}(p) = \int^{\infty}_{0} e^{-pt} \; dt =  \Big[-\frac{e^{-pt}}{p}\Big]^{\infty}_{0} = \frac{-e^{-p \infty}}{p} + \frac{e^{-p 0}}{p} = \frac{1}{p}  \] 
+\[L\{u\}(s) = \int^{\infty}_{0} e^{-st} \; dt =  \Big[-\frac{e^{-pt}}{s}\Big]^{\infty}_{0} = \frac{-e^{-s \infty}}{s} + \frac{e^{-p 0}}{s} = \frac{1}{s}  \] 
 
 On rappelle ici que $p$ est un nombre \textbf{complexe}.
 
-\paragraph{\textbf{3.} $r(t)$}
+\paragraph{\textbf{2.} $r(t)$}
 La fonction r(t) est la fonction rampe définie comme une droite de pente 1 sur les réels positifs.
 
 \begin{center}
@@ -241,7 +269,7 @@ La fonction r(t) est la fonction rampe définie comme une droite de pente 1 sur 
 
 On suit les mêmes étapes que précédemment : 
 
-\[L{u}(p) = \int^{\infty}_{0} t e^{-pt} \; dt\]
+\[L\{u\}(p) = \int^{\infty}_{0} t e^{-pt} \; dt\]
 
 Le calcul de cette transformée est un peu plus complexe. Il fait appel au théorème de l'intégration par parties:
 
@@ -249,15 +277,15 @@ Le calcul de cette transformée est un peu plus complexe. Il fait appel au théo
 
 De façon plus explicite, si on doit intégrer un produit de fonction, dont on connaît les dérivées et les primitives on peut décomposer l'intégrale du produit en deux parties plus simples à calculer. Donc ici :
 
-\[L{r}(p) = \int^{\infty}_{0} t e^{-pt} \; dt =  \Big[-\frac{te^{-pt}}{p}\Big]^{\infty}_{0} + \int^{\infty}_{0} \frac{e^{-pt}}{p} \; dt\]
+\[L\{ r \}(s) = \int^{\infty}_{0} t e^{-st} \; dt =  \Big[-\frac{te^{-st}}{s}\Big]^{\infty}_{0} + \int^{\infty}_{0} \frac{e^{-st}}{s} \; dt\]
 
-\[ \Big[-\frac{te^{-pt}}{p}\Big]^{\infty}_{0} = 0\]
+\[ \Big[-\frac{te^{-st}}{s}\Big]^{\infty}_{0} = 0\]
 
-\[ \int^{\infty}_{0} \frac{e^{-pt}}{p} \; dt = \Big[-\frac{te^{-pt}}{p^2}\Big]^{\infty}_{0} = \frac{1}{p^2}\]
+\[ \int^{\infty}_{0} \frac{e^{-st}}{s} \; dt = \Big[-\frac{te^{-st}}{s^2}\Big]^{\infty}_{0} = \frac{1}{s^2}\]
 
-\[ L{r}(p) = \int^{\infty}_{0} t e^{-pt} \; dt  = \frac{1}{p^2}\]
+\[ L\{ r \}(s) = \int^{\infty}_{0} t e^{-st} \; dt  = \frac{1}{s^2}\]
 
-\paragraph{\textbf{4.} $f(t) = e^{-at}$}
+\paragraph{\textbf{3.} $f(t) = e^{-at}$}
 Cette fonction est fréquemment rencontrée en ingénierie car elle constitue la réponse typique d'un système premier ordre, comme par exemple la décharge d'un condensateur dans un circuit RC simple.
 \begin{center}
 	\begin{tikzpicture}
@@ -285,49 +313,28 @@ Cette fonction est fréquemment rencontrée en ingénierie car elle constitue la
 
 Cette transformée est plus simple à calculer car elle se base sur le calcul de la première.
 
-\[L{f}(p) = \int^{\infty}_{0} e^{-at} e^{-pt} \; dt\]
+\[L\{ f \}(s) = \int^{\infty}_{0} e^{-at} e^{-st} \; dt\]
 
-Si on réécrit $e^{-at} e^{-pt}$ comme $e^{-(p+a)t}$, il vient directement que: 
+Si on réécrit $e^{-at} e^{-st}$ comme $e^{-(s+a)t}$, il vient directement que: 
 
-\[L{f}(p) = \frac{1}{p+a}\]
+\[L\{ f \}(s) = \frac{1}{s+a}\]
 
 Il est intéressant de noter que, si on multiplie une fonction par $f(t) = e^{-at}$, quelque soit, la fonction cela induit que $p$ va devenir $p+a$ dans la transformée de Laplace.
+
+\paragraph{\textbf{4.} $\delta (t)$}
+\[L\{ \delta \}(s) = \int^{\infty}_{0} \delta(t) e^{-st} \; dt = 1\] 
+
+Une façon intuitive d'arriver à ce résultat est de partir de la transformée de l'échelon dont le résultat est connu et le calcul simple. Il faut alors remarquer que la fonction $\delta(t)$ est la dérivée de la fonction échelon. Et puisqu'on sait que la fonction échelon a pour transformée de Laplace $\frac{1}{s}$ alors la multiplication par $s$ due à la dérivation donne 1 pour la fonction $delta$
 
 \paragraph{\textbf{5.} $f(t) = \sin(\omega_0 t)$}
 Pour trouver cette transformer, on peut utiliser deux méthodes: L'intégration par parties ou bien une des formules d'Euler. Les formules d'Euler établissent le lien entre les exponentielles complexes et les fonctions trigonométriques sin et cos:  $\sin(\omega_0 t) = \frac{e^{j \omega_0 t} - e^{-j \omega_0 t}}{2j}$
 
-\[L{f}(p) = \int^{\infty}_{0} \sin(\omega_0 t) e^{-pt} \; dt =  \int^{\infty}_{0} \frac{e^{j \omega_0 t} - e^{-j \omega_0 t}}{2j} e^{-pt} \; dt\]
+\[L\{ f \}(s) = \int^{\infty}_{0} \sin(\omega_0 t) e^{-st} \; dt =  \int^{\infty}_{0} \frac{e^{j \omega_0 t} - e^{-j \omega_0 t}}{2j} e^{-st} \; dt\]
 
-On peut alors réécrire l'ensemble comme :
+On seut alors réécrire l'ensemble comme :
 
-\[L{f}(p) =  \int^{\infty}_{0} \frac{e^{j \omega_0 t}e^{-pt}}{2j}  \; dt - \int^{\infty}_{0} \frac{e^{-j \omega_0 t}e^{-pt}}{2j}  \; dt = \frac{1}{2j}\Big[\frac{2j\omega_0}{p^2 + \omega_0^2}  \Big] = \frac{\omega_0}{p^2 + \omega_0^2} \]
+\[L\{ f \}(s) =  \int^{\infty}_{0} \frac{e^{j \omega_0 t}e^{-st}}{2j}  \; dt - \int^{\infty}_{0} \frac{e^{-j \omega_0 t}e^{-st}}{2j}  \; dt = \frac{1}{2j}\Big[\frac{2j\omega_0}{s^2 + \omega_0^2}  \Big] = \frac{\omega_0}{s^2 + \omega_0^2} \]
 
-\subsubsection{Propriétés de la transformée de Laplace}
-Dans cette section, les propriétés utiles dans le transformée de Laplace vont être abordées.
-
-\textbf{Exercices : } 
-
-\[L{af+g}(p) = \int^{\infty}_{0}( a f(t) + g(t)) e^{-pt} \; dt = \; ?\]
-
-Avec le résultat de ce calcul on observe la notion de linéarité.
-
-\[L{f'}(p) = \int^{\infty}_{0}f'(t) e^{-pt} \; dt = \; ?\]
-
-Ici en réutilisant l'intégration par partie on déduit une règle générale pour la transformée d'une dérivée.\\
-
-Soit $F(t) = \int^{t}_{0} f(\tau)  \; d\tau$,
-
-\[L{F}(p) = \int^{\infty}_{0}F(t) e^{-pt} \; dt = \; ?\]
-
-Pour finir, un des intérêts principaux de ces transformées est sa relation avec la convolution.
-
-soit deux fonctions $f(t)$ et $g(t)$ et $f \star g$ le produit de convolution de ces fonctions, alors on peut écrire :
-
-\[L (f \star g) (p) =  \int^{\infty}_{0}(f \star g) e^{-pt} \; dt = L(f)L(g) (p)  \]
-
-%Par application du théorème de Fubini, on peut écrire:
-
-%\[L (f \star g) (p) =  \int^{\infty}_{0}(f \star g) e^{-pt} \; dt =  (\int^{\infty}_{0}(f) e^{-pt} \; dt ) (\int^{\infty}_{0}(g) e^{-pt} \; dt)  \]
 
 \subsection{Série de Fourier, Transformée de Fourier et lien avec la transformée de Laplace}
 L'objectif de cette-sous partie est de compléter un peu les concepts présentés précédemment sur la transformée de Laplace et d'illustrer la construction mathématique de la théorie de Fourier. On verra que comprendre celle-ci permet également de mieux saisir certains aspects du traitement du signal numérique.
@@ -424,13 +431,13 @@ Une dernière chose importante: La représentation graphique ici ne sera pas qua
 
 Puisqu'on a défini auparavant la transformée de Laplace on peut définir la transformée de Fourier en se basant sur cette dernière. On rappelle la définition de la transformée de Laplace :
 
-\[L{g}(p) = \int^{\infty}_{-\infty} g(t) e^{-pt} \; dt\]\\ 
+\[L\{ g \}(s) = \int^{\infty}_{-\infty} g(t) e^{-st} \; dt\]\\ 
 
 On peut alors définir la transformée de Fourier de la manière suivante:
 
-\[TF{g}(\omega) = \int^{\infty}_{-\infty} g(t) e^{-j\omega t} \; dt\]\\
+\[TF\{ g \}(\omega) = \int^{\infty}_{-\infty} g(t) e^{-j\omega t} \; dt\]\\
 
-On remplace alors la variable de Laplace, $p$ par  $j \omega = 2 \pi j f$ où $f$  est la fréquence qui est homogène à l'inverse d'un temps.\\
+On remplace alors la variable de Laplace, $s$ par  $j \omega = 2 \pi j f$ où $f$  est la fréquence qui est homogène à l'inverse d'un temps.\\
 
 La différence entre Fourier et Laplace se situe surtout au niveau du type  d'analyse effectuée. La méthode de Fourier est généralement plus restrictive du fait de sa forme mathématique. Celle-ci se prête notamment mieux aux analyses harmoniques.\\
 
@@ -452,10 +459,10 @@ Sur un plan conceptuel, la transformée de Fourier est une généralisation aux 
 On rappelle que la période de toutes ces fonctions est $\pi$
 
 \paragraph{1. $f_1(t) = \cos(2 t)$}
- \[TF{g_1}(f) = \int^{\infty}_{-\infty} g_1(t) e^{-2\pi j f t} \; dt\]
- \[TF{g_1}(f) = \int^{\infty}_{-\infty} \cos(2 t) e^{-2\pi j f t} \; dt\]
-\[TF{g_1}(f) = \int^{\infty}_{-\infty} (\frac{e^{2jt} +  e^{-2jt}}{2}) e^{-2\pi j f t} \; dt\]
-\[TF{g_1}(f) = \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f -2)t}}{2}) \; dt + \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f +2)t}}{2}) \; dt\]
+ \[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} g_1(t) e^{-2\pi j f t} \; dt\]
+ \[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} \cos(2 t) e^{-2\pi j f t} \; dt\]
+\[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} (\frac{e^{2jt} +  e^{-2jt}}{2}) e^{-2\pi j f t} \; dt\]
+\[TF\{ g_1 \}(f) = \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f -2)t}}{2}) \; dt + \int^{\infty}_{-\infty} (\frac{e^{-j(2 \pi f +2)t}}{2}) \; dt\]
 
 pour aller plus loin il faut savoir que : 
 
@@ -463,12 +470,12 @@ pour aller plus loin il faut savoir que :
  
 Ce qui mène à :
 
-\[TF{g_1}(f) = \frac{1}{2}(\delta(f+2) + \delta(f-2))\]
+\[TF\{ g_1 \}(f) = \frac{1}{2}(\delta(f+2) + \delta(f-2))\]
 
 \paragraph{2. $g_2(t) = 0.55 \cos(2 t) + 0.45 \cos(4 t)$}
 En repartant du résultat précédent on en déduit le résultat suivant:
 
-\[TF{g_2}(f) = \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]
+\[TF\{ g_2 \}(f) = \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]
 
 On a donc la somme de 4 diracs, 2 par composantes.
 
@@ -480,7 +487,7 @@ En repartant du résultat précédent on en déduit le résultat suivant:
 \paragraph{4. $g_4(t) = 0.4 \cos(2 t) + 0.3 \cos(4 t) + 0.2 \cos(6 t) + 0.1 \cos(8 t)$}
 En repartant du résultat précédent on en déduit le résultat suivant:
 
-\[TF{g_4}(f) = \frac{0.4}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.2}{2}(\delta(f+6) + \delta(f-6))\]
+\[TF\{ g_4 \}(f) = \frac{0.4}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.2}{2}(\delta(f+6) + \delta(f-6))\]
 \[ + \frac{0.1}{2}(\delta(f+8) + \delta(f-8)) \]
 
 
@@ -578,13 +585,13 @@ On voit que l'ajout du terme de déphasage a un impact visible sur la forme de l
 
 On rappelle la transformée de Fourier du signal précédent :
 
-\[ TF{g_2}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]
+\[ TF\{ g_2 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]
 
 On peut alors en déduire facilement la transformée de Fourier de $g_5(t)$
 
-\[ TF{g_5}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))e^{-2 j \pi \frac{pi}{3} f }\]
+\[ TF\{ g_5 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))e^{-2 j \pi \frac{pi}{3} f }\]
 
-Si $TF{g_2}(f)$ était une fonction réelle (pas de partie complexe), $TF{g_5}(f)$ a clairement une partie imaginaire non nulle. On note également que dans ce cas le module et l'argument sont déjà présentées de façon évidente.\\
+Si $TF\{ g_2 \}(f)$ était une fonction réelle (pas de partie complexe), $TF{g_5}(f)$ a clairement une partie imaginaire non nulle. On note également que dans ce cas le module et l'argument sont déjà présentées de façon évidente.\\
 
 Le module des deux fonctions est identique. En effet, on sait que $|e^{-2 j \pi \frac{pi}{3} f }|=1$. Et donc, les modules des deux fonctions sont identiques. Ce qui distingue les deux fonctions dans ce cas est leur phase, soit l'argument de la transformée de Fourier. 
 

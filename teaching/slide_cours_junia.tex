@@ -220,8 +220,11 @@ Prérequis : Notion de retard d'une fonction \\
 \only<2->{
 \vspace{1 cm} 
 Soit $x : t \in \mathbb{R} \rightarrow x(t) \in \mathbb{R} $ \\
+
 \vspace{1 cm} 
-La fonction $x(t)$ retardé de $\tau \in \mathbb{R}$ s'écrit $x(t-\tau)$
+La fonction $x(t)$ retardé de $\tau \in \mathbb{R}$ s'écrit $x(t-\tau)$\\
+\vspace{1 cm} 
+La suite $x[n]$ retardé de $k \in \mathbb{N}$ s'écrit $x[n-k]$
 }
 
 \end{frame}
@@ -237,14 +240,16 @@ Soit $F$ un filtre de telle sorte que, pour $x(t)$ et $y(t)$ deux fonctions , $ 
 le filtre $F$  est dit \textbf{invariant dans le temps} si \\
 \vspace{1cm}
 \begin{center}
-$\forall \tau \in \mathbb{R}, \;\; F(x(t-\tau)) = y(t-\tau)$
+$\forall \tau \in \mathbb{R}, \;\; F(x(t-\tau)) = y(t-\tau)$\\
+\vspace{0.7 cm}
+$\forall k \in \mathbb{N}, \;\; F(x[n-k]) = y[n-k]$\\
 \end{center}
 }
 
 \only<3->
 { 
 \begin{block}{}
-	En résumé, quelque soit le retard/décalage en entrée, il doit se retrouver en sortie.
+	En résumé, la réponse d'un filtre/système invariant dans le temps ne doit pas dépendre du moment où on l'utilise
 \end{block} 
 }
 
@@ -258,11 +263,215 @@ $\forall \tau \in \mathbb{R}, \;\; F(x(t-\tau)) = y(t-\tau)$
 Un système F est linéaire invariant dans le temps si :
 \begin{itemize}
 \item La sortie correspondant à une combinaison linéaire de signaux d'entrée est la combinaison linéaire des signaux de sortie correspondant aux entrées prises séparément\\
-
-
-\item Quelque soit le retard/décalage, une entrée décalée correspondra à la sortie décalée sans autre différence\\
+\item la réponse d'un filtre/système invariant dans le temps ne doit pas dépendre du moment où on l'utilise\\
 \end{itemize}
 
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Soit un signal d'entrée $x$ (continue ou discret) et $F$ un filtre/système LIT\\
+\vspace{1 cm}
+\begin{columns}
+\column{70mm}
+\begin{center}
+$x(t) = \int x(\tau) \delta(t-\tau) d\tau$\\
+\vspace{0.5cm}
+$F(x(t)) = y(t)$\\
+$ = F(\int x(\tau) \delta(t-\tau) d\tau)$\\
+\vspace{0.5cm}
+F linéaire donc, \\
+\vspace{0.5cm}
+$F(x(t)) = y(t) $\\
+$= \int F (x(\tau) \delta(t-\tau) d\tau)$
+\end{center}
+
+\column{60mm}
+\begin{center}
+$x[n] = \sum x[k] \delta[n-k] $ \\
+\vspace{0.5cm}
+$F(x[n]) = y[n] $\\
+$= F(\sum x[k] \delta[n-k]) $ \\
+\vspace{0.5cm}
+F linéaire donc, \\
+\vspace{0.5cm}
+$F(x[n]) = y[n] $\\
+$ = \sum F( x[k] \delta[n-k]) $ \\
+
+
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Soit un signal d'entrée $x$ (continue ou discret) et $F$ un filtre/système LIT\\
+\vspace{1 cm}
+\begin{columns}
+\column{70mm}
+\begin{center}
+$F(x(t)) = y(t) $\\
+$= \int F (x(\tau) \delta(t-\tau) d\tau)$\\
+\vspace{0.5cm}
+
+$F$ s'applique aux fonctions de $t$\\
+\vspace{0.5cm}
+
+$y(t) = \int x(\tau) F(\delta(t-\tau) )d\tau$\\
+\vspace{0.5cm}
+
+\end{center}
+
+\column{60mm}
+\begin{center}
+$F(x[n]) = y[n] $\\
+$ = \sum F( x[k] \delta[n-k]) $ \\
+\vspace{0.5cm}
+
+$F$ s'applique aux suites sur $n$\\
+\vspace{0.5cm}
+
+$ y[n] = \sum x[k]  F(\delta[n-k]) $ \\
+\vspace{0.5cm}
+
+
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Soit un signal d'entrée $x$ (continue ou discret) et $F$ un filtre/système LIT\\
+\vspace{1 cm}
+\begin{columns}
+\column{70mm}
+\begin{center}
+$y(t) = \int x(\tau) F(\delta(t-\tau) )d\tau$\\
+\vspace{0.5cm}
+
+Puisque $F$ invariant dans le temps,\\
+\vspace{0.5cm}
+
+$y(t) = \int x(\tau) h(t-\tau) d\tau$\\
+\vspace{0.5cm}
+
+avec $h[t]$ la\\ \textbf{réponse impulsionnelle} du filtre $F$
+
+\end{center}
+
+\column{60mm}
+\begin{center}
+
+$ y[n] = \sum x[k]  F(\delta[n-k]) $ \\
+\vspace{0.5cm}
+
+Puisque $F$ invariant dans le temps,\\
+\vspace{0.5cm}
+
+$ y[n] = \sum x[k]  h[n-k] $ \\
+\vspace{0.5cm}
+
+avec $h[n]$ la\\ \textbf{réponse impulsionnelle} du filtre $F$
+
+\end{center}
+\end{columns}
+\begin{block}{}
+Ces deux relations sont ce qu'on appelle \textbf{l'équation de convolution}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Système linéaire et invariant dans le temps (LIT)}
+Le fait que le sytème soit LIT et les équations de convolutions sous-tendent: \\
+\vspace{1cm}
+\begin{itemize}
+\item La possibilité d'écrire une \textbf{fonction de transfert}
+\item La possibilité de \textbf{prédire/calculer le comportement} d'un système "arbitraire"
+\item La possibilité de créer des \textbf{systèmes complexes} au comportement connu à partir de \textbf{cellules "simples"}
+\end{itemize}
+
+\end{frame} 
+
+\section{Outils Mathématiques}
+\subsection{Transformée de Laplace}
+
+\begin{frame}
+\frametitle{Transformée de Laplace}
+\textbf{Que vous évoque la transformée de Laplace ?}\\
+
+\vspace{1cm}
+
+\only<2->
+{
+	Transformée de Laplace monolatérale : $[L\{f\}(s) = \int^{\infty}_{0} f(t) e^{-st} \; dt$
+	Transformée de Laplace bilatérale : $[L\{f\}(s) = \int^{\infty}_{\infty} f(t) e^{-st} \; dt$
+}
+
+\only<3->
+{
+\begin{block}{}
+Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide.
+\end{block}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Propriétés de la transformée de Laplace}
+\begin{itemize}
+\item<2-> Linéarité: \only<3->{ $L\{af+g\}(s) = a L\{ f\}(s) + L \{ g \} (s)$}
+\item<4-> Dérivation : \only<5->{$ L\{f'\}(s) = \; s L\{f \}(s)$}
+\item<5-> Intégration : \only<6->{$ L\{F\}(s) = \frac{1}{s} L\{f \}(s) $}
+\item<7-> Convolution : \only<8->{$ L\{f \star g \} = L\{f \}(s) \cdot L \{ g \} (s)  $}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Transformée de Laplace}
+
+\textbf{Exercice: Calculer les transformées de Laplace suivantes}\\
+\vspace{1cm}
+\begin{itemize}
+\item $u(t)$ (échelon de heaviside)
+\item $r(t) = t$ (rampe)
+\item $f(t) = e^{-at}$ (exponentielle décroissante)
+\item $\delta (t)$ (impulsion de dirac) 
+\item $sin(\omega t)$
+\end{itemize}
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Transformée de Laplace}
+
+\textbf{Exercice: Calculer les transformées de Laplace suivantes}\\
+\vspace{1cm}
+\begin{itemize}
+\item $u(t)$  \only<2->{$\rightarrow \frac{1}{p} $} 
+\item $r(t) = t$  \only<3->{$\rightarrow \frac{1}{p^2} $} 
+\item $f(t) = e^{-at}$  \only<4->{$\rightarrow \frac{1}{p+a} $}
+\item $\delta (t)$ \only<5->{$\rightarrow 1$} 
+\item $sin(\omega t)$ = \only<6->{$\rightarrow \frac{\omega_0^2}{p^2 + \omega_0^2} $}
+\end{itemize}
+
+\end{frame}
+
+\subsection{Transformée de Fourier et lien avec la transformée de Laplace}
+
+\subsubsection{Transformée de Fourier}
+
+
+\begin{frame}
+\frametitle{Transformée de Fourier}
+\textbf{Question: Quelle est pour vous le lien entre transformée de Laplace et transformée de Fourier}\\
+\vspace{1 cm}
+\only<2->
+{
+\begin{center}
+	$L\{f\}(s) = \int^{\infty}_{-\infty} f(t) e^{-st} \; dt $ \only<3->{$ \rightarrow TF\{ f \}(\nu) = \int^{\infty}_{-\infty} f(t) e^{-j2\pi \nu t} dt $}
+\end{center} 
+}
 \end{frame} 
 
 
