@@ -458,8 +458,26 @@ On peut notamment en avoir l'intuition si on regarde la fonction qui sert à "pr
 
 Dans la partie précédente, on a introduit les séries de Fourier et on a construit un graphique où on reportait les coefficients de chaque harmonique. Cela dit, il a été très clairement spécifié que cet outil s'appliquait UNIQUEMENT aux fonctions périodiques. Cette restriction théorique complique l'application des séries de Fourier et l'analyse des harmoniques à beaucoup de signaux "physiques".\\
 
-Sur un plan conceptuel, la transformée de Fourier est une généralisation aux fonctions non-périodiques du développement en série de Fourier. Pour mieux comprendre comment cette généralisation et ses implications on va reprendre l'exemple de nos quatre sommes de cosinus.\\
+Sur un plan conceptuel, la transformée de Fourier est une généralisation aux fonctions non-périodiques du développement en série de Fourier. Mais les coefficients ne sont plus des valeurs discrètes mais une fonction complexe continue de la variable fréquentielle, on va donc rappeler rapidement la notion de spectre.\\
 
+\subsubsection{Notion de spectre en amplitude et en phase}
+La fonction résultant de l'application de la transformée de Fourier à une fonction $f$ est appelée spectre fréquentielle (ou parfois simplement spectre) de $f$.\\
+
+On souhaite généralement extraire des informations du spectre . Ce spectre étant un nombre complexe il faut alors choisir une représentation permettant d'obtenir les informations souhaitées. Généralement on représente donc le spectre en utilisant le couple module/argument.\\
+
+\underline{\textbf{Rappel:}} Soit un complexe $z$ = $a + ib$, alors le module de $z$ est un réel $\rho$ défini comme :\\
+
+\[ \rho = \sqrt{a^2 + b^2}  \]\\
+
+On définit également l'argument de $z$ est un réel $\theta$ défini comme:\\
+
+\[ \theta =  \arctan\frac{b}{a} = \arccos{\frac{a}{\rho}} = \arcsin{\frac{b}{\rho}} \] \\
+
+On peut alors écrire le complexe $z$ sous la forme $\rho e^{i \theta}$\\
+
+Dans les faits, pour la plupart des fonctions on calcule aisément le module et l'argument à l'aide d'outils comme MATLAB ou autre si on en dispose. Mais pour des cas simples il est tout à fait possible de faire le calcul à la main. C'est ce qu'on va faire dans la suite.\\
+
+\subsubsection{Exemples}
 \textbf{Calculer la transformée de Fourier des quatre fonctions suivantes:}
 \begin{enumerate}
 \item $g_1(t) = \cos(2 t)$
@@ -481,38 +499,29 @@ pour aller plus loin il faut savoir que : \\
  
 Ce qui mène à :\\
 
-\[TF\{ g_1 \}(f) = \frac{1}{2}(\delta(f+2) + \delta(f-2))\]
+\[TF\{ g_1 \}(f) = \frac{1}{2}(\delta(f+1/\pi) + \delta(f-1/\pi))\]
 
 \paragraph{2. $g_2(t) = 0.55 \cos(2 t) + 0.45 \cos(4 t)$}
 En repartant du résultat précédent on en déduit le résultat suivant:\\
 
-\[TF\{ g_2 \}(f) = \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]\\
+\[TF\{ g_2 \}(f) = \frac{0.55}{2}(\delta(f+1/\pi) + \delta(f-1/\pi)) + \frac{0.45}{2}(\delta(f+2/\pi) + \delta(f-2/\pi))\]\\
 
 On a donc la somme de 4 diracs, 2 par composantes.
 
 \paragraph{3. $g_3(t) = 0.6 \cos(2 t) + 0.3 \cos(4 t) + 0.1 \cos(6 t)$}
 En repartant du résultat précédent on en déduit le résultat suivant:\\
 
-\[TF{g_3}(f) = \frac{0.6}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.1}{2}(\delta(f+6) + \delta(f-6))\]\\
+\[TF{g_3}(f) = \frac{0.6}{2}(\delta(f+1/\pi) + \delta(f-1/\pi)) + \frac{0.3}{2}(\delta(f+2/\pi) + \delta(f-2/\pi)) + \frac{0.1}{2}(\delta(f+2/\pi) + \delta(f-3/\pi))\]\\
 
 \paragraph{4. $g_4(t) = 0.4 \cos(2 t) + 0.3 \cos(4 t) + 0.2 \cos(6 t) + 0.1 \cos(8 t)$}
 En repartant du résultat précédent on en déduit le résultat suivant:\\
 
-\[TF\{ g_4 \}(f) = \frac{0.4}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.3}{2}(\delta(f+4) + \delta(f-4)) + \frac{0.2}{2}(\delta(f+6) + \delta(f-6))\]
-\[ + \frac{0.1}{2}(\delta(f+8) + \delta(f-8)) \]\\
+\[TF\{ g_4 \}(f) = \frac{0.4}{2}(\delta(f+1/\pi) + \delta(f-1/\pi)) + \frac{0.3}{2}(\delta(f+2/\pi) + \delta(f-2/\pi)) + \frac{0.2}{2}(\delta(f+3/\pi) + \delta(f-3/\pi))\]
+\[ + \frac{0.1}{2}(\delta(f4/\pi) + \delta(f-4/\pi)) \]\\
 
 
 On peut alors tracer le \textbf{spectre} de ces fonctions. Le spectre d'un signal est toujours représenté par deux graphes. Le premier, et celui qu'on se figure plus fréquemment quand on parle de spectre est le spectre en amplitude du signal, qui équivaut au module de la transformée de Fourier du signal.\\
 
-\underline{\textbf{Rappel:}} Soit un complexe $z$ = $a + ib$, alors le module de $z$ est un réel $\rho$ défini comme :\\
-
-\[ \rho = \sqrt{a^2 + b^2}  \]\\
-
-On définit également l'argument de $z$ est un réel $\theta$ défini comme:\\
-
-\[ \theta =  \arctan\frac{b}{a} = \arccos{\frac{a}{\rho}} = \arcsin{\frac{b}{\rho}} \] \\
-
-On peut alors écrire le complexe $z$ sous la forme $\rho e^{i \theta}$\\
 
 Donc si on trace le module du spectre de nos fonctions sinusoïdales précédentes, on obtient le spectre suivant. On note quand dans le cas de la  transformée de Fourier le spectre comporte des composantes positives ET négatives en fréquences ce qui n'était pas le cas dans le représentation en série de Fourier.\\
  
@@ -569,7 +578,7 @@ Ici on a représenté le module du spectre mais pas son argument. On a donc un s
 
 On va donc partir d'un second signal :\\
 
-\[ g_5(t) = 0.55b\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) \] \\
+\[ g_5(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) \] \\
 
 Il s'agit de la fonction $g_2(t)$ mais légèrement modifiée. On a introduit un déphasage de $\frac{\pi}{3}$. On peut visualiser ce déphasage dans la figure où on a représenté les fonctions $g_2(t)$ et $g_5(t)$.\\
 
@@ -597,11 +606,11 @@ On voit que l'ajout du terme de déphasage a un impact visible sur la forme de l
 
 On rappelle la transformée de Fourier du signal précédent :\\
 
-\[ TF\{ g_2 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))\]\\
+\[ TF\{ g_2 \}(f) =   \frac{0.55}{2}(\delta(f+1/\pi) + \delta(f-1/\pi)) + \frac{0.45}{2}(\delta(f+2/\pi) + \delta(f-2/\pi))\]\\
 
 On peut alors en déduire facilement la transformée de Fourier de $g_5(t)$\\
 
-\[ TF\{ g_5 \}(f) =   \frac{0.55}{2}(\delta(f+2) + \delta(f-2)) + \frac{0.45}{2}(\delta(f+4) + \delta(f-4))e^{-2 j \pi \frac{pi}{3} f }\]\\
+\[ TF\{ g_5 \}(f) =   \frac{0.55}{2}(\delta(f+1/\pi) + \delta(f-v)) + \frac{0.45}{2}(\delta(f+2/\pi) + \delta(f-2/\pi))e^{-2 j \pi \frac{pi}{3} f }\]\\
 
 Si $TF\{ g_2 \}(f)$ était une fonction réelle (pas de partie complexe), $TF{g_5}(f)$ a clairement une partie imaginaire non nulle. On note également que dans ce cas le module et l'argument sont déjà présentées de façon évidente.\\
 
@@ -629,7 +638,6 @@ On peut utiliser MATLAB ou GNU/Octave pour représenter les modules de ces fonct
 
 Cette exemple démontre bien l'importance générale de la phase des signaux et pas seulement de leur spectre d'amplitude qui est souvent ce que les étudiants gardent à l'esprit lorsqu'on leur présente ces notions. Cette notion de phase reprendra de l'importance plus tard lorsqu'on présentera certains types de filtres.
 
-\subsection{Notion de spectre en amplitude et en phase}
 
 \subsection{Remarques sur la transformée de Fourier}
 Dans cette sous-partie, l'accent va être mis sur certains points importants et certaines propriétés de la transformée de Fourier.\\
@@ -722,7 +730,7 @@ On présente alors souvent la transformée de Fourier comme l'extension de la s�
 
 On peut donc retenir ici que la périodicité d'un signal temporelle se traduit par un spectre de raies lorsqu'on prend le module de sa transformée de Fourier. La réciproque de cette propriété est également vraie et nous emmène à discuter le cas des signaux numériques.\\
 
-
+\section{Signaux numériques et transformée en Z}
 
 \subsection{Signaux numériques}
 
@@ -878,8 +886,8 @@ Le signal échantillonné avec une période $T_e$ peut alors s'exprimer comme le
 	\draw[->] (-5,0)-- (5,0);
 \draw (-0.3,-0.3) node {0};
 \draw[->] (0,-3)-- (0,3);
-\draw (5.1,0.25) node {$f$};
-\draw (0,3.5) node {$s(t)$};
+\draw (5.1,0.25) node {$t$};
+\draw (0,3.5) node {$g(t)$};
 %\draw (4.5,-0.3) node {1};
 
 \draw[domain=-4.9:4.9,color=blue,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
@@ -892,18 +900,26 @@ Le signal échantillonné avec une période $T_e$ peut alors s'exprimer comme le
 	\draw[->] (-5,0)-- (5,0);
 \draw (-0.3,-0.3) node {0};
 \draw[->] (0,-3)-- (0,3);
-\draw (5.1,0.25) node {$f$};
+\draw (5.1,0.25) node {$t$};
 \draw (0,3.5) node {$u_{T_e}(t)$};
 %\draw (4.5,-0.3) node {1};
 
 \draw[thick,blue] (-4,-0)-- (-4,1);
+\draw[thick,blue] (-3.5,-0)-- (-3.5,1);
 \draw[thick,blue] (-3,-0)-- (-3,1);
+\draw[thick,blue] (-2.5,-0)-- (-2.5,1);
 \draw[thick,blue] (-2,-0)-- (-2,1);
+\draw[thick,blue] (-1.5,-0)-- (-1.5,1);
 \draw[thick,blue] (-1,-0)-- (-1,1);
+\draw[thick,blue] (-0.5,-0)-- (-0.5,1);
 \draw[thick,blue] (0,-0)-- (0,1);
+\draw[thick,blue] (-0.5,-0)-- (-0.5,1);
 \draw[thick,blue] (1,-0)-- (1,1);
+\draw[thick,blue] (1.5,-0)-- (1.5,1);
 \draw[thick,blue] (2,-0)-- (2,1);
+\draw[thick,blue] (2.5,-0)-- (2.5,1);
 \draw[thick,blue] (3,-0)-- (3,1);
+\draw[thick,blue] (3.5,-0)-- (3.5,1);
 \draw[thick,blue] (4,-0)-- (4,1);
 	\end{tikzpicture}
 \end{center}
@@ -921,7 +937,7 @@ Le signal échantillonné avec une période $T_e$ peut alors s'exprimer comme le
 \draw[dashed,domain=-4.9:4.9,color=blue,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
 
 \draw[thick,blue] (-4,-0)-- (-4,-0.9);
-\draw[thick,blue] (-3,-0)-- (-3,1);
+\draw[thick,blue] (-3.5,-0)-- (-3.5,1);
 \draw[thick,blue] (-2,-0)-- (-2,0);
 \draw[thick,blue] (-1,-0)-- (-1,-1.25);
 \draw[thick,blue] (0,-0)-- (0,1.3);
@@ -931,8 +947,9 @@ Le signal échantillonné avec une période $T_e$ peut alors s'exprimer comme le
 \draw[thick,blue] (4,-0)-- (4,-0.35);
 	\end{tikzpicture}
 \end{center}
+Avant d'aller plus loin, il faut mentionner le critère de Shannon. Ce dernier stipule que pour échantillonner un signal sans perte d'information (ou repliement) il est nécessaire de prendre une \textbf{fréquence d'échantillonnage au moins 2 fois supérieur à la fréquence la plus élevée du signal.}
 
-Une des premières choses à aborder dans ce cas est l'impact de l'opération d'échantillonnage sur le spectre du signal:\\
+On peut maintenant aborder dans ce cas est l'impact de l'opération d'échantillonnage sur le spectre du signal:\\
 
 \[ TF (\sum_{n = -\infty}^{\infty} s(t)\delta(t-nT_e)) = \sum_{n = -\infty}^{\infty} TF(s(t)\delta(t-nT_e) ) \]
 
@@ -1528,6 +1545,10 @@ Pour pouvoir poursuivre il faut calculer $h_2(n)$ sur quelques échantillons. Po
 
 \end{tikzpicture}
 \end{center}
+
+\subsection{Fréquence de coupure, bande de transition et gabarit}
+
+\subsection{pôles et zéros}
 
 \subsubsection{Réponse impulsionnelle finie et infinie}
 Dans les deux exercices précédents, on a traité un filtre non-récursif et un filtre non-récursif. On a pu constater que dans le cadre du filtre non-récursif, la réponse impulsionnelle présentait un nombre fini d'échantillons non nul. \`A l'inverse le filtre récursif, du fait de la contribution de l'échantillon précédente à une réponse impulsionnelle comportant un nombre infini d'échantillons non nul.\\
