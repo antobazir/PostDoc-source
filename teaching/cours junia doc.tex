@@ -1111,11 +1111,53 @@ Une outil mathématique particulièrement important en traitement du signal/filt
 
 La transformée en Z est définie de la façon suivante :
 
-\[\sum_{n = 0}^{\infty} s_{T_e}(n) z^{-n}\] 
+\[\sum_{n = 0}^{\infty} s_{T_e}[n)] z^{-n}\] 
 
 On la compare généralement à la transformée de Laplace. L'intégrale (somme continue) est remplacée par une somme discrète, et le terme exponentiel est remplacé par $z^{-n}$ C'est ce terme qui donne son nom à la transformée en Z. Tout comme $p$ dans la transformée de Laplace, $z$  est une variable \textbf{complexe}. Il est important de noter que le fait que la somme soit infinie oblige la variable $z$ à avoir un module inférieur à 1 pour converger.\\
 
 La comparaison avec la transformée de Laplace vient surtout du fait que la transformée en Z a des propriétés sur des signaux discrets très similaires à celle de la transformée de Laplace pour les signaux continus. C'est ce qu'on va illustrer dans les sous-parties suivantes.\\
+
+\subsubsection{Propriétés de la transformée en Z}
+
+\textbf{Exercice : démontrer la linéarité de la transformée en Z}\\
+
+soit $x(n) = a x_1[n] + b x_2[n]$, alors,
+
+\[X(z) = \sum_{n = 0}^{\infty} x[n] z^{-n}\] 
+
+\[X(z) = \sum_{n = 0}^{\infty} (a x_1[n] + b x_2[n]) z^{-n}\] 
+
+\[X(z) = a \sum_{n = 0}^{\infty} x_1[n]  z^{-n} + b \sum_{n = 0}^{\infty} x_2[n] \] 
+
+\[X(z) = a X_1(z)+ b X_2(z) \] 
+
+\textbf{Exercice : Calculer la transformée en Z de $x_1[n] \star x_2[n]$}\\
+
+Dans un premier temps il faut établir ce qu'est la convolution  de deux signaux discrets.
+
+\[ x_1[n] \star x_2[n]=  \sum_{k = -\infty}^{\infty} x_1[n-k]x_2[n] \]
+
+Cette définition est analogue à celle de la convolution dans le domaine continu. On peut ensuite appliquer la transformée en Z. La démonstration est simple mais pas forcément intuitive.
+
+\[ TZ(x_1[n] \star x_2[n]) = \sum_{n = -\infty}^{\infty} \sum_{k = -\infty}^{\infty} x_1[n-k]x_2[n] z^{-n}\]
+
+On peut alors réécrire la variable de la transformée en z sous une autre forme sans changer l'égalité.
+
+\[ TZ(x_1[n] \star x_2(n]) = \sum_{n = -\infty}^{\infty} \sum_{k = -\infty}^{\infty} x_1[n-k]x_2[k] z^{-k}  z^{-[n-k]}\]
+
+Puisque $k$ peut prendre n'importe quelle valeur on peut le réécrire sous la forme d'un entier unique $m$ 
+
+\[ TZ(x_1[n] \star x_2[n]) = \sum_{n = -\infty}^{\infty} \sum_{m = -\infty}^{\infty} x_1[m]x_2[k] z^{-k}  z^{-(m)}\]
+
+On a donc une expression où on peut regrouper les sommes dans deux produits.
+
+\[ TZ(x_1[n] \star x_2[n]) = \sum_{n = -\infty}^{\infty} x_2[k]z^{-k} \sum_{m = -\infty}^{\infty} x_1[m]   z^{-(m)}\]
+
+\[ TZ(x_1[n] \star x_2[n]) = TZ(x_1) TZ(x_2)\]
+
+Dernière propritétés utile ici, le décalage temporel. Si $TZ\{x \}(z) = X(z)$, alors 
+
+\[ TZ\{x[n-k]\} = X(z)\cdot z^{-k} \]
 
 \subsubsection{Transformée en Z des fonctions usuelles}
 
@@ -1128,7 +1170,7 @@ La comparaison avec la transformée de Laplace vient surtout du fait que la tran
 \end{enumerate} 
 
 \textbf{1. $\delta[n]$}
-\[\sum_{n = 0}^{\infty} \delta[n] z^{-n}\] \\
+\[TZ\{ \delta[n] \} = \sum_{n = 0}^{\infty} \delta[n] z^{-n}\] \\
 
 $\delta[n]$ est la suite définie comme prenant la valeur 1 pour l'échantillon d'index 0 et 0 sur tous les autres points. Donc,\\
 
@@ -1157,47 +1199,25 @@ Dans ce cas, la valeur de la somme peut se démontrer en utilisant une méthode 
 
 %proof : https://en.wikipedia.org/wiki/Arithmetico-geometric_sequence#Sum_of_the_terms
 
+\subsection{Transformée en $z$ et  autres transformées}
+Conceptuellement la transformée en $z$ n'est ni la transformée de Laplace, ni la transformée de Fourier. Ceci dit, il est possible de calculer les transformée de Fourier et de Laplace d'un signal discret en effectuant un changement de variable pour la transformée en $z$\\
 
-\subsubsection{Propriétés de la transformée en Z}
+Pour la transformée de Laplace, ce changement  de variable est : 
 
-\textbf{Exercice : démontrer la linéarité de la transformée en Z}\\
+\[z = e^{sT_e}\]
 
-soit $x(n) = a x_1(n) + b x_2(n)$, alors,
+, avec $T_e$ la période d'échantillonnage du signal discret.\\
 
-\[X(z) = \sum_{n = 0}^{\infty} x(n) z^{-n}\] 
+Pour la transformée de Fourier, ce changement de variable est :
 
-\[X(z) = \sum_{n = 0}^{\infty} (a x_1(n) + b x_2(n)) z^{-n}\] 
+\[z = e^{j\omega T_e} =  e^{j 2 \pi \nu T_e} \]
 
-\[X(z) = a \sum_{n = 0}^{\infty} x_1(n)  z^{-n} + b \sum_{n = 0}^{\infty} x_2(n) \] 
+Ce changement de variable n'est pas tout à fait anodin. En effet, il faut bien remarquer qu'à ce stade, bien qu'on traite les signaux en temps discrets, la transformée en $z$ ne fait jamais intervenir la période d'échantillonnage. Or comprendre un système discret implique de connaître et d'analyser cet aspect. C'est pour cela que pour les signaux discrets, on calcule généralement la transformée en $z$ dans un premier temps et qu'on passe ensuite à la transformée de Fourier par changement de variable.\\
 
-\[X(z) = a X_1(z)+ b X_2(z) \] 
 
-\textbf{Exercice : Calculer la transformée en Z de $x_1(n) \star x_2(n)$}\\
-
-Dans un premier temps il faut établir ce qu'est la convolution  de deux signaux discrets.
-
-\[ x_1(n) \star x_2(n)=  \sum_{k = -\infty}^{\infty} x_1(n-k)x_2(n) \]
-
-Cette définition est analogue à celle de la convolution dans le domaine continu. On peut ensuite appliquer la transformée en Z. La démonstration est simple mais pas forcément intuitive.
-
-\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} \sum_{k = -\infty}^{\infty} x_1(n-k)x_2(n) z^{-n}\]
-
-On peut alors réécrire la variable de la transformée en z sous une autre forme sans changer l'égalité.
-
-\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} \sum_{k = -\infty}^{\infty} x_1(n-k)x_2(k) z^{-k}  z^{-(n-k)}\]
-
-Puisque $k$ peut prendre n'importe quelle valeur on peut le réécrire sous la forme d'un entier unique $m$ 
-
-\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} \sum_{m = -\infty}^{\infty} x_1(m)x_2(k) z^{-k}  z^{-(m)}\]
-
-On a donc une expression où on peut regrouper les sommes dans deux produits.
-
-\[ TZ(x_1(n) \star x_2(n)) = \sum_{n = -\infty}^{\infty} x_2(k)z^{-k} \sum_{m = -\infty}^{\infty} x_1(m)   z^{-(m)}\]
-
-\[ TZ(x_1(n) \star x_2(n)) = TZ(x_1) TZ(x_2)\]
-
+ 
 \subsection{La transformée de Fourier discrète (TFD)}
-
+\subsubsection{Construction}
 \textbf{Question: Que vous évoque la notion de transformée de Fourier Discrète ?}\\
 
 Dans la sous-partie précédente on a présenté la transformée en Z. La transformée en Z est un outil "général" permettant l'analyse de système  opérant sur des temps discrets. On peut alors calculer la transformée de Fourier d'un signal discret en faisant le changement de variable suivant : $z = e^{j2\pi f T_e}$ avec $T_e$ la période d'échantillonnage du signal discret. Soit $s[n]$ un signal discret, La transformée de Fourier d'un signal discret s'écrit alors : 
@@ -1228,6 +1248,17 @@ Un choix évident, notamment en terme de mémoire est de se dire que si on dispo
 \[S^{\star} (m \frac{f_e}{N}) = \sum_{k = 0}^{N-1} s[k] \; e^{-j 2 \pi k m \frac{f_e}{N} T_e} \]\\
 
 On insiste bien ici sur le fait que pour avoir le terme d'indice $m$ de la suite du spectre, il faut sommer $N$ terme de la suite correspondant au signal temporel avec le bon indice $m$ dans le terme exponentiel.\\
+
+\subsubsection{Lien avec la transformée de Fourier}
+Il est important de bien comprendre le lien entre la transformée de Fourier discrète et la transformée de Fourier appliquée aux signaux discrets.\\
+
+Dans les deux cas la transformée est \textbf{appliquée à un signal discret}. Mais, pour la transformée de Fourier, la fonction résultante porte sur une variable fréquentielle \textbf{continue.} Pour la transformée de Fourier discrète la fréquence est échantillonnée et le nombre d'échantillon est le même que le nombre d'échantillon de signal sur lequel on a sommé.\\
+
+\subsubsection{Zero Padding}
+Lorsqu'on utilise la transformée de Fourier discrète sur un signal qui a un nombre $N$ d'échantillons, on obtient normalemen $N$ échantillons en fréquence. Cependant, on peut vouloir tracer un spectre avec davantage de points...\\
+
+Dans ce cas, on peut utiliser la technique du zéro padding 
+
 
 Afin de bien illustrer le lien entre toutes les notions evoquées jusqu'ici on va reprendre le cas de la fonction rectangulaire.
 
@@ -1330,16 +1361,17 @@ On a rappelé les notions d'invariance dans le temps et de linéarité des filtr
 On a rappelé les définitions des transformées de Fourier et de Laplace, leur propriétés ainsi que quelques transformées usuelles par le biais d'exemple.\\
 
 On a ensuite abordé les notions importantes de codage et d'échantillonnage pour passer un signal du domaine temporel continu au domaine temporel discret. On a pu voir l'impact de l'échantillonnage sur le spectre en amplitude et on a rappelé l'importance du théorème de Nyquist-Shannon. \\
+
 pur finir on a discuté des propriétés particulières des signaux échantillonnés et on a les comparés à celles de signaux continus équivalents.\\
 
 \section{Filtres numériques : Généralités}
-On rappelle qu'un filtre numérique va lier une entrée $x(n)$ à une sortie $y(n)$. On avait discuté plus tôt l'importance capitale des propriétés de linéarité et de l'invariance dans le temps puisque ces conditions sont des pré-requis au fait que le filtre/système puisse être décrit par sa seule réponse impulsionnelle.\\
+On rappelle qu'un filtre numérique va lier une entrée $x[n]$ à une sortie $y[n]$. On avait discuté plus tôt l'importance capitale des propriétés de linéarité et de l'invariance dans le temps puisque ces conditions sont des pré-requis au fait que le filtre/système puisse être décrit par sa seule réponse impulsionnelle.\\
 
-\textbf{Question: Rappelez pour une filtre linéaire invariant dans le temps discret l'équation liant l'entrée et la sortie}\\
+\textbf{Question: Rappelez pour un filtre linéaire invariant dans le temps discret l'équation liant l'entrée et la sortie}\\
 
-\[ y(n) = \sum_{m = 0}^{N-1} h(m) x(n-m) \]\\
+\[ y[n] = \sum_{m = 0}^{N-1} h[m]\; x[n-m] \]\\
 
-On rappelle que dans le cadre des systèmes linéaires et invariants dans le temps, $h(m)$ est la réponse impulsionnelle du filtre discret qui le caractérise entièrement.
+On rappelle que dans le cadre des systèmes linéaires et invariants dans le temps, $h[m]$ est la réponse impulsionnelle du filtre discret qui le caractérise entièrement.
 
 
 \subsection{Notion de récursivité et équation de récurrence} 
@@ -2234,4 +2266,5 @@ La transformation bilinéaire ou une fonction proche de cette dernière est gén
 
 \textbf{Add bibliography \label{**BIBLIO!}}
  
+\section{Exemples} 
 \end{document}
