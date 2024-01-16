@@ -1,0 +1,134 @@
+**Notes ECG
+
+****BIOMEDICAL DIGITAL SIGNAL PROCESSING
+
+3 types :
+1. Standard clinical ECG (12 leads)
+2. VCG (3 orthogonal leads)
+3. Monitoring ECG (1 or 2 leads)
+
+"The clinical bandwidth used for
+recording the standard 12-lead ECG is 0.05–100 Hz. For monitoring applications,
+such as for intensive care patients and for ambulatory patients, the bandwidth is re-
+stricted to 0.5–50 Hz. In these environments, rhythm disturbances (i.e., arrhyth-
+mias) are principally of interest rather than subtle morphological changes in the
+waveforms."
+
+"A third
+bandwidth used for heart rate meters (cardiotachometers) maximizes the signal-to-
+noise ratio for detecting the QRS complex. Such a filter passes the frequencies of
+the QRS complex while rejecting noise including non-QRS waves in the signal
+such as the P and T waves. This filter helps to detect the QRS complexes but dis-
+torts the ECG so much that the appearance of the filtered signal is not clinically ac-
+ceptable"
+
+"Electroencephalogram (EEG)
+Frequency range: dc–100 Hz (0.5–60 Hz)
+Signal range: 15–100 mV
+
+Electromyogram (EMG)
+Frequency range: 10–200 Hz
+Signal range: function of muscle activity and electrode placement
+
+Electrocardiogram (ECG)
+Frequency range: 0.05–100 Hz
+Signal range: 10 μV(fetal), 5 mV(adult)
+
+Heart rate
+Frequency range: 45–200 beats/min
+
+Blood pressure
+Frequency range: dc–200 Hz (dc–60 Hz)
+Signal range: 40–300 mm Hg (arterial); 0–15 mm Hg (venous)
+Breathing rate
+Frequency range: 12–40 breaths/min"
+
+Sensor/Elec -> Amp -> Low-Pass filter -> analog multiplex -> sample and hold -> Analog
+to digital converter
+
+Une fois qu'on aura présenté les concepts on passe sur la chaine d'instru
+
+"The objective of an A/D converter is to determine the output digital word for a
+given analog input. As mentioned previously, A/D converters often make use of
+D/A converters."
+
+chap 5.1.2 
+"In many biomedical signal processing applications, it is important to preserve
+certain characteristics of a signal throughout the filtering operation, such as the
+height and duration of the QRS pulse."
+
+"FIR filters especially useful for adaptive filtering where filter
+coefficients change as a function of the input data."
+
+
+"A common biomedical signal processing problem involves the removal of noise of
+a particular frequency or frequency range (such as 60 Hz)"
+
+chap 6.
+"In this chapter we introduce the analysis and design of infinite impulse response
+(IIR) digital filters that have the potential of sharp rolloffs (Tompkins and Webster,
+1981)."
+
+Exemple de l'intégrateur 
+"Since they use feedback, they may be unstable if improperly
+designed. Also, they typically do not have linear phase response."
+
+Chap 7.
+When digital filters must operate in a real-time environment, many filter designs
+become unsatisfactory due to the amount of required computation time. A consid-
+erable reduction in computation time is achieved by replacing floating-point coeffi-
+cients with small integer coefficients in filter equations.
+
+Chap.8
+"This chapter discusses how to build adaptive digital filters to perform noise cancel-
+lation and signal extraction. Adaptive techniques are advantageous because they do
+not require a priori knowledge of the signal or noise characteristics as do fixed fil-
+ters. Adaptive filters employ a method of learning through an estimated synthesis
+of a desired signal and error feedback to modify the filter parameters."
+
+"An adaptive filter learns the statistics of the input sources
+and tracks them if they vary slowly."
+
+"Prenatal monitoring has made it possible to detect the heartbeat of the unborn child
+noninvasively. However, motion artifact and the maternal ECG make it very
+difficult to perceive the fetal ECG since it is a low-amplitude signal."
+
+
+Chap.9
+Signal averaging is a digital technique for separating a repetitive signal from noise without introducing signal distortion (Tompkins and
+Webster, 1981)
+
+"One predominant application area of signal averaging is in electroencephalogra-
+phy. The EEG recorded from scalp electrodes is difficult to interpret in part be-
+cause it consists of a summation of the activity of the billions of brain cells. It is
+impossible to deduce much about the activity of the visual or auditory parts of the
+brain from the EEG."
+
+"1. The signal waveform must be repetitive (although it does not have to be peri-
+odic). This means that the signal must occur more than once but not necessarily
+at regular intervals.
+2. The noise must be random and uncorrelated with the signal. In this application,
+random means that the noise is not periodic and that it can only be described
+statistically (e.g., by its mean and variance).
+3. The temporal position of each signal waveform must be accurately known."
+
+An important assumption made in signal averaging theory is that the noise is
+Gaussian. This assumption is not usually completely valid for biomedical signals.
+Also, if the noise distribution is related to the signal, misleading results can occur.
+
+
+Chap 10.
+For example, an ECG used in
+monitoring may have a bandwidth of 50 Hz and be sampled at 200 sps in order to
+easily visualize the higher-frequency attributes of the QRS complex. Sampling the-
+ory tells us that we can sample such a signal at 100 sps. TP provides a way to re-
+duce the effective sampling rate by half to 100 sps by selectively saving important
+signal points (i.e., the peaks and valleys or turning points).
+
+chap 11.
+A biomedical signal is often corrupted by noise (e.g., powerline interference, mus-
+cle or motion artifacts, RF interference from electrosurgery or diathermy appara-
+tus). Therefore, it is useful to know the frequency spectrum of the corrupting signal
+in order to be able to design a filter to eliminate it. If we want to find out, for ex-
+ample, how well the patient’s cardiac output is correlated with the area of the QRS
+complex, then we need to use proper correlation techniques.

@@ -31,19 +31,22 @@
 Il existe trois façons équivalentes de définir un filtre numérique :\\
 \vspace{0.5cm}
 \begin{columns}[T]
-\column{35mm}
+\column{40mm}
 \only<2->{
-Equation de récurrence : 
+Equation de récurrence :\\
+\vspace{1cm} 
 \small \[ y[n] = x[n] + a y[n-1]\]
 }
-\column{35mm}
+\column{40mm}
 \only<3->{
-Fonction de transfert :
+Fonction de transfert :\\
+\vspace{1cm}
 \small \[ H(z) = \frac{Y(z)}{X(z)} = \frac{z}{z-a} \]
 } 
-\column{35mm}
+\column{40mm}
 \only<4->{
-Réponse impulsionnelle:
+Réponse impulsionnelle:\\
+\vspace{1cm}
 \small \[ h[n] = a^{n} \]
 }
 \end{columns}
@@ -71,22 +74,22 @@ Réponse impulsionnelle:
 		%\draw (-3,1.5) node {$TZ^{-1}$};
 \end{tikzpicture}
 \end{center}
-\vspace{0.6cm}
-En général, on optimise la fonction de transfert soit, en agissant directement sur ses coefficients, soit en réglant ceux de la réponse impulsionnelle.
+
 \end{frame}
 
 \subsection{Fonction de transfert, équation de récurrence et réponse impulsionnelle: Exemples}
 
 \begin{frame}
 \frametitle{Exemple de définition d'un filtre}
-On part de l'équation de récurrence:   $ y_1[n] = \frac{\displaystyle x_1[n] + x_1[n-1]}{\displaystyle 2}$
-Fonction de transfert : 
+On part de l'équation de récurrence:   $ y_1[n] = \frac{\displaystyle x_1[n] + x_1[n-1]}{\displaystyle 2}$\\
 \vspace{0.3cm}
+Fonction de transfert : 
+\vspace{0.2cm}
 
 \only<2->{
 \[ y_1[n] = \frac{x_1[n] + x_1[n-1]}{2}  \; -\boxed{TZ} \;  \rightarrow Y_1(z) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \]
 }
-\vspace{0.3cm}
+\vspace{0.2cm}
 
 \only<3->{
 \[ Y_1(z) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \rightarrow Y_1(z) = X_1(z)\frac{(1 + z^{-1})}{2}  \]
@@ -101,16 +104,17 @@ Fonction de transfert :
 
 \begin{frame}
 \frametitle{Exemple de définition d'un filtre}
-On part de l'équation de récurrence:   $ y_1[n] = \frac{\displaystyle x_1[n] + x_1[n-1]}{\displaystyle 2}$\\ \vspace{0.3cm}
+On part de l'équation de récurrence:   $ y_1[n] = \frac{\displaystyle x_1[n] + x_1[n-1]}{\displaystyle 2}$\\ 
+\vspace{0.2cm}
 Réponse impulsionnelle : 
-\vspace{0.3cm}
+\vspace{0.2cm}
 On remplace x[n] par $\delta[n]$\\
-\vspace{0.3cm}
+\vspace{0.2cm}
 
 \only<2->{
 \[ y_1[n] = \frac{x_1[n] + x_1[n-1]}{2}  \; -\boxed{\delta[n]}\rightarrow \;  h_1[n] = \frac{\delta[n] + \delta[n-1]}{2} \]
 }
-\vspace{0.3cm}
+\vspace{0.2cm}
 
 \only<3->{
 \begin{center}
@@ -118,8 +122,11 @@ On remplace x[n] par $\delta[n]$\\
 \draw[->] (-2,0)--(2,0) node[right] {$n$};
 \draw[->] (0,0)--(0,1.2) node[above] {$h[n]$};
 
+\draw[->,thick,blue] (-2,0)--(-2,0);
+\draw[->,thick,blue] (-1,0)--(-1,0);
 \draw[->,thick,blue] (0,0)--(0,0.5);
 \draw[->,thick,blue] (1,0)--(1,0.5);
+\draw[->,thick,blue] (2,0)--(2,0);
 \end{tikzpicture}
 \end{center}
 
@@ -129,11 +136,11 @@ On remplace x[n] par $\delta[n]$\\
 
 \begin{frame}
 \frametitle{Exemple de définition d'un filtre}
-On part de la fonction de transfert : $H_2(z) = \frac{\displaystyle z}{\displaystyle (1-z) }$\\
+On part de la fonction de transfert : $H_2(z) = \frac{\displaystyle z}{\displaystyle (z-1) }$\\
 \vspace{0.3cm}
 
 \only<2->{
-\[H_2(z) = \frac{ z}{ 1-z } =\frac{1}{(1 - z^{-1})}\]
+\[H_2(z) = \frac{ z}{ z-1 } =\frac{1}{(1 - z^{-1})}\]
 }
 \vspace{0.3cm}
 \only<3->{
@@ -148,7 +155,7 @@ On part de la fonction de transfert : $H_2(z) = \frac{\displaystyle z}{\displays
 
 \begin{frame}
 \frametitle{Exemple de définition d'un filtre}
-\[ Y_2(z)(1 - z^{-1})  = X_2(z)  = Y_2(z) - Y_2(z)z^{-1} = X_2(z) \]\\
+\[ Y_2(z)(1 - z^{-1})  = X_2(z)  = Y_2(z) - Y_2(z)z^{-1}  \]\\
 \vspace{0.3cm} 
 On repasse en temporel,
 \\
@@ -160,7 +167,7 @@ On repasse en temporel,
 
 \vspace{0.3cm}
 \only<3->{
-\[ \boxed{H_2(z) = \frac{z}{1-z } \rightarrow  y_2[n] = x_2[n]+y_2[n-1] }\]
+\[ \boxed{H_2(z) = \frac{z}{z-1 } \rightarrow  y_2[n] = x_2[n]+y_2[n-1] }\]
 }
 
 \end{frame}
@@ -168,7 +175,7 @@ On repasse en temporel,
 \subsection{Réponse en fréquence: Premier exemple}
 \begin{frame}
 \frametitle{Réponse en fréquence de filtres numériques}
-\underline{Important :} Lorsqu'on parle de la réponse en fréquence d'un filtre, on fait référece à sa \textbf{transformée de Fourier.}\\
+\underline{Important :} Lorsqu'on parle de la réponse en fréquence d'un filtre, on fait référence à sa \textbf{transformée de Fourier.}\\
 \vspace{0.3cm}
 
 \only<2->{
@@ -210,10 +217,11 @@ Reprenons les filtres précédents
 \begin{columns}[T]
 \column {60mm}
 \only<2->{
-\[|H_1(\nu)|  =   |\cos(\pi \nu T_e)| \]
+\vspace{0.4cm}
+\[|H_1(\nu)|  =   |\cos(\pi \nu T_e)| \]\\
 }
 
-\vspace{0.16cm}
+\vspace{0.06cm}
 \only<3->{
 \begin{center}
 \begin{tikzpicture}
@@ -230,10 +238,10 @@ Reprenons les filtres précédents
 
 \column{60mm}
 \only<2->{
-\[\textrm{arg}(H_1(\nu)) =  \arctan(\tan(\pi \nu T_e))  \]
+\[\textrm{arg}(H_1(\nu)) =  \arctan(\tan(\pi \nu T_e))  \]\\
 }
 
-\vspace{0.5cm}
+%\vspace{0.5cm}
 
 
 \only<3->{
@@ -251,9 +259,8 @@ Reprenons les filtres précédents
 \draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
 \end{tikzpicture}
 \end{center}
+
 }
-
-
 \end{columns}
 \end{frame}
 
@@ -277,6 +284,7 @@ La fonction de transfert possède un zéro en $\frac{\displaystyle f_e}{\display
 
 \column{60mm}
 \only<2->{
+\vspace{1.5cm}
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
@@ -535,9 +543,9 @@ On peut également définir des filtres "shelf" où on ne coupe pas complètemen
 \column{60mm}
 \only<3->{
 \begin{itemize}
+\item Débruitage/Lissage 
+\vspace{0.3cm}
 \item Utilisé pour construire des filtres plus complexes
-\item Débruitage 
-\item Lissage 
 \end{itemize}
 } 
 
@@ -546,6 +554,7 @@ On peut également définir des filtres "shelf" où on ne coupe pas complètemen
 \end{frame}
 
 \begin{frame}
+Utilisé en pré-traitement sur des signaux biomédicaux tels que:
 \frametitle{Exemple d'utilisation : Filtre passe-bas}
 \begin{columns}
 \column{60mm}
@@ -659,7 +668,7 @@ Signaux traités
 \end{columns}
 \vspace{1cm}
 \only<3->{
-Le filtre passe-haut appliqué à l'image fait ressortir les bords 
+Le filtre passe-haut appliqué à l'image fait ressortir les bords \only<4->{$\rightarrow$ Segmentation }
 }
 
 \end{frame}
@@ -689,6 +698,12 @@ En terme de phase:
 \end{columns}
 \end{frame}
 
+%\subsection{Ordre d'un filtre}
+%\begin{frame}
+%\frametitle{Ordre d'un filtre}
+%Dans le cadre des filtres numériques
+%
+%\end{frame}
 
 
 \subsection{Design de filtres: Contraintes}
@@ -715,8 +730,8 @@ Toutes ces contraintes sont condensés dans un gabarit
 
 \begin{frame}
 \frametitle{Design de filtre: Gabarit}
-Exemple du filtre passe-bas:\\
-\vspace{1cm} 
+Exemple d'un gabarit d'un filtre passe bas filtre passe-bas:\\
+\vspace{0.5cm} 
 \begin{columns}
 \column{60mm}
 \begin{center}
@@ -760,14 +775,14 @@ Exemple du filtre passe-bas:\\
 
 \begin{frame}
 \frametitle{Réponse en fréquence: Deuxième exemple}
-Réponse en fréquence du filtre $H_2(z)  = \frac{\displaystyle  z}{ \displaystyle 1-z }$\\
-\vspace{0.3cm}
+Réponse en fréquence du filtre: $H_2(z)  = \frac{\displaystyle  z}{ \displaystyle z-1 }$\\
+\vspace{0.2cm}
 \only<2->{
 \underline{Remarque} : Ici le filtre comporte des termes en $z$ au dénominateur...\\
 }
 \vspace{0.3cm}
 \only<3->{
-\[H_2(z)  = \frac{z}{1-z } \rightarrow H_2(\nu) = \frac{1}{2 e^{-\pi \nu T_e}   \sin (\pi \nu T_e)} =  \] 
+\[H_2(z)  = \frac{z}{z-1 } \rightarrow H_2(\nu) = \frac{1}{2 e^{-\pi \nu T_e}   \sin (\pi \nu T_e)} =  \] 
 }
 \begin{columns}
 \column{60mm}
@@ -783,7 +798,7 @@ Réponse en fréquence du filtre $H_2(z)  = \frac{\displaystyle  z}{ \displaysty
 
 \begin{frame} 
 \frametitle{Réponse en fréquence: Deuxième exemple}
-Réponse en fréquence du filtre $H_2(z)  = \frac{\displaystyle  z}{ \displaystyle 1-z }$\\
+Réponse en fréquence du filtre: $H_2(z)  = \frac{\displaystyle  z}{ \displaystyle z-1 }$\\
 \vspace{0.2cm}
 
 \begin{columns}
@@ -791,7 +806,7 @@ Réponse en fréquence du filtre $H_2(z)  = \frac{\displaystyle  z}{ \displaysty
 \only<2->{
 \[ |H_2(\nu)| = \frac{1}{2 |\sin(\pi \nu T_e)|} \] 
 }
-\vspace{0.4cm}
+\vspace{0.25cm}
 \only<3->{
 \begin{center}
 \begin{tikzpicture}
@@ -814,9 +829,9 @@ Réponse en fréquence du filtre $H_2(z)  = \frac{\displaystyle  z}{ \displaysty
 }
 \column{60mm}
 \only<2->{
-\[ \textrm{arg}(H_2(\nu)) = -\arctan(\frac{1}{\tan( \pi \nu T_e)}) \]
+\[ \textrm{arg}(H_2(\nu)) = -\arctan(\frac{1}{\tan( \pi \nu T_e)}) \]\\
 } 
-\vspace{0.2cm}
+\vspace{0.4cm}
 \only<3->{
 \begin{center}
 \begin{tikzpicture}
@@ -836,11 +851,13 @@ Réponse en fréquence du filtre $H_2(z)  = \frac{\displaystyle  z}{ \displaysty
 }
 \end{columns}
 \vspace{0.2cm}
+\only<4->{
 Le filtres est \textbf{instable} aux fréquences multiples de $f_e$... 
+}
 
 \end{frame}
 
-\subsection{Notion de récursivité}
+\subsection{Notion de récursivité, pôles et zéros}
 \begin{frame}
 \frametitle{Notion de récursivité}
 Au délà des caractéristiques fréquentielles deux grandes classes de filtres numériques existent : \\
@@ -865,7 +882,7 @@ Filtre non-récursifs:\\
 \end{tikzpicture}
 \end{center}
 }
-\vspace{0.2cm}	
+\vspace{0.8cm}	
 \only<3->{
 \[ H(z) = 1+ a_1 z + a_2 z^2 + \cdots + a_n z^n  \] 
 }	 
@@ -903,30 +920,128 @@ Filtre récursifs: \\
 
 \end{frame}
 
+\subsection{Pôles et zéros}
 \begin{frame}
 \frametitle{Notion de pôles et de zéros}
 Soit une fonction de transfert d'un système récursif: \\
-\vspace{0.2cm}
 \[ H(z) = \frac{1+ a_1 z + a_2 z^2 + \cdots + a_n z^n }{1+ b_1 z + b_2 z^2 + \cdots + b_n z^n} = \frac{(z-z_1)(z-z_2)...(z-z_n)}{(z-p_1)(z-p_2)...(z-p_n)} \] 
 
 \vspace{0.3cm}
 
-\begin{columns}
+\begin{columns}[T]
 \column{60mm}
 zéros : ensemble des $z_n$ \\
 \begin{itemize}
-\item<3-> annule la fonction de transnfert 
+\item<3-> annule la fonction de transfert
+\item<4-> filtres récursifs et non-récursifs 
 \end{itemize}
 \column{60mm}
 pôles : ensemble des $p_n$ \\
 \begin{itemize}
-\item<3-> Fait diverger la fonction de transfert
+\item<3-> fait diverger la fonction de transfert
+\item<4-> filtre récursifs uniquement
 \end{itemize}
 
 \end{columns} 
 
-
-
 \end{frame}
+
+\begin{frame}
+\frametitle{Plan pôle-zéro}
+La notion de plan pôle zéro existe aussi pour la transformée en z\\
+\vspace{0.2cm}
+\begin{columns}
+\column{60mm}
+Laplace:
+\begin{center}
+	\begin{tikzpicture}
+	\draw[->] (-2,0)--(2,0) node[right]{Re($s$)};
+	\draw[->] (0,-2)--(0,2)node[above]{Im($s$)};
+	
+	\only<2->
+	{
+		\draw[->,thick,blue] (0,-2)--(0,2);
+		\draw[fill=blue,opacity=0.2] (-2,-2) rectangle(0,2) ;
+		\draw[<-,blue] (-0.5,-1)--(2.5,-1) node[blue,right] {zone de stabilité};
+	}
+	
+		\only<3->
+	{
+		\draw (1,0) node{o};
+		\draw (1,-0.4) node{\footnotesize zéro};
+		\draw (-1.2,-1) node{x};
+		\draw (-1.2,1) node{x};
+		\draw[dashed] (-1.2,-1)--(-1.2,1) ;
+	}
+	\end{tikzpicture}
+\end{center}
+	
+\column{60mm}
+z:
+\begin{center}
+	\begin{tikzpicture}
+		\draw[->] (-2,0)--(2,0) node[right]{Re($z$)};
+	\draw[->] (0,-2)--(0,2)node[above]{Im($z$)};
+		
+	
+	\only<2->
+	{
+		\draw[blue,fill=blue,opacity=0.2] (0,0) circle (1);
+		\draw[blue,thick] (0,0) circle (1);
+		\draw[->,blue] (-2,-1)--(-0.5,-0.3);
+	}
+	
+	\only<3->
+	{
+		\draw (1,0) node{o};
+		\draw (-0.5,0.6) node{x};
+		\draw (-1,0.9) node{\footnotesize pôle stable};
+		\draw (-0.5,-0.6) node{x};
+		\draw[dashed] (0,0)--(-0.5,-0.6);	
+		\draw[dashed] (0,0)--(-0.5,0.6);		
+	}
+	\end{tikzpicture}
+\end{center}
+
+\end{columns} 
+\vspace{0.3cm}
+Coeffs réels $\rightarrow$ pôles doubles et réels ou complexes conjugués
+\end{frame}
+
+\begin{frame}
+\frametitle{Résumé du chapitre}
+\begin{enumerate}
+\item Définitions
+\begin{itemize}
+\item Fonction de transfert 
+\vspace{0.1cm}
+\item \'Equation de récurrence
+\vspace{0.1cm}
+\item Réponse impulsionnelle
+\vspace{0.1cm}
+\end{itemize}
+\vspace{0.2cm} 
+\item Types de filtres \& Gabarit  :
+\begin{itemize}
+\item Passe-bas
+\vspace{0.1cm}
+\item Passe-haut
+\vspace{0.1cm}
+\item Passe-bande
+\vspace{0.1cm}
+\item Coupe-bande
+\end{itemize}
+\vspace{0.2cm} 
+\item Récurisivité, pôles et zéros :
+\begin{itemize}
+\item définitions pôle et zéros
+\vspace{0.1cm}
+\item graphe pôle-zéro
+\end{itemize}
+\vspace{0.2cm} 
+
+\end{enumerate}
+\end{frame}
+
 
 \end{document}

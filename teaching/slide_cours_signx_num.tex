@@ -641,22 +641,22 @@ Transformées en Z $\rightarrow$ analyse systèmes à fonctions discrètes (num�
 
 \only<3->{
 \vspace{0.3 cm}
-Soit $x[n]$ un signal discret, \\
-\[TZ\{ x \}(z) = \sum_{n = -\infty}^{\infty} s_{T_e}[n] z^{-n} \]
+Soit $s[n]$ un signal discret, \\
+\[TZ\{ s \}(z) = \sum_{n = -\infty}^{\infty} s_{T_e}[n] z^{-n} \]
 }
  \vspace{0.3 cm}
 
 \only<4->{
 Tout comme la transformée de Laplace il existe aussi une variante monolatérale:
 
-\[TZ\{ x \}(z) = \sum_{n = 0}^{\infty} s_{T_e}[n] z^{-n} \]
+\[TZ\{ s \}(z) = \sum_{n = 0}^{\infty} s_{T_e}[n] z^{-n} \]
 }
 
 \end{frame} 
 
 \begin{frame}
 \frametitle{Transformée en $z$: Définition}
-\[TZ\{ x \}(z) = \sum_{n = 0}^{\infty} s_{T_e}[n] z^{-n} \]
+\[TZ\{ s \}(z) = \sum_{n = 0}^{\infty} s_{T_e}[n] z^{-n} \]
 
 \vspace{0.3 cm} 
 \only<2->{
@@ -664,18 +664,21 @@ fonction de $t$ \textbf{échantillonnée} $\rightarrow$ fonction de $z$ \textbf{
 }
 \vspace{0.3 cm} 
 \only<3->{
-La transformée en $z$ est une fonction complexe
+La transformée en $z$ est une fonction \textbf{complexe}
 }
 
 \end{frame} 
 
 \begin{frame}
 \frametitle{Propriétés de la transformée en $z$}
-Par construction, même propriétés que Laplace et Fourier
+Par construction, même propriétés que Laplace et Fourier\\
+\vspace{0.4cm}
 
 \begin{itemize}
-\item<2-> Linéarité \only<3->{: $TZ(a x_1[n] + b x_2[n]) = a\cdot TZ (x_1[n]) + b\cdot TZ(x_2[n]) $}
-\item<4-> Convolution \only<5->{: $TZ(x_1[n] \star x_2[n]) = TZ(x_1) TZ(x_2)$}
+\item<2-> Linéarité \only<3->{: \[TZ(a x_1[n] + b x_2[n]) = a\cdot TZ (x_1[n]) + b\cdot TZ(x_2[n]) \]}
+\vspace{0.3cm}
+\item<4-> Convolution \only<5->{: \[TZ(x_1[n] \star x_2[n]) = TZ(x_1) TZ(x_2)\]}
+\vspace{0.3cm}
 \item<6-> Décalage temporel \only<6->{: \[ TZ\{x[n-k]\} = X(z)\cdot z^{-k} \]}
 \end{itemize}
 
@@ -698,7 +701,7 @@ Soit $\delta [n]$ l'impulsion de Kronecker,
 \[ \boxed{TZ\{ \delta[n] \} =  1} \]
 
 }
-
+\vspace{0.4cm}
 \only<4->{ Résultat similaire en Laplace et en Fourier}
 
 \end{frame}
@@ -715,7 +718,7 @@ Soit $u [n]$ l'échelon échantillonné,
 \[\boxed{TZ\{ u[n] \} = \sum_{n = 0}^{\infty} z^{-n}  = \frac{1}{1-z^{-1}}} \]
 
 \vspace{0.3cm}
-Vrai si $|z|<1$ (série géométrique)
+Vrai si $|z|>1$ (série géométrique)
 
 }
 \end{frame} 
@@ -743,7 +746,7 @@ Soit $\sin(\omega_0 \cdot n )\cdot u [n]$ le sinus échantillonné,
 \vspace{0.3cm}
 
 \only<2->{
-\[\boxed{TZ\{ \sin(\omega_0 \cdot n )\cdot u [n] \}  = \frac{z^{-1} \sin(\omega_0)}{1-2z^{-1} cos(\omega_0) +z^{-2}}} \]
+\[\boxed{TZ\{ \sin(\omega_0 \cdot n )\cdot u [n] \}  = \frac{z^{-1} \sin(\omega_0)}{1-2z^{-1} \cos(\omega_0) +z^{-2}}} \]
 }
 
 
@@ -754,11 +757,14 @@ Soit $\sin(\omega_0 \cdot n )\cdot u [n]$ le sinus échantillonné,
 
 \begin{enumerate}
 \item $\delta[n] \rightarrow  1$ 
-\item $u[n] \rightarrow \frac{\displaystyle 1}{ \displaystyle 1-z^{-1}}$
-\item $n \cdot u[n] \rightarrow \frac{\displaystyle z^{-1}}{\displaystyle (1-z^{-1})^2} $
-\item $sin(\omega_0 n)u(n) \rightarrow  \frac{\displaystyle z^{-1} \sin(\omega_0)}{\displaystyle 1-2z^{-1} cos(\omega_0) +z^{-2}} $
-\end{enumerate} 
 \vspace{0.3cm}
+\item $u[n] \rightarrow \frac{\displaystyle 1}{ \displaystyle 1-z^{-1}}$
+\vspace{0.3cm}
+\item $n \cdot u[n] \rightarrow \frac{\displaystyle z^{-1}}{\displaystyle (1-z^{-1})^2} $
+\vspace{0.3cm}
+\item $\sin(\omega_0 n) \cdot u(n) \rightarrow  \frac{\displaystyle z^{-1} \sin(\omega_0)}{\displaystyle 1-2z^{-1} \cos(\omega_0) +z^{-2}} $
+\end{enumerate} 
+\vspace{0.5cm}
 
 Fonctions rencontrées fréquemment en traitement du signal.
 
@@ -771,7 +777,7 @@ Remarque : La transformée en $z$ ne fait pas intervenir la période d'échantil
 
 \vspace{1cm}
 \only<2->{
-Si on souhaite "retrouver" cette variable, il faut repasser de $z$ à Laplace ou Fourier.. .\\
+Si on souhaite "retrouver" cette variable, il faut repasser de $z$ à Laplace ou Fourier...\\
 }
 
 \vspace{1cm}
@@ -797,12 +803,12 @@ Fourier :
 On résume... Soit $x[n]$ un signal discret,\\
 \vspace{0.3cm}
 \only<2->{
-\[TZ\{ x[n] \} \rightarrow TF\{x[n]\} =  \sum_{n = -\infty}^{\infty} x[n] e^{-j 2 \pi n \nu T_e}\] 
-}
+\[TZ\{ x[n] \} \rightarrow TF\{x[n]\} =  \sum_{n = -\infty}^{\infty} x[n] e^{-j 2 \pi n \nu T_e}\] \\
+
 \vspace{0.3cm}
 Somme infinie... Et variable fréquentielle continue\\
 \vspace{0.3cm}
-
+}
 \only<3->{
 \begin{block}{}
 Comment calculer une transformée de Fourier avec un ordinateur ?
@@ -826,8 +832,10 @@ donc ,
 }
 \vspace{0.3cm}
 \begin{enumerate}
-\item<5-> $TF\{ x \}(\nu) = \sum_{n = 0}^{\infty} x[n] \; e^{-j 2 \pi n \nu T_e} \rightarrow  \sum_{n = 0}^{N-1} x[n] \; e^{-j 2 \pi n \nu T_e}$\vspace{0.4cm}
-\item<6->$\sum_{n = 0}^{N-1} x[n] \; e^{-j 2 \pi n \nu T_e} \rightarrow  \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n m \frac{nu_e}{N} T_e } = \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N} } $
+\item<5-> $TF\{ x \}(\nu) = \sum_{n = 0}^{\infty} x[n] \; e^{-j 2 \pi n \nu T_e} \rightarrow  \sum_{n = 0}^{N-1} x[n] \; e^{-j 2 \pi n \nu T_e}$\vspace{0.5cm}
+\item<6->$\sum_{n = 0}^{N-1} x[n] \; e^{-j 2 \pi n \nu T_e} \rightarrow  \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n m \frac{nu_e}{N} T_e }  $
+\vspace{0.5cm}
+\item<7-> $\sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n m \frac{nu_e}{N} T_e } = \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N} }$
 \end{enumerate} 
 
 \end{frame}
@@ -836,12 +844,14 @@ donc ,
 \frametitle{Transformée de Fourier Discrète (TFD)}
 En résumé,\\
 \vspace{0.3cm} 
-\[ TFD\{ x[n] \} =  \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}  \] 
+\[ TFD\{ x[n] \} =  \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}  \] \\
+\vspace{0.4cm}
 
 \vspace{0.3cm}
 \begin{itemize}
 \item<2-> C'est cette fonction que MATLAB ou Python calcule
-\item<3-> formulée ainsi la TFD, comme la transformée en $z$, ne fait pas intervenir $T_e$  
+\vspace{0.3cm}
+\item<3-> formulée ainsi, la TFD comme la transformée en $z$, ne fait pas intervenir $T_e$  
 \end{itemize}
 
 \end{frame}
@@ -853,10 +863,10 @@ En résumé,\\
 Transformée de Fourier: $X(f) = \sum_{n = 0}^{\infty} x[n] \; e^{-j 2 \pi n \nu T_e}$' 
 \begin{itemize}
 \item<2-> Somme infinie sur signal discret
-\item<3-> Spectre en fréquence continu 
+\item<3-> Spectre en fréquence continu (infinité de points)
 \end{itemize}
 \vspace{1cm}
-Transformée de Fourier Discrète :$X_D(m) \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N} }$
+Transformée de Fourier Discrète :$X_D(m) = \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N} }$
 \begin{itemize}
 \item<2-> Somme finie ($N$) sur signal discret 
 \item<3-> Spectre en fréquence fini et échantillonné sur $N$ points.
@@ -893,6 +903,11 @@ peu de points dans le signal = peu de points dans le spectre...\\
 \vspace{0.5cm}
 
 "Interpole" le spectre de façon à avoir plus de points avec le \textbf{même signal}
+
+\only<2->{
+\vspace{0.5cm}
+\textbf{Attention:} Le zéro padding ne crée pas d'information
+}
 \end{frame}
 
 \begin{frame}
@@ -903,8 +918,8 @@ peu de points dans le signal = peu de points dans le spectre...\\
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale =0.5]
-\draw(-4,0)--(4,0) node[right]{$n$};
-\draw(0,-2)--(0,2) node[right]{$x[n]$};
+\draw[->](-4,0)--(4,0) node[right]{$n$};
+%\draw(0,-2)--(0,2) node[right]{$x[n]$};
 
 \draw[->,blue](-4,0)--(-4,0);
 \draw[->,blue](-3,0)--(-3,0);
@@ -925,8 +940,8 @@ peu de points dans le signal = peu de points dans le spectre...\\
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale =0.5]
-\draw(-4,0)--(4,0) node[right]{$n$};
-\draw(0,0)--(0,2) node[right]{$|X[n]|$};
+\draw[->](-4,0)--(4,0) node[right]{$n$};
+\draw[->](0,0)--(0,2) node[right]{$|X[n]|$};
 
 \draw[ domain=-3.9:3.9,color=blue,samples=9] plot  (\x,{abs(100*( sin(3.14*\x r  )/(3.14*\x r)))});
 \end{scope}
@@ -954,14 +969,50 @@ En rajoutant des zéros, on se "rapproche" de la transformée de Fourier non-dis
 \frametitle{TFD: résumé}
 \begin{itemize}
 \item TFD calculable par ordi : nombre finis de termes 
+\vspace{0.3cm}
 \item<2-> Approximation de la TF
-\item<3-> Utilisation possible du zéro padding pour de meilleures courbes.
+\vspace{0.3cm}
+\item<3-> Utilisation possible du zéro padding pour rajouter des points au spectre.
 
 \end{itemize}
 \vspace{1cm}
-Dans tous ces développements on part du principe que l'amplitude est continue mais ce n'est pas forcément vrai (codage)
+Dans tous ces développements on part du principe que l'amplitude est continue mais ce n'est pas exact (codage)
 \end{frame}
 
+\subsection{Résumé du chapitre}
+\begin{frame}
 
+\frametitle{Résumé du chapitre}
+\begin{enumerate}
+\item Signaux numériques
+\vspace{0.2cm} 
+\begin{itemize}
+\item<3->  Codage : discrétisation de l'amplitude 
+\vspace{0.3cm}
+\item<4->  \'Echantillonnage : discrétisation du temps
+\vspace{0.3cm}
+\begin{itemize} 
+\item  Critère de Shannon : $f_e > 2 f_{max}$
+\vspace{0.3cm}
+\item  Peigne de Dirac et périodisation du spectre $\rightarrow$ \textbf{Repliement spectral}
+\end{itemize} 
+\end{itemize}
+\vspace{0.3cm}
+\item<2-> Transformée en $z$ \& Transformée de Fourier discrète
+\vspace{0.2cm} 
+\begin{itemize}
+\item<5->  Définition TZ \& TZ fonctions usuelles 
+\vspace{0.3cm} 
+\item<6->  Lien avec Fourier : $z = e^{j \pi f T_e}$
+\vspace{0.3cm}
+\item<7->  Transformée de Fourier discrète et zero-padding
+\begin{itemize} 
+\item  Limitation du nombre de termes por les supports numériques
+\vspace{0.15cm}
+\item  Zéro-padding: Ajout de zéros après les échantillons temporels $\rightarrow$ plus de points dans le spectre
+\end{itemize} 
+\end{itemize}
+\end{enumerate}
 
+\end{frame}
 \end{document}
