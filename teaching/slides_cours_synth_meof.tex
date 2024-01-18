@@ -646,12 +646,13 @@ Commentaires:
 \item<4-> Oscillations = tolérance en amplitude + largeur de transition
 \vspace{0.3cm}
 \item<5-> + de termes = - d'oscillations MAIS mémoire et temps de calcul à prendre en compte
+\item<6-> \textbf{Ondulations de même amplitude en bande passante et affaiblie...}
 \end{itemize}
 \end{columns}
 
 \end{frame}
 
-\subsection{Synthèse de filtres non-récursifs: Méthode des fenêtres}
+\subsection{ Méthode des fenêtres}
 
 \begin{frame}
 \frametitle{Synthèse de filtres non-récursifs: Méthode des fenêtres}
@@ -855,7 +856,7 @@ Commentaires:
 \vspace{0.2cm}
 \item<3-> Faible largeur transition = Ondulations importantes 
 \vspace{0.2cm}
-\item<4-> Méthode assez directe mais pas forcément optimale... 
+\item<4-> \textbf{Ondulations de même amplitude en bande passante et affaiblie...}
 \end{itemize}
 
 \end{frame}
@@ -894,5 +895,1181 @@ Principales méthodes de synthèse de filtres non-récursifs:
 \end{frame}
 
 \subsection{Méthode de l'échantillonnage en fréquence}
+\begin{frame}
+\frametitle{Méthode de l'échantillonnage en fréquence}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
+
+
+%\draw (3,-0.3) node {$f_e/2$};
+
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	%\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[->,thick,red] (0,0)--(0,2);
+	\draw[->,thick,red] (0.5,0)--(0.5,2);
+	\draw[->,thick,red] (1,0)--(1,2);
+		\draw[->,thick,red] (1.5,0)--(1.5,1);
+	\draw[->,thick,red] (2,0)--(2,0);
+	\draw[->,thick,red] (2.5,0)--(2.5,0);
+	\draw[->,thick,red] (3,0)--(3,0);
+\end{tikzpicture}
+\end{center}
+
+\column{60mm}
+Point départ méthode des fenêtres : Réponse en fréquence idéale continue \\
+
+\vspace{0.5cm}
+
+Point départ Méthode échantillonnage en fréquence : \textbf{Echantillons en fréquence visés}\\
+\vspace{0.2cm}
+\begin{itemize}
+\item<2-> Amplitude des échantillons en bande passante : 1
+\item<3-> Amplitude des échantillons en bande passante : 0
+\item<4-> Amplitude des échantillons en bande de transition : variable
+\end{itemize}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Méthode de l'échantillonnage en fréquence}
+Application de la transformée de Fourier inverse aux $H_k$
+
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
+
+
+%\draw (3,-0.3) node {$f_e/2$};
+
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	%\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[->,thick,red] (0,0)--(0,2);
+	\draw[->,thick,red] (0.5,0)--(0.5,2);
+	\draw[->,thick,red] (1,0)--(1,2);
+		\draw[->,thick,red] (1.5,0)--(1.5,1);
+	\draw[->,thick,red] (2,0)--(2,0);
+	\draw[->,thick,red] (2.5,0)--(2.5,0);
+	\draw[->,thick,red] (3,0)--(3,0);
+	\draw[->] (4,1.5)--(6,1.5);
+	\end{tikzpicture}
+\end{center}
+
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-2,0)-- (2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $h_k$};
+\draw[thick,blue] plot coordinates{
+(-6/3,0.006*5)
+(-5/3,0.024*5)
+(-4/3,-0.025*5)
+(-3/3,-0.081*5)
+(-2/3,0.035*5)
+(-1/3,0.31*5)
+(0/3,0.4615*5)
+(1/3,0.31*5)
+(2/3,0.035*5)
+(3/3,-0.081*5)
+(4/3,-0.025*5)
+(5/3,0.024*5)
+(6/3,0.006*5)};
+
+%\draw[thick,green!20!black] plot coordinates{
+%(-6/3,-0.0061*5)
+%(-5/3,0.0224*5)
+%(-4/3,0.0203*5)
+%(-3/3,-0.0538*5)
+%(-2/3,-0.0163*5)
+%(-1/3,0.0741*5)
+%(0,0)
+%(1/3,-0.0741*5)
+%(2/3,0.0163*5)
+%(3/3,0.0538*5)
+%(4/3,-0.02030*5)
+%(5/3,-0.0224*5)
+%(6/3,0.0061*5)};
+
+%\draw[thick,blue] (2,2)--(2.3,2) node[right]{\scriptsize Re($h_k$)};
+%\draw[thick,green!20!black] (2,1.5)--(2.3,1.5) node[right]{\scriptsize Im($h_k$)};
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\vspace{0.2cm}
+On obtient une réponse impulsionnelle...
+\end{frame}
+
+\begin{frame}
+\frametitle{Méthode de l'échantillonnage en fréquence}
+De la réponse impulsionnelle on peut tirer une réponse en fréquence \textbf{continue}
+
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-2,0)-- (2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $h_k$};
+\draw[thick,blue] plot coordinates{
+(-6/3,0.006*5)
+(-5/3,0.024*5)
+(-4/3,-0.025*5)
+(-3/3,-0.081*5)
+(-2/3,0.035*5)
+(-1/3,0.31*5)
+(0/3,0.4615*5)
+(1/3,0.31*5)
+(2/3,0.035*5)
+(3/3,-0.081*5)
+(4/3,-0.025*5)
+(5/3,0.024*5)
+(6/3,0.006*5)};
+\draw[->] (2.5,2)--(4,2);  
+
+%\draw[thick,blue] (2,2)--(2.3,2) node[right]{\scriptsize Re($h_k$)};
+%\draw[thick,green!20!black] (2,1.5)--(2.3,1.5) node[right]{\scriptsize Im($h_k$)};
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_freq_samp.txt};
+
+\begin{scope}[yshift=-2.5cm]
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize $\textrm{arg}(H(f))$};
+\draw[thick,blue] plot file {arg_freq_samp.txt};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Méthode de l'échantillonnage en fréquence}
+Si on reprend les échantillons initiaux...\\
+\vspace{0.3cm}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
+
+
+%\draw (3,-0.3) node {$f_e/2$};
+
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	%\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[->,thick,red] (0,0)--(0,2);
+	\draw[->,thick,red] (0.5,0)--(0.5,2);
+	\draw[->,thick,red] (1,0)--(1,2);
+		\draw[->,thick,red] (1.5,0)--(1.5,1);
+	\draw[->,thick,red] (2,0)--(2,0);
+	\draw[->,thick,red] (2.5,0)--(2.5,0);
+	\draw[->,thick,red] (3,0)--(3,0);
+	\draw[->] (4,1.5)--(6,1.5);
+	\end{tikzpicture}
+\end{center}
+
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_freq_samp.txt};
+
+\begin{scope}[yshift=-2.5cm]
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize $\textrm{arg}(H(f))$};
+\draw[thick,blue] plot file {arg_freq_samp.txt};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\vspace{0.3cm}
+Dans les faits, on a \textbf{interpolé} la réponse en fréquence du filtre à partir des $H_k$
+\end{frame}
+
+\begin{frame}
+\frametitle{Méthode de l'échantillonnage en fréquence}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2]
+\draw[->] (-2.1,0)-- (2.1,0)node[right] { $f$} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] {  $|H(f)|$};
+\draw[thick,blue] plot file {module_freq_samp.txt};
+
+\only<2>{
+\draw[->,thick,red] (0+0.02,0)--(0+0.02,1);
+\draw[->,thick,red] (0.3077+0.02,0)--(0.3077+0.02,1);
+\draw[->,thick,red] (0.6154+0.02,0)--(0.6154+0.02,1);
+\draw[->,thick,red] (0.9231+0.02,0)--(0.9231+0.02,0.5);
+\draw[->,thick,red] (1.2038+0.02,0)--(1.2038+0.02,0);
+\draw[->,thick,red] (1.5385+0.02,0)--(1.5385+0.02,0);
+\draw[->,thick,red] (1.8462+0.02,0)--(1.8462+0.02,0);
+}
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+Observations: 
+\begin{itemize}
+\item<2-> La réponse en fréquence réelle  passe  par les points donnés au départ
+\item<3->On ne contrôle pas la largeur de la bande de transition
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Méthode de l'échantillonnage en fréquence}
+Pour bien comprendre l'impact du choix des points on peut modifier la valeur dans la bande de transition.
+\begin{columns}
+\column{50mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.7]
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
+
+
+%\draw (3,-0.3) node {$f_e/2$};
+
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	%\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[->,thick,green!30!black] (0,0)--(0,2);
+	\draw[->,thick,green!30!black] (0.5,0)--(0.5,2);
+	\draw[->,thick,green!30!black] (1,0)--(1,2);
+		\draw[->,thick,green!30!black] (1.5,0)--(1.5,0.3);
+	\draw[->,thick,green!30!black] (2,0)--(2,0);
+	\draw[->,thick,green!30!black] (2.5,0)--(2.5,0);
+	\draw[->,thick,green!30!black] (3,0)--(3,0);
+	\only<2->{
+		\draw[->] (4,1.5)--(6,1.5);
+	}
+	\end{scope}
+	\end{tikzpicture}
+\end{center}
+
+\column{70mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1.5]
+\draw[->] (-2.1,0)-- (2.1,0)node[right] { $f$} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] {  $|H(f)|$};
+\draw[thick,blue] plot file {module_freq_samp2.txt};
+
+\draw[dotted,blue] plot file {module_freq_samp.txt};
+
+\only<2>{
+\draw[->,thick,green!30!black] (0+0.02,0)--(0+0.02,1);
+\draw[->,thick,green!30!black] (0.3077+0.02,0)--(0.3077+0.02,1);
+\draw[->,thick,green!30!black] (0.6154+0.02,0)--(0.6154+0.02,1);
+\draw[->,thick,green!30!black] (0.9231+0.02,0)--(0.9231+0.02,0.1);
+\draw[->,thick,green!30!black] (1.2038+0.02,0)--(1.2038+0.02,0);
+\draw[->,thick,green!30!black] (1.5385+0.02,0)--(1.5385+0.02,0);
+\draw[->,thick,green!30!black] (1.8462+0.02,0)--(1.8462+0.02,0);
+}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\vspace{0.1cm}
+Observations: 
+\begin{itemize}
+\item Retour du compromis transition/ondulations
+\end{itemize}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Méthode de l'échantillonnage en fréquence: Résumé}
+\begin{center}
+\begin{tikzpicture}
+	\begin{scope}[scale=0.5]
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	%\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[->,thick,red] (0,0)--(0,2);
+	\draw[->,thick,red] (0.5,0)--(0.5,2);
+	\draw[->,thick,red] (1,0)--(1,2);
+		\draw[->,thick,red] (1.5,0)--(1.5,1);
+	\draw[->,thick,red] (2,0)--(2,0);
+	\draw[->,thick,red] (2.5,0)--(2.5,0);
+	\draw[->,thick,red] (3,0)--(3,0);
+	\draw[->] (4.5,1.5)--(6.5,1.5); 
+	\draw (1,-1.5) node[text centered] {\scriptsize Ech. Fréq. visés};
+	\end{scope}
+	
+	\begin{scope}[scale=0.5,xshift=9.5 cm]
+	\draw[->] (-2,0)-- (2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $h_k$};
+\draw[thick,blue] plot coordinates{
+(-6/3,0.006*5)
+(-5/3,0.024*5)
+(-4/3,-0.025*5)
+(-3/3,-0.081*5)
+(-2/3,0.035*5)
+(-1/3,0.31*5)
+(0/3,0.4615*5)
+(1/3,0.31*5)
+(2/3,0.035*5)
+(3/3,-0.081*5)
+(4/3,-0.025*5)
+(5/3,0.024*5)
+(6/3,0.006*5)};
+\draw[->] (2.5,1.5)--(4.5,1.5); 
+\draw (0,-1.5) node[text centered] {\scriptsize Rép. Imp.};
+\end{scope}
+	
+	\begin{scope}[scale=1,xshift=9cm]
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_freq_samp.txt};
+
+
+\draw[->,thick,red] (0+0.02,0)--(0+0.02,1);
+\draw[->,thick,red] (0.3077+0.02,0)--(0.3077+0.02,1);
+\draw[->,thick,red] (0.6154+0.02,0)--(0.6154+0.02,1);
+\draw[->,thick,red] (0.9231+0.02,0)--(0.9231+0.02,0.5);
+\draw[->,thick,red] (1.2038+0.02,0)--(1.2038+0.02,0);
+\draw[->,thick,red] (1.5385+0.02,0)--(1.5385+0.02,0);
+\draw[->,thick,red] (1.8462+0.02,0)--(1.8462+0.02,0);
+\draw (0,-0.75) node[text centered] {\scriptsize Rep. Fréq. Réelle};
+\end{scope}
+	
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+
+\vspace{0.1cm}
+\begin{enumerate}
+\item<2-> On fixe des valeurs pour le spectre dans les trois régions
+\item<3-> De ces valeurs on calcule la réponse impulsionnelle
+\item<4-> Permet de réduire l'amplitude des oscillations dans une bande ou l'autre par rapport à la méthodes des fenêtres
+\end{enumerate}
+
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Méthode de l'échantillonnage en fréquence: Résumé}
+\begin{center}
+\begin{tikzpicture}
+	\begin{scope}[scale=0.5]
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	%\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[->,thick,red] (0,0)--(0,2);
+	\draw[->,thick,red] (0.5,0)--(0.5,2);
+	\draw[->,thick,red] (1,0)--(1,2);
+		\draw[->,thick,red] (1.5,0)--(1.5,1);
+	\draw[->,thick,red] (2,0)--(2,0);
+	\draw[->,thick,red] (2.5,0)--(2.5,0);
+	\draw[->,thick,red] (3,0)--(3,0);
+	\draw[->] (4.5,1.5)--(6.5,1.5); 
+	\draw (1,-1.5) node[text centered] {\scriptsize Ech. Fréq. visés};
+	\end{scope}
+	
+	\begin{scope}[scale=0.5,xshift=9.5 cm]
+	\draw[->] (-2,0)-- (2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $h_k$};
+\draw[thick,blue] plot coordinates{
+(-6/3,0.006*5)
+(-5/3,0.024*5)
+(-4/3,-0.025*5)
+(-3/3,-0.081*5)
+(-2/3,0.035*5)
+(-1/3,0.31*5)
+(0/3,0.4615*5)
+(1/3,0.31*5)
+(2/3,0.035*5)
+(3/3,-0.081*5)
+(4/3,-0.025*5)
+(5/3,0.024*5)
+(6/3,0.006*5)};
+\draw[->] (2.5,1.5)--(4.5,1.5); 
+\draw (0,-1.5) node[text centered] {\scriptsize Rép. Imp.};
+\end{scope}
+	
+	\begin{scope}[scale=1,xshift=9cm]
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_freq_samp.txt};
+
+
+\draw[->,thick,red] (0+0.02,0)--(0+0.02,1);
+\draw[->,thick,red] (0.3077+0.02,0)--(0.3077+0.02,1);
+\draw[->,thick,red] (0.6154+0.02,0)--(0.6154+0.02,1);
+\draw[->,thick,red] (0.9231+0.02,0)--(0.9231+0.02,0.5);
+\draw[->,thick,red] (1.2038+0.02,0)--(1.2038+0.02,0);
+\draw[->,thick,red] (1.5385+0.02,0)--(1.5385+0.02,0);
+\draw[->,thick,red] (1.8462+0.02,0)--(1.8462+0.02,0);
+\draw (0,-0.75) node[text centered] {\scriptsize Rep. Fréq. Réelle};
+\end{scope}
+	
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+Remarques:
+\vspace{0.1cm}
+\begin{itemize}
+\item Méthode la plus "simple" 
+\item Compromis largeur/ondulations
+\item Performances similaires à la méthode des fenêtres
+\end{itemize}
+
+
+\end{frame}
+
+\subsection{Synthèse de filtres récursifs}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Différentes méthodes}
+Les méthodes suivent toute le même principe général :
+
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H/H_k$};
+		\draw (1,-1) node[text centered] {\scriptsize Rep. freq. visé};
+		\node[rectangle,draw,align=center] (D) at (4,0) {$h_i$};
+		\draw (4,-1) node[text centered] {\scriptsize Rep. imp. interm.};
+		\node[rectangle,draw,align=center] (N) at (7,0) {$h_i^*$};
+				\draw (7,-1) node[text centered] {\scriptsize Rep. imp. corr.};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H^*(f)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. réelle.};
+		
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(N);
+		\draw[->] (N)--(B);
+\end{tikzpicture}
+\end{center}
+
+Principales méthodes de synthèse de filtres non-récursifs:
+\vspace{0.2cm}
+\begin{itemize}
+\item<2-> \textbf{Méthode des fenêtres} \only<7->{: Simple mais ondulation amplitude non-const. identique en bde passante et affablie}
+\item<3-> \textbf{Méthode de l'échantillonnage en fréquence}\only8->{ : Ondulation potentiellement réduite mais tjrs amplitude non-constante}
+\item<4-> Méthode des moindres carrés  \only<9->{:idem}
+\item<5-> Méthode itérative par TFD \only<10->{ : amplitude constante possible}
+\item<6-> Méthode par approximation de
+Tchebychev :\only<11->{spécification complète.
+}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs : Principe général}
+Pour les filtres non-récursifs, on réglait les coeffs de la \textbf{réponse impulsionnelle}\\
+
+\vspace{1 cm}
+\only<2->{
+Filtre récursif  $\rightarrow$ réponse impulsionnelle infinie...\\
+}
+\vspace{1 cm}
+\only<3->{ 
+\begin{block}{}
+On travaille sur la \textbf{fonction de transfert} 
+\end{block}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs : Principe général}
+
+\begin{block}{}
+On travaille sur la \textbf{fonction de transfert} 
+\end{block}
+
+\vspace{1cm} 
+
+Fonction de transfert en $z$ = \textbf{fonction continue }\\
+
+\vspace{1cm}
+
+\textbf{Comment représenter le filtre en numérique ? (nombre fini de termes)}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs : Principe général}
+\textbf{Comment représenter le filtre en numérique ? (nombre fini de termes)}\\
+\vspace{1cm}
+\only<1>{
+\[\text{eq° différence  } \;\;\; y[n] = x[n] +  a y[n] \; \rightarrow  \; \frac{1}{1-a z^{-1}} \;\;\; \text{   fct° transfert} \]\\
+}
+\only<2->{
+\[\text{eq° différence  } \;\;\; y[n] = x[n] + \mbox{\bfseries a} y[n] \; \rightarrow  \; \frac{1}{1-\mbox{\bfseries a} z^{-1}} \;\;\; \text{   fct° transfert} \]\\
+}
+\vspace{1cm} 
+
+\only<3->{
+\begin{block}{}
+C'est le coefficient \bfseries{ a} qui est stocké par l'ordinateur (ou réglé dans les circuits
+\end{block}
+}
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs : Principe général}
+
+ 
+\begin{block}{}
+On travaille directement dans le \textbf{domaine fréquentiel.}
+\end{block}
+\vspace{1cm}
+$\rightarrow$ On calcule les $a_k,b_k$ dans $H(z) = \frac{\displaystyle 1+ a_1 z + a_2 z^2 + \cdots + a_n z^n }{\displaystyle 1+ b_1 z + b_2 z^2 + \cdots + b_n z^n}$ \\
+\vspace{1cm}
+
+2 grandes classes de méthodes : 
+\begin{itemize}
+\item<2->  \only<2-3>{ Calcul direct des coefficients par fonctions modèles}
+\only<4>{ \textbf{Calcul direct des coefficients par l'analogique}}
+\vspace{0.3cm}
+
+\item<3-> Techniques itératives
+
+\end{itemize}
+\end{frame}
+
+\subsection{Synthèse de filtres récursifs: Calcul direct par l'analogique}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Calcul direct par l'analogique}
+On s'inspire des filtres analogiques qu'on connait bien...\\
+\vspace{1cm}
+On part de $H(s)$ ... $\rightarrow$ Comment passer à $H(z)$ ?\\
+\vspace{1cm}
+\only<2->{
+\begin{center} 
+ $z = e^{sT_e}$ ? \only<3>{\textbf{NON.}}
+\end{center}
+} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Calcul direct par l'analogique}
+$z = e^{sT_e}$ ne fonctionne pas... Pourquoi ?\\
+\vspace{0.5cm}
+\only<2->{
+\textbf{Problème 1 }: Les fonctions de transferts doivent être des fractions rationnelles...\\
+\vspace{0.5cm}
+Or, si $H(s)$ est une fraction rationnelle $H(z = e^{sT_e})$ n'est pas une fraction rationnelle...\\
+\vspace{0.5cm}
+}
+
+\only<3->{
+\textbf{Problème 2} : Un système stable en analogique et converti de cette manière n'est pas forcément stable en numérique...\\
+
+}
+
+\only<4->{
+\vspace{0.5cm}
+\begin{block}{}
+Nécessité de trouver une correspondance qui remplisse ces deux critères...
+\end{block}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Calcul direct par l'analogique}
+\begin{center}
+\begin{tikzpicture}
+\draw[->](0,0)--(0,1) node[above]{$H(s)$};
+\draw[->](0,0)--(1,0) node[right]{$s$};
+\draw (0.5,-0.5) node[text centered]  {\scriptsize fct° transfert  analogique};
+
+
+\draw[thick,blue] (0,0.8).. controls(0.9,0.8) and (0.25,0).. (0.9,0);
+
+\only<2->{
+\draw[->] (1.2,0.5)--(1.7,0.5);
+\node[rectangle,draw,align=center] (I) at (3,0.5) {$z= f(s)$};
+}
+
+\only<3->{
+\draw[->] (4.2,0.5)--(4.7,0.5);
+
+\draw[->](5,0)--(5,1) node[above]{$H(z)$};
+\draw[->](5,0)--(6,0) node[right]{$z$};
+
+\draw[thick,red] (5,0.8).. controls(5.9,0.5) and (5.25,0.3).. (5.9,0);
+\draw (5.5,-0.5) node[text centered]  { \scriptsize fct° transfert numérique};
+}
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+
+\begin{enumerate}
+\item Choix d'une fonction analogique correspondant au gabarit
+\vspace{0.2cm}
+\item<2->  Choix d'une méthode de conversion pour passer de $s$ à $z$ 
+\vspace{0.2cm}
+\item<3-> Obtention d'une fonction de transfert en $z$ 
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Calcul direct par l'analogique}
+\begin{center}
+\begin{tikzpicture}
+\draw[->](0,0)--(0,1) node[above]{$H(s)$};
+\draw[->](0,0)--(1,0) node[right]{$s$};
+\draw (0.5,-0.5) node[text centered]  {\scriptsize fct° transfert  analogique};
+
+
+\draw[thick,blue] (0,0.8).. controls(0.9,0.8) and (0.25,0).. (0.9,0);
+
+\only<2->{
+\draw[->] (1.2,0.5)--(1.7,0.5);
+\node[rectangle,draw,align=center] (I) at (3,0.5) {$z= f(s)$};
+}
+
+\only<3->{
+\draw[->] (4.2,0.5)--(4.7,0.5);
+
+\draw[->](5,0)--(5,1) node[above]{$H(z)$};
+\draw[->](5,0)--(6,0) node[right]{$z$};
+
+\draw[thick,red] (5,0.8).. controls(5.9,0.5) and (5.25,0.3).. (5.9,0);
+\draw (5.5,-0.5) node[text centered]  { \scriptsize fct° transfert numérique};
+}
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+\begin{itemize}
+\item Approximation de la dérivée 
+\item Invariance impulsionnelle
+\item Transformation Bilinéaire
+\end{itemize}
+
+\end{frame}
+\subsection{Approximation de la dérivée}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+En analogique, \\
+\vspace{0.2cm}
+\[y(t) =  \frac{dx(t)}{dt}  \rightarrow  \; H(s) = s \]\\
+\vspace{0.2cm} 
+\only<2->{
+En discret, on peut écrire:\\
+\vspace{0.2cm}
+\[y(t) = \frac{dy(t)}{dt} \; \;  \approx \; \;  y[n] = \frac{x[n]-x[n-1]}{T_e} \]\\
+\vspace{0.2cm}
+}
+\only<3->{
+\[  y[n] = \frac{x[n]-x[n-1]}{T_e} \; \rightarrow \;  H(z) = \frac{1 -z ^{-1}}{T_e} \]\\
+\vspace{0.2cm}
+}
+
+\only<4->{
+\[\boxed{s  \approx \frac{1-z^{-1}}{T_e}} \]
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Prenons le filtre passe-bas analogique suivant  :
+\[ H(s) = \frac{1}{s+a} \; \;  \leftrightarrow \; \; \frac{dy(t)}{dt} + ay(t) = x(t) \]\\
+
+\only<2->{
+\vspace{0.5cm} 
+\'Etude de la réponse en fréquence afin de pouvoir comparer
+}
+
+\only<3->{
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(j\omega) = \frac{1}{j\omega + a}\]
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+
+\'Etude de la réponse en fréquence du passe-bas analogique afin de pouvoir comparer\\
+\vspace{0.5cm}
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(j\omega) = \frac{1}{j\omega + a}\]\\
+\vspace{0.5cm}
+
+\begin{columns}
+\column{60mm}
+\only<2->{
+\[ |H(j\omega)| = \frac{1}{\sqrt{\omega^2+a^2}} \]
+}
+
+
+\column{60mm}
+\only<2->{
+\[ \text{arg}(H(j\omega)) = -\arctan(\tan(\frac{\omega}{a})) \]
+}
+
+
+\end{columns}
+\vspace{1cm}
+\only<3->{
+\textbf{On ne peut pas tracer sans avoir la valeur de $a$...}
+
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(\nu) = \frac{1}{2j\pi \nu + a}\]\\
+\vspace{0.5 cm}
+$a$ est homogène à... \only<2->{\textbf{une fréquence}} \\
+\vspace{0.5 cm}
+\only<3->{
+Impact de $a$ sur le comportement du filtre ? \\
+\vspace{0.3cm}
+}
+
+\only<4->{
+\begin{columns}[T]
+\column{60mm}
+Si $\nu \rightarrow 0$,\\
+\vspace{0.3cm}
+\[H(\nu) = \frac{1}{2j\pi \nu + a} \rightarrow \frac{1}{a} \]
+
+\column{60mm}
+Si $\nu \rightarrow \infty$,\\
+\vspace{0.3cm}
+\[H(\nu) = \frac{1}{2j\pi \nu + a} \rightarrow \frac{1}{2j\pi \nu} \rightarrow 0 \]
+\end{columns} 
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Impact de $a$ sur le comportement du filtre $H(\nu) = \frac{1}{2j\pi \nu + a}$\\
+\vspace{0.2cm}
+\begin{columns}[T]
+\column{60mm}
+Si $\nu \rightarrow 0$,\\
+\vspace{0.2cm}
+\[H(\nu) = \frac{1}{2j\pi \nu + a} \rightarrow \frac{1}{a} \]
+\only<2->{
+Si $a << 1$,\\
+\[H(\nu) \rightarrow \frac{1}{a} \rightarrow H(\nu \rightarrow 0) >> 1 \]\\
+\vspace{0.2cm}
+Si $a >> 1$,\\
+\[H(\nu)  \rightarrow \frac{1}{a} \rightarrow H(\nu \rightarrow 0) << 1 \]
+}
+
+\column{60mm}
+Si $\nu \rightarrow \infty$,\\
+\vspace{0.2cm}
+\[H(\nu)  \rightarrow \frac{1}{2j\pi \nu} \rightarrow 0 \]\\
+\vspace{1cm}
+\only<3->{
+plus $a$ est grand, plus $H(\nu)$ ira lentement vers 0
+}
+\end{columns} 
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+
+On peut donc tracer la réponse pour différents régimes (suivant $a$)\\
+\vspace{0.5cm}
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(\nu) = \frac{1}{2j\pi \nu + a}\]\\
+\vspace{0.5cm}
+
+\begin{columns}
+\column{60mm}
+
+\only<2->{
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1.9,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1.9,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\draw[color=blue!50!cyan] (1.2,1.25)--(1.4,1.25) node[right,color=black] {\scriptsize $a<<1$};
+\draw[color=blue] (1.2,1)--(1.4,1) node[right,color=black] {\scriptsize $a>>1$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+}
+
+\column{60mm}
+
+\only<2->{
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,-1.5) node[above] {$\scriptstyle \text{arg}(H(\nu))$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.0:1.9,color=blue!50!cyan,samples=30] plot (\x,{-0.01*atan(\x/0.1)});
+\draw[domain=0.0:1.9,color=blue,samples=30] plot (\x,{-0.01*atan(\x/2)});
+
+\draw[color=blue!50!cyan] (1.2,-1.25)--(1.4,-1.25) node[right,color=black] {\scriptsize $a<<1$};
+\draw[color=blue] (1.2,-1)--(1.4,-1) node[right,color=black] {\scriptsize $a>>1$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+}
+
+%\draw[->] (-1,0)--(1,0) node[right] { $\scriptstyle \omega$};
+%\draw[->] (0,-1)-- (0,1) node[above] {$\scriptstyle |H(\omega)|$}; 
+%
+%\draw[domain= 0.5:1,color=blue,samples=30] plot (\x,{\x-1});
+%\draw[domain=-0.5:0.5,color=blue,samples=30] plot (\x,{\x});
+%\draw[domain= -1:-0.5,color=blue,samples=30] %\end{tikzpicture}
+%\end{center}
+
+
+\end{columns}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Maintenant on passe en $z$
+\vspace{0.5cm}
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(z) = \frac{1}{\frac{1-z^{-1}}{T_e}+ a} = \frac{T_e}{1-z^{-1}+ a T_e}\]\\
+\only<2->{
+\vspace{0.5cm} 
+On passe en fréquence, 
+\[H(z) = \frac{T_e}{1-z^{-1}+ a T_e} \rightarrow H(\nu) = \frac{T_e}{1-e^{-j2\pi \nu T_e}+ a T_e}\]
+
+}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Réponse en fréquence du filtre en $z$\\
+\vspace{0.1cm}
+\[H(\nu) =  \frac{T_e}{1-e^{-j2\pi \nu T_e}+ a T_e}\]\\
+\vspace{0.2cm}
+\only<2->{
+En discret, $\nu \in [0,\nu_e/2]$\\
+\vspace{0.2cm}
+}
+\only<3->{
+\begin{columns}
+\column{20mm}
+\[H(0) = \frac{T_e}{a T_e} \]
+\column{50mm}
+\[H(\nu_e/4) = \frac{T_e}{1- j +a T_e} \]
+\column{30mm}
+\[H(\nu_e/2) = \frac{T_e}{2 + a T_e} \]
+\end{columns}
+
+}
+
+\only<4->{
+\begin{columns}
+\column{20mm}
+\[|H(0)| = \frac{T_e}{a T_e} \]
+\column{50mm}
+\[|H(\nu_e/4)| = \frac{T_e}{\sqrt{(1 + aT_e)^2 + 1}} \]
+\column{30mm}
+\[|H(\nu_e/2)| = \frac{T_e}{2 + a T_e} \]
+\end{columns}
+
+}
+
+\only<5->{
+\vspace{0.2cm}
+Comme précédemment, on va avoir $a>> T_e$ et $a<<T_e$
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Réponse en fréquence du filtre en $z$\\
+\vspace{0.1cm}
+\[H(\nu) =  \frac{T_e}{1-e^{-j2\pi \nu T_e}+ a T_e}\]\\
+
+
+\begin{columns}
+\column{60mm}
+
+\only<2->{
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\begin{scope}[xshift=2cm]
+\draw[dashed,domain=-1:-0.065,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[dashed,domain=-1:0,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+\end{scope}
+
+\draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
+\draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
+\draw[dashed] (1,0)node[below] {\scriptsize $f_e/2$}--(1,0.5);
+\end{scope}
+
+
+\end{tikzpicture}
+\end{center}
+}
+
+\column{60mm}
+
+\only<2->{
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,-0.8)  -- (0,0.8) node[above] {$\scriptstyle \text{arg}(H(\nu))$}  ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+%
+%\draw[domain=0.1:1.9,color=blue!50!cyan,samples=30] plot (\x,{-0.1*sin(\x/(2*pi))});
+%\draw[domain=-1:1,color=blue,samples=50] plot (\x,{sin(acos((\x))});
+%\begin{scope}[xshift=1cm]
+\draw[dashed,domain=0:2,color=blue!50!cyan,samples=30] plot (\x,{-0.01*atan(-sin(3.14*\x r)/(1-cos(3.14*\x r)+0.1))});
+\draw[dashed,domain=0:2,color=blue,samples=30] plot (\x,{-0.01*atan(-sin(3.14*\x r)/(1-cos(3.14*\x r)+10))});
+\draw[domain=0:1,color=blue!50!cyan,samples=30] plot (\x,{-0.01*atan(-sin(3.14*\x r)/(1-cos(3.14*\x r)+0.1))});
+\draw[domain=0:1,color=blue,samples=30] plot (\x,{-0.01*atan(-sin(3.14*\x r)/(1-cos(3.14*\x r)+10))});
+%\end{scope}
+
+\draw[color=blue!50!cyan] (1.2,-1.25)--(1.4,-1.25) node[right,color=black] {\scriptsize $a<<1$};
+\draw[color=blue] (1.2,-1)--(1.4,-1) node[right,color=black] {\scriptsize $a>>1$};
+\draw[dashed] (1,-0.5)node[below] {\scriptsize $f_e/2$}--(1,0);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+}
+
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+On peut maintenant comparer le continu et le discret:\\ 
+\vspace{0.3cm}
+\begin{columns}
+\column{60mm}
+continu $\nu \in [0,\infty]$:
+\[H(\nu) = \frac{1}{2j\pi \nu + a}\]
+\vspace{0.1cm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1.5] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1.9,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1.9,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\draw[color=blue!50!cyan] (1.2,1.25)--(1.4,1.25) node[right,color=black] {\scriptsize $a<<1$};
+\draw[color=blue] (1.2,1)--(1.4,1) node[right,color=black] {\scriptsize $a>>1$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\column{60mm}
+discret $\nu \in [0,\nu_e/2]$:
+\[H(\nu) = \frac{T_e}{1-e^{-j2\pi \nu T_e}+ a T_e}\]
+\vspace{0.1cm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1.5] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\begin{scope}[xshift=2cm]
+\draw[dashed,domain=-1:-0.065,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[dashed,domain=-1:0,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+\end{scope}
+
+\draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
+\draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
+\draw[dashed] (1,0)node[below] {\scriptsize $f_e/2$}--(1,0.5);
+\end{scope}
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{columns}
+\begin{itemize}
+\item On perd les caractéristiques du filtres au delà de $f_e/2$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Resumé:
+\only<2->{
+\[ y(t) = \frac{dy(t)}{dt} \; \;  \approx \; \;  y[n] = \frac{x[n]-x[n-1]}{T_e} \rightarrow \boxed{s  \approx \frac{1-z^{-1}}{T_e}} \]
+\vspace{0.1cm}
+}
+\only<3->{
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(z) = \frac{1}{\frac{1-z^{-1}}{T_e}+ a} = \frac{T_e}{1-z^{-1}+ a T_e}\]
+}
+
+\only<4->{
+\begin{columns}
+\column{60mm}
+\vspace{0.1cm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1.25] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1.9,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1.9,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\draw[color=blue!50!cyan] (1.2,1.25)--(1.4,1.25) node[right,color=black] {\scriptsize $a<<1$};
+\draw[color=blue] (1.2,1)--(1.4,1) node[right,color=black] {\scriptsize $a>>1$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\column{60mm}
+\vspace{0.1cm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1.25] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\begin{scope}[xshift=2cm]
+\draw[dashed,domain=-1:-0.065,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[dashed,domain=-1:0,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+\end{scope}
+
+\draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
+\draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
+\draw[dashed] (1,0)node[below] {\scriptsize $f_e/2$}--(1,0.5);
+\end{scope}
+
+
+\end{tikzpicture}
+\end{center}
+
+\end{columns}
+
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs: Approximation de la dérivée}
+Remarques:\\
+\vspace{0.1cm}
+\begin{itemize}
+\item On a approximé la dérivée d'un certaine manière mais d'autres formules plus complexes sont possibles...
+\item Possiblement difficile de synthétiser des filtres passe-haut.. 
+\end{itemize}
+\label{rajouter passe haut si le temps le permet}
+\end{frame}
+
+\subsection{Invariance impulsionnelle}
+\begin{frame}
+\frametitle{Invariance impulsionnelle}
+Approche plus "directe"\\
+\vspace{0.1cm}
+\only<2->{
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H(s)$};
+		\draw (1,-1) node[text centered] {\scriptsize Fct° trsf. analog.};
+		\node[rectangle,draw,align=center] (D) at (4,0) {$h(t)$};
+		\draw (4,-1) node[text centered] {\scriptsize Rep. imp. analog.};
+		\node[rectangle,draw,align=center] (N) at (7,0) {$h[n]$};
+				\draw (7,-1) node[text centered] {\scriptsize Rep. imp. discr.};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. filtre}
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(N);
+		\draw[->] (N)--(B);
+\end{tikzpicture}
+\end{center}
+}
+\end{frame}
 
 \end{document}

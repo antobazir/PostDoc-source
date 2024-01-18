@@ -1,0 +1,48 @@
+filtre RII cours Daniel 
+- ordre peu elevé (c'est quoi l'ordreà) donc petit mais pas forcément stable
+
+- une méthode possible de  synthèse de filtre RII numérique consiste à prendre la réponse impulsionnelle du filtre
+analogique et à l'échantillonner -> Pas ouf surtout le filtre a une réponse 
+impulsionnelle de largeur plus grande que la "bande" d'échantillonnage.
+
+-  méthode de la transfor bilinéaire.
+on doit passer de la variable  p à la variable z -> évite le problème précédent mais
+induit d'autres distorsions (compensables)
+
+-en pratique :
+"a) On définit les caractéristiques du filtre numérique à réaliser
+b) On définit le facteur d’échelle k par correspondance de 2 fréquences f d0 et f an0 . (généralement
+on normalise le plan analogique donc ω an0 = 1).
+c) On convertit les fréquences du filtre numérique (zéro, fréquence de coupure, valeur max, ...)
+en fréquences correspondantes au domaine analogique.
+d) On détermine la fonction de transfert H a (p) du filtre analogique répondant aux exigences.
+e) On applique à H a (p) la formule de transformation bilinéaire qui donne H d (Z -1 ) et on détermine
+l’équation de récurrence."
+
+filtre RII Bellanger 
+-"fonctions de filtrage beaucoup plus sélectives que celles des filtres RIF à
+quantité de calculs équivalente. Cependant la boucle de réaction complique l’étude
+des propriétés et la conception de ces filtres et amène des phénomènes parasites."
+
+-Cellule du premier ordre :sortie = entrée + 1 échantillon précédent pondéré
+-Cellule du second ordre : sortie = entrée + 2 échantillons précédént pondérés séparément
+-Cellule du second ordre générale 
+
+Méthode synthèse 
+- fonctions modèles : Même contraintes qu'avant. Difficultés du repliment spectral
+lors du passage de l'analogique au numérique.
+-L'invariance impulsionnelle est justifiée mathématiquement par une réécriture de l'équa
+diff d'un système récursif analogique
+- Transfo Bilin.
+	-fraction rationnelle en Z =  fraction rationelle en s 
+	-Re(s) < 0 alors Z module inférieur à 1
+	-Bijection non linéaire entre les fréquences analogiques et numériques -> prédéformation
+
+ 
+
+bouquin 
+(stabilité: réponse impulsionnelle doit être totalement sommable en gros somme de tous
+les termes strictement inférieur à l'infini)
+
+
+Proakis
