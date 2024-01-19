@@ -2063,13 +2063,234 @@ Approche plus "directe"\\
 		\node[rectangle,draw,align=center] (N) at (7,0) {$h[n]$};
 				\draw (7,-1) node[text centered] {\scriptsize Rep. imp. discr.};
 		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
-		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. filtre}
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. filtre};
 		\draw[->] (I)--(D);
 		\draw[->] (D)--(N);
 		\draw[->] (N)--(B);
 \end{tikzpicture}
 \end{center}
 }
+\begin{enumerate}
+\item<3-> On part d'une fonction analogique avec les bonnes propriétés (passe-bas, passe-haut, etc...)
+\item<4-> On calcule sa réponse impulsionnelle en temporel
+\item<5-> On échantillonne cette réponse impulsionnelle 
+\item<6-> On prend la transformée en $z$ de cette réponse impulsionnelle échantillonnée pour obtenir la fonction de transfert
+\end{enumerate}
 \end{frame}
 
+\begin{frame}
+\frametitle{Invariance impulsionnelle}
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H(s)$};
+		\draw (1,-1) node[text centered] {\scriptsize Fct° trsf. analog.};
+		\node[rectangle,draw,align=center] (D) at (4,0) {$h(t)$};
+		\draw (4,-1) node[text centered] {\scriptsize Rep. imp. analog.};
+		\node[rectangle,draw,align=center] (N) at (7,0) {$h[n]$};
+				\draw (7,-1) node[text centered] {\scriptsize Rep. imp. discr.};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. filtre};
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(N);
+		\draw[->] (N)--(B);
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+MAIS...
+\begin{itemize}
+\item<2-> Filtre récursif $\rightarrow$ réponse impulsionnelle infinie...
+\vspace{0.2cm}
+\item<3-> Filtre numérique $\rightarrow$  représentation à l'aide d'un nombre fini de termes...
+\item<4-> \textbf{Comment faire la conversion en pratique ?...}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Invariance impulsionelle}
+Dans les faits, passage direct
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H(s)$};
+		\draw (1,-1) node[text centered] {\scriptsize Fct° trsf. analog.};
+
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. filtre};
+		\draw[->] (I)--(B);
+\end{tikzpicture}
+\end{center}
+\vspace{0.2cm}
+\only<2->{
+\underline{Rappel}: Synthétiser un filtre récursif = déterminer les coeff dans la fonction de transfert 
+}
+\vspace{0.2cm}
+\only<3->{
+\begin{block}{}
+Principe: établir une correspondance mathématique entre les coefficients en analogique et les coefficients en numérique
+\end{block}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Invariance impulsionnelle}
+Chose importante:  Soit une fonction de transfert $H(s)$, et deux entiers $m,n$ tels que $m < n$
+\vspace{0.2cm}
+\[ H(s)  = \frac{1+ a_1 s + a_2 s^2 + \cdots + a_n s^m }{1+ b_1 s + b_2 s^2 + \cdots + b_n s^n} =  \frac{(s-z_1)(s-z_2)...(s-z_n)}{(s-p_1)(s-p_2)...(s-p_n)}\] 
+\vspace{0.2cm}
+zéros : ensemble des $z_n$ \hspace{2 cm}  pôles : ensemble des $p_n$
+\vspace{0.2cm}
+\only<2->{
+Il est possible de décomposer $H(s)$ en éléments simples\\
+\vspace{0.1cm}
+\[ H(s)  =  \frac{(s-z_1)(s-z_2)...(s-z_n)}{(s-p_1)(s-p_2)...(s-p_n)} = \frac{c_1}{s-p_1} + \frac{c_2}{s-p_2} + \cdots + \frac{c_n}{s-p_n} \] 
+}
+
+\only<3->{
+\underline{Important }: les pôles $p_n$ ne changent pas de valeur entre les deux représentations
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Invariance impulsionnelle}
+Pour un filtre récursif analogique, on peut donc écrire en général 
+\[ H(s)  =  \frac{(s-z_1)(s-z_2)...(s-z_n)}{(s-p_1)(s-p_2)...(s-p_n)} = \frac{c_1}{s-p_1} + \frac{c_2}{s-p_2} + \cdots + \frac{c_n}{s-p_n} \] \\
+\vspace{0.2cm}
+Un filtre récursif quelconque peut donc s'écrire comme une somme de filtres passe-bas:\\
+\vspace{0.2cm}
+\[ H(s)  = \frac{c_1}{s-p_1} + \frac{c_2}{s-p_2} + \cdots + \frac{c_n}{s-p_n} = H_1(s) + H_2(s) + \cdots  + H_n(z)\]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Invariance impulsionnelle} 
+Pour un filtre passe bas avec un pôle $p_k$,\\
+\vspace{0.1cm}
+\[ H_k(s) = \frac{c_k}{s-p_k} \rightarrow h_k(t) = c_k e^{p_k t} \]\\
+\vspace{0.1cm}
+\only<2->{
+On peut alors appliquer le principe d'invariance impulsionnelle et échantillonner la réponse impulsionnelle\\
+\vspace{0.1cm}
+\[h_k(t) = c_k e^{p_k t} \rightarrow  h_k[n] = c_k e^{p_k n T_e} \]\\
+}
+\only>3->{
+\vspace{0.1cm}
+On prend alors la transformée en $z$ de $h_k[n]$
+\vspace{0.1cm}
+\[ h_k[n] = c_k e^{p_k n T_e} \rightarrow H_k(z)= \frac{c_k}{1-e^{p_k T_e}z^{-1}}\]
+}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Invariance impulsionnelle} 
+Donc \\
+\vspace{0.1cm}
+\[ H(s)  =  \frac{1+ a_1 s + a_2 s^2 + \cdots + a_n s^m }{1+ b_1 s + b_2 s^2 + \cdots + b_n s^n} = \frac{c_1}{s-p_1} + \frac{c_2}{s-p_2} + \cdots + \frac{c_n}{s-p_n} \]\\
+\vspace{0.1cm}
+\only<2->{
+et,
+\[ H_k(s) = \frac{c_k}{s-p_k} \rightarrow H_k(z)= \frac{c_k}{1-e^{p_k T_e}z^{-1}}\]
+}
+\only<3->{
+\[ H(s) = \frac{1+ a_1 s + a_2 s^2 + \cdots + a_n s^m }{1+ b_1 s + b_2 s^2 + \cdots + b_n s^n}  \] 
+
+\[ \rightarrow H(z) = \frac{c_1}{1-e^{p_1 T_e}z^{-1}} + \frac{c_2}{1-e^{p_2 T_e}z^{-1}}  + \cdots + \frac{c_n}{1-e^{p_n T_e}z^{-1}} \]
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Invariance impulsionnelle: Résumé} 
+Pour résumer: \\
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H(s)$};
+		\draw (1,-1) node[text centered] {\scriptsize Fct° trsf. analog.};
+		\node[rectangle,draw,align=center] (D) at (5.5,0) {$p_1, p_2, \cdots, p_n$\\  $c_1, c_2, \cdots, c_n$};
+		\draw (5.5,-1) node[text centered] {\scriptsize Coeff. \& pôles. analog.};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. num.};
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(B);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\begin{enumerate}
+\item<2-> On choisit un filtre $H(s)$ analogique
+\vspace{0.5cm} 
+\item<3-> On calcule sa décomposition en éléments simple pour obtenir les pôles $p_1, p_2, \cdots, p_n$ et les constantes $c_1, c_2, \cdots, c_n$ 
+\vspace{0.5cm} 
+\item<4-> On calcule $H(z)$ en sommant les fonctions  $\frac{\displaystyle c_k}{ \displaystyle 1-e^{p_k T_e}z^{-1}}$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Invariance impulsionnelle: Remarques} 
+
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H(s)$};
+		\draw (1,-1) node[text centered] {\scriptsize Fct° trsf. analog.};
+		\node[rectangle,draw,align=center] (D) at (5.5,0) {$p_1, p_2, \cdots, p_n$\\  $c_1, c_2, \cdots, c_n$};
+		\draw (5.5,-1) node[text centered] {\scriptsize Coeff. \& pôles. analog.};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. num.};
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(B);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+Remarques :
+\vspace{0.1cm}
+\begin{itemize}
+\item<2-> Méthode utilisée dans certains calculateurs pour simuler des systèmes analogiques
+\vspace{0.3cm} 
+\item<3-> Comme dans la méthode précedente, le repliment spectral due à l'échantillonnage  rend compliquée la conversion des filtres passe-haut sans fréquence d'échantillonnage importante...
+
+\end{itemize}
+\end{frame}
+
+\subsection{Transformation Bilinéaire}
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire} 
+Synthèse de filtre récursifs par le biais de filtres analogiques :  $H(s) \rightarrow H(z)$\\
+Propriétés requises : \\
+\begin{itemize}
+\item<2-> fraction rationnelle en $s$ $\rightarrow$ fraction rationnelle en $z$
+\vspace{0.5cm}
+\item<3-> filtre stable en  $s$ $\rightarrow$ filtre stable en  $z$
+\vspace{0.5cm}
+\item<4-> Conservation des propriétés en amplitude (ex: passe-haut $\rightarrow$ passe-haut)
+\end{itemize}
+\only<5->{
+\vspace{0.4cm}
+Bon compromis : \textbf{Transformation bilinéaire}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire} 
+Transformation bilinéaire : 
+\[ s = \frac{2}{T_e} \frac{1-z^{-1}}{1+z^{-1}} \] \\
+\vspace{0.2cm}
+\only<2->{
+On peut le comprendre ainsi : \\
+\vspace{0.1cm}
+\[ z = e^{sT_e} =  \frac{e^{s\frac{T_e}{2}}}{e^{-s\frac{T_e}{2}}} \approx \frac{1 + s \frac{T_e}{2}}{1 - s \frac{T_e}{2}}  \]
+
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Appliquons la transformation bilinéaire au filtre étudié précédemment:
+\[ H(s) = \frac{1}{s+a} \]\\
+\vspace{0.2cm}
+\only<3->{
+\[  H(s) = \frac{1}{s+a} \rightarrow H(z) = \frac{1}{\frac{2}{T_e} \frac{1-z^{-1}}{1+z^{-1}}+a} =\frac{T_e(1+z^{-1})}{2(1-z^{-1}) + a(1+z^{-1})} \]
+}
+\vspace{0.2cm}
+\only<4->{
+Etudions la réponse en fréquence du filtre numérique...
+}
+\end{frame}
 \end{document}
