@@ -1,0 +1,59 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+
+\section*{Résumé \& Méthodes chapitre II}
+\subsection*{Transformée de Laplace}
+\subsubsection*{Définition}
+	Transformée de Laplace monolatérale : 
+	\[L\{f\}(s) = \displaystyle \int^{\infty}_{0} f(t) e^{-st} \; dt\]\\ 
+	\vspace{0.3cm}
+	Transformée de Laplace bilatérale : \[L\{f\}(s) = \displaystyle \int^{\infty}_{-\infty} f(t) e^{-st} \; dt\]\\
+
+Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide. \\
+
+Rappel :  $s$ est une variable complexe. La transformée de Laplace d'une fonction est une fonction complexe
+
+
+
+\subsubsection*{Propriétés}
+
+\begin{itemize}
+\item Linéarité:  $L\{af+g\}(s) = a L\{ f\}(s) + L \{ g \} (s)$
+\item Dérivation : $ L\{f'\}(s) = \; s L\{f \}(s)$
+\item Intégration : $ L\{F\}(s) = \frac{\displaystyle 1}{\displaystyle s} L\{f \}(s) $
+\item Convolution : $ L\{f \star g \} = L\{f \}(s) \cdot L \{ g \} (s)  $
+\end{itemize}
+
+\subsubsection*{Transformées Usuelles}
+\begin{itemize}
+\item $u(t)$  $\rightarrow \frac{\displaystyle 1}{\displaystyle p} $
+\item $r(t) = t$  $\rightarrow \frac{\displaystyle 1}{ \displaystyle p^2} $
+\item $f(t) = e^{-at}$ $\rightarrow \frac{\displaystyle 1}{\displaystyle p+a} $
+\item $\delta (t)$ $\rightarrow 1$ 
+\item $sin(\omega_0 t)$ = $\rightarrow \frac{\displaystyle \omega_0^2}{ \displaystyle p^2 + \omega_0^2} $
+\end{itemize}
+
+\subsection*{Transformée de Fourier}
+\subsubsection*{Définition}
+\[TF\{ f \}(\nu) = \displaystyle \int^{\infty}_{-\infty} f(t) e^{-j2\pi \nu t} dt\]
+
+Rappel :  $\nu$ est une fréquence, et donc un réel. La transformée de Fourier d'une fonction est une fonction complexe
+
+\subsubsection*{Lien avec Laplace}
+\textbf{La transformée de Fourier} est un cas \textbf{particulier de la transformée de Laplace bilatérale.} En effet $s= \sigma + j \omega$ pour la variable de Laplace en général. La transformée de Fourier correspond au cas où $s = j \omega = j 2 \pi \nu$ avec $\nu$ la fréquence d'excitation.
+
+\subsubsection*{Notion de spectre}
+Si f(t) est une fonction, alors $F(\nu) = TF\{f\}(\nu)$ est appelé \textbf{spectre de la fonction $f$}
+\end{document}

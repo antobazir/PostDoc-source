@@ -1364,10 +1364,9 @@ Remarques:
 
 \end{frame}
 
-\subsection{Synthèse de filtres récursifs}
 
 \begin{frame}
-\frametitle{Synthèse de filtres récursifs: Différentes méthodes}
+\frametitle{Synthèse de filtres non-récursifs: Différentes méthodes}
 Les méthodes suivent toute le même principe général :
 
 \begin{center}
@@ -1400,6 +1399,8 @@ Tchebychev :\only<11->{spécification complète.
 \end{itemize}
 
 \end{frame}
+\subsection{Synthèse de filtres récursifs}
+
 
 \begin{frame}
 \frametitle{Synthèse de filtres récursifs : Principe général}
@@ -1629,7 +1630,7 @@ Prenons le filtre passe-bas analogique suivant  :
 }
 
 \only<3->{
-\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(j\omega) = \frac{1}{j\omega + a}\]
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(\nu) = \frac{1}{2j\pi \nu + a}\]
 }
 \end{frame}
 
@@ -1638,7 +1639,7 @@ Prenons le filtre passe-bas analogique suivant  :
 
 \'Etude de la réponse en fréquence du passe-bas analogique afin de pouvoir comparer\\
 \vspace{0.5cm}
-\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(j\omega) = \frac{1}{j\omega + a}\]\\
+\[H(s) = \frac{1}{s+a} \; \;  \rightarrow \; \; H(\nu) = \frac{1}{2j\pi \nu + a}\]\\
 \vspace{0.5cm}
 
 \begin{columns}
@@ -2286,11 +2287,251 @@ Appliquons la transformation bilinéaire au filtre étudié précédemment:
 \[ H(s) = \frac{1}{s+a} \]\\
 \vspace{0.2cm}
 \only<3->{
-\[  H(s) = \frac{1}{s+a} \rightarrow H(z) = \frac{1}{\frac{2}{T_e} \frac{1-z^{-1}}{1+z^{-1}}+a} =\frac{T_e(1+z^{-1})}{2(1-z^{-1}) + a(1+z^{-1})} \]
+\[  H(s) = \frac{1}{s+a} \rightarrow H(z) = \frac{1}{\frac{2}{T_e} \frac{1-z^{-1}}{1+z^{-1}}+a} =\frac{T_e(1+z^{-1})}{2(1-z^{-1}) + aT_e(1+z^{-1})} \]
 }
 \vspace{0.2cm}
 \only<4->{
 Etudions la réponse en fréquence du filtre numérique...
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Réponse en fréquence :
+\vspace{0.2cm}
+\[ H(z)  =\frac{T_e(1+z^{-1})}{2(1-z^{-1}) + aT_e(1+z^{-1})}\]
+ \vspace{0.2cm}
+ \only<2->{
+\[ \rightarrow H(\nu) =  \frac{T_e(1+e^{-j2 \pi \nu T_e})}{2(1-e^{-j2 \pi \nu T_e}) + aT_e(1+e^{-j2 \pi \nu T_e})}\]
+\vspace{0.2cm}
+}
+ \only<3->{
+\[ \rightarrow H(\nu) =  \frac{jT_e\; \cos(\pi \nu T_e)}{2\sin(\pi \nu T_e)+ ajT_e\; \cos(\pi \nu T_e)}\]
+}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Réponse en fréquence :  Amplitude
+\vspace{0.2cm}
+\[H(\nu) =  \frac{jT_e\; \cos(\pi \nu T_e)}{2\sin(\pi \nu T_e)+ ajT_e\; \cos(\pi \nu T_e)}\]
+\vspace{0.2cm}
+\[|H(\nu)| =  \frac{|jT_e\; \cos(\pi \nu T_e)|}{|2\sin(\pi \nu T_e)+ ajT_e\; \cos(\pi \nu T_e)|}\]
+\vspace{0.2cm}
+\[|H(\nu)| =  \frac{|T_e\; \cos(\pi \nu T_e)|}{\sqrt{4\sin^2(\pi \nu T_e)+ a^2T_e^2\; \cos^2(\pi \nu T_e)}}\]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+\vspace{0.2cm}
+\[|H(\nu)| =  \frac{|T_e\; \cos(\pi \nu T_e)|}{\sqrt{4\sin^2(\pi \nu T_e)+ a^2T_e^2\; \cos^2(\pi \nu T_e)}}\]
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (-1,0)--(1,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[dashed,domain=-0.9:0.9,color=blue,samples=30] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (10*cos(3.14*\x r))^2))});
+\draw[domain=-0.5:0.5,color=blue,samples=30] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (10*cos(3.14*\x r))^2))});
+\draw[dashed,domain=-0.9:-0.1,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2)});
+\draw[domain=-0.5:-0.1,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2))});
+\draw[dashed,domain=0.1:0.9,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2))});
+\draw[domain=0.1:0.5,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2))});
+
+\draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
+\draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
+\draw[dashed] (0.5,0)node[below] {\scriptsize $\nu_e/2$}--(0.5,0.5);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Réponse en fréquence : Phase
+\vspace{0.2cm}
+\[H(\nu) =  \frac{jT_e\; \cos(\pi \nu T_e)}{2\sin(\pi \nu T_e)+ ajT_e\; \cos(\pi \nu T_e)}\]
+\vspace{0.2cm}
+\[\text{arg}(H(\nu)) =  \text{arg}(jT_e\; \cos(\pi \nu T_e)) - \text{arg}(2\sin(\pi \nu T_e)+ ajT_e\; \cos(\pi \nu T_e))\]
+\vspace{0.2cm}
+\[\text{arg}(H(\nu)) =  \pm \frac{\pi}{2}- \arctan(\frac{aT_e\; \cos(\pi \nu T_e)}{2\sin(\pi \nu T_e)})\]
+\vspace{0.2cm}
+\[\text{arg}(H(\nu)) =  \pm \frac{\pi}{2}- \arctan(\frac{aT_e}{2}\frac{ 1}{\tan(\pi \nu T_e)})\]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Réponse en fréquence : Phase
+\vspace{0.2cm}
+\[\text{arg}(H(\nu)) =  \pm \frac{\pi}{2}- \arctan(\frac{aT_e}{2}\frac{ 1}{\tan(\pi \nu T_e)})\]
+
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (-1,0)--(1,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,-1) -- (0,1) node[above] {$\scriptstyle \text{arg}(H(\nu))$} ;
+
+\draw[dashed,domain=0.01:0.9,color=blue!50!cyan,samples=30] plot (\x,{1/2 - 1/180*atan(0.1/2*1/tan(3.14*\x r))});
+\draw[dashed,domain=-0.9:-0.01,color=blue!50!cyan,samples=30] plot (\x,{-1/2 - 1/180*atan(0.1/2*1/tan(3.14*\x r))});
+\draw[domain=0.01:0.5,color=blue!50!cyan,samples=30] plot (\x,{1/2 - 1/180*atan(0.1/2*1/tan(3.14*\x r))});
+\draw[domain=-0.5:-0.01,color=blue!50!cyan,samples=30] plot (\x,{-1/2 - 1/180*atan(0.1/2*1/tan(3.14*\x r))});
+ 
+
+\draw[dashed,domain=0.01:0.9,color=blue,samples=30] plot (\x,{1/2 - 1/180*atan(10/2*1/tan(3.14*\x r))});
+\draw[dashed,domain=-0.9:-0.01,color=blue,samples=30] plot (\x,{-1/2 - 1/180*atan(10/2*1/tan(3.14*\x r))});
+\draw[domain=0.01:0.5,color=blue,samples=30] plot (\x,{1/2 - 1/180*atan(10/2*1/tan(3.14*\x r))});
+\draw[domain=-0.5:-0.01,color=blue,samples=30] plot (\x,{-1/2 - 1/180*atan(10/2*1/tan(3.14*\x r))});
+
+\draw[color=blue!50!cyan] (-0.8,0.75) node[right,color=black] {\scriptsize $a<<T_e$} --(-1,0.75) ;
+\draw[color=blue] (-0.8,1)node[right,color=black] {\scriptsize $a>>T_e$} --(-1,1) ;
+\draw[dashed] (0.5,0)node[below] {\scriptsize $\nu_e/2$}--(0.5,0.5);
+\end{scope} 
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Comparaison analogique/numérique par la transfo bilinéaire.
+\vspace{0.2cm}
+\begin{columns}
+\column{60mm}
+
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (0,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[domain=0.065:1.9,color=blue!50!cyan,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 0.1^2))});
+\draw[domain=0:1.9,color=blue,samples=30] plot (\x,{1/sqrt((10*\x)^2 + 2^2))});
+
+\draw[color=blue!50!cyan] (1.2,1.25)--(1.4,1.25) node[right,color=black] {\scriptsize $a<<1$};
+\draw[color=blue] (1.2,1)--(1.4,1) node[right,color=black] {\scriptsize $a>>1$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+\column{60mm}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2] 
+\draw[->] (-1,0)--(1,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0) -- (0,1.5) node[above] {$\scriptstyle |H(\nu)|$} ;
+
+%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+
+\draw[dashed,domain=-0.9:0.9,color=blue,samples=30] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (10*cos(3.14*\x r))^2))});
+\draw[domain=-0.5:0.5,color=blue,samples=30] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (10*cos(3.14*\x r))^2))});
+\draw[dashed,domain=-0.9:-0.1,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2)});
+\draw[domain=-0.5:-0.1,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2))});
+\draw[dashed,domain=0.1:0.9,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2))});
+\draw[domain=0.1:0.5,color=blue!50!cyan,samples=15] plot (\x,{abs(cos(3.14*\x r))/(sqrt((2*sin(3.14 *\x r))^2 + (0.1*cos(3.14*\x r))^2))});
+
+\draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
+\draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
+\draw[dashed] (0.5,0)node[below] {\scriptsize $\nu_e/2$}--(0.5,0.5);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+
+\end{columns}
+\only<2->{
+\vspace{0.2cm}
+Contrairement aux deux méthodes précédentes, on comprime l'intégralité de la réponse en fréquence analogique sur $[0,\nu_e/2]$ $\rightarrow$ en numérique \textbf{Pas de repliement spectral} 
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Synthèse de filtres récursifs:Transformation Bilinéaire}
+Bon comportement en amplitude, mais...
+\vspace{0.1cm}
+\[s = \frac{2}{T_e} \frac{1-z^{-1}}{1+z^{-1}}\]\\
+\vspace{0.1cm}
+\only<2->{
+Si on passe en fréquence, 
+\[2j\pi\nu_a T_e = \frac{2}{T_e} \frac{1-e^{-2j\pi \nu_n T_e}}{1+e^{-2j\pi \nu_n T_e}}\]\\
+}
+\only<3->{
+\vspace{0.1cm}
+\[ \rightarrow \nu_a = \frac{1}{ \pi T_e} \tan(\pi \nu_n T_e)\]
+}
+\only<4->{
+\vspace{0.1cm}
+Si je choisis une fréquence de coupure $\nu_{c,a}$ en analogique, la fréquence de coupure $\nu_{c,n}$ après la transformation sera différente... \only<5->{$\rightarrow$\textbf{ On pré-déforme les fréquences avant la transfo bilin.}}
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Transformation bilinéaire : Résumé}
+\begin{center}
+\begin{tikzpicture}
+		\node[rectangle,draw,align=center] (I) at (1,0) {$H(s)$};
+		\draw (1,-1) node[text centered] {\scriptsize Fct° trsf. analog.};
+		\node[rectangle,draw,align=center] (D) at (4,0) {$H(s_d)$};
+		\draw (4,-1) node[text centered] {\scriptsize Fct° trsf. prédef.};
+		\node[rectangle,draw,align=center] (N) at (7,0) {$s = \frac{\displaystyle  2}{\displaystyle  T_e} \frac{\displaystyle 1-z^{-1}}{\displaystyle  1+z^{-1}}$};
+				\draw (7,-1) node[text centered] {\scriptsize Transfo. Bilin.};
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H(z)$};	
+		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. filtre num.};
+		\draw[->] (I)--(D);
+		\draw[->] (D)--(N);
+		\draw[->] (N)--(B);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}
+\item<2-> On sélectionne une filtre analogique avec les bonnes propriétés en fréquence 
+\item<3-> On prédéforme les fréquences en analogique 
+\item<4-> On applique la transformation bilinéaire
+\end{enumerate}
+\end{frame}
+
+\subsection{Résumé de la synthèse de filtre}
+\begin{frame}
+\frametitle{Résumé: Synthèse de filtres}
+Synthèse de filtres = \textbf{Détermination des coefficients de la fonction de transfert/réponse impulsionnelle.}\\
+\vspace{0.1cm}
+\only<2->{
+\begin{columns}
+\column{60mm}
+Filtres non-récursifs: \\
+\vspace{0.1cm}
+\begin{itemize}
+\item<3-> Méthode des fenêtres
+\item<4-> Méthode l'échantillonnage en fréquence
+\end{itemize}
+
+\column{60mm}
+\only<5->{
+Filtres récursifs: 
+\begin{itemize}
+\item<6-> Approximation de la dérivée 
+\item<7-> Invariance impulsionnelle
+\item<8-> Invariance impulsionnelle
+
+\end{itemize}
+}
+
+\end{columns}
+
 }
 \end{frame}
 \end{document}

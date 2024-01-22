@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+
+\section*{Résumé \& Méthodes chapitre I}
+Dans ce chapitre, on a donné quelqes défintions générales... Puis 2 notions importantes ont été abordées :
+\begin{itemize}
+\item  Linéarité 
+\item Invariance dans le temps
+\end{itemize} 
+
+\subsection*{Définitions générales}
+\textbf{Filtre} : "En traitement du signal, un filtre est un dispositif ou un processus permettant de retirer des composantes ou des parties indésirables d'un signal." (wikipedia.org)\\
+
+\textbf{Comment définir un filtre} :
+\begin{itemize}
+\item Analogique/Numérique
+\item Actif/Passif (analogique)
+\item Causal/Non causal (numérique)
+\item Linéaire/Non linéaire 
+\item Invariant/Non invariant dans le temps
+\end{itemize}
+
+\subsection*{Notion de linéarité}
+\textbf{Définition Mathématique}:  $f : x \in \mathbb{R} \rightarrow f(x) \in \mathbb{R} $ et $(x_1,x_2,a,b) \in \mathbb{R}^4$ \\ alors $f$ linéaire si, \\
+
+\[f(a x_1 + b x_2) = a f(x_1) + b f(x_2)\]
+
+\textbf{Un système linéaire transforme donc une combinaison linéaire d'entrée en combinaison linéaire de sortie.}\\
+
+\subsection*{Notion d'invariance dans le temps}
+\textbf{Définition Mathématique}:
+Soit $F$ un filtre de telle sorte que, pour $x(t)$ et $y(t)$ deux fonctions , $ \forall \; t \in \mathbb{R}, \; y(t) = F(x(t))$ ou $ \forall \; n \in \mathbb{N}, \; y[n] = F(x[n])$ \\
+
+le filtre $F$  est dit \textbf{invariant dans le temps} si \\
+
+\[\forall \tau \in \mathbb{R}, \;\; F(x(t-\tau)) = y(t-\tau)\]\\
+
+\[\forall k \in \mathbb{N}, \;\; F(x[n-k]) = y[n-k]\]\\
+
+En somme, \textbf{la sortie du système ne dépend pas du moment auquel l'entrée est appliquée}.
+
+\subsection*{Système Linéaire et Invariant dans le temps}
+\textbf{Important}: Tous les systèmes décrits dans ce cours sont linéaires et invariants dans le temps. \textbf{C'est grâce à ces deux propriétés qu'on peut écrire des fonctions de transferts et prédire la sortie d'un système à partir de son entrée et de sa réponse impulsionnelle ou sa fonction de transfert.}\\
+
+\begin{center}
+\textbf{Linéarité + Invariance dans le temps $\rightarrow$ fonction de transfert}
+\end{center}
+
+\end{document}
