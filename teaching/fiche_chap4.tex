@@ -1,0 +1,93 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage[margin=0.7in]{geometry}
+%\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+\title{Résumé \& Méthodes chapitre IV: Transformée en $z$}
+\maketitle
+\section{Transformée en $z$}
+La transformée en $z$ est un outil d'analyse des signaux discrets avec des propriétés similaires à la transformée de Laplace.
+\subsection{Définition}
+Soit $s[n]$ un signal discret, \\
+\[\boxed{TZ\{ x \}(z) = \sum_{n = -\infty}^{\infty} x[n] z^{-n}} \]
+\\
+Tout comme la transformée de Laplace il existe aussi une variante monolatérale:
+
+\[TZ\{ x \}(z) = \sum_{n = 0}^{\infty} x[n] z^{-n} \]\\
+
+\underline{Remarques:} Bien que le signal d'entrée soit \textbf{discret}, la spectre résultant est bien une \textbf{fonction continue}.
+
+\subsection{Propriétés}
+\begin{itemize}
+\item Linéarité : $TZ(a x_1[n] + b x_2[n]) = a\cdot TZ (x_1[n]) + b\cdot TZ(x_2[n])$
+\vspace{0.3cm}
+\item Convolution : $TZ(x_1[n] \star x_2[n]) = TZ(x_1) TZ(x_2)$
+\vspace{0.3cm}
+\item Décalage temporel : $ TZ\{x[n-k]\} = X(z)\cdot z^{-k} $
+\end{itemize}
+\vspace{0.3cm}
+
+\subsection{Transformées Usuelles}
+\begin{itemize}
+\item $TZ\{ u[n] \}  = \frac{\displaystyle 1}{\displaystyle 1-z^{-1}}$ si $|z|>1$
+\item $TZ\{ \delta [n] \}  = 1$
+\item $TZ\{ n\cdot u[n] \} = \frac{\displaystyle z^{-1}}{\displaystyle (1-z^{-1})^2}$ si $|z|>1$
+\item $TZ\{ \sin(\omega_0 \cdot n )\cdot u [n] \}  = \frac{\displaystyle z^{-1} \sin(\omega_0)}{\displaystyle 1-2z^{-1} \cos(\omega_0) +z^{-2}}$ si $|z|>1$
+\end{itemize}
+
+\newpage
+\subsection{Lien avec les autres transformées}
+La transformée en $z$ permet de définir les transformées de Laplace et de Fourier pour des signaux discrets:
+
+\subsection{Transformée de Laplace}
+Soit $x[n]$ un signal discret,\\
+ 
+\[ \boxed{L\{x[n] \} = \sum_{n = -\infty}^{\infty} x[n] e^{-snT_e}} \] 
+
+\subsection{Transformée de Fourier}
+Soit $x[n]$ un signal discret,\\
+
+\[\boxed{TF\{x[n] \} = \sum_{n = -\infty}^{\infty} x[n] e^{-j2\pi nT_e}}  \]
+\vspace{0.3cm}
+\section{Transformée de Fourier Discrète (TFD)}
+Si la transformée en $z$ est un outil adaptée aux signaux discrets, le fait qu'elle fasse intervenir une somme infinie la rend toujours inadaptée aux calculateurs numériques... La TFD répond à cette problématique.
+\subsection{Définition}
+soit $x[n]$ un signal discret,
+\[ TFD\{ x[n] \} =  \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}\]\\
+
+Il s'agit d'une transformée de Fourier avec une \textbf{somme finie de termes} et un\textbf{ nombre fini de points en fréquence}. C'est donc une \textbf{fonction complexe échantillonnée}.
+
+\subsection{Lien avec la transformée de Fourier}
+La TFD est une approximation de la transformée de Fourier du signal discret $x[n]$. Si on prend $N = \infty$ dans la formule précédente, on retrouve la transformée de Fourier. 
+
+\newpage
+\subsection{Zero-padding}
+Il peut arriver qu'on souhaite tracer un spectre contenant plus de point que le signal initial. Le zero-padding permet d'interpoler le spectre d'un signal discret.
+
+
+\subsubsection{Définition}
+Soit un signal $x[n]$ et son spectre $x[N]$ obtenu par TFD
+\[
+\begin{bmatrix} x[1] \\ x[2] \\ \vdots \\ x[N] \end{bmatrix} \; -TFD \rightarrow  
+\begin{bmatrix} X[1] \\ X[2] \\ \vdots \\ X[N] \end{bmatrix}
+\]\\
+\vspace{0.1cm}\\
+On peut alors rajouter le nombre souhaité de zéros à la suite du dernier échantillon du signal.
+\[
+\begin{bmatrix} x[1] \\ x[2] \\ \vdots \\ x[N] \\ 0 \\ \vdots \\ 0 \end{bmatrix} \; -TFD \rightarrow  
+\begin{bmatrix} X^*[1] \\ X^*[2] \\ \vdots \\  \vdots \\  \vdots \\ X^*[N+M] \end{bmatrix}
+\]\\
+
+Des points seront alors ajouter entre les points existants du spectre. Ces points interpolés viennent se placer de façon à construire graduellement la transformée de Fourier (celle avec une infinité de terme) du signal discret $x[n]$
+
+\end{document}

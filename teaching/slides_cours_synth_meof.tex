@@ -1390,7 +1390,7 @@ Principales méthodes de synthèse de filtres non-récursifs:
 \vspace{0.2cm}
 \begin{itemize}
 \item<2-> \textbf{Méthode des fenêtres} \only<7->{: Simple mais ondulation amplitude non-const. identique en bde passante et affablie}
-\item<3-> \textbf{Méthode de l'échantillonnage en fréquence}\only8->{ : Ondulation potentiellement réduite mais tjrs amplitude non-constante}
+\item<3-> \textbf{Méthode de l'échantillonnage en fréquence}\only<8->{ : Ondulation potentiellement réduite mais tjrs amplitude non-constante}
 \item<4-> Méthode des moindres carrés  \only<9->{:idem}
 \item<5-> Méthode itérative par TFD \only<10->{ : amplitude constante possible}
 \item<6-> Méthode par approximation de
@@ -2499,7 +2499,9 @@ Si je choisis une fréquence de coupure $\nu_{c,a}$ en analogique, la fréquence
 \end{center}
 \begin{enumerate}
 \item<2-> On sélectionne une filtre analogique avec les bonnes propriétés en fréquence 
-\item<3-> On prédéforme les fréquences en analogique 
+\vspace{0.2cm}
+\item<3-> On prédéforme les fréquences en analogique avec $\nu_a = \frac{1}{ \pi T_e} \tan(\pi \nu_n T_e)$
+\vspace{0.2cm}
 \item<4-> On applique la transformation bilinéaire
 \end{enumerate}
 \end{frame}
@@ -2508,24 +2510,27 @@ Si je choisis une fréquence de coupure $\nu_{c,a}$ en analogique, la fréquence
 \begin{frame}
 \frametitle{Résumé: Synthèse de filtres}
 Synthèse de filtres = \textbf{Détermination des coefficients de la fonction de transfert/réponse impulsionnelle.}\\
-\vspace{0.1cm}
+\vspace{0.3cm} 
 \only<2->{
 \begin{columns}
 \column{60mm}
-Filtres non-récursifs: \\
+\underline{Filtres non-récursifs}: \\
 \vspace{0.1cm}
 \begin{itemize}
 \item<3-> Méthode des fenêtres
+\vspace{0.1cm}
 \item<4-> Méthode l'échantillonnage en fréquence
 \end{itemize}
 
 \column{60mm}
 \only<5->{
-Filtres récursifs: 
+\underline{Filtres récursifs}: 
 \begin{itemize}
 \item<6-> Approximation de la dérivée 
+\vspace{0.1cm}
 \item<7-> Invariance impulsionnelle
-\item<8-> Invariance impulsionnelle
+\vspace{0.1cm}
+\item<8-> Transformation bilinéaire
 
 \end{itemize}
 }

@@ -1,7 +1,8 @@
 \documentclass[11pt,a4paper]{article}
 %\usepackage[utf8]{inputenc}
 %\usepackage[ascii]{inputenc}
-\usepackage{geometry}
+\usepackage[margin=0.7in]{geometry}
+%\usepackage{geometry}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{textcomp}
 \usepackage{graphicx}
@@ -11,32 +12,39 @@
 \usepackage{amsmath}
 \usepackage{tikz}
 
-\begin{document}
 
-\section*{Résumé \& Méthodes chapitre II}
-\subsection*{Transformée de Laplace}
-\subsubsection*{Définition}
-	Transformée de Laplace monolatérale : 
+\begin{document}
+\title{Résumé \& Méthodes chapitre II: Outils Mathématiques}
+\maketitle
+\section{Transformée de Laplace}
+\subsection{Définition}
+Transformée de Laplace monolatérale : 
 	\[L\{f\}(s) = \displaystyle \int^{\infty}_{0} f(t) e^{-st} \; dt\]\\ 
 	\vspace{0.3cm}
-	Transformée de Laplace bilatérale : \[L\{f\}(s) = \displaystyle \int^{\infty}_{-\infty} f(t) e^{-st} \; dt\]\\
+Transformée de Laplace bilatérale : \[L\{f\}(s) = \displaystyle \int^{\infty}_{-\infty} f(t) e^{-st} \; dt\]\\
 
 Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide. \\
 
-Rappel :  $s$ est une variable complexe. La transformée de Laplace d'une fonction est une fonction complexe
+Rappel :  $s$ est une variable complexe. La transformée de Laplace d'une fonction (réel ou complexe) est une fonction complexe.\\
+\vspace{0.15cm}
 
 
-
-\subsubsection*{Propriétés}
+\subsection{Propriétés}
 
 \begin{itemize}
 \item Linéarité:  $L\{af+g\}(s) = a L\{ f\}(s) + L \{ g \} (s)$
+\vspace{0.1cm}
 \item Dérivation : $ L\{f'\}(s) = \; s L\{f \}(s)$
+\vspace{0.1cm}
 \item Intégration : $ L\{F\}(s) = \frac{\displaystyle 1}{\displaystyle s} L\{f \}(s) $
+\vspace{0.1cm}
 \item Convolution : $ L\{f \star g \} = L\{f \}(s) \cdot L \{ g \} (s)  $
 \end{itemize}
 
-\subsubsection*{Transformées Usuelles}
+\vspace{0.15cm}
+
+
+\subsection{Transformées Usuelles}
 \begin{itemize}
 \item $u(t)$  $\rightarrow \frac{\displaystyle 1}{\displaystyle p} $
 \item $r(t) = t$  $\rightarrow \frac{\displaystyle 1}{ \displaystyle p^2} $
@@ -44,16 +52,215 @@ Rappel :  $s$ est une variable complexe. La transformée de Laplace d'une foncti
 \item $\delta (t)$ $\rightarrow 1$ 
 \item $sin(\omega_0 t)$ = $\rightarrow \frac{\displaystyle \omega_0^2}{ \displaystyle p^2 + \omega_0^2} $
 \end{itemize}
-
-\subsection*{Transformée de Fourier}
-\subsubsection*{Définition}
+\vspace{1cm}
+\section{Transformée de Fourier}
+\subsection{Définition}
 \[TF\{ f \}(\nu) = \displaystyle \int^{\infty}_{-\infty} f(t) e^{-j2\pi \nu t} dt\]
 
 Rappel :  $\nu$ est une fréquence, et donc un réel. La transformée de Fourier d'une fonction est une fonction complexe
+\\
+\subsection{Lien avec Laplace}
+\textbf{La transformée de Fourier} est un cas \textbf{particulier de la transformée de Laplace bilatérale.} En effet $s= \sigma + j \omega$ pour la variable de Laplace en général. La transformée de Fourier correspond au cas où $s = j \omega = j 2 \pi \nu$ avec $\nu$ la fréquence d'excitation.\\
 
-\subsubsection*{Lien avec Laplace}
-\textbf{La transformée de Fourier} est un cas \textbf{particulier de la transformée de Laplace bilatérale.} En effet $s= \sigma + j \omega$ pour la variable de Laplace en général. La transformée de Fourier correspond au cas où $s = j \omega = j 2 \pi \nu$ avec $\nu$ la fréquence d'excitation.
+\textbf{La transformée de Fourier a donc les mêmes propriétés que la transformée de Laplace.}
+\\
+\subsection{Notion de spectre \& Réponse en fréquence}
+Si $f(t)$ est une fonction, alors $F(\nu) = TF\{f\}(\nu)$ est appelé \textbf{spectre de la fonction $f$}\\
 
-\subsubsection*{Notion de spectre}
-Si f(t) est une fonction, alors $F(\nu) = TF\{f\}(\nu)$ est appelé \textbf{spectre de la fonction $f$}
+\fbox{
+\textbf{Réponse en fréquence = Module (ampl.) + argument (phase) du spectre } 
+}
+\\
+\subsection{Extension temporelle vs. Extension fréquentielle}
+Le point de départ ici est de constater que  :
+\[ TF \{ \delta (t) \}  = 1 \]\\
+Autrement dit, une fonction non nulle en un point unique de l'axe des temps a pour transformée de Fourier une fonction constante (et donc d'extension infinie) en fréquence.\\
+
+La réciproque est également vraie:
+\[ TF^{-1} \{ \delta (\nu) \}  = 1 \]\\
+
+On peut généraliser en disant que \textbf{L'extension temporelle d'une fonction est inversement proportionnelle à son extension fréquentielle} donc,\\
+
+
+\fbox{
+\begin{minipage}{\textwidth}
+\begin{center}
+\textbf{Signal temporel court = Large spectre}
+\begin{tikzpicture}
+\draw[->] (-2,0)--(2,0) node[right]{$t$};
+\draw[->] (0,-1)--(0,1) node[above]{$f(t)$};
+\draw[thick,blue] (-2,0)--(0,0)--(0,1)--(0,0)--(2,0);
+
+\begin{scope}[xshift=6cm]
+\draw[->] (-2,0)--(2,0) node[right]{$\nu$};
+\draw[->] (0,-1)--(0,1) node[above]{$F(\nu)$};
+\draw[thick,blue] (-2,0.5)--(2,0.5);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+ \textbf{Signal temporel long  = Spectre court} 
+\begin{tikzpicture}
+\draw[->] (-2,0)--(2,0) node[right]{$t$};
+\draw[->] (0,-1)--(0,1) node[above]{$f(t)$};
+\draw[thick,blue] (-2,0.5)--(2,0.5);
+
+\begin{scope}[xshift=6cm]
+\draw[->] (-2,0)--(2,0) node[right]{$\nu$};
+\draw[->] (0,-1)--(0,1) node[above]{$F(\nu)$};
+\draw[thick,blue] (-2,0)--(0,0)--(0,1)--(0,0)--(2,0);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+}
+
+\vspace{1cm}
+\subsection{Périodicité et échantillonnage}
+\vspace{0.5cm}
+
+Une fonction périodique dans le domaine temporel aura un spectre de raies espacées régulièrement et séparées de $\Delta f = 1/T$, où $T$ est la période du signal temporel. \\
+\vspace{0.3cm}\\
+\fbox{
+\begin{minipage}{\textwidth}
+\begin{center}
+\textbf{Signal périodique = Spectre de raies}
+\begin{tikzpicture}
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(t)$};
+\draw[->] (0,0)-- (5,0) node[right] {$t$};
+
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+
+\begin{scope}[xshift=1cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\draw[dashed,black] (2.5,0) node[below]{$T$}--(2.5,1);
+\end{scope}
+
+\begin{scope}[xshift=2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+\begin{scope}[xshift=-1cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+\begin{scope}[xshift=-2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+
+\begin{scope}[xshift=7cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$E(\nu)$};
+\draw[->] (0,0)-- (5,0) node[right] {$\nu$};
+\draw[ domain=0.1:4.9,color=blue,samples=24] plot[ycomb] (\x,{80*abs(sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r))});
+\draw[<->] (3.25,-0.3)--(3.45,-0.3) node[below left] {$\frac{1}{T}$};
+\end{scope}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(t)$};
+\draw[->] (0,0)-- (5,0) node[below right] {$t$};
+
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+
+
+\begin{scope}[xshift=2cm]
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+\begin{scope}[xshift=-2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+\end{scope}
+
+
+
+\begin{scope}[xshift=7cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$E(\nu)$};
+\draw[->] (0,0)-- (5,0) node[right] {$\nu$};
+\draw[ domain=0.1:4.9,color=blue,samples=96] plot[ycomb] (\x,{80*abs(sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r))});
+%\draw[<->] (3.25,-0.3)--(3.45,-0.3) node[below left] {$\frac{1}{T}$};
+\end{scope}
+\end{tikzpicture}\\
+Période infinie = Spectre continue\\
+\end{center}
+\end{minipage}
+}\\
+
+
+\vspace{0.3cm}
+La réciproque est aussi vraie.\\
+\vspace{0.3cm}\\
+\fbox{
+%\begin{center}
+\begin{minipage}{\textwidth}
+\begin{center}
+\textbf{Spectre périodique = Signal de raies}
+\begin{tikzpicture}
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(t)$};
+\draw[->] (0,0)-- (5,0) node[right] {$\nu$};
+
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+
+\begin{scope}[xshift=1cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\draw[dashed,black] (2.5,0) node[below]{$F$}--(2.5,1);
+\end{scope}
+
+\begin{scope}[xshift=2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+\begin{scope}[xshift=-1cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+\begin{scope}[xshift=-2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+
+\begin{scope}[xshift=7cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$E(t)$};
+\draw[->] (0,0)-- (5,0) node[right] {$t$};
+\draw[ domain=0.1:4.9,color=blue,samples=24] plot[ycomb] (\x,{80*abs(sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r))});
+\draw[<->] (3.25,-0.3)--(3.45,-0.3) node[below left] {$\frac{1}{F}$};
+\end{scope}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$e(\nu)$};
+\draw[->] (0,0)-- (5,0) node[below right] {$\nu$};
+
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+
+
+\begin{scope}[xshift=2cm]
+\draw[thick,blue] (1,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(3,0);
+\end{scope}
+
+
+\begin{scope}[xshift=-2cm]
+\draw[thick,blue] (2,0)--(2.25,0)--(2.25,1)--(2.75,1)--(2.75,0)--(4,0);
+\end{scope}
+
+
+
+\begin{scope}[xshift=7cm]
+\draw[->] (2.5,0) node[below] {0} -- (2.5,1.5)node[above] {$E(t)$};
+\draw[->] (0,0)-- (5,0) node[right] {$t$};
+\draw[ domain=0.1:4.9,color=blue,samples=96] plot[ycomb] (\x,{80*abs(sin(5*3.14*\x r -5*3.14*2.5r )/(5*3.14*\x r-5*3.14*2.5 r))});
+%\draw[<->] (3.25,-0.3)--(3.45,-0.3) node[below left] {$\frac{1}{T}$};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+%
+}
+
 \end{document}

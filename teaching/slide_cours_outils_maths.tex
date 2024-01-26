@@ -52,8 +52,11 @@ Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide.
 \frametitle{Propriétés de la transformée de Laplace}
 \begin{itemize}
 \item<2-> Linéarité: \only<3->{ $L\{af+g\}(s) = a L\{ f\}(s) + L \{ g \} (s)$}
+\vspace{0.2cm}
 \item<4-> Dérivation : \only<5->{$ L\{f'\}(s) = \; s L\{f \}(s)$}
+\vspace{0.2cm}
 \item<5-> Intégration : \only<6->{$ L\{F\}(s) = \frac{\displaystyle 1}{\displaystyle s} L\{f \}(s) $}
+\vspace{0.2cm}
 \item<7-> Convolution : \only<8->{$ L\{f \star g \} = L\{f \}(s) \cdot L \{ g \} (s)  $}
 \end{itemize}
 
@@ -66,9 +69,13 @@ Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide.
 \vspace{1cm}
 \begin{itemize}
 \item $u(t)$ (échelon de heaviside)
+\vspace{0.2cm}
 \item $r(t) = t$ (rampe)
+\vspace{0.2cm}
 \item $f(t) = e^{-at}$ (exponentielle décroissante)
+\vspace{0.2cm}
 \item $\delta (t)$ (impulsion de dirac) 
+\vspace{0.2cm}
 \item $sin(\omega_0 t)$
 \end{itemize}
 
@@ -81,9 +88,13 @@ Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide.
 \vspace{1cm}
 \begin{itemize}
 \item $u(t)$  \only<2->{$\rightarrow \frac{\displaystyle 1}{\displaystyle p} $} 
-\item $r(t) = t$  \only<3->{$\rightarrow \frac{\displaystyle 1}{ \displaystyle p^2} $} 
+\vspace{0.2cm}
+\item $r(t) = t$  \only<3->{$\rightarrow \frac{\displaystyle 1}{ \displaystyle p^2} $}
+\vspace{0.2cm}
 \item $f(t) = e^{-at}$  \only<4->{$\rightarrow \frac{\displaystyle 1}{\displaystyle p+a} $}
+\vspace{0.2cm}
 \item $\delta (t)$ \only<5->{$\rightarrow 1$} 
+\vspace{0.2cm}
 \item $sin(\omega t)$ = \only<6->{$\rightarrow \frac{\displaystyle \omega_0^2}{ \displaystyle p^2 + \omega_0^2} $}
 \end{itemize}
 
@@ -96,7 +107,7 @@ Utile, entre autre, pour analyser des systèmes dynamiques de façon rapide.
 
 \begin{frame}
 \frametitle{Transformée de Fourier}
-\textbf{Question: Quelle est pour vous le lien entre transformée de Laplace et transformée de Fourier}\\
+\textbf{Question: Quelle est pour vous le lien entre transformée de Laplace et transformée de Fourier ?}\\
 \vspace{1 cm}
 \only<2->
 {
@@ -139,7 +150,8 @@ Comment représenter $F(\nu)$  ? \\
 
 \vspace{1cm} 
 
-2 possibilités pour représenter un nombre complexe $z$: 
+2 possibilités pour représenter un nombre complexe $z$: \\
+\vspace{0.2cm}
 
 \begin{itemize}
 \item $z = a+ ib$
@@ -186,7 +198,7 @@ Spectre de $g_1(t) = \cos(2 t)$ \\
 
 \only<3->{
 Soit $z = a +ib$, alors $|z|=$\only<2->{$r = \sqrt{a^2 + b^2}$}
-et $arg(z) = \theta = \arctan(\frac{\displaystyle b}{\displaystyle a})$
+et $\text{arg}(z) = \theta = \arctan(\frac{\displaystyle b}{\displaystyle a})$
 }
 
 \vspace{0.4 cm} 
@@ -231,7 +243,7 @@ $$arg(G_1(\nu)) = $$ \only<3->{ $$\arctan(\frac{0}{\frac{\displaystyle \delta(\n
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right]{$\nu$};
-\draw[->] (0,-1)--(0,1) node[above]{$arg(G_1(\nu))$};
+\draw[->] (0,-1)--(0,1) node[above]{$\text{arg}(G_1(\nu))$};
 \draw[->,blue,thick] (-1,0) node[below]{$-1/\pi$}--(-1,0) ;
 \draw[->,blue,thick] (1,0) node[below]{$1/\pi$}--(1,0) ;
 \end{tikzpicture}
@@ -274,7 +286,7 @@ $$arg(G_1(\nu))  = 0 $$ \\
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right]{$\nu$};
-\draw[->] (0,-1)--(0,1) node[above]{$arg(G_1(\nu))$};
+\draw[->] (0,-1)--(0,1) node[above]{$\text{arg}(G_1(\nu))$};
 \draw[->,blue,thick] (-1,0) node[below]{\scriptsize $-1/\pi$}--(-1,0) ;
 \draw[->,blue,thick] (1,0) node[below]{ \scriptsize $1/\pi$}--(1,0) ;
 \end{tikzpicture}
@@ -347,7 +359,7 @@ Spectre de $g_2(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3})$ \\
  \frac{0.45}{2}(\delta_2) \cdot  \cos(2\frac{\pi^2}{3} \nu)}\bigr) \]\\
  \vspace{0.3cm} 
  \only<2->{
- \[arg(G_2(\nu)) = 2\frac{\pi^2}{3} \nu*\delta_2 \]\\
+ \[\text{arg}(G_2(\nu)) = 2\frac{\pi^2}{3} \nu \cdot \frac{0.45}{2}(\delta(\nu+2/\pi) + \delta(\nu-2/\pi)) \]\\
  }
 
  \vspace{0.3cm}
@@ -356,8 +368,10 @@ Spectre de $g_2(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3})$ \\
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right]{$\nu$};
-\draw[->] (0,-1)--(0,1) node[above]{$arg(G_2(\nu))$};
-\draw[orange,thick] (-1,-1) --(1,1) ;
+\draw[->] (0,-1)--(0,1) node[above]{$\text{arg}(G_2(\nu))$};
+%\draw[orange,thick] (-1,-1) --(1,1) ;
+\draw[->,orange,thick] (-0.65,0)--(-0.65,-0.65) ;
+\draw[->,orange,thick] (0.65,0)--(0.65,0.65) ;
 \draw[dashed] (-0.65,0)node[above]{\scriptsize -1} --(-0.65,-0.65)--(0,-0.65)node[right]{\scriptsize $-\frac{2\pi^2}{3}$} ;
 \draw[dashed] (0.65,0)node[below]{\scriptsize 1} --(0.65,0.65)--(0,0.65)node[left]{\scriptsize $\frac{2\pi^2}{3}$} ;
 \end{tikzpicture}
@@ -391,7 +405,7 @@ Spectre de $g_2(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3})$ \\
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right]{$\nu$};
-\draw[->] (0,-1)--(0,1) node[above]{$arg(G_2(\nu))$};
+\draw[->] (0,-1)--(0,1) node[above]{$\text{arg}(G_2(\nu))$};
 \draw[orange,thick] (-1,-1) --(1,1) ;
 \draw[dashed] (-0.65,0)node[above]{\scriptsize -1} --(-0.65,-0.65)--(0,-0.65)node[right]{\scriptsize $-\frac{2\pi^2}{3}$} ;
 \draw[dashed] (0.65,0)node[below]{\scriptsize 1} --(0.65,0.65)--(0,0.65)node[left]{\scriptsize $\frac{2\pi^2}{3}$} ;
@@ -457,7 +471,7 @@ L'ajout d'un déphasage à une des composantes change la forme du signal et la p
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right]{$\nu$};
-\draw[->] (0,-1)--(0,1) node[above]{$arg(G_{2,3}(\nu))$};
+\draw[->] (0,-1)--(0,1) node[above]{$\text{arg}(G_{2,3}(\nu))$};
 \draw[orange,thick] (-1,-1) --(1,1) ;
 \draw[dashed] (-0.65,0)node[above]{\scriptsize -1} --(-0.65,-0.65)--(0,-0.65)node[right]{\scriptsize $-\frac{2\pi^2}{3}$} ;
 \draw[dashed] (0.65,0)node[below]{\scriptsize 1} --(0.65,0.65)--(0,0.65)node[left]{\scriptsize $\frac{2\pi^2}{3}$} ;
