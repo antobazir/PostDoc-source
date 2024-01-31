@@ -368,7 +368,7 @@ Analyses:
 \includegraphics[scale=0.35]{tr_num_ecg.png}\\
 \textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
 \end{center}
-Filtrage temps réel du signal numérique
+Filtrage temps réel du signal numérique \& Extraction du QRS
 \begin{enumerate}
 \item<2-> filtrage passe-bande pour ne garder que les fréquences du QRS
 \item<3-> Dérivée du signal (QRS = forte pente)
@@ -442,6 +442,7 @@ Dans ce cas, on va vouloir détecter le signal dans le domaine temporel
 
 \end{frame}
 
+\subsubsection{Ultrasons}
 \begin{frame}
 \frametitle{Exemple de signaux : Ultrasons}
 \begin{columns}
@@ -458,6 +459,7 @@ Dans ce cas, on va vouloir détecter le signal dans le domaine temporel
 \end{enumerate}
 \end{columns}
 \end{frame}
+
 
 \begin{frame}
 \frametitle{Exemple de signaux : Ultrasons}
@@ -512,10 +514,489 @@ On dispose généralement d'un réseau de traducteurs qui vont former les pixels
 \end{frame}
 
 \begin{frame}
-\frametitle{Chaine d'instrumentation}
+\frametitle{Exemple de signaux : Ultrasons}
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.23]{Ultrasonic.png}\\
+\textit{\footnotesize Principe d'imagerie ultrasonore. Hazari, 2010}
+\column{60mm}
+Applications:
+\begin{itemize}
+\item Imagerie de contraste $\rightarrow$ variation \textbf{relative} prop. méca\\
+\begin{itemize}
+\item Détection de discontinuité/interfaces 
+\end{itemize}
+\vspace{0.2cm}
+\item Mesure \textbf{absolue} prop. méca 
+\begin{itemize}
+\item Mesure pulse-écho  
+\item Mesure régime sinusoïdal
+\end{itemize}
+\vspace{0.2cm}
+\item \textbf{Cartographie} propriétés mécaniques
+\begin{itemize}
+\item carte vitesse du son 
+\item carte atténuation
+\end{itemize}
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\subsubsection{Rayons-X/$\gamma$}
+\begin{frame}
+\frametitle{Exemple de signaux : Rayons-X/$\gamma$}
+Principe :
+\[  I = I_0 \cdot \exp (- \int^{x_{max}}_{x_0} \; \mu (Z(x),E) \; dx)  \] 
+\vspace{0.5cm}
+\begin{itemize}
+\item $I_0, I$: intensités initiale et détectée 
+\item $x_0, x_{max}$ : Points d'entrée et de sortie de l'objet à imager
+\item $Z(x)$  numéro atomique du matériau traversé 
+\item $E$ énergie du rayonnement émis
+\end{itemize}
+\vspace{0.5cm}
+\only<2->{
+\textbf{Offre un contraste entre différents tissus}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple de signaux : Rayons-X/$\gamma$}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.12]{xray_plan.jpg}\\
+\textit{Radiographie pulmonaire numérisée, Nevit Delmen}
+\end{center}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.22]{xray_tomo.png}\\
+\textit{Tomographie axiale calculée, Mustafa Mafraji}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple de signaux : Rayons-X/$\gamma$}
+\begin{center}
+\includegraphics[scale=0.3]{dig_mammo.png}\\
+\end{center}
+\begin{itemize}
+\item Radiographie numérique : Comptage de photons/mesure d'énergie $\rightarrow$ signal numérique
+\item Standard actuel dans le domaine médical
+\item Outils de traitement d'image numérique disponible
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple de signaux: résumé}
+\begin{itemize}
+\item \textbf{\'Electrocardiogramme }
+\begin{itemize}
+\item signal bioélectrique
+\item Analyse fréquentielle 
+\item Détection de motifs (QRS, RR, etc...)
+\end{itemize}
+\vspace{0.1cm}
+\item \textbf{\'Electroencéphalogramme}
+\begin{itemize}
+\item signal bioélectrique
+\item Analyse fréquentielle (ondes $\alpha$, $\beta$, $\delta$...) 
+\item Détection de motifs (ondes évoquées)
+\end{itemize}
+\vspace{0.1cm}
+\item  \textbf{Ultrasons} 
+\begin{itemize}
+\item signal acoustique
+\item mesure des propriétés acoustiques  (rigidité, etc...)
+\item imagerie de contraste (échographie, tomographie, etc...)
+\end{itemize}
+\vspace{0.1cm}
+\item \textbf{Rayons-X/$\gamma$}
+\begin{itemize}
+\item signal electromagnétique
+\item imagerie de contraste (échographie, tomographie, etc...)
+\end{itemize}
+\end{itemize} 
+\end{frame}
+
+\subsection{Chaîne d'instrumentation Numérique}
+\begin{frame}
+\frametitle{Chaine d'instrumentation Numérique}
+\begin{center}
+\begin{tikzpicture}
+\node (S) at (0,0) {\footnotesize  Sig.};
+\node[draw,rectangle,align=center]  (C) at (1.5,0) {\footnotesize Capteur}; 
+\node[draw,rectangle,align=center]  (A) at (3,0) {\footnotesize Ampli.}; 
+\node[draw,rectangle,align=center]  (F) at (4.5,0) {\footnotesize Filtre \\ \footnotesize analog.}; 
+\node[draw,rectangle,align=center]  (E) at (6,0) {\footnotesize Echant.}; 
+\node[draw,rectangle,align=center]  (AD) at (7.5,0) {\footnotesize CAN}; 
+\node[draw,rectangle,align=center]  (N) at (9,0) {\footnotesize Filtre \\ \footnotesize num.}; 
+\node (R) at (10.5,0) {\footnotesize  \textbf{Rés.}};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(A);
+\draw[->] (A)--(F);
+\draw[->] (F)--(E);
+\draw[->] (E)--(AD);
+\draw[->] (AD)--(N);
+\draw[->] (N)--(R);
+\end{tikzpicture}
+\end{center}
+\begin{enumerate}
+\item Conversion du signal physique en tension
+\item Amplification
+\item Filtrage analogique
+\item \'Echantillonnage  (Bloqueur)
+\item Conversion analogique-numérique
+\item Filtrage numérique 
+\end{enumerate}
+\vspace{0.3cm}
+\only<2->{
+Des variantes existent...
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chaine d'instrumentation Numérique : Capteur}
+\begin{center}
+\begin{tikzpicture}
+\node[align=center] (S) at (0,0) {\footnotesize  Signal\\ \footnotesize  Physique};
+\node[draw,rectangle,align=center]  (C) at (3,0) {\footnotesize Capteur};
+\node[align=center] (T) at (6,0) {\footnotesize  Tension};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(T);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\textbf{Caractéristiques :}\\
+\vspace{0.1cm}
+\begin{itemize}
+\item Conversion \textbf{univoque} entre le signal physique et la tension
+\vspace{0.1cm}
+\item Gamme de mesure et/ou Plage de linéarite
+\item \textbf{Résolution} spatiale et temporelle
+\item Exemples : 
+\begin{itemize}
+\item Tradcuteur piézoélectrique
+\item Détecteur à comptage de photons
+\item Electrodes ECG/EEG
+\end{itemize}
+\vspace{0.1cm}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chaine d'instrumentation Numérique : Amplificateur}
+\begin{center}
+\begin{tikzpicture}
+\node[align=center] (S) at (0,0) {\footnotesize  Tension};
+\node[draw,rectangle,align=center]  (C) at (3,0) {\footnotesize Amplificateur};
+\node[align=center] (T) at (6,0) {\footnotesize  Tension};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(T);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\textbf{Caractéristiques :}\\
+\vspace{0.1cm}
+\begin{itemize}
+\item \textbf{Applique un facteur multplicatif sur le signal du capteur}
+\vspace{0.1cm}
+\item Adapte la tension à la gamme de CAN
+\vspace{0.1cm}
+\item Doit être \textbf{linéaire en tension ET en fréquence}
+\vspace{0.1cm}
+\item Amplifie également le bruit 
+\vspace{0.1cm}
+\begin{itemize}
+\item nécessité potentielle d'un premier filtrage 
+\vspace{0.1cm}
+\item  filtre notch 50 Hz...
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chaine d'instrumentation Numérique : Filtrage analogique}
+\begin{center}
+\begin{tikzpicture}
+\node[align=center] (S) at (0,0) {\footnotesize  Tension};
+\node[draw,rectangle,align=center]  (C) at (3,0) {\footnotesize Filtre \\ \footnotesize analog.};
+\node[align=center] (T) at (6,0) {\footnotesize  Tension};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(T);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\textbf{Caractéristiques :}\\
+\vspace{0.2cm}
+\begin{itemize}
+\item \textbf{Souvent utilisé pour éliminer des parasites bien identifiés }
+\vspace{0.2cm}
+\begin{itemize}
+\item Passe-bas : Bruit des électrodes (EEG/ECG)
+\vspace{0.2cm}
+\item Notch : élimination du 50-60 Hz
+\vspace{0.2cm}
+\item Passe-haut : élimination de la respiration/mouvments corporels (ultrasons)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chaine d'instrumentation Numérique : \'Echantillonnage}
+\begin{center}
+\begin{tikzpicture}
+\node[align=center] (S) at (0,0) {\footnotesize  Tension variable};
+\node[draw,rectangle,align=center]  (C) at (3,0) {\footnotesize \'Echantillonnage};
+\node[align=center] (T) at (6,0) {\footnotesize  Tension "constante"};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(T);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\textbf{\textbf{Circuit bloqueur} :}\\
+\vspace{0.2cm}
+\begin{itemize}
+\item \textbf{Prend la valeur en  entrée et la maintient pendant $T_e$ }
+\vspace{0.2cm}
+\begin{itemize}
+\item Retard d'ouverture 
+\vspace{0.2cm}
+\item Incertitude d'ouverture 
+\vspace{0.2cm}
+\item Temps d'établissement du blocage
+\end{itemize}
+\vspace{0.2cm}
+\item Temps caractéristiques \textbf{bien inférieurs} à la période d'échantillonnage.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chaine d'instrumentation Numérique : Conversion Analogique/Numérique}
+\begin{center}
+\begin{tikzpicture}
+\node[align=center] (S) at (0,0) {\footnotesize  Tension "constante"};
+\node[draw,rectangle,align=center]  (C) at (4,0) {\footnotesize Convertisseur \\ \footnotesize  Analogique/Numérique};
+\node[align=center] (T) at (8,0) {\footnotesize  Valeur numérique};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(T);
+\end{tikzpicture}
+\end{center}
+\vspace{0.1cm}
+\begin{itemize}
+\item \textbf{Convertit la valeur réelle en valeur binaire}
+\vspace{0.2cm}
+\begin{itemize}
+\item Gamme dynamique divisé en N échelons  
+\vspace{0.2cm}
+\item Valeur réelle située dans un échelon pendant $T_e$
+\vspace{0.2cm}
+\item Correspondance à une valeur numérique (00011..)
+\end{itemize}
+\vspace{0.2cm}
+\item Plusieurs architectures possibles (Double rampe, Sigma-delta...) basées sur des cycles de charge-décharges suivies dans le temps
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du complexe QRS\\
+\vspace{0.3cm}
+Pourquoi extraire le complexe QRS ?\\
+\vspace{0.2cm}
+\begin{itemize}
+\item suivi de la condition du patient en temps réel 
+\item Etablissement des tachogrammes (RR)
+\item \'A la base de beacoup d'algorithmes acutels...
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\textbf{Caractéristiques du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.35]{QRS.png}\\
+
+\end{center}
+\underline{Origine physique} : dépolarisation des ventricules\\
+\vspace{0.3cm}
+Caractéristiques: \\
+\vspace{0.1cm}
+\begin{itemize}
+\item Durée :  80 -100 ms
+\item Fréquence : 10-15 Hz 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.3]{ECG_spectrum.png}\\
+\textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
+\vspace{0.1cm}
+\end{center}
+Importance du filtrage passe-bande...
+\end{frame}
+
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.3]{ECG_spectrum.png}\\
+\textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
+\vspace{0.1cm}
+\end{center}
+Comment choisir $T_e$ ? \only<2-> {Shannon $\rightarrow f_e > 80 Hz$  \only<3->{ Dans les faits, $f_e$ 500 Hz} }
 
 
 \end{frame}
 
-%FAIRE LE TRAITEMENT D'ECG  PAR TOMPKINS
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\vspace{0.3cm}
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du QRS
+\begin{enumerate}
+\item \textbf{filtrage passe-bande numérique}
+\item Dérivée 
+\item Mise au carré 
+\item Moyennage
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique}\\
+ \vspace{0.3 cm}
+ Plusieurs méthodes possibles (liste non-exhasutive) :\\
+ \vspace{0.2cm}
+ \begin{itemize}
+ \item Filtre récursifs à  2 pôles
+ \vspace{0.2cm}
+ \item Filtre à coefficients "entiers"
+ \vspace{0.2cm}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+ \vspace{0.3 cm}
+ Forme possible de la fonction de transfert :
+ \[H(z) = \frac{c_1}{z-p_1} + \frac{c_2}{z-p_2} \]\\
+  \vspace{0.3 cm}
+  \'Equation aux différences :
+ \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]  
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+
+  Forme de l'équation aux différences :
+ \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]  \\
+  \vspace{0.3 cm}
+  Fonction de transfert :
+   \[H(z) = \frac{1 - z^{-2}}{1 - b_1 z^{-1} + b_2 z^{-2}} \]  \\
+  \vspace{0.3cm}
+ \textbf{Comment se comporte ce filtre ?}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+
+  \vspace{0.3 cm}
+  Fonction de transfert :
+   \[H(z) = \frac{1 - z^{-2}}{1 - b_1 z^{-1} + b_2 z^{-2}} \]  \\
+  \vspace{0.3cm}
+ On prend les valeurs données par Tompkins:
+ \begin{itemize}
+ \item $f_e$ = 500 Hz
+ \item $b_1$ = 1.875
+ \item $b_2$ = 0.9219
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+
+  \vspace{0.3 cm}
+  Fonction de transfert :
+   \[H(z) = \frac{1 - z^{-2}}{1 - 1.875 z^{-1} + 0.9219 z^{-2}} \]  \\
+  \vspace{0.3cm}
+   \[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2.5]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passebande1.txt};
+
+\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);à
+\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+On sélectionne bien dans une gamme de fréquence autour du QRS
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+\begin{columns}
+\column{60mm}
+\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \]
+\column{60mm} 
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2.5]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passebande1.txt};
+
+\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);à
+\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\vspace{0.3cm}
+Remarques :
+\begin{itemize}
+\item Le numérateur sert à couper les basses fréquences
+\item Coefficients optimisées pour augmenter la vitesse de calcul
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre à coeffs entiers}\\
+\end{frame}
 \end{document}
