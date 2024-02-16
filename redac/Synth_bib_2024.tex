@@ -1,0 +1,297 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[ascii]{inputenc}
+\usepackage[margin=0.7in]{geometry}
+%\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+
+\begin{document}
+\tableofcontents
+
+\section{Introduction}
+This document aims at digesting and organising the knowledge accumulating during literature review on various subjects related to cell metabolism. There are two mains goals in this task : 
+\begin{enumerate}
+\item Keep track of what has been read and potentially retrieve lost/forgotten important pieces of information
+\item Organizing the information to make the writing of an article/synthesis faster in the future
+\end{enumerate}
+To this end relevant and linked pieces of information will be placed together in section with corresponding references.
+
+
+\section{ATP and energy management}
+\begin{itemize}
+\item We know that prolif cancer cells are more glycoytic but have overall lower ATP reserve than healthy cells. Does it mean that they expanded the reserves and use glycolysis to maintain viability and prolif ? 
+\item Cells appears to die of Necrosis if very ATP depleted or of Apoptosis if mildly depleted for long enough.  Where does quiescence fit in all this 
+\item Is it achieve at a threshold similar or above apoptosis if Checkpoint is reached ? 
+\item Overall ATP increase, meaning there is actually WAY MORE ADP than in healthy cells $\rightarrow$ cancer cells accumulate Phosphore in general
+\item "These data suggest that when demand for NAD+ to support oxidation reactions exceeds the rate of ATP turnover in cells, NAD+ regeneration by mitochondrial respiration becomes constrained, promoting fermentation, despite available oxygen. This argues that cells engage in aerobic glycolysis when the demand for NAD+ is in excess of the demand for ATP."\cite{Luengo2020}
+\end{itemize}
+\textbf{[Need to find the references for this]}
+
+\section{Quiescence, Cell death \& energy}
+\begin{itemize}
+\item Can it be assumed that the pathway for apoptosis is downregulated ? If yes does it mean that cells might continue to proliferate (or try to) even when ATP should not allow for it ? $\rightarrow$ yes I suppose
+\item Quiescence is entirely possible in cancer cells. It seems to be triggered by the right set of conditions as in cell sensing nutrient depletion before proceeding to G1 leading to metabolic catastrophe.
+\item What level triggers quiescence ? Is there a window of ATP production level that can induce quiescence ? $\rightarrow$ Quiescence can also be triggered by regulatory cues not linked to nutrient availability
+\item How do we choose that level so that glutamine and autophagy can be acounted for ? $\rightarrow$ In the final model a single "effective" nutrient is used representing basically everything
+\item Since autophagy is essentially catabolism, how does it come into play into preventing cells from going into necrosis. Can it be used as a crutch to lead cells into dormancy/apoptosis ?$\rightarrow$ I suppose but do not have evidence for that so far
+
+\end{itemize}
+
+\section{Reactive Oxygen Species (ROS) \& Cell metabolism}
+\begin{itemize}
+\item ROS are deleterious (cell cycle arrest or cell death) at high concentrations but can trigger cell response at low concentrations \cite{Arfin2021}
+\item Cancer cells downregulate OXPHOS even with oxygen. Accelerated metabolism $\rightarrow$ ROS (countered by NADPH also produced by accelerated glycolysis)\cite{Arfin2021}
+\item "Glutamate is also utilized for glutathione biosynthesis, which is a major antioxidant and quenches the ROS, therefore providing protection to cancer cells against cytotoxic ROS."\cite{Mudassar2020}
+\item "The electron transport chain couples the transfer of charge across the inner mitochondrial membrane with the production of ATP. The leakage of ROS and protons from Complexes I-IV of the electron transport chain represents a self-regulating system to reduce oxidative stress, whereby ROS themselves induce proton leak and decrease ROS generation (Brookes, 2005). "\cite{Strickland2017}
+\item "In the rapidly proliferating SF-188 pediatric glioblastoma cell line there is a shift away from glycolysis toward oxidative glutamine metabolism represented by increased oxygen consumption and increased ROS"\cite{Strickland2017}
+\item "Cancer cells show an increased tolerance for oxidative stress whereby moderate ROS levels promote proliferation and differentiation, whilst excessive ROS exposure causes oxidative damage and induces apoptosis (Jin et al., 2015; Rinaldi et al., 2016)."\cite{Strickland2017} 
+\item "Hypoxia often arises concurrently with increased ROS/NOS production, which can act indirectly to stabilize HIF complexes (Chandel et al., 2000, Figure 14B)."\cite{Strickland2017} 
+\item Is it the case for all cells or only for those that do not constitutively express HIF1-$\alpha ?$
+\end{itemize}
+
+\section{Oxidative Phosphorylation (OXPHOS) \& Electron Transport Chain (ETC)}
+\begin{itemize}
+\item OXPHOS is the part where NADPH and FADH$_2$ are used to cancel the proton gradient and make ATP in the mitochondria \cite{Berg2006}
+\item Mechanism of energy production within mitochondria that is more ATP efficient that glycolysis through the electron transport chain (ETC) \cite{Berg2006}
+\item "The mitochondrial electron transport chain (ETC) consists of four enzyme complexes that transfer electrons from donors such as NADH to oxygen (Figure 6a). Chemical disruption of the ETC by complex 1 inhibitors has long been known to impede regeneration of electron acceptors and block cell proliferation ”
+\item "Glycolysis is indicated by high expression of HIF-1$\alpha$ (Hypoxia inducible factor-
+1$\alpha$) and low levels of phospho-5’ AMP-activated protein kinase (pAMPK), whereas
+OXPHOS-reliant tumors have low levels of HIF-1$\alpha$ and high levels of pAMPK. Some
+cancer cells express high levels of both HIF-1$\alpha$ and pAMPK indicating active glycolysis
+as well as OXPHOS" \cite{Nayak2018}
+\item ”The mitochondrial electron transport chain (ETC) consists of four enzyme complexes that transfer electrons from donors such as NADH to oxygen (Figure 6a). Chemical disruption of the ETC by complex 1 inhibitors has long been known to impede regeneration of electron acceptors and block cell proliferation.” Bauer 2021
+\item "Interestingly, it has long been known that human cells lacking a functional ETC can proliferate if cultured in supra-
+physiological concentrations of pyruvate (King and Attardi, 1989). While pyruvate can serve as a biosynthetic substrate or affect the redox state of the cell by promoting the
+regeneration of NAD+ (Harris, 1980; Howell and Sager, 1979), why it reverses the suppressive effects of ETC inhibition on cell proliferation is unknown."\cite{Birsoy2015}
+\item "the electron transport chain produces ATP and reactive oxygen species (ROS) which act as signaling molecules"\cite{Strickland2017}
+\item "Glioma cells demonstrate alterations to mitochondrial morphology, with some cells containing healthy electron-dense mitochondria and others exhibiting mitochondria with extensive cristolysis; these characteristics are thought to correlate with hypoxia-resistant and hypoxia-sensitive cell types (Arismendi-Morillo and Castellano-Ramirez, 2008)."
+\item "The difference between basal respiration and
+respiration at its maximal level constitutes the mitochondrial reserve"\cite{Marchetti2020}
+\item "Moreover, hypoxia causes multiple changes in the
+composition of ETC complexes. These changes are required to keep mitochondria in tact under low oxygen conditions and to prevent excessive ROS formation. Most of the changes in complex composition occur within complex I, a dominant acceptor of electrons, and complex IV, facilitating electron transport to molecular oxygen. Some of these alterations comprise the exchange of subunits within ETC complexes others modify complex structure, while subunit depletion also occurs." \cite{Fuhrmann2017}
+\item The work of Spinelli et al. also demonstrated that some cells can tolerate molecular O$_{2}$ absence for proliferation through reduction of fumarate with the SDH complex working in reverse. \cite{Spinelli2021}
+\end{itemize}
+
+\section{Metabolism \& Mechanics}
+\begin{itemize}
+\item  "our group reveals that hepatoma MCS formation is a three-step process [6] (Fig. 1)."\cite{Lin2008}
+\item "Long-chain ECM fibers with multiple RGD motifs for cell-surface integrin binding initially provide rapid aggregation of dispersed cells. A delay phase follows this aggregation
+showing up-regulated cadherin expression. Finally, homophilic cadherin-cadherin binding between two cells confers strong cell adhesion, forming MCS."\cite{Lin2008}
+\item "[Dr. Hynes] found that ECM components in tumor matrix
+are derived from cancer cells and stromal cells,
+and many of them are only expressed by cancer
+cells, including Col19A1, Col22A1, Col7A1, LAMA4,
+LAMB1, LTBP1, LTBP3, LTBP4, TINAGL1, and ECM
+regulators galectin 1 (LGALS1) and PLOD1.[20,21] "\cite{Xiong2016}
+\item "Cell-cell adhesion is mediated by transmembrane proteins called cadherins that interact through extracellular domains [Citation125]. Cadherin bonds are stabilized by the cortical actin network, with the interaction between actin and cadherins being dynamic and mechanoresponsive [Citation126–128]."\cite{Boot2021}
+
+\item "Manning et al. developed a model that explicitly showed how the overall surface tension of a multicellular aggregate is determined by the ratio of adhesion tension to cortical tension, indicating a crossover from adhesion-dominated to cortical tension-dominated behavior [Citation20]."\cite{Boot2021}
+
+\item "Such variability is a result of innate differences within cell lines, in cell-cell adhesion, thus affecting the overall MCT formation. Cell lines with compact spheroid formation indicated high levels of E-cadherins and those with tight spheroid formation expressed high levels of N-cadherin molecules." \textbf{Facellitate: https://facellitate.com/the-role-of-cell-type-in-multicellular-tumor-spheroid-formation/}
+
+\item Stiffer extracellular matrix (ECM) upregulates glucose transport proteins (GLUTs), increases glycolytic enzymes and the PPP pathway which is used for nucleic acids, aromatic acids and NADPH. \cite{Onwudiwe2022}
+\item Stiffer ECM also enables proteases which helps degrading the matrix and therefore migration. \cite{Onwudiwe2022}
+\item "In the brain, [...]Cellular stiffness is generally higher than that of the ECM, and the overall tumor generally softens with cancer progression (16).”\cite{Onwudiwe2022}
+\item So stiffer ECM is good at the beginning and then softens because it is degrade, but it means it boosts cancer-favourable metabolism \cite{Onwudiwe2022}\cite{Oh2017}\cite{Romani2020}
+\item "there is a shift from oxidative glutamine metabolism to reductive carboxylation when non-small cell lung cancer (NSCLC) cells transition from a monolayer cultures to spheroids [114]." \cite{Natarajan2019}\cite{Jiang2016}
+\item "”On a stiff ECM, the ubiquitin ligase TRIM21 is trapped by stress fibres (TaBle 1),
+and can- not induce the degradation of PFK 40 (Fig. 2a). On a soft ECM, where stress fibres are inhibited, TRIM21 is able to target PFK and direct it to degradation, thus reducing glycolysi$s^{40}$. The reduced glycolysis rate was not accompanied by a compensatory increase in mitochondrial respiration, indicating a decoupling between the two main energy-producing pathways that should limit the total energy production capacity in cells on a soft ECM.”\cite{Romani2020}
+\item "Indeed, oncogene transformation overrides this regulation and uncouples ECM stiffness from glycolysis, leading to aberrant metabolism of glucose on soft substrata$^{40}$ , a key hallmark of cancer (Box 2)."\cite{Romani2020}
+\item ”Intracellular pH is regulated by integrin-mediated cell spreading, and thus by the level of cellular tension 46–49 . Intracellular pH is more basic, indicating more active H
++ extrusion, in spread cells, where cell tension is higher, compared with rounded cells, where tension is lower, and this is due to differential NHE1 activity (Fig. 2a). ”\cite{Romani2020}
+\textbf{”The complete absence of adhesion (cell detachment) can be compared, to some extent, with an extremely soft ECM”}\cite{Romani2020}
+\item "lung cancer cells cultured as spheroids, characterized by low or absent cell–ECM
+adhesions, rewired the use of glucose and glutamine to increase the production of antioxidant molecules within the mitochondria" \cite{Romani2020}
+\textbf{\item ”For instance, detachment from ECM made of hyaluronic acid leads to increased glu-
+cose metabolism 103 , which is opposite to other observations described above and sug-
+gests that cells likely integrate various cues to determine their (metabolic) fate.”}\cite{Romani2020}
+\item "Metabolic flux analysis revealed a significant increase in the glycolysis capacity of dendritic cells (DCs) cultured on 50 kPa hydrogel and rigid plastic substrates compared to culture on the soft substrates."\cite{Liao2022}
+\item "Increased substrate stiffness has a positive effect on glycolytic gene expression, and glucose uptake, and also promotes the increase of intermediates in the pentose phosphate pathway (PPP) and tricarboxylic acid cycle pathway (TCA) " \cite{Liao2022}
+\item ”Up-regulation of quiescent GBM cells was identified with up-regulation of laminin, collagens, tenascin C, and integrin $\alpha$3 (62).”\cite{Chen2021}
+\item "ECM composition is also related to GBM cell phenotype. Up-regulation of quiescent GBM cells was identified with up-regulation of laminin, collagens, tenascin C, and integrin $\alpha$3 (62)."\cite{Chen2021}
+\item "ECM composition is not homogenous or static, in fact, ECM composition varies between different TME regions; periostin and MMP-2/9 are expressed in hypoxic regions (67), whereas type I collagen, tenascin C, laminin, integrin-$\alpha$6, and fibronectin are more abundant in vascularized regions (Table)."\cite{Chen2021}
+\item "These spheroid-based models demonstrated significant interplay between spheroid edges and HA altering not only cell morphology of the cells but also metabolic profiles through enriched glycolysis and fatty acid oxidation and synthesis"\cite{Chen2021}
+\item \textbf{Look up if somebody compared spheroid in suspension and in scaffold of relevant matrix}
+\item "Patient-derived cells maintained under serum-free conditions in neurospheres or laminin-attached monolayers have been shown to retain the original characteristics of the human tumors (Lee et al., 2006; Pollard et al., 2009) and have a more oxidative phenotype (Lin et al., 2017)." \cite{Strickland2017}
+\item "This may indicate that tissue architecture is related to the relative preference or propensity to use lactate as a fuel."\cite{Faubert2017}
+\end{itemize}
+
+\section{Glutamine \& Glutaminolysis}
+\begin{itemize}
+\item Glutamine can provide energy but is also used to provide nucleotides to cancer cells. \cite{Natarajan2019}\cite{Ma2022}
+\item ”Tumor cells mitigate excess ROS and maintain redox homeostasis principally by
+glutathione synthesis [110,111]. Glutathione is a tripeptide synthesized from glutamate,
+cysteine, and glycine that actively scavenges ROS.”\cite{Natarajan2019} This can mean that removing ROS resistance may mimick a glutamine-related defect
+\item "Under monolayer culture, these cells showed abundant glutamine uptake to drive TCA cycle anaplerosis, which is lost under anchorage-independent growth." \cite{Natarajan2019}
+\item "In cancer patients, some tumors have been reported to consume such an abun-
+dance of glutamine that they depress plasma glutamine levels (10, 11). Despite these
+observations, the high rates of glutamine metabolism and addiction exhibited by some
+cancer cells are poorly understood. Recently, we reported that glioma cells can exhibit
+glutamine uptake and metabolism that exceeds the cell’s use of glutamine for protein and
+nucleotide biosynthesis (12). In such cells, the excess glutamine metabolites produced
+were found to be secreted as either lactate or alanine. This high rate of glutaminolysis
+was found to be beneficial because it provided the cell a high rate of NADPH production
+that was used to fuel lipid and nucleotide biosynthesis" \cite{Wise2008} 
+\item NADPH can balance ROS and support biosynthesis. So in some cases if glutamine is not present enough glucose may not be enough to support massive growth
+\item SF188 which are addicted to Glutamine consume between 0.5 and 1.5 mM (in control condition ?) \cite{Wise2008}
+\item "At high utilization rates of glutamine, oxidative utilization of glucose was decreased, while the production of lactate from glutamine was enhanced. This emergent phenotype was observed only when the available carbon exceeded the amount that could be fully oxidized by the available oxygen" Modelling results, careful...\cite{Damiani2017}
+\item Glutamine is the main carbon source for the TCA cycle when Ras is activated \cite{Ma2022}
+\item In the human non-small cell lung cancer cell line A549, it was found that silencing HIF-1$\alpha$ expression reduced glutamine consumption in the tumor cells [40]. Furthermore, HIF-2$\alpha$-
+has been reported to enhance the activity of c-MYC, which in turn drives glutamine
+catabolism by regulating numerous genes including glutaminase [30, 41]. ”\cite{Ma2022}
+\item "HIF-2$\alpha$ enhances glutamine uptake which is
+converted into glutamate and replenishes the TCA cycle." \cite{Mudassar2020}
+\item "Oncogenes influence nutrient metabolism and nutrient dependence. The oncogene c-Myc stimulates glutamine metabolism and renders cells dependent on glutamine to sustain viability (“glutamine addiction”), suggesting that treatments targeting glutamine metabolism might selectively kill c-Myc-transformed tumor cells."\cite{Yang2009}
+\item "Interestingly, glutamine and glutamate are actually released by glioma cells, affecting the surrounding neural tissues (Buckingham et al., 2011)."\cite{Strickland2017}
+\item ”Since the brain microenvironment is rich in glutamine [2], glioblastoma cells can take advantage of glutamine catabolism (termed glutaminolysis) as an additional or alternative energy source especially when glycolytic energy production is low due to phases when glucose levels are depleted”\cite{Stuart2023}
+\item ”Glutamine addiction is usually associated to glycolysis impairment and Akt induction in those HGG cells [6].”\cite{Fuchs2020}
+\item Consos dans "notes on deprivation" et "notes on glutamine and glutaminolysis" 
+\end{itemize}
+
+\section{The Citric Acid Cycle}
+\begin{itemize}
+\item "The products of TCA cycle, NADH, FADH2 provide electrons for the electron transport chain (ETC) chain. This process is known as oxidative phosphorylation (OXPHOS) and efficiently generates ATP."\cite{Mudassar2020}
+\item "Mitochondrial metabolism provides precursors to build macromolecules in growing cancer cells1,2." \cite{Mullen2011} 
+\item "there is a shift from oxidative glutamine metabolism to reductive carboxylation when non-small cell lung cancer (NSCLC) cells transition from a monolayer cultures to spheroids [114]." \cite{Natarajan2019}\cite{Jiang2016}
+\item "This reductive, glutamine-dependent pathway is the dominant mode of metabolism in rapidly growing malignant cells containing mutations in complex I or complex III of the ETC, in patient-derived renal carcinoma cells with mutations in fumarate hydratase, and in cells with normal mitochondria subjected to acute pharmacological ETC inhibition." \cite{Mullen2011}
+\item  In highly proliferating cells, citrate produced in the TCA cycle is redirected into the cytosol for the production of
+NADPH and fatty acids. The production of $\alpha$-KG though glutaminolysis replenishes
+the TCA cycle, a process called anaplerosis.10,11 \cite{Villar2015}
+\item  "These results indicate that the energy demand of C6 cells is reduced in the absence of glutamine because of the fact that their growth slows down drastically."[...]"without significantly affecting the relative contribution of the oxidative phosphorylation and of the glycolysis to the total ATP synthesis" It  is \textbf{rat glioma}, though....\cite{Martin1999}
+\item "The Kreb's cycle is therefore a flexible central provider for the catabolic and anabolic needs of the cancer cell."\cite{Strickland2017}
+\end{itemize}
+
+
+\section{Lactate}
+\begin{itemize}
+\item "Excreting lactate through monocarboxylate transporters (e.g. MCT1, 4) eliminates protons arising from the glyceraldehyde 3-phosphate dehydrogenase reaction in glycolysis, thereby maintaining pH homeostasis inside the cell and acidifying the extracellular space"\cite{Faubert2017}
+\item Some cancer cells use lactate as a respiratory substrate and lipogenic precursor in culture (Chen et al., 2016). Blocking lactate uptake with an MCT1 inhibitor reduces respiration and promotes glycolysis in some cancer cell lines, and suppresses xenograft growth in mice"\cite{Faubert2017}
+\item "We also find that lactate’s contribution as a respiratory fuel exceeds that of glucose, particularly in tumors growing in the lung."\cite{Faubert2017}
+\item "Lactate [can be] preferred to glucose as a fuel for the TCA cycle in vivo" \cite{Faubert2017}
+\item "This may indicate that tissue architecture is related to the relative preference or propensity to use lactate as a fuel."\cite{Faubert2017}
+\item "At high utilization rates of glutamine, oxidative utilization of glucose was decreased, while the production of lactate from glutamine was enhanced. This emergent phenotype was observed only when the available carbon exceeded the amount that could be fully oxidized by the available metabolites. oxygen"\cite{Damiani2017} Modelling results, careful...
+\item "Although lactate is generally considered a waste product, we now show that it is a prominent substrate that fuels the oxidative metabolism of oxygenated tumor cells. There is therefore a symbiosis in which glycolytic and oxidative tumor cells mutually regulate their access to energy." \cite{Sonveaux2009}
+\item "Lactate rescues a broad array of different GBM model systems from nutrient deprived mediated reduction in cellular viability"\cite{Torrini2022}
+\item "Lactate activates oxidative metabolism and thereby facilitates promotion of proliferation and survival of GBM cells"\cite{Torrini2022}
+\item "Consistently, lactate renders GBM cultures more sensitive to the cytotoxic actions by inhibitors of oxidative phosphorylation and the electron transport chain,"\cite{Torrini2022}
+\item "Here we show that lactate is also a TCA cycle carbon source for NSCLC. In human NSCLC, evidence of lactate utilization was most apparent in tumors with high 18fluorodeoxyglucose uptake and aggressive oncological behavior." \cite{Faubert2017}
+\end{itemize}
+
+\section{Flux-Balance analysis}
+\begin{itemize}
+\item FBA allows to identify a phenotype that maximizes a certain objective (typically growth) among all the possible flux patterns compatible with the steady state assumption"\cite{Damiani2017}
+\item Sampling of the feasible flux space allowed us to obtain a large number of randomly mutated cells simulated at different glutamine and glucose uptake rates. We observed that, in the limited subset of proliferating cells, most displayed fermentation of glucose to lactate in the presence of oxygen.\cite{Damiani2017}
+\item Need for a good network establishment...
+\item It can be used in conjunction with ABM. By fixing the maximum  growth rate, Shan \textit{et al.} can use the flux in the diffusion-reaction equation and get to the concentration of each metabolite (They still had to reduce the network).\cite{Shan2018}
+\item "We demonstrated with FBA that
+under our interpretation, glutamine addiction led to an increase uptake of oxygen (i.e., lower
+yields on oxygen) in glutamine-addicted tumor cells to maintain their redox balance and to
+meet the energy demand; this lower yield on oxygen represents a cost of using glutamine in
+the TCA cycle. We see the impact of this lower yield on oxygen in the reduced growth rate of
+glutamine-addicted tumor cells relative to Warburg tumor cells."\cite{Shan2018}
+
+\end{itemize}
+
+
+\section{Hypoxia \& Hypoxia-Inducible Factors}
+\begin{itemize}
+\item In the human non-small cell lung cancer cell line A549, it was found that silencing HIF-1$\alpha$ expression reduced glutamine consumption in the tumor cells [40]. Furthermore, HIF-2$\alpha$ has been reported to enhance the activity of c-MYC, which in turn drives glutamine catabolism by regulating numerous genes including glutaminase [30, 41]. ”\cite{Ma2022}
+\item "HIF-1$\alpha$ decreases mitochondrial OXPHOS by activating PDK1, which subsequently inhibits PDH. It also inhibits the excess reactive oxygen species (ROS) produced as a result of inefficient electron transport, therefore,protecting cancer cells against oxidative stress."\cite{Mudassar2020}
+\item "HIF-2$\alpha$ enhances glutamine uptake which is
+converted into glutamate and replenishes the TCA cycle." \cite{Mudassar2020}
+\item "HIF-1$\alpha$ mediates multiple cellular adaptations present in GBM under hypoxic conditions, such as cell differentiation, inflammatory/immune response modulation, and metabolic reprogramming (47, 48)." \cite{Chen2021}
+\item "the electron transport chain produces ATP and reactive oxygen species (ROS) which act as signaling molecules"\cite{Strickland2017}
+\item "Glioma cells demonstrate alterations to mitochondrial morphology, with some cells containing healthy electron-dense mitochondria and others exhibiting mitochondria with extensive cristolysis; these characteristics are thought to correlate with hypoxia-resistant and hypoxia-sensitive cell types (Arismendi-Morillo and Castellano-Ramirez, 2008)."
+\item "Fatty acid synthesis has been shown to continue under low-oxygen tension and low-nutrient conditions (Lewis et al., 2015), a process which is activated by HIF1$\alpha$ signaling. Fatty acids are shuttled into lipid droplets upon hypoxia in order to support cell growth and survival upon re-oxygenation (Bensaad et al., 2014)."\cite{Strickland2017}
+\item "Hypoxia causes: activation of Hypoxia Inducible Factors (HIF; the subject of this section), facilitation of adaptive metabolism (such as formation of lipid droplets), release of vascular endothelial growth factor (which influences the surrounding tissue to support neo-angiogenesis), and death (if resultant signaling and nutrient restoration does not promote survival). " \cite{Strickland2017}
+\item "By recapitulating reductive metabolism in the form of glycolysis and glutaminolysis constitutive activation of HIF-1 in cancer can contribute to cell growth (Lemaire et al., 2015)." \cite{Strickland2017}
+\item "Lactate production, due to HIF metabolic remodeling, also
+has a role in creating a favorable environment for glioma
+invasion (Figure 14). Lactate causes a decrease in extracellular pH forming an acidic microenvironment, which promotes the death of surrounding tissue, ECM degradation and subsequent localized migration" \cite{Strickland2017}
+\item ”Hypoxia-mimetics increase cultured DIPG glycolytic rate and enzyme expression, and decrease proliferation” \cite{Waker2018}
+\item Acute hypoxia acts on peripheral cells that are incompletely and intermittently oxygenated by an aberrant neovascularization. The temporal scale for acute hypoxia is generally considered from minutes to several hours. After 24 h of poor oxygen levels, the tumor cells are considered in a chronic hypoxic state and usually located in the furthest part of the tumor from the blood vessels. Lastly, the cyclic hypoxia might be considered as a kind of intermediary between acute and chronic hypoxia.”\cite{Fuchs2020}
+\item ”Furthermore, hypoxia activates the hypoxia-inducible factor 1 (HIF-1) pathway which favors the survival of tumor cells by increasing their glucose uptake and utiliza-
+tion via altered glucose metabolism [6]. It also induces angiogenesis [7], creates an acidic microenvironment and promotes proliferation [8]”\cite{Shen2018}
+\item "Moreover, hypoxia causes multiple changes in the
+composition of ETC complexes. These changes are required to keep mitochondria in tact under low oxygen conditions and to prevent excessive ROS formation. Most of the changes in complex composition occur within complex I, a dominant acceptor of electrons, and complex IV, facilitating electron transport to molecular oxygen. Some of these alterations comprise the exchange of subunits within ETC complexes others modify complex structure, while subunit depletion also occurs." \cite{Fuhrmann2017}
+\item There seem to be mechanism that prevent the Depletion of NADH \cite{Yan2020}
+\item The work of Spinelli et al. also demonstrated that some cells can tolerate molecular O$_{2}$ absence for proliferation through reduction of fumarate with the SDH complex working in reverse. \cite{Spinelli2021}
+\end{itemize}
+
+\section{Fatty acid Oxidation}
+\begin{itemize}
+\item "more recent work has revealed that GBM utilizes bioenergetic substrates such as amino acids, nucleic acids, and fatty acids, with emerging evidence that fatty acid metabolism is the primary substrate for energy production"\cite{Chen2021}
+\item "ncreasingly, it is appreciated that fatty acids can act as critical bio-energetic substrates within the glioma cell (Figure 3). Recent results from our lab and other groups have demonstrated that glioma cells primarily use fatty acids as a substrate for energy production. Specifically, human glioma cells primary-cultured under serum-free conditions oxidize fatty acids to maintain both respiratory and proliferative activity (Lin et al., 2017)."\cite{Strickland2017}
+\item "3C in vivo radiolabelling studies conducted in orthotopic mouse models of malignant glioma show that acetate contributes over half of oxidative activity within these tumors, while glucose contributes only a third (Maher et al., 2012; Mashimo et al., 2014)." \cite{Strickland2017}
+\item "Fatty acids pass easily through the plasma membrane, and this may indeed be a nutrient source in vivo, but these substrates are not made available in cell culture. However, cells do have access to high concentrations of glucose both in vitro and in vivo. "\cite{Strickland2017}
+\item "Fatty acid synthesis has been shown to continue under low-oxygen tension and low-nutrient conditions (Lewis et al., 2015), a process which is activated by HIF1$\alpha$ signaling. Fatty acids are shuttled into lipid droplets upon hypoxia in order to support cell growth and survival upon re-oxygenation (Bensaad et al., 2014)."\cite{Strickland2017}
+\end{itemize}
+
+\section{pH and metabolism}
+\begin{itemize}
+\item The collective metabolic process of GBM ultimately leads to an acidic environment that is harmful to normal cells but has minimal effect on cancer cells, thus supporting tumor progression (20).\cite{Chen2021}
+\item ”Intracellular pH is regulated by integrin-mediated cell spreading, and thus by the level of cellular tension 46–49 . Intracellular pH is more basic, indicating more active H
++ extrusion, in spread cells, where cell tension is higher, compared with rounded cells, where tension is lower, and this is due to differential NHE1 activity (Fig. 2a). ”\cite{Romani2020}
+\item "Notably, low tissue pH and lactic acidosis, a hallmark of GBM that is intimately tied to hypoxia and glycolysis, impacts tumor cell metabolism and survival."\cite{Chen2021}
+\item "It is therefore generally accepted that cancer cells undergo aerobic glycolysis so that the NADH by-product of lactate production can be used to fuel biomass production and lactate can be utilized to acidify the microenvironment, facilitating invasion" \cite{Strickland2017}
+\item "GSCs have high mitochondrial reserves compared with differentiated cell types; inhibiting neither glycolysis nor oxidative phosphorylation in this cell type has significant effects on energy production (Vlashi et al., 2011)."\cite{Strickland2017}
+\end{itemize}
+
+\section{Migration}
+\textbf{Does Migration occur in spheroids ?}
+\begin{itemize}
+\item ”Estimates suggest that up to approximately 50\% of ATP is used to support the actin cytoskeleton (Bernstein, 2003; Daniel et al., 1986). Consequently, intracellular ATP:ADP ratio has been positively correlated with migration potential (Zanotelli et al., 2018).”\cite{Zanotelli2021}
+\item ”Glycolysis can help cells respond to fluctuating energetic demands in the membrane (Epstein et al., 2014), hence an increase in glucose uptake is often observed when the
+energy cost associated with migration increases rapidly (Zanotelli et al., 2019; Zhang et al., 2019). While glycolysis can synthesize ATP up to 100 times quicker than OXPHOS,
+the energetic yield is very low and presents a thermodynamic trade-off between rate and yield (Martinez-Outschoorn et al., 2017).”
+\item "The essential observation to be
+made is that the inert polystyrene microspheres are driven towards the center of the spheroid while the labelled cells, although exhibiting a similar tendency for internalization, persisted near the periphery of the spheroid occupied by proliferating cells. Consequently a distinctly bimodal distribution of labelled cells can be seen. These experiments are taken by us to imply that there are both passive and active mechanisms governing cell migration."
+\item Besides the paper from Dorie$^{\cite{Dorie1986}}$, There is EXACTLY two papers from the same team that adress the question...No compelling evidence of migration in spheroids
+\end{itemize}
+
+\section{Metabolic variety and plasticity}
+\begin{itemize}
+\item "For example, glioblastoma stem cells (GSCs) in perivascular regions exhibit robust glycolytic metabolism based on blood glucose availability, whereas cells in hypoxic regions display high levels of metabolic flexibility and are fueled by lactate, lipids, and amino acids (21)."\cite{Chen2021}
+\item "In addition to these region-specific changes, a metabolic interplay has been posited in the perivascular and hypoxic regions where lactate release from hypoxic regions are metabolized through oxidative phosphorylation by perivascular cells and glucose release from the perivascular cells fuel glycolysis in the hypoxic space (60)."\cite{Chen2021}
+\item "Tumors contain oxygenated and hypoxic regions, so the tumor cell population is heterogeneous. Hypoxic tumor cells primarily use glucose for glycolytic energy production and release lactic acid, creating a lactate gradient that mirrors the oxygen gradient in the tumor. By contrast, oxygenated tumor cells have been thought to primarily use glucose for oxidative energy production."\cite{Sonveaux2009}
+\item "The D-54MG and GL261 glioma cell lines displayed an oxidative phosphorylation (OXPHOS)-dependent phenotype, characterized by extremely long survival under glucose starvation, and low tolerance to poisoning of the electron transport chain (ETC). Alternatively, U-251MG and U-87MG glioma cells exhibited a glycolytic-dependent phenotype with functional OXPHOS."\cite{Griguer2005}
+\item "While the Warburg Effect has been observed in gliomas and other tumors (Oudard et al., 1996), it has been noted that aerobic glycolysis does not account for the total ATP production in many types of cancer cells—both immortalized cell lines and primary cultures (Vander Heiden et al., 2009)—suggesting that other substrates are being oxidized. When this hypothesis was first formally tested in MCF-7 breast cancer cells in 2002, it was discovered that total ATP turnover was 80\% oxidative and 20\% glycolytic (Guppy et al., 2002)."\cite{Strickland2017}
+\item "In particular, cancer stem cells which propagate tumor growth and allow recurrence after resection or chemotherapeutic treatment, may exploit different metabolic strategies than other cells within the tumor. For example, a recent study showed that glioma stem cells (GSCs) are less glycolytic than differentiated glioma cells, consuming lower levels of glucose and producing lower amounts of lactate while maintaining higher ATP levels compared with their differentiated progeny. The notorious radio-resistance of this cell population is correlated with higher mitochondrial reserve capacity, leading the authors to conclude that GSCs primarily rely upon oxidative metabolic strategies and will not be vanquished by therapies aiming to inhibit glycolysis (Vlashi et al., 2011)."\cite{Strickland2017}
+\item "The Kreb's cycle is therefore a flexible central provider for the catabolic and anabolic needs of the cancer cell." \cite{Strickland2017}
+\item "Interestingly, glutamine and glutamate are actually released by glioma cells, affecting the surrounding neural tissues (Buckingham et al., 2011)."\cite{Strickland2017}
+\item "In the 1960s and 1970s, Randle showed that NADH and acetyl-CoA produced during beta-oxidation both inhibit the activity of pyruvate dehydrogenase (PDH), thereby promoting the conversion of pyruvate to lactate. Well-characterized in diabetes, the work of Randle and his colleagues reveals that non-oxidative glycolysis can occur alongside the oxidation of other substrates, particularly fatty acids" (Randle et al., 1963).\cite{Strickland2017}
+\item "A more recent study has established the Corbet-Feron Effect, where lactate-induced acidification of the microenvironment over a period of weeks leads to adaptation of the cancer cell population, promoting beta-oxidation as a metabolic strategy (Corbet et al., 2016). "\cite{Strickland2017}
+\item "In conclusion, the metabolic state of GSCs seems to differ substantially from the metabolic state of differentiated glioma cells, and it correlates with resistance to ionizing radiation. The ability of GSCs to use multiple pathways to produce energy renders them resistant to therapies that target individual metabolic pathways, suggesting that targeting specific metabolic pathways in glioblastoma may spare GSCs."\cite{Vlashi2011}
+\item "In the rapidly proliferating SF-188 pediatric glioblastoma cell line there is a shift away from glycolysis toward oxidative glutamine metabolism represented by increased oxygen consumption and increased ROS"\cite{Strickland2017}
+\item "In fact it has been proposed that varying oxygen levels within a tumor make metabolic heterogeneity inevitable (Strickaert et al., 2016)."\cite{Strickland2017}
+\item "Metabolic shift or enhanced glutamine metabolism is believed to occur in response to oncogenes such as c-MYC and pro-inflammatory cytokines in glioblastoma" \cite{Stuart2023}
+\item "Although anaerobic glycolysis can provide energy to the cells in an efficient way, as demonstrated by the maintainance of the energy level under anoxia, aerobic metabolism
+can provide the energy to the cells in the absence of glucose (and glycogen), probably by utilizing pyruvate or glutamine as carbon sources (the concentrations of which are
+1 mM and 4 mM, respectively, in the culture medium). Under the most drastic starvation conditions (Dulbecco’s modified Eagle’s medium free of glucose, pyruvate and glutamine), the survival of C6 glioma cells with a good energy status at least duringan
+8-h period, suggests the ultimate utilization, before death of the endogenous pool of fatty acids. These results illustrate the ability of the cells to modulate the activity of
+their metabolic pathways as a function of the substrate content of their external medium."\cite{Piannet1991}
+\item ”Furthermore, hypoxia activates the hypoxia-inducible factor 1 (HIF-1) pathway which favors the survival of tumor cells by increasing their glucose uptake and utiliza-
+tion via altered glucose metabolism [6]. It also induces angiogenesis [7], creates an acidic microenvironment and promotes proliferation [8]”\cite{Shen2018}
+\item "HIF-1 $\alpha$ expression was higher when cells were incubated under hypoxia compared
+to normoxic conditions, indicating that they actually sense our low-oxygen in vitro con-
+ditions (Figure 1a, uncropped version in Figure S1). Nevertheless, we did not observe
+any cell culture suffering up to 96 h under these hypoxic conditions"\cite{Bailleul2021}
+\item ” It was previously suggested in experimental tumor models that lactate oxidation occurs in well-oxygenated regions as part of symbiotic metabolite exchanges in which hypoxic cancer cells produce lactate and better oxygenated cells take up lactate to fuel respiration (Sonveaux et al., 2008).”\cite{Faubert2017}
+ \item \textbf{Glucose feeds the TCA cycle via circulating lactate}  \cite{Hui2017}
+ \item ”In GBM1 and JHH520 cells, reduction in glucose levels (450 mg/dL–45 mg/dL) did not significantly affect cell viability. However, reducing the glucose concentration to
+45 mg/dL significantly decreased the viability of BTSC233 cells (p < 0.05)” \cite{Yusuf2022}
+\item The work of Spinelli et al. also demonstrated that some cells can tolerate molecular O$_{2}$ absence for proliferation through reduction of fumarate with the SDH complex working in reverse. \cite{Spinelli2021}
+\end{itemize}
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{/home/antonybazir/Documents/Post-doc/Redac/biblio_synthese}
+
+\end{document}
