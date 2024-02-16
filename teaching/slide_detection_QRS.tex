@@ -1,0 +1,854 @@
+\documentclass{beamer}
+
+\usepackage{epsfig}
+\usepackage{multicol}
+\usepackage{geometry}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\usetheme{Boadilla}
+\usepackage{pict2e}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\title[Traitement du signal numérique]{Traitement du signal numérique - HEI4 IMS}
+\author[Antony Bazir]{}
+
+\setlength{\unitlength}{1cm}
+
+\begin{document}
+
+\section{Détection complexe QRS}
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du complexe QRS\\
+\vspace{0.3cm}
+Pourquoi extraire le complexe QRS ?\\
+\vspace{0.2cm}
+\begin{itemize}
+\item suivi de la condition du patient en temps réel 
+\item Etablissement des tachogrammes (RR)
+\item \'A la base de beacoup d'algorithmes acutels...
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\textbf{Caractéristiques du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.35]{QRS.png}\\
+
+\end{center}
+\underline{Origine physique} : dépolarisation des ventricules\\
+\vspace{0.3cm}
+Caractéristiques: \\
+\vspace{0.1cm}
+\begin{itemize}
+\item Durée :  80 -100 ms
+\item Fréquence : 10-15 Hz 
+\end{itemize}
+
+\end{frame}
+
+\subsection{Filtrage passe-bande}
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.3]{ECG_spectrum.png}\\
+\textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
+\vspace{0.1cm}
+\end{center}
+Importance du filtrage passe-bande...
+\end{frame}
+
+\begin{frame}
+\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\begin{center}
+\includegraphics[scale=0.3]{ECG_spectrum.png}\\
+\textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
+\vspace{0.1cm}
+\end{center}
+Comment choisir $T_e$ ? \only<2-> {Shannon $\rightarrow f_e > 80 Hz$  \only<3->{ Dans les faits, $f_e$ 500 Hz} }
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\vspace{0.3cm}
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du QRS
+\begin{enumerate}
+\item \textbf{filtrage passe-bande numérique}
+\item Dérivée 
+\item Mise au carré 
+\item Moyennage
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique}\\
+ \vspace{0.3 cm}
+ Plusieurs méthodes possibles (liste non-exhasutive) :\\
+ \vspace{0.2cm}
+ \begin{itemize}
+ \item Filtre récursif à  2 pôles
+ \vspace{0.2cm}
+ \item Filtre à coefficients "entiers"
+ \vspace{0.2cm}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+ \vspace{0.3 cm}
+ Forme possible de la fonction de transfert :
+ \[H(z) = \frac{c_1}{z-p_1} + \frac{c_2}{z-p_2} \]\\
+  \vspace{0.3 cm}
+  \'Equation aux différences :
+ \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]  
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+
+  Forme de l'équation aux différences :
+ \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]  \\
+  \vspace{0.3 cm}
+  Fonction de transfert :
+   \[H(z) = \frac{1 - z^{-2}}{1 - b_1 z^{-1} + b_2 z^{-2}} \]  \\
+  \vspace{0.3cm}
+ \textbf{Comment se comporte ce filtre ?}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+
+  \vspace{0.3 cm}
+  Fonction de transfert :
+   \[H(z) = \frac{1 - z^{-2}}{1 - b_1 z^{-1} + b_2 z^{-2}} \]  \\
+  \vspace{0.3cm}
+ On prend les valeurs données par Tompkins:
+ \begin{itemize}
+ \item $f_e$ = 500 Hz
+ \item $b_1$ = 1.875
+ \item $b_2$ = 0.9219
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+
+  \vspace{0.3 cm}
+  Fonction de transfert :
+   \[H(z) = \frac{1 - z^{-2}}{1 - 1.875 z^{-1} + 0.9219 z^{-2}} \]  \\
+  \vspace{0.3cm}
+   \[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2.5]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passebande1.txt};
+
+\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);
+\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\vspace{0.3cm}
+On sélectionne bien dans une gamme de fréquence autour du QRS
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+\begin{columns}
+\column{60mm}
+\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \]
+\column{60mm} 
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2.5]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passebande1.txt};
+
+\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);
+\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\vspace{0.3cm}
+Remarques :
+\begin{itemize}
+\item Le numérateur sert à couper les basses fréquences
+\item Coefficients optimisées pour augmenter la vitesse de calcul
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+\begin{columns}
+\column{60mm}
+\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \]
+\column{60mm} 
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2.5]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(f))$};
+\draw[thick,blue] plot file {argument_passebande1.txt};
+
+\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,0);
+\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\end{columns}
+Problèmes :
+\begin{itemize}
+\item Phase fortement non linéaire
+\item Distorsion de phase importante au niveau de la bande d'intérêt
+\end{itemize}
+\only<2->{
+On utilise un autre type de filtre...
+}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre à coeffs entiers}\\
+ \vspace{0.2cm}
+ \underline{Objectif} : Gagner du temps de calcul en prenant des coeffs entiers ET garder une phase linéaire (informatique) \\
+ \vspace{0.3cm}
+ Forme générale : 
+ \[ H(z) = \frac{(1 -z^{-m})^p}{(1 - 2 \cos(\theta)z^{-1} + z^{-2})^t} \] \\
+ \vspace{0.2cm}
+ \begin{itemize}
+ \item  $m$,$p$ et $t$ entiers positifs
+ \item $\theta$ idéalement 0, $\pi/3$, $\pi/2$, $2\pi/3$ ou $\pi$
+ \item Permet "d'annuler" des zéros
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre à coeffs entiers}\\
+ \vspace{0.2cm}
+ Forme générale : 
+ \[ H(z) = \frac{(1 -z^{-m})^p}{(1 - 2 \cos(\theta)z^{-1} + z^{-2})^t} \] \\
+ \vspace{0.2cm}
+ Mise en oeuvre pour la détection QRS :
+ \begin{itemize}
+ \item  Passe-haut et passe-bas en cascade
+ \item \textbf{Phase linéaire} $\rightarrow$ pas de distorsion de phase
+ \end{itemize}
+ \vspace{0.2cm}
+ \textbf{Important de ne pas trop déformer l'ECG pendant le traitement...}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Passe-bas à coeff entiers}\\
+  \vspace{0.2cm}
+   \[ H_{pb}(z) = \frac{(1 -z^{-6})^2}{(1 - z^{-1} )^2} \]
+   \vspace{0.1cm}
+   \begin{columns}
+	\column{60mm}
+	\begin{center}
+	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passebas.txt};
+
+\draw[dashed] (0.33,0) node[below]{\scriptsize 33 Hz}--(0.33,0);
+\draw[dashed] (1,0) node[below]{\scriptsize 100 Hz}--(1,0);
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	\column{60mm}  
+		\begin{center}
+	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(f))$};
+\draw[thick,blue] plot file {argument_passebas.txt};
+	\end{scope}
+	\end{tikzpicture}
+	\end{center} 
+   
+   \end{columns}
+  \end{frame}
+  
+  \begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Passe-haut à coeff entiers}\\
+  \vspace{0.2cm}
+   \[ H_{ph}(z) = z^{-18} - \frac{1 -z^{-36}}{36(1 - z^{-1})} \]
+   \vspace{0.1cm}
+   \begin{columns}
+	\column{60mm}
+	\begin{center}
+	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passehaut.txt};
+
+\draw[dashed] (0.09,0) node[below]{\scriptsize 9 Hz}--(0.09,1.2);
+\draw[dashed] (1,0) node[below]{\scriptsize 100 Hz}--(1,0);
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	\column{60mm}  
+		\begin{center}
+	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(f))$};
+\draw[thick,blue] plot file {argument_passehaut.txt};
+	\end{scope}
+	\end{tikzpicture}
+	\end{center} 
+   
+   \end{columns}
+  \end{frame}
+  
+  
+    \begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Passe-bande à coeff entiers}\\
+  \vspace{0.2cm}
+   \[ H(z) = H_{pb}(z) \times H_{ph}(z) \]
+   \vspace{0.1cm}
+   \begin{columns}
+	\column{60mm}
+	\begin{center}
+	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_passebande.txt};
+
+\draw[dashed] (0.09,0) node[below]{\scriptsize 9 Hz}--(0.09,1);
+\draw[dashed] (1,0) node[below]{\scriptsize 100 Hz}--(1,0);
+\draw[dashed] (0.33,0) node[below]{\scriptsize 33 Hz}--(0.33,0);
+\draw[dashed] (1,0) node[below]{\scriptsize 100 Hz}--(1,0);
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	\column{60mm}  
+		\begin{center}
+	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(f))$};
+\draw[thick,blue] plot file {argument_passebande.txt};
+	\end{scope}
+	\end{tikzpicture}
+	\end{center} 
+   
+   \end{columns}
+   \vspace{0.3cm}
+   \only<2->{
+   \textbf{Appliquons ce premier filtre à un ECG}
+   }
+  \end{frame}
+  
+   \begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Signal ECG} échantillonné à 200 Hz par Tompkins\\
+ \vspace{0.3cm}
+ 	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s(t)$};
+\draw[thick,blue] plot file {signal_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+
+\draw[dashed] (0.12,0.3) node[below]{\scriptsize P}--(0.12,0.3);
+
+\draw[dashed] (0.66,-0.4) node[below]{\scriptsize QRS}--(0.66,-0.4);
+
+\draw[dashed] (1.6,0.8) node[below]{\scriptsize T}--(1.6,0.8);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+ \only<2->{
+ On retrace le spectre en fréquence du signal numérisé 
+ }
+ \end{frame} 
+ 
+    \begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Spectre du Signal ECG numérique}\\
+ \vspace{0.3cm}
+ 	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=3]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|\tilde{S}(f)|$};
+\draw[thick,blue] plot file {module_ECG.txt};
+
+\draw[dashed] (2,0) node[below]{\scriptsize 100 Hz}--(2,0);
+
+\draw[dashed] (1,0) node[below]{\scriptsize 50 Hz}--(1,0);
+
+\draw[dashed] (0.5,0) node[below]{\scriptsize 25 Hz}--(0.5,0);
+
+\draw[dashed] (0.1,0) node[below]{\scriptsize 10 Hz}--(0.1,0);
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+
+ \end{frame} 
+ 
+ \begin{frame}
+ \frametitle{Détection QRS: Filtrage passe-bande}
+ On applique maintenant le filtre passe-bande au signal \\
+ 
+\vspace{0.2cm}
+
+Comment procéder ? \\
+\vspace{0.2cm}
+ \begin{itemize}
+ \item Coder l'équation aux différences 
+ \vspace{0.1cm}
+ \item Réaliser la convolution dans le domaine temporel 
+ \vspace{0.1cm}
+ \item Faire le produit du spectre et du signal dans le domaine fréquentiel
+ \end{itemize}
+ \vspace{0.2cm}
+ \only<2->{
+\textbf{ Méthode la plus directe : Coder l'équation aux différences}
+ }
+ \end{frame}
+ 
+  \begin{frame}
+ \frametitle{Détection QRS: Filtrage passe-bande}
+ \'Equations aux différences: \\
+ \vspace{0.1cm}
+  \[H_{pb}(z) = \frac{(1 -z^{-6})^2}{(1 - z^{-1} )^2}\] \[  \rightarrow  y[n] =  2y[n-1]- y[n-2] + x[n] - 2x[n-6] + x[n-12] \]\\
+  \vspace{0.2cm}
+  
+  \[ H_{ph}(z) = z^{-36} - \frac{1 -z^{-36}}{36(1 - z^{-1})}\]
+  \[ \rightarrow y[n] = x[n-18] -\frac{1}{36}[y[n-1] + x[n] - x[n-36] ]  \]\\
+ \vspace{0.2cm}
+ \only<2->{
+ On les applique tour à tour au signal ECG
+ }
+  \end{frame}
+  
+  \begin{frame}
+ \frametitle{Détection QRS: Filtrage passe-bande} 
+ Résultat: 
+ \begin{columns}
+ \column{55mm}
+  	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s(t)$};
+\draw[thick,blue] plot file {signal_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+
+\draw[dashed] (0.12,0.4) node[below]{\scriptsize P}--(0.12,0.4);
+
+\draw[dashed] (0.66,-0.4) node[below]{\scriptsize QRS}--(0.66,-0.4);
+
+\draw[dashed] (1.6,0.8) node[below]{\scriptsize T}--(1.6,0.8);
+
+%\draw[->] (2.4,0.6)--(3,0.6);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	
+	\column{10mm}
+	  	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=2]
+
+
+\draw[->] (2.4,0.7)--(3,0.7);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+ 
+ \column{55mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s_1(t)$};
+\draw[thick,blue] plot file {bp_sig_ECG.txt};
+\draw[dashed] (2,-0.4) node[below]{\scriptsize 0.43 s}--(2,-0.4);
+
+%\draw[dashed] (0.12,0.3) node[below]{\scriptsize P}--(0.12,0.3);
+
+\draw[dashed] (1,-0.5) node[below]{\scriptsize QRS}--(1,-0.5);
+
+%\draw[dashed] (1.6,0.8) node[below]{\scriptsize T}--(1.6,0.8);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+ \end{columns}
+ \vspace{0.2cm}
+ Le filtrage passe-bande "accentue" le complexe QRS dans le signal
+ \end{frame}
+ 
+\begin{frame}
+\frametitle{Détection QRS: Dérivation}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\vspace{0.3cm}
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du QRS
+\begin{enumerate}
+\item Filtrage passe-bande numérique
+\item \textbf{Dérivée} 
+\item Mise au carré 
+\item Moyennage
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Dérivation}
+\textbf{Pourquoi un dérivateur ?}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s_1(t)$};
+\draw[thick,blue] plot file {bp_sig_ECG.txt};
+\draw[dashed] (2,-0.4) node[below]{\scriptsize 0.43 s}--(2,-0.4);
+
+%\draw[dashed] (0.12,0.3) node[below]{\scriptsize P}--(0.12,0.3);
+
+\draw[dashed] (1,-0.5) node[below]{\scriptsize QRS}--(1,-0.5);
+
+%\draw[dashed] (1.6,0.8) node[below]{\scriptsize T}--(1.6,0.8);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	Le complexe QRS semble correspondre aux zones de pente maximale dans le signal...
+
+\end{frame}
+\vspace{0.3cm}
+
+\subsection{Dérivation}
+\begin{frame}
+\frametitle{Détection QRS: Dérivation}
+On implémente un dérivateur à 5 points 
+\[ y[n] = \frac{2 x[n] + x[n-1] - x[n-3] -2 x[n-4]}{6} \] 
+
+\[H(z) = \frac{1}{6}[2 + z^{-1} - z^{-3} -2z^{-4}] \] 
+
+\begin{columns}
+\column{60mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {module_deriv.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 100 Hz}--(2,0);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+\column{60mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(f))$};
+\draw[thick,blue] plot file {argument_deriv.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 100 Hz}--(2,0);
+
+	\end{scope}
+	\end{tikzpicture}
+	\scriptsize Phase linéaire
+	\end{center}
+\vspace{0.1cm} 
+
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Dérivation}
+On code l'équation aux différences
+\[ y[n] = \frac{2 x[n] + x[n-1] - x[n-3] -2 x[n-4]}{6} \] 
+\vspace{0.1cm}
+Résultat:\\
+\vspace{0.1cm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $f$} ;
+\draw[->] (0,-0.5)-- (0,0.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[thick,blue] plot file {deriv_sig_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+\draw[dotted,blue] plot file {bp_sig_ECG.txt};
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center} 
+Le filtre "réagit" aux régions à forte pente...
+\end{frame}
+
+\subsection{Mise au carré}
+
+
+\begin{frame}
+\frametitle{Détection QRS: Mise au carré}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\vspace{0.3cm}
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du QRS
+\begin{enumerate}
+\item Filtrage passe-bande numérique
+\item Dérivée 
+\item \textbf{Mise au carré }
+\item Moyennage
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Mise au carré}
+On met le signal précédent au carré... 
+\begin{columns}
+\column{55mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,-0.5)-- (0,0.5)node[above] {\scriptsize  $s_2(t)$};
+\draw[thick,blue] plot file {deriv_sig_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+%\draw[dotted,blue] plot file {bp_sig_ECG.txt};
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center} 
+	\column{10mm}
+	  	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=2]
+
+
+\draw[->] (2.4,0.7)--(3,0.7);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	\column{55mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1)node[above] {\scriptsize  $s_3(t)$};
+\draw[thick,blue] plot file {square_sig_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+%\draw[dotted,blue] plot file {bp_sig_ECG.txt};
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+\end{columns}
+\vspace{1cm}
+On a un signal maximisé au niveau de la QRS...\\
+\vspace{0.5cm} \only<2->{Mais étape supplémentaire nécessaire pour éviter les faux positifs}
+\end{frame}
+
+\subsection{Moyennage}
+\begin{frame}
+\frametitle{Détection QRS: Moyennage}
+\begin{center}
+\includegraphics[scale=0.35]{tr_num_ecg.png}\\
+\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\vspace{0.3cm}
+\end{center}
+Filtrage temps réel du signal numérique \& Extraction du QRS
+\begin{enumerate}
+\item Filtrage passe-bande numérique
+\item Dérivée 
+\item Mise au carré
+\item \textbf{Moyennage}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Moyennage}
+Moyennage du signal dérivé sur 32 échantillons:\\
+\vspace{0.2cm}
+\[ y[n] = \frac{1}{32} [x[n -31] + x[n-30] + x[n-29] + \cdots +  x[n] ]\]
+
+\vspace{0.4cm}
+Pourquoi 32 échantillons ?
+\begin{itemize}
+\item Durée typique d'un complexe QRS : 0.1 s
+\vspace{0.2cm}
+\item Fréquence d'échantillonnage : 200 Hz 
+\vspace{0.2cm}
+\item<2-> Durée minimale : 20 échantillons
+\vspace{0.2cm}
+\item<3-> On souhaite que la valeur max de la fenêtre dure plusieurs échantillons $\rightarrow $ \textbf{32 échantillons} 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Moyennage}
+Moyennage du signal dérivé sur 32 échantillons:\\
+\vspace{0.2cm}
+\[ y[n] = \frac{1}{32} [x[n -31] + x[n-30] + x[n-29] + \cdots +  x[n] ]\]
+
+\vspace{0.4cm}
+\begin{columns}
+\column{55mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1)node[above] {\scriptsize  $s_3(t)$};
+\draw[thick,blue] plot file {square_sig_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+%\draw[dotted,blue] plot file {bp_sig_ECG.txt};
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center} 
+	\column{10mm}
+	  	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=2]
+
+
+\draw[->] (2.4,0.7)--(3,0.7);
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+	\column{55mm}
+   	\begin{center}
+ 	\begin{tikzpicture}
+ 	\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1)node[above] {\scriptsize  $s_4(t)$};
+\draw[thick,blue] plot file {mvmn_sig_ECG.txt};
+\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+%\draw[dotted,blue] plot file {bp_sig_ECG.txt};
+
+	\end{scope}
+	\end{tikzpicture}
+	\end{center}
+\end{columns}
+\vspace{0.2cm}
+	Le signal passe et se maintient à  1 lors de la détection du complexe QRS
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Résumé}
+Filtre passant à 1 lors de la détection QRS:
+  	\begin{center}
+ 	\begin{tikzpicture}
+	\begin{scope}[scale=0.8]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s(t)$};
+\draw[thick,blue] plot file {signal_ECG.txt};
+\draw (1,-0.8) node[text centered] {\scriptsize ECG};
+\end{scope}
+
+ 	\begin{scope}[scale=0.5,xshift=6cm]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s_1(t)$};
+\draw[thick,blue] plot file {bp_sig_ECG.txt};
+%\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+\draw[dotted,blue] plot file {signal_ECG.txt};
+\draw (1,-0.8) node[text centered] {\scriptsize passe-bande};
+	\end{scope}
+	
+	\begin{scope}[scale=0.5,xshift=10.5cm]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s_2(t)$};
+\draw[thick,blue] plot file {deriv_sig_ECG.txt};
+%\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+\draw[dotted,blue] plot file {bp_sig_ECG.txt};
+\draw (1,-0.8) node[text centered] {\scriptsize dérivée};
+	\end{scope}
+	
+		\begin{scope}[scale=0.5,xshift=15cm]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s_3(t)$};
+\draw[thick,blue] plot file {square_sig_ECG.txt};
+%\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+\draw[dotted,blue] plot file {deriv_sig_ECG.txt};
+\draw (1,-0.8) node[text centered] {\scriptsize carré};
+	\end{scope}
+	
+			\begin{scope}[scale=0.8,xshift=12cm]
+\draw[->] (0,0)-- (2.2,0)node[right] {\scriptsize $t$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $s_4(t)$};
+\draw[thick,blue] plot file {mvmn_sig_ECG.txt};
+%\draw[dashed] (2,0) node[below]{\scriptsize 0.43 s}--(2,0);
+\draw[dotted,blue] plot file {square_sig_ECG.txt};
+\draw (1,-0.8) node[text centered] {\scriptsize détection};
+	\end{scope}
+\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+Remarques:
+\begin{itemize}
+\item Délai entre la détection et l'ECG dans le signal
+\item Paramètres à rerégler si on change la fréquence d'échantillonnage
+\end{itemize}
+
+\end{frame}
+\end{document}
+
+

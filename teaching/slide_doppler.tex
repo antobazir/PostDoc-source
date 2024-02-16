@@ -1,0 +1,680 @@
+\documentclass{beamer}
+
+\usepackage{epsfig}
+\usepackage{multicol}
+\usepackage{geometry}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\usetheme{Boadilla}
+\usepackage{pict2e}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+\title[Traitement du signal numérique]{Traitement du signal numérique - HEI4 IMS}
+\author[Antony Bazir]{}
+
+\setlength{\unitlength}{1cm}
+
+\begin{document}
+\section{Doppler Ultrasound}
+\subsection{Bases physiques}
+\begin{frame}
+\frametitle{\'Echographie Doppler:  Bases physiques}
+\center
+\includegraphics[scale=0.45]{doppler_principle.png}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler:  Bases physiques}
+Principe : \\
+\vspace{0.5cm}
+\[ f_{rec} = f_{em} \cdot \frac{c - v_{rec}}{c - v_{em}} \]
+\vspace{0.5cm}
+\begin{itemize}
+\item $f_{rec}$ : fréquence perçue par le récepteur
+\vspace{0.2cm}
+\item $f_{em}$ : fréquence émise par la source\\
+\vspace{0.2cm}
+\item $c$ : La vitesse du son dans le milieu
+\vspace{0.2cm}
+\item $v_{rec}$ : vitesse du récepteur dans le milieu
+\vspace{0.2cm}
+\item $v_{em}$ : vitesse de la source dans le milieu
+
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler:  Bases physiques}
+En pratique:
+\\
+\vspace{0.5cm} 
+\[ \Delta f = f_{em} \cdot 2 \frac{v}{c} \cos(\theta) \]
+\vspace{0.5cm}
+\begin{itemize}
+\item $f_{em}$ : fréquence émise par la source\\
+\vspace{0.2cm}
+\item $c$ : La vitesse du son dans le milieu
+\vspace{0.2cm}
+\item $v$ : vitesse de la source dans le milieu
+\vspace{0.2cm}
+\item $\theta$ : angle de la trajectoire de la source par rapport au capteur
+\vspace{0.2cm}
+\item $\Delta_f$ : décalage en fréquence dû à l'effet Doppler
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler:  Bases physiques}
+Application numérique
+\\
+\vspace{0.5cm} 
+\[ \Delta f = f_{em} \cdot 2 \frac{v}{c} \cos(\theta) \]
+\vspace{0.5cm}
+\begin{itemize}
+\item $f_{em}$ : 2 MHz
+\item $c$ : 1540 m/s
+\vspace{0.2cm}
+\item $v$ : 0.3 m/s 
+\vspace{0.2cm}
+\item $\theta$ : 45°
+\vspace{0.2cm}
+\item $\Delta_f$ : 548 Hz
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Situation réelle  }
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.3]{doppler_pratique.png}\\
+\textit{Allan, 2012}
+\column{60mm}
+\begin{itemize}
+\item Vitesse \& angle variées 
+\vspace{0.2cm}
+\item interactions possibles entre les champs 
+\end{itemize}
+$\rightarrow$ bande de détection doppler
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Mode d'émission }
+\begin{itemize}
+\item Doppler en émission continu
+\vspace{0.2cm}
+\begin{itemize}
+\item Permet d'analyser une grande gamme de viesse de flux 
+\vspace{0.2cm}
+\item Localisation précise difficile
+\vspace{0.2cm}
+\end{itemize}
+\item Doppler pulsé
+\vspace{0.2cm}
+\begin{itemize}
+\item Vitesse max détectable limitée\\
+\vspace{0.2cm}
+\item Bonne propriété de localisation via temps de vol
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Structure des sondes}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.4]{probes.png}\\
+\textit{\footnotesize Configurations de sondes et volumes d'études, Allan, 2014}
+\end{center}
+\column{60mm}
+\begin{itemize}
+\item A. Sonde tandem pour le Doppler continu
+\vspace{0.5cm}
+\item B. Sonde unique pour le doppler pulsé 
+\vspace{0.5cm}
+\item C. Sonde unique en mode "multi-focus"
+\end{itemize}
+\vspace{0.4cm}
+Possibilité de sondes matricielles 
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Fréquence des sondes}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.4]{probes.png}\\
+\textit{\footnotesize Configurations de sondes et volumes d'études, Allan, 2014}
+\end{center}
+\column{60mm}
+On cherche à distinguer des vaisseaux sanguins.\\
+\vspace{0.5cm}
+Diamètre vaisseaux:
+\begin{itemize}
+\item Capillaire : $\approx$ 10 \textmu m
+\item veine : $\approx$ 1 mm
+\item artères : $\approx$ 1 cm
+\end{itemize}
+\vspace{0.5cm}
+$\lambda  =  \frac{\displaystyle c}{\displaystyle f} \approx 1$ mm $\rightarrow$ $f$ $\approx$ 1 MHz
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: images Doppler}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.3]{imaging_doppler.png}\\
+\textit{\footnotesize Sonde duplex, Allan, 2014}
+\end{center}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.35]{image_doppler.png}\\
+\textit{\footnotesize image duplex en mode normal et puissance, Allan, 2014}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: images Doppler}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.35]{image_doppler.png}\\
+\textit{\footnotesize image duplex en mode normal et puissance, Allan, 2014}
+\end{center}
+\column{60mm}
+\begin{itemize}
+\item Doppler couleur
+\vspace{0.2cm}
+\begin{itemize}
+\item Méthode pulsée
+\vspace{0.2cm}
+\item donne la vitesse et la direction du flux
+\vspace{0.2cm} 
+\end{itemize}
+\item Doppler de puissance
+\vspace{0.2cm}
+\begin{itemize}
+\item Mesure la puissance du signal doppler uniquement
+\vspace{0.2cm}
+\item Produit des images avec un meilleur rapport signal/bruit 
+\end{itemize}
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Analyse spectrale}
+\begin{center}
+\includegraphics[scale=0.4]{spectra.png}\\
+\textit{\footnotesize Sonogramme instantane, Allan, 2014}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Analyse spectrale}
+\begin{center}
+\includegraphics[scale=0.4]{sonogram.png}\\
+\textit{\footnotesize Sonogramme instantanée, Allan, 2014}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: images Doppler}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.5]{sonogram2.png}\\
+\textit{\footnotesize Sonogramme, Allan, 2014}
+\end{center}
+\column{60mm}
+Chaque spectre est mis à côte à côte et l'amplitude de chaque fréquence est en niveau de gris
+\vspace{0.3cm}
+\begin{itemize}
+\item $T_s$ = 5 ms  $\rightarrow f_{min}$ = 200 Hz 
+\vspace{0.3cm}
+\item $T_e$ = 1 \textmu s $\rightarrow f_{max}$ = 500 kHz 
+\vspace{0.3cm}
+\item $f_{min} \rightarrow$ résolution spectrale
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: images Doppler}
+\begin{columns}
+\column{80mm}
+\begin{center}
+\includegraphics[scale=0.5]{sonogram3.png}\\
+\textit{\footnotesize Sonogramme, Allan, 2014}
+\end{center}
+\column{40mm}
+Informations :
+\vspace{0.3cm}
+\begin{itemize}
+\item ligne blanche: vitesse max 
+\vspace{0.3cm}
+\item ligne bleue: vitesse moyenne
+\vspace{0.3cm}
+\end{itemize}
+On peut suivre le flux au cours du temps
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Artefacts possibles}
+Artéfacts: phénomènes pouvant conduire à une mauvaise évaluation des variables étudiés
+\begin{itemize}
+\item \textbf{Atténuation }: perte de puissance acoustique avec la profondeur 
+\vspace{0.2cm}
+\item \textbf{Réfraction} : perte de puissance acoustique aux interfaces 
+\vspace{0.2cm}
+\item \textbf{Effet de faisceau}: Contribution non-désirée ou difficile à déchiffrer due au caractéristiques du faisceau
+\vspace{0.2cm}
+\item \textbf{Distorsion \& Génération d'harmoniques}
+\vspace{0.2cm}
+\item \textbf{Effet lié au patient} : Pression sur le vaisseau...
+\vspace{0.2cm}
+\item \textbf{Effet de repliment spectral}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Repliement spectral}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.35]{aliasing.png}\\
+\textit{\footnotesize Repliment spectral, Allan, 2014}
+\end{center}
+\column{60mm}
+Principe :
+\vspace{0.3cm}
+\begin{itemize}
+\item Mode pulsée $\rightarrow$ "échantillonnage" signal 
+\vspace{0.3cm}
+\item échantillonnage $\rightarrow$ Shannon
+\vspace{0.3cm}
+\item Shannon non respecté $\rightarrow$  repliement
+\vspace{0.3cm}
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Hémodynamique}
+\begin{columns}
+\column{70mm}
+\begin{center}
+\includegraphics[scale=0.3]{hemodynamique.png}\\
+\textit{\footnotesize Système circulatoire humain}
+\end{center}
+\column{50mm}
+Hémodynamique:
+\vspace{0.3cm}
+\begin{itemize}
+\item Etude des flux sanguins dans le corps 
+\vspace{0.3cm}
+\item Objet d'étude du Doppler
+\vspace{0.3cm}
+\item Potentiel d'amélioration de la technologie Doppler
+\vspace{0.3cm}
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Hémodynamique}
+\underline{Vitesse du flux }: 
+\begin{center}
+\includegraphics[scale=0.45]{blood_flow.png}\\
+\textit{\footnotesize vitesse flux sanguin, B. Cummings 2004}
+\end{center}
+
+Selon où on mesure le décalage Doppler peut varier d'un ordre de grandeur\\
+
+\vspace{0.3cm}
+Il faut donc adapter la résolution fréquentielle.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Hémodynamique}
+\underline{Nature du flux }: 
+\begin{center}
+\includegraphics[scale=0.4]{flow.png}\\
+\textit{\footnotesize Flux laminaire/turbulent, Allan, 2014}
+\end{center}
+\vspace{0.3cm}
+nature flux $\rightarrow$ distribution des vitesses $\rightarrow$ spectre Doppler
+
+\end{frame}
+
+\begin{frame}
+\frametitle{\'Echographie Doppler: Hémodynamique}
+\underline{Sonogramme }: 
+\begin{center}
+\includegraphics[scale=0.35]{lam_turb.png}\\
+\textit{\footnotesize Flux laminaire/turbulent, Allan, 2014}
+\end{center}
+\vspace{0.3cm}
+flux turbulent $\rightarrow$ pics haute fréquence + contribution négative chaotique
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.3]{heart.png}\\
+\textit{\footnotesize Schéma du coeur avec ses pacemakers
+naturels, Najarian \& Splinter, 2010}
+\end{center}
+\column{60mm}
+\begin{itemize}
+\item On a étudié l'electroencéphalogramme
+\vspace{0.5cm}
+\item On a étudié le doppler 
+\vspace{0.5cm}
+\item \textbf{On peut mélanger les deux}
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.3]{heart.png}\\
+\textit{\footnotesize Schéma du coeur avec ses pacemakers
+naturels, Najarian \& Splinter, 2010}
+\end{center}
+\column{60mm}
+Mécanisme:
+\begin{itemize}
+\item Activation muscle cardiaque $\rightarrow$ ondes acoustiques
+\vspace{0.5cm}
+\item Propagation acoustique tissus $\rightarrow$ informations physiologiques
+\vspace{0.5cm}
+
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+%
+%\begin{frame}
+%\frametitle{Doppler, coeur \& Ultrasons}
+%\begin{columns}
+%\column{60mm}
+%\begin{center}
+%\includegraphics[scale=0.4]{pwv_artery.png}\\
+%\textit{\footnotesize Propagation ondes méca le long des parois artérielles}
+%\end{center}
+%\column{60mm}
+%Soit $c$ la vitesse de l'onde mécanique dans l'artère  :
+%
+%\[ c = \sqrt{\frac{Eh}{2 \rho R }} \] 
+%
+%\begin{itemize}
+%\item $E$ : module élastique de la paroi 
+%\item $h$ : épaisseur de la paroi artérielle
+%\item $\rho$ : la densité du sang
+%\item $R$ : la rayon interne du vaisseaux
+%\end{itemize}
+%
+%\end{columns}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.25]{TDI_myocard.png}\\
+\textit{\footnotesize Images Doppler tissulaire, 1992}
+\end{center}
+\column{60mm}
+\underline{Principe Doppler tissulaire} :
+\vspace{0.3cm}
+\begin{itemize}
+\item Traducteur linéaire multiéléments
+\vspace{0.3cm}
+\item Filtrage "wall thump"/Clutter pour éliminer les basses fréquences non associées au mouvement recherché 
+\vspace{0.3cm}
+\item Réglage assez différent du Doppler "sanguin"
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.3]{tdi_cfwi.png}\\
+\textit{\footnotesize Images ultrasons du myocarde, Salles et al., 2019}
+\end{center}
+\column{60mm}
+Depuis 1992... \\
+\vspace{0.5cm}
+\begin{itemize}
+\item Amélioration des sensibilités des sondes ultrasonores
+\vspace{0.5cm}
+\item Augmentation des cadences d'imagerie
+\vspace{0.5cm}
+\item Augmentation des capacités de calcul/stockage pour le filtrage/traitement
+\vspace{0.5cm}
+
+\end{itemize}
+Travaux de recherche de Sébastien Salles \textit{et al.}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.4]{cfwi2.png}\\
+\textit{\footnotesize Principe filtrage image ultrasonore}
+\end{center}
+\column{60mm}
+Principe "Clutter Filter Wave Imaging": \\
+\vspace{0.5cm}
+\begin{itemize}
+\item Suite d'images ultrasonores $\rightarrow$ ensemble de fréquences Doppler
+\vspace{0.5cm}
+\item Spectre Doppler $\rightarrow$ Ensemble complexe de mouvement de tissu
+\vspace{0.5cm}
+\item Filtrage sélectif pour mettre en évidence l'onde tissulaire recherchée
+\vspace{0.5cm}
+
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.4]{cfwi2.png}\\
+\textit{\footnotesize Principe filtrage image ultrasonore}
+\end{center}
+\column{60mm}
+Etapes du traitement:\\
+\vspace{0.5cm}
+\begin{enumerate}
+\item Filtre "clutter"/fouillis radar
+\vspace{0.5cm}
+\item Détection d'enveloppe et conversion en image "B-mode"
+\vspace{0.5cm}
+\item Filtrage passe-bas
+\vspace{0.5cm}
+\item Gradient temporel
+\vspace{0.5cm}
+\end{enumerate}
+Travaux de recherche de Sébastien Salles \textit{et al.}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\underline{\'Etape 1 filtre Clutter}:
+\begin{columns}
+\column{70mm}
+\begin{center}
+\includegraphics[scale=0.4]{cfwi.png}\\
+\textit{\footnotesize Illustration filtre Clutter, Salles \textit{et al.}, 2019}
+\end{center}
+\column{50mm}
+Filtrage de suite d'images\\
+\vspace{0.5cm}
+\begin{enumerate}
+\item Chaque pixel a une vitesse
+\vspace{0.5cm}
+\item \textbf{Coupe} les ondes venant des tissus stationnaires
+\vspace{0.5cm}
+\item \textbf{Atténue} sélectivement les vitesses recherchées
+\end{enumerate}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\underline{\'Etape 2 Image B-mode}:
+
+\begin{center}
+\includegraphics[scale=0.4]{B-mode_envelope.png}\\
+\textit{\footnotesize Principe formation d'image B-mode, Ouzir, 2018}
+\end{center}
+\vspace{0.2cm}
+\begin{enumerate}
+\item Ondes ultrasonores filtrées $\rightarrow$ Champ de vitesse
+\vspace{0.2cm}
+\item Enveloppes d'amplitude au cours du temps
+\vspace{0.2cm}
+\item Conversion en niveau de gris + Log
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\underline{\'Etape 3 Lissage spatiotemporel}:
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.4]{smoothing_cfwi.png}\\
+\textit{\footnotesize Lissage spatiotemporel, Salles et al., 2019}
+\end{center}
+\column{60mm}
+\vspace{0.2cm}
+\begin{itemize}
+\item Filtrage passe-bas spatiotemporel
+\vspace{0.8cm}
+\item \'Etape optionnelle d'optimisation
+
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\underline{\'Etape 4 Dérivation}:
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.4]{diff_cfwi.png}\\
+\textit{\footnotesize Dérivation, Salles et al., 2019}
+\end{center}
+\column{60mm}
+\vspace{0.2cm}
+\begin{itemize}
+\item Résultat étape 3 : cartes de vitesses
+\vspace{0.5cm}
+\item Onde méca recherchée définie via accélération
+\vspace{0.5cm}
+\item Dérivée temporelle vitesse = accélération
+\end{itemize}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+\underline{Résultats}:
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.35]{cfwi_left_vent.png}\\
+\textit{\footnotesize Résultat CFWI, Salles \textit{et al.}, 2019}
+\end{center}
+\column{60mm}
+\underline{Filtrage de suite d'images}\\
+\vspace{0.5cm}
+\begin{enumerate}
+\item Atténuation = zone sombre dans le doppler
+\vspace{0.5cm}
+\item Opérations successives pour remonter à l'onde dans le signal 
+\vspace{0.5cm}
+\end{enumerate}
+On peut \textbf{suivre} l'onde mécanique 
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Doppler, coeur \& Ultrasons}
+Bilan
+\begin{columns}
+\column{60mm}
+\begin{center}
+\includegraphics[scale=0.35]{cfwi_left_vent.png}\\
+\textit{\footnotesize Résultat CFWI, Salles \textit{et al.}, 2019}
+\end{center}
+\column{60mm}
+Poursuites et applications\\
+\vspace{0.5cm}
+\begin{enumerate}
+\item Technique désormais utilisée en 3D
+\vspace{0.5cm}
+\item Outils de diagnostic non invasif complémentaire  
+\vspace{0.5cm}
+\end{enumerate}
+Toujours en développement... 
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bilan Doppler}
+ 
+\begin{itemize}
+\item Technique basée sur l'effet Doppler 
+\vspace{0.5cm}
+\item Utilisée régulièrement en clinique pour mesurer les flux sanguins
+\vspace{0.5cm}
+\item Utilisée sur les tissus depuis une trentaine d'année
+\vspace{0.5cm}
+\item Possibilité de suivre des ondes en 3D grâce aux progrès en imagerie
+\vspace{0.5cm}
+\end{itemize}
+\end{frame}
+\end{document}

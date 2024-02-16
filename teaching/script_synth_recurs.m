@@ -33,3 +33,21 @@ plot(f,abs(H))
 f = linspace(0,1,50)
 H = (1- exp(-j*2*pi.*f))./(1- exp(-j*2*pi.*f)+10)
 plot(f,abs(H))
+
+
+a = 0.1
+f = linspace(-1,1,50)
+H = (1+ exp(-j*2*pi.*f))./(2*(1- exp(-j*2*pi.*f))+a.*(1+ exp(-j*2*pi.*f)))
+plot(f,abs(H))
+hold on
+##a = 1
+##H2 = 1./(1- exp(-j*2*pi.*f)+a)
+##plot(f,arg(H2))
+a = 0.1
+H3 = 1./(1- exp(-j*2*pi.*f)+a)
+plot(f,arg(H3))
+f2 = linspace(-1,1,50)
+plot(f,-atan((-sin(2*pi.*f))./(1-cos(2*pi.*f)+a)))
+
+
+

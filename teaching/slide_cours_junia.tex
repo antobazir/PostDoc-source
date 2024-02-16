@@ -100,9 +100,13 @@ Antony BAZIR
 \vspace{1cm}
 \begin{itemize}
 \item<2-> Analogique/Numérique
+\vspace{0.2cm}
 \item<3-> Actif/Passif (analogique)
+\vspace{0.2cm}
 \item<4-> Causal/Non causal (numérique)
+\vspace{0.2cm}
 \item<5-> Linéaire/Non linéaire 
+\vspace{0.2cm}
 \item<6-> Invariant/Non invariant dans le temps
 \end{itemize}
 \only<7->
@@ -129,9 +133,9 @@ Soit $f : x \in \mathbb{R} \rightarrow f(x) \in \mathbb{R} $ et $(x_1,x_2,a,b) \
 {
 $f$ linéaire si\\
 \vspace{0.5 cm}
-\begin{block}{}
-\[f(a x_1 + b x_2) = a f(x_1) + b f(x_2)\]
-\end{block}
+
+\[\boxed{f(a x_1 + b x_2) = a f(x_1) + b f(x_2)}\]
+
 }
 
 \end{frame}
@@ -143,9 +147,13 @@ $f$ linéaire si\\
  \vspace{0.5cm}
 \begin{itemize}
 \item<2-> $f(x) = a x^2 + b x + c$ (avec $a$, $b$ et $c$ des constantes réelles positives)
+\vspace{0.2cm}
 \item<3-> $f(x) = \sqrt{x^2}$
+\vspace{0.2cm}
 \item<4-> $f(x) = a$ (constante réelle positive)
+\vspace{0.2cm}
 \item<5-> $f(x) = \ln(x)$
+\vspace{0.2cm}
 \item<6-> $f(x) = \frac{1}{a x + b}$
 \end{itemize}
 \vspace{1cm}
@@ -222,12 +230,12 @@ Prérequis : Notion de retard d'une fonction \\
 Soit $x : t \in \mathbb{R} \rightarrow x(t) \in \mathbb{R} $ \\
 
 \vspace{1 cm} 
-La fonction $x(t)$ retardé de $\tau \in \mathbb{R}$ s'écrit $x(t-\tau)$\\
+La fonction $x(t)$ retardée de $\tau \in \mathbb{R}$ s'écrit $x(t-\tau)$\\
 \vspace{1 cm}
 }
 
 \only<3->{
-La suite $x[n]$ retardé de $k \in \mathbb{N}$ s'écrit $x[n-k]$
+La suite $x[n]$ retardée de $k \in \mathbb{N}$ s'écrit $x[n-k]$
 }
 
 \end{frame}
@@ -273,8 +281,10 @@ $\forall k \in \mathbb{N}, \;\; F(x[n-k]) = y[n-k]$\\
 \frametitle{Système linéaire et invariant dans le  temps (LIT) }
 
 Un système F est linéaire invariant dans le temps si :
+\vspace{0.3cm}
 \begin{itemize}
 \item La sortie correspondant à une combinaison linéaire de signaux d'entrée est la combinaison linéaire des signaux de sortie correspondant aux entrées prises séparément\\
+\vspace{0.3cm}
 \item la réponse d'un filtre/système invariant dans le temps ne doit pas dépendre du moment où on l'utilise\\
 \end{itemize}
 
@@ -287,11 +297,11 @@ Soit un signal d'entrée $x$ (continue ou discret) et $F$ un filtre/système LIT
 \begin{columns}
 \column{65mm}
 \begin{center}
-$x(t) = \displaystyle \int x(\tau) \delta(t-\tau) d\tau$\\
+$x(t) = \displaystyle \int x(\tau)  \; \delta(t-\tau) \; d\tau$\\
 \only<2->{
 \vspace{0.5cm}
 $F(x(t)) = y(t)$\\
-$ = F( \displaystyle \int x(\tau) \delta(t-\tau) d\tau)$\\
+$ = F( \displaystyle \int x(\tau)\;  \delta(t-\tau) \; d\tau)$\\
 \vspace{0.5cm}
 }
 
@@ -299,18 +309,19 @@ $ = F( \displaystyle \int x(\tau) \delta(t-\tau) d\tau)$\\
 F linéaire donc, \\
 \vspace{0.5cm}
 $F(x(t)) = y(t) $\\
-$= \displaystyle \int F (x(\tau) \delta(t-\tau) d\tau)$
+$= \displaystyle \int F (x(\tau) \; \delta(t-\tau) \; d\tau)$
 }
 \end{center}
 
 \column{55mm}
 \begin{center}
-$x[n] =  \displaystyle \sum x[k] \delta[n-k] $ \\
+$x[n] =  \displaystyle \sum \; x[k] \; \delta[n-k] $ \\
 \vspace{0.5cm}
 
 \only<2->{
 $F(x[n]) = y[n] $\\
-$= F(\displaystyle \sum x[k] \delta[n-k]) $ \\
+
+$= F(\displaystyle \sum \; x[k] \;  \delta[n-k]) $ \\
 \vspace{0.5cm}
 }
 
@@ -318,7 +329,7 @@ $= F(\displaystyle \sum x[k] \delta[n-k]) $ \\
 F linéaire donc, \\
 \vspace{0.5cm}
 $F(x[n]) = y[n] $\\
-$ = \displaystyle \sum F( x[k] \delta[n-k]) $ \\
+$ = \displaystyle \sum F( x[k] \; \delta[n-k]) $ \\
 }
 
 \end{center}
@@ -333,13 +344,13 @@ Soit un signal d'entrée $x$ (continue ou discret) et $F$ un filtre/système LIT
 \column{65mm}
 \begin{center}
 $F(x(t)) = y(t) $\\
-$= \displaystyle \int F (x(\tau) \delta(t-\tau) d\tau)$\\
+$= \displaystyle \int F (x(\tau) \; \delta(t-\tau) \; d\tau)$\\
 \vspace{0.5cm}
 
 $F$ s'applique aux fonctions de $t$\\
 \vspace{0.5cm}
 
-$y(t) = \displaystyle \int x(\tau) F(\delta(t-\tau) )d\tau$\\
+$y(t) = \displaystyle \int x(\tau) \; F(\delta(t-\tau) \; )d\tau$\\
 \vspace{0.5cm}
 
 \end{center}
@@ -347,13 +358,13 @@ $y(t) = \displaystyle \int x(\tau) F(\delta(t-\tau) )d\tau$\\
 \column{55mm}
 \begin{center}
 $F(x[n]) = y[n] $\\
-$ = \displaystyle \sum F( x[k] \delta[n-k]) $ \\
+$ = \displaystyle \sum \; F( x[k] \; \delta[n-k]) $ \\
 \vspace{0.5cm}
 
 $F$ s'applique aux suites sur $n$\\
 \vspace{0.5cm}
 
-$ y[n] = \displaystyle \sum x[k]  F(\delta[n-k]) $ \\
+$ y[n] = \displaystyle \sum \; x[k] \;  F(\delta[n-k]) $ \\
 \vspace{0.5cm}
 
 
@@ -368,13 +379,13 @@ Soit un signal d'entrée $x$ (continue ou discret) et $F$ un filtre/système LIT
 \begin{columns}
 \column{65mm}
 \begin{center}
-$y(t) = \displaystyle \int x(\tau) F(\delta(t-\tau) )d\tau$\\
+$y(t) = \displaystyle \int x(\tau) \; F(\delta(t-\tau) ) \;d\tau$\\
 \vspace{0.5cm}
 
 Puisque $F$ invariant dans le temps,\\
 \vspace{0.5cm}
 
-$y(t) = \displaystyle \int x(\tau) h(t-\tau) d\tau$\\
+$y(t) = \displaystyle \int x(\tau) \; h(t-\tau) \; d\tau$\\
 \vspace{0.5cm}
 
 avec $h[t]$ la\\ \textbf{réponse impulsionnelle} du filtre $F$
@@ -408,7 +419,9 @@ Le fait que le sytème soit LIT et les équations de convolution sous-tendent: \
 \vspace{1cm}
 \begin{itemize}
 \item La possibilité d'écrire une \textbf{fonction de transfert}
+\vspace{0.3cm}
 \item La possibilité de \textbf{prédire/calculer le comportement} d'un système "arbitraire"
+\vspace{0.3cm}
 \item La possibilité de créer des \textbf{systèmes complexes} au comportement connu à partir de \textbf{cellules "simples"}
 \end{itemize}
 

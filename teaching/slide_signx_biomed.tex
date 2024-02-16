@@ -676,11 +676,15 @@ Des variantes existent...
 \item Conversion \textbf{univoque} entre le signal physique et la tension
 \vspace{0.1cm}
 \item Gamme de mesure et/ou Plage de linéarite
+\vspace{0.1cm}
 \item \textbf{Résolution} spatiale et temporelle
+\vspace{0.1cm}
 \item Exemples : 
 \begin{itemize}
 \item Tradcuteur piézoélectrique
+\vspace{0.1cm}
 \item Détecteur à comptage de photons
+\vspace{0.1cm}
 \item Electrodes ECG/EEG
 \end{itemize}
 \vspace{0.1cm}
@@ -798,7 +802,7 @@ Des variantes existent...
 \vspace{0.2cm}
 \item Valeur réelle située dans un échelon pendant $T_e$
 \vspace{0.2cm}
-\item Correspondance à une valeur numérique (00011..)
+\item Correspondance à une valeur numérique (001 , 010, 00011..)
 \end{itemize}
 \vspace{0.2cm}
 \item Plusieurs architectures possibles (Double rampe, Sigma-delta...) basées sur des cycles de charge-décharges suivies dans le temps
@@ -806,197 +810,68 @@ Des variantes existent...
 \end{frame}
 
 \begin{frame}
-\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\frametitle{Chaine d'instrumentation Numérique : Filtrage numérique}
 \begin{center}
-\includegraphics[scale=0.35]{tr_num_ecg.png}\\
-\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
+\begin{tikzpicture}
+\node[align=center] (S) at (0,0) {\footnotesize  Séquence \\
+\footnotesize à traiter};
+\node[draw,rectangle,align=center]  (C) at (4,0) {\footnotesize Filtre \\ \footnotesize  numérique};
+\node[align=center] (T) at (8,0) {\footnotesize  Info exploitable};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(T);
+\end{tikzpicture}
 \end{center}
-Filtrage temps réel du signal numérique \& Extraction du complexe QRS\\
-\vspace{0.3cm}
-Pourquoi extraire le complexe QRS ?\\
+\vspace{0.1cm}
+\begin{itemize}
+\item \textbf{Extraction ou réorganisation de l'info}
 \vspace{0.2cm}
 \begin{itemize}
-\item suivi de la condition du patient en temps réel 
-\item Etablissement des tachogrammes (RR)
-\item \'A la base de beacoup d'algorithmes acutels...
+\item A-scan $\rightarrow$ Image complète (ultrasons) 
+\vspace{0.2cm}
+\item Plans de projection $\rightarrow$ Vue en coupe (radiographie)
+\vspace{0.2cm}
+\item Signaux temporels $\rightarrow$ variables pertinentes (ECG, EEG, etc...)
 \end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Filtrage numérique :  Extraction du complexe QRS}
-\textbf{Caractéristiques du complexe QRS}
-\begin{center}
-\includegraphics[scale=0.35]{QRS.png}\\
-
-\end{center}
-\underline{Origine physique} : dépolarisation des ventricules\\
-\vspace{0.3cm}
-Caractéristiques: \\
-\vspace{0.1cm}
-\begin{itemize}
-\item Durée :  80 -100 ms
-\item Fréquence : 10-15 Hz 
+\vspace{0.2cm}
 \end{itemize}
-
 \end{frame}
 
 \begin{frame}
-\frametitle{Filtrage numérique :  Extraction du complexe QRS}
+\frametitle{Chaine d'instrumentation Numérique}
 \begin{center}
-\includegraphics[scale=0.3]{ECG_spectrum.png}\\
-\textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
-\vspace{0.1cm}
+\begin{tikzpicture}
+\node (S) at (0,0) {\footnotesize  Sig.};
+\node[draw,rectangle,align=center]  (C) at (1.5,0) {\footnotesize Capteur}; 
+\node[draw,rectangle,align=center]  (A) at (3,0) {\footnotesize Ampli.}; 
+\node[draw,rectangle,align=center]  (F) at (4.5,0) {\footnotesize Filtre \\ \footnotesize analog.}; 
+\node[draw,rectangle,align=center]  (E) at (6,0) {\footnotesize Echant.}; 
+\node[draw,rectangle,align=center]  (AD) at (7.5,0) {\footnotesize CAN}; 
+\node[draw,rectangle,align=center]  (N) at (9,0) {\footnotesize Filtre \\ \footnotesize num.}; 
+\node (R) at (10.5,0) {\footnotesize  \textbf{Rés.}};
+
+\draw[->] (S)--(C);
+\draw[->] (C)--(A);
+\draw[->] (A)--(F);
+\draw[->] (F)--(E);
+\draw[->] (E)--(AD);
+\draw[->] (AD)--(N);
+\draw[->] (N)--(R);
+\end{tikzpicture}
 \end{center}
-Importance du filtrage passe-bande...
-\end{frame}
-
-\begin{frame}
-\frametitle{Filtrage numérique :  Extraction du complexe QRS}
-\begin{center}
-\includegraphics[scale=0.3]{ECG_spectrum.png}\\
-\textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
-\vspace{0.1cm}
-\end{center}
-Comment choisir $T_e$ ? \only<2-> {Shannon $\rightarrow f_e > 80 Hz$  \only<3->{ Dans les faits, $f_e$ 500 Hz} }
-
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
-\begin{center}
-\includegraphics[scale=0.35]{tr_num_ecg.png}\\
-\textit{\footnotesize Algorithme de détection du complexe QRS, Tompkins, 2000}\\
-\vspace{0.3cm}
-\end{center}
-Filtrage temps réel du signal numérique \& Extraction du QRS
 \begin{enumerate}
-\item \textbf{filtrage passe-bande numérique}
-\item Dérivée 
-\item Mise au carré 
-\item Moyennage
+\item Conversion du signal physique en tension
+\item Amplification
+\item Filtrage analogique
+\item \'Echantillonnage  (Bloqueur)
+\item Conversion analogique-numérique
+\item \textbf{Filtrage numérique} 
 \end{enumerate}
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique}\\
- \vspace{0.3 cm}
- Plusieurs méthodes possibles (liste non-exhasutive) :\\
- \vspace{0.2cm}
- \begin{itemize}
- \item Filtre récursifs à  2 pôles
- \vspace{0.2cm}
- \item Filtre à coefficients "entiers"
- \vspace{0.2cm}
- \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
- \vspace{0.3 cm}
- Forme possible de la fonction de transfert :
- \[H(z) = \frac{c_1}{z-p_1} + \frac{c_2}{z-p_2} \]\\
-  \vspace{0.3 cm}
-  \'Equation aux différences :
- \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]  
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
-
-  Forme de l'équation aux différences :
- \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]  \\
-  \vspace{0.3 cm}
-  Fonction de transfert :
-   \[H(z) = \frac{1 - z^{-2}}{1 - b_1 z^{-1} + b_2 z^{-2}} \]  \\
-  \vspace{0.3cm}
- \textbf{Comment se comporte ce filtre ?}
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
-
-  \vspace{0.3 cm}
-  Fonction de transfert :
-   \[H(z) = \frac{1 - z^{-2}}{1 - b_1 z^{-1} + b_2 z^{-2}} \]  \\
-  \vspace{0.3cm}
- On prend les valeurs données par Tompkins:
- \begin{itemize}
- \item $f_e$ = 500 Hz
- \item $b_1$ = 1.875
- \item $b_2$ = 0.9219
- \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
-
-  \vspace{0.3 cm}
-  Fonction de transfert :
-   \[H(z) = \frac{1 - z^{-2}}{1 - 1.875 z^{-1} + 0.9219 z^{-2}} \]  \\
-  \vspace{0.3cm}
-   \[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
-\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
-\begin{center}
-\begin{tikzpicture}
-\begin{scope}[scale=2.5]
-\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
-\draw[thick,blue] plot file {module_passebande1.txt};
-
-\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);à
-\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
-\end{scope}
-
-\end{tikzpicture}
-\end{center}
 \vspace{0.3cm}
-On sélectionne bien dans une gamme de fréquence autour du QRS
+\only<2->{
+On va se concentrer sur la partie filtrage... numérique
+}
 \end{frame}
 
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
-\begin{columns}
-\column{60mm}
-\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \]
-\column{60mm} 
-\begin{center}
-\begin{tikzpicture}
-\begin{scope}[scale=2.5]
-\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
-\draw[thick,blue] plot file {module_passebande1.txt};
-
-\draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);à
-\draw[dashed] (1,0) node[below]{\scriptsize 250 Hz}--(1,0);
-\end{scope}
-
-\end{tikzpicture}
-\end{center}
-\end{columns}
-\vspace{0.3cm}
-Remarques :
-\begin{itemize}
-\item Le numérateur sert à couper les basses fréquences
-\item Coefficients optimisées pour augmenter la vitesse de calcul
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Détection QRS: Filtrage passe-bande}
- \textbf{Filtrage passe-bande numérique: Filtre à coeffs entiers}\\
-\end{frame}
+  
 \end{document}
