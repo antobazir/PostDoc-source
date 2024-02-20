@@ -1,11 +1,26 @@
 %function [Grid,G,O,D,GD,T] = migrate2D_sphere_ctr(Grid,lG,cG,G,O,D,GD,T)
 %function [Grid,kO,kG,DG,sycle] = migrate2D_sphere_ctr2(Grid,sz,G,O,sycle,kO,kG,kO_tissue,kG_tissue,DG,DG_tissue)
-function  [Grid,LD,kO,dkO,kS,dkS,kP,DSm,DOm,DPm,DKm,Rt_S,Rt_O,state] = migrate2D_sphere_metvar(Grid,LD,sz,S,P,O,K,state,kO,dkO,kS,dkS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,Rt_S,Rt_O)%encoding the migration of cells in a sphere in order to make the sphere round
+function  [Grid,LD,kO,kS,DSm,DOm,state,state_mat,err] = migrate2D_sphere_metvar(Grid,LD,sz,S,O,state,state_mat,kO,kS,kO_tissue,kS_tissue,DOm,DSm,DOx_tissue,DS_tissue)%encoding the migration of cells in a sphere in order to make the sphere round
 % *Hypothesis: Cells are allowed to move a few steps every hour.
 % They typically move in order to make the configuration more circular
 % In that case it means they move towards the neighboring empty position where
 % their distance to the center of the aggregate is minimal
 % *The center of the aggregate can be fixed a the beginning or recalculated at each steps
+
+if(size(kS,1)!=sz)
+    disp('wrong resizing begin mig')
+    size(kS,1)
+    save('debug')
+    err =1;
+    return
+endif
+
+if(isempty(find(state_mat(:,1)!=0))==0)
+  disp('problem in the 1st column of state_mat/beginning of mig')
+  save('debug_state_mat')
+  err=1;
+  return
+endif
 
 %disp('mig')
  % only the perimeter cells can be moved
@@ -75,26 +90,28 @@ while(stable_bool==0)
 			LD(pos_p(i,1),pos_p(i,2))=0;
 			kS(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=kS(idx_p(i));
 			kS(pos_p(i,1),pos_p(i,2))=0;
-      dkS(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=dkS(idx_p(i));
-			dkS(pos_p(i,1),pos_p(i,2))=0;
+      %dkS(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=dkS(idx_p(i));
+			%dkS(pos_p(i,1),pos_p(i,2))=0;
 			%kP(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=kP(idx_p(i));
 			%kP(pos_p(i,1),pos_p(i,2))=0;
 			kO(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=kO(idx_p(i));
 			kO(pos_p(i,1),pos_p(i,2))=0;
-      dkO(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=dkO(idx_p(i));
-			dkO(pos_p(i,1),pos_p(i,2))=0;
+      %dkO(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=dkO(idx_p(i));
+			%dkO(pos_p(i,1),pos_p(i,2))=0;
 			DSm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DSm(idx_p(i));
 			DSm(pos_p(i,1),pos_p(i,2))=0;
-			DPm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DPm(idx_p(i));
-			DPm(pos_p(i,1),pos_p(i,2))=0;
+			%DPm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DPm(idx_p(i));
+			%DPm(pos_p(i,1),pos_p(i,2))=0;
 			DOm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DOm(idx_p(i));
 			DOm(pos_p(i,1),pos_p(i,2))=0;
-			DKm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DOm(idx_p(i));
-			DKm(pos_p(i,1),pos_p(i,2))=0;
-      Rt_S(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=Rt_S(idx_p(i));
-			Rt_S(pos_p(i,1),pos_p(i,2))=0;
-      Rt_O(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=Rt_O(idx_p(i));
-			Rt_O(pos_p(i,1),pos_p(i,2))=0;
+      state_mat(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))  = state_mat(idx_p(i));
+      state_mat(pos_p(i,1),pos_p(i,2))  = 0;
+			%DKm(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=DOm(idx_p(i));
+			%DKm(pos_p(i,1),pos_p(i,2))=0;
+      %Rt_S(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=Rt_S(idx_p(i));
+			%Rt_S(pos_p(i,1),pos_p(i,2))=0;
+      %Rt_O(ng(d_n(min_d(id),1),1),ng(d_n(min_d(id),1),2))=Rt_O(idx_p(i));
+			%Rt_O(pos_p(i,1),pos_p(i,2))=0;
 
 			%mise à jour des cartes de diffusion intracellulaires
 
@@ -111,6 +128,22 @@ while(stable_bool==0)
 			stable_bool=1;
 		endif
 
-	endfor
+endfor
+        if(size(kS,1)!=sz)
+          disp('wrong resizing end mig')
+          save('debug')
+          err =1;
+          return
+        endif
+
+        if(isempty(find(state_mat(:,1)!=0))==0)
+          disp('problem in the 1st column of state_mat/end of mig')
+          save('debug_state_mat')
+          err=1;
+          return
+        endif
+
+
+err =0;
 endwhile
 

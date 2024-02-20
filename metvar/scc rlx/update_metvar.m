@@ -58,7 +58,7 @@ M(find(Grid==0))=1;
 
     %explicit  scheme non dimensionalised
     %x-step
-    M(2:sz-1,:) =  M(2:sz-1,:) + d0^2*dt/tau*(DMm(3:sz,:)-DMm(1:sz-2,:))/(4*dx^2).*(M(3:sz,:)-M(1:sz-2,:)) + DMm(2:sz-1,:)*d0^2*dt/tau/dx^2.*(M(3:sz,:) -2*(M(2:sz-1,:)) + M(1:sz-2,:)) -LD(2:sz-1,:).*kM(2:sz-1,:).*dt.*(M(2:sz-1,:)>0);%-V_norm*kM(2:sz-1,:).*dt.*M(2:sz-1,:)./(cM + M(2:sz-1,:));
+    M(2:sz-1,:) =  M(2:sz-1,:) + d0^2*dt/tau*(DMm(3:sz,:)-DMm(1:sz-2,:))/(4*dx^2).*(M(3:sz,:)-M(1:sz-2,:)) + DMm(2:sz-1,:)*d0^2*dt/tau/dx^2.*(M(3:sz,:) -2*(M(2:sz-1,:)) + M(1:sz-2,:)) -kM(2:sz-1,:).*dt.*(M(2:sz-1,:)>0);%-V_norm*kM(2:sz-1,:).*dt.*M(2:sz-1,:)./(cM + M(2:sz-1,:));
   %y-step
     M(:,2:sz-1) =  M(:,2:sz-1) +  d0^2*dt/tau*(DMm(:,3:sz)-DMm(:,1:sz-2))/(4*dx^2).*(M(:,3:sz)-M(:,1:sz-2)) + DMm(:,2:sz-1)*d0^2*dt/tau/dx^2.*(M(:,3:sz) -2*(M(:,2:sz-1)) + M(:,1:sz-2));
 

@@ -24,12 +24,21 @@
 
 %On ne donne plus directement la valeur de k mais on fixe le dkS
 
-function    [Grid,LD,kO,dkO,kS,dkS,kP,DSm,DOm,DPm,DKm,Rt_S,Rt_O,state] = divide2D_metvar_r(Grid,LD,pos_p,c_idx,sz,S,P,O,K,state,kO,dkO,kS,dkS,kP,kO_tissue,kS_tissue,kP_tissue,DOm,DSm,DPm,DKm,DOx_tissue,DS_tissue,DP_tissue,DK_tissue,Rt_S,Rt_O,reac_time);
+function    [Grid,LD,kO,kS,DSm,DOm,state,state_mat,err] = divide2D_metvar_r(Grid,LD,pos_p,c_idx,sz,S,O,state,state_mat,kO,kS,kO_tissue,kS_tissue,DOm,DSm,DOx_tissue,DS_tissue,reac_time);
 %disp('divid*****************************')
 %sort(Grid(find(Grid!=0)))
 %kbhit;
 ##
 %plr = randi(1:4);
+
+       if(size(kS,1)!=sz)
+          disp('wrong resizing before divide')
+          save('debug')
+          err =1;
+          return
+        endif
+
+
 pos_p;
 
 %grille de zéro et de 1
@@ -64,6 +73,8 @@ endif
 
 %disp('first if');
 plr;
+##size(kS)
+##kbhit;
 
     if(Grid(ng(plr,1),ng(plr,2))!=0)
       int_pos = [ng(plr,1) ng(plr,2)];
@@ -103,44 +114,48 @@ plr;
         sv(8,:) = [shift_vec(i,1)+1 shift_vec(i,2)+1];
 
 
-
 				Grid(sv(plr,1),sv(plr,2)) = Grid(shift_vec(i,1),shift_vec(i,2));
 				LD(sv(plr,1),sv(plr,2)) = LD(shift_vec(i,1),shift_vec(i,2));
 				kO(sv(plr,1),sv(plr,2)) = kO(shift_vec(i,1),shift_vec(i,2));
-				dkO(sv(plr,1),sv(plr,2)) = dkO(shift_vec(i,1),shift_vec(i,2));
+				%dkO(sv(plr,1),sv(plr,2)) = dkO(shift_vec(i,1),shift_vec(i,2));
 				kS(sv(plr,1),sv(plr,2)) = kS(shift_vec(i,1),shift_vec(i,2));
-				dkS(sv(plr,1),sv(plr,2)) = dkS(shift_vec(i,1),shift_vec(i,2));
-				kP(sv(plr,1),sv(plr,2)) = kP(shift_vec(i,1),shift_vec(i,2));
+				%dkS(sv(plr,1),sv(plr,2)) = dkS(shift_vec(i,1),shift_vec(i,2));
+				%kP(sv(plr,1),sv(plr,2)) = kP(shift_vec(i,1),shift_vec(i,2));
 				DSm(sv(plr,1),sv(plr,2)) = DSm(shift_vec(i,1),shift_vec(i,2));
-				Dpm(sv(plr,1),sv(plr,2)) = DPm(shift_vec(i,1),shift_vec(i,2));
+				%DPm(sv(plr,1),sv(plr,2)) = DPm(shift_vec(i,1),shift_vec(i,2));
 				DOm(sv(plr,1),sv(plr,2)) = DOm(shift_vec(i,1),shift_vec(i,2));
-				DKm(sv(plr,1),sv(plr,2)) = DKm(shift_vec(i,1),shift_vec(i,2));
-				Rt_S(sv(plr,1),sv(plr,2)) = Rt_S(shift_vec(i,1),shift_vec(i,2));
-				Rt_O(sv(plr,1),sv(plr,2)) = Rt_O(shift_vec(i,1),shift_vec(i,2));
+        state_mat(sv(plr,1),sv(plr,2)) = state_mat(shift_vec(i,1),shift_vec(i,2));
+				%DKm(sv(plr,1),sv(plr,2)) = DKm(shift_vec(i,1),shift_vec(i,2));
+				%Rt_S(sv(plr,1),sv(plr,2)) = Rt_S(shift_vec(i,1),shift_vec(i,2));
+				%Rt_O(sv(plr,1),sv(plr,2)) = Rt_O(shift_vec(i,1),shift_vec(i,2));
 
 
 			endfor
 
         Grid(ng(plr,1),ng(plr,2)) = size(state,1)+1;
-        LD(ng(plr,1),ng(plr,2)) = 1;
-        dkO(ng(plr,1),ng(plr,2)) = kO_tissue - kO(ng(plr,1),ng(plr,2));
-        dkS(ng(plr,1),ng(plr,2)) = kS_tissue - kS(ng(plr,1),ng(plr,2));
-        kP(ng(plr,1),ng(plr,2)) = kP_tissue;
-        DSm(ng(plr,1),ng(plr,2)) = DS_tissue;
-        DPm(ng(plr,1),ng(plr,2)) = DP_tissue;
-        DOm(ng(plr,1),ng(plr,2)) = DOx_tissue;
-        DKm(ng(plr,1),ng(plr,2)) = DK_tissue;
-        Rt_S(ng(plr,1),ng(plr,2)) = reac_time;
-        Rt_O(ng(plr,1),ng(plr,2)) = reac_time;
+        LD(ng(plr,1),ng(plr,2)) = LD(pos_p(1),pos_p(2));;
+        kS(ng(plr,1),ng(plr,2)) = kS(pos_p(1),pos_p(2));
+        kO(ng(plr,1),ng(plr,2)) = kO(pos_p(1),pos_p(2));
+        %kP(ng(plr,1),ng(plr,2)) = kP(pos_p(1),pos_p(2));
+        DSm(ng(plr,1),ng(plr,2)) = DSm(pos_p(1),pos_p(2));
+        DOm(ng(plr,1),ng(plr,2)) = DOm(pos_p(1),pos_p(2));
+        state_mat(ng(plr,1),ng(plr,2)) = state_mat(pos_p(1),pos_p(2));
+        %DPm(ng(plr,1),ng(plr,2)) = DPm(pos_p(1),pos_p(2));
+        %DKm(ng(plr,1),ng(plr,2)) = DKm(pos_p(1),pos_p(2));
+        %Rt_S(ng(plr,1),ng(plr,2)) = reac_time;
+        %Rt_O(ng(plr,1),ng(plr,2)) = reac_time;
         cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
-        state(size(state,1)+1,:) = [0 cycle_duration];
+        state(size(state,1)+1,:) = [0 state(size(state,1),2) state(size(state,1),3) state(size(state,1),4) state(size(state,1),5) state(size(state,1),6) state(size(state,1),7)];        % A priori faudrait faire baisser et remonter le conso lors des divisions mais non.
+
+##        size(kS)
+##        kbhit;
 
          if(max(max(Grid))!=length(find(Grid!=0)))
           disp(['2-Problem_shift:' num2str(plr) '/' num2str(c_idx)])
           Grid(17:32,17:32)
           size(state,1)
           kbhit;
-          Grid_before_problem(17:32,17:32)
+          %Grid_before_problem(17:32,17:32)
           kbhit;
           return
         endif
@@ -150,25 +165,27 @@ plr;
       if(max(max(Grid))!=length(find(Grid!=0)))
           disp(['3-Problem_shift:' num2str(plr) '/' num2str(c_idx)])
             Grid(17:32,17:32)
-            kbhit;
-            Grid_before_problem(17:32,17:32)
-            kbhit;
+           % kbhit;
+           % Grid_before_problem(17:32,17:32)
+            %kbhit;
           return
         endif
 
+
         Grid(ng(plr,1),ng(plr,2)) = size(state,1)+1;
-        LD(ng(plr,1),ng(plr,2)) = 1;
-        dkO(ng(plr,1),ng(plr,2)) = kO_tissue - kO(ng(plr,1),ng(plr,2));
-        dkS(ng(plr,1),ng(plr,2)) = kS_tissue - kS(ng(plr,1),ng(plr,2));
-        kP(ng(plr,1),ng(plr,2)) = kP_tissue;
-        DSm(ng(plr,1),ng(plr,2)) = DS_tissue;
-        DPm(ng(plr,1),ng(plr,2)) = DP_tissue;
-        DOm(ng(plr,1),ng(plr,2)) = DOx_tissue;
-        DKm(ng(plr,1),ng(plr,2)) = DK_tissue;
-        Rt_S(ng(plr,1),ng(plr,2)) = reac_time;
-        Rt_O(ng(plr,1),ng(plr,2)) = reac_time;
+        LD(ng(plr,1),ng(plr,2)) = LD(pos_p(1),pos_p(2));
+        kS(ng(plr,1),ng(plr,2)) = kS(pos_p(1),pos_p(2));
+        kO(ng(plr,1),ng(plr,2)) = kO(pos_p(1),pos_p(2));
+        %kP(ng(plr,1),ng(plr,2)) = kP(pos_p(1),pos_p(2));
+        DSm(ng(plr,1),ng(plr,2)) = DSm(pos_p(1),pos_p(2));
+        DOm(ng(plr,1),ng(plr,2)) = DOm(pos_p(1),pos_p(2));
+        state_mat(ng(plr,1),ng(plr,2)) = state_mat(pos_p(1),pos_p(2));
+        %DPm(ng(plr,1),ng(plr,2)) = DPm(pos_p(1),pos_p(2));
+        %DKm(ng(plr,1),ng(plr,2)) = DKm(pos_p(1),pos_p(2));
+        %Rt_S(ng(plr,1),ng(plr,2)) = reac_time;
+        %Rt_O(ng(plr,1),ng(plr,2)) = reac_time;
         cycle_duration = 1; % round(interp1([0.150 0.0375 0.015],[2.8000-0.6 6.6000-0.6 400.0000-0.6]*24*60,O(find(Grid==c_idx)))+864);
-        state(size(state,1)+1,:) = [0 cycle_duration];
+        state(size(state,1)+1,:) = [0 state(size(state,1),2) state(size(state,1),3) state(size(state,1),4) state(size(state,1),5) state(size(state,1),6) state(size(state,1),7)];
 
          if(max(max(Grid))!=length(find(Grid!=0)))
             disp(['4 - Problem:' num2str(plr)])
@@ -178,7 +195,17 @@ plr;
             kbhit;
             return
         endif
+
+##        size(kS)
+##        kbhit;
     endif
+
+        if(size(kS,1)!=sz)
+          disp('wrong resizing after divide')
+          save('debug')
+          err =1;
+          return
+        endif
 
 %sort(Grid(find(Grid!=0)))
 %kbhit;
@@ -625,5 +652,5 @@ plr;
 ##return
 ##'called'
 ##
-
+err =0;
 endfunction

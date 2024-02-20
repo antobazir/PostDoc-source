@@ -1,3 +1,4 @@
+
 ## Copyright (C) 2023 antonybazir
 ##
 ## This program is free software: you can redistribute it and/or modify
@@ -22,7 +23,7 @@
 ## Author: antonybazir <antonybazir.bazir@antonybazir-Latitude-E7450>
 ## Created: 2023-11-10
 
-function a = full_study (folder_name, behavior)
+function err = full_study (folder_name, behavior)
 
 	%checks that the folder exists
 if(exist(folder_name)==0)
@@ -41,9 +42,15 @@ for i=1:3
 %if the file exists don't do the calculations
   if(exist(filename(i,:))==0)
     disp('calcul lancé')
-    metvar_f(kO_arg(i),kS_arg(i),behavior,filename(i,:));
+    c_s  = metvar_f(kO_arg(i),kS_arg(i),behavior,filename(i,:));
+    if(c_s==1)
+     disp('error in metvar_f')
+     err=1;
+     return
+    endif
   endif
 endfor
+err=0;
 ##
 ##for i=1:3
 ##  Grids(:,:,:,i) = load(filename(i,:),'Grid_r').Grid_r;

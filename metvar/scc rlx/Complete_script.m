@@ -5,10 +5,14 @@ pkg load image
 
 %substrate reactions only%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %reference configuration
-full_study('ref_conf','ref');
+e = full_study('ref_conf','ref');
+if(e==1)
+  disp('error')
+  return
+endif
 
 %substrate starvation
-full_study('starv','starv');
+e = full_study('starv','starv');
 ##
 ##%substrate saving
 ##full_study('cellcyc','savy','savy');
@@ -30,14 +34,14 @@ full_study('starv','starv');
 ##full_study('loc_hypox_comp_arr','loc_hypox_comp_arr');
 
 
-%OS models%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-full_study('cellcyc','OS_fragile','OS_fragile');
-
-full_study('cellcyc','OS_hypos_tol','OS_hypos_tol');
-
-full_study('cellcyc','OS_hypox_tol','OS_hypox_tol');
-
-full_study('cellcyc','OS_hypox_boost','OS_hypox_boost');
+##%OS models%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+##full_study('cellcyc','OS_fragile','OS_fragile');
+##
+##full_study('cellcyc','OS_hypos_tol','OS_hypos_tol');
+##
+##full_study('cellcyc','OS_hypox_tol','OS_hypox_tol');
+##
+##full_study('cellcyc','OS_hypox_boost','OS_hypox_boost');
 
 %full_study('cellcyc','OS_hypox_boost_mig','OS_hypox_boost_mig');
 ##%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
