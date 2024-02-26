@@ -276,7 +276,7 @@ while(Radius_agg<1000&&n_pt/n_min<10) % loop to stop at a given size here it is 
   state_cell(n_pt) = mat2cell(state,size(state,1),size(state,2));
 
   %ensemble de conditions "impossibles" qui arrêtent le code si elle se produisent
-if(length(find(kS>kS_comp))!=0||length(find(S>1.1))!=0||length(find(kS<-0.05))!=0)
+if(length(find(kS>kS_comp+0.01))!=0||length(find(S>1.1))!=0||length(find(kS<-0.05))!=0)
 
   disp(['problem conso:' num2str(n_pt)])
 

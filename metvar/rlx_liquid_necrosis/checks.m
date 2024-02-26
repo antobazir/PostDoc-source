@@ -50,6 +50,13 @@ for i=1:size(S_r,3)
   kbhit
 endfor
 
+figure
+for i=1:size(state_story,2)
+  i
+  hist(state_story{i}(:,1),50)
+  kbhit
+endfor
+
 %150-160 pour vérifier qu'on perd pas de cellules mortes
 %269-270-271 pour comprendre pour quoi des cellules baissent à l'extérieur
 figure
