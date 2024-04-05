@@ -6,6 +6,6 @@
 #include <unistd.h>        
 #include <sys/stat.h>      
 
-int full_study(char* folder, char* file);
+int full_study(char* folder, char* behavior);
 
 

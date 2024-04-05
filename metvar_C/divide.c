@@ -6,25 +6,26 @@
 #include <sys/stat.h>
 #include <time.h>
 #include "structdef.h"
+#include "matx.h"
 
 
 
-int divide(Model *mod, int *row, int *col) 
+int divide(Model *mod, int cell_idx) 
 {
-	unsigned int ngh[3][3];
-	unsigned int ngh_vec[8];
+	int ngh[3][3];
+	int ngh_vec[8];
 	int i,j;
-	unsigned int n_free = 0;
-	unsigned int k=0;
-	unsigned int l=0;
-	unsigned int n_row[8];
-	unsigned int nf_row[8];
-	unsigned int n_col[8];
-	unsigned int nf_col[8];	 
-	unsigned int idx_ngh[8]; 
-	unsigned int chosen_site;
-	int interm_row;
-	int interm_col;
+	int n_free = 0;
+	int k=0;
+	int l=0;
+	int n_row[8];
+	int nf_row[8];
+	int n_col[8];
+	int nf_col[8];	 
+	int idx_ngh[8]; 
+	int chosen_site;
+	int interm_row, row;
+	int interm_col, col;
 	int row_shift[8];
 	int col_shift[8];
 
@@ -40,6 +41,8 @@ int divide(Model *mod, int *row, int *col)
 	
 	/* initialise le générateur de nombres*/
 	srand(time(0));
+	
+	find_int((*mod).M_Nutr.sz,cell_idx,(*mod).M_Cell.Grid,&row,&col);
 
 	/*test:  cas plusieurs voisins libres */ 
 	/*(*mod).M_Cell.Grid[4][5]=2;
@@ -59,32 +62,22 @@ int divide(Model *mod, int *row, int *col)
 	(*mod).M_Cell.Grid[5][3]=5;
 	(*mod).M_Cell.N_Cell=9;*/
 
-	printf("*****************\n");
-		
-	for (i=0; i<SZ; i++)
-	{
-		for (j=0; j<SZ; j++)
-		{
-			printf("%d ",(*mod).M_Cell.Grid[i][j]);
-		}
-		printf("\n");
-	}
 
 	/* on compte les voisins vide et on identifie les voisins vides*/
 	for(i=-1; i<2;i++)
 	{
 		for(j=-1; j<2;j++)
 		{
-			ngh[i+1][j+1] = (*mod).M_Cell.Grid[*row+i][*col+j];
+			ngh[i+1][j+1] = (*mod).M_Cell.Grid[row+i][col+j];
 			/*printf("current: %d \n",ngh[i+1][j+1]);*/
-			n_row[l] = *row+i;
-			n_col[l] = *col+j;	
+			n_row[l] = row+i;
+			n_col[l] = col+j;	
 			if(ngh[i+1][j+1]==0)
 			{	
 				if(i!=0||j!=0)
 				{	
-					nf_row[k] = *row+i;
-					nf_col[k] = *col+j;
+					nf_row[k] = row+i;
+					nf_col[k] = col+j;
 					idx_ngh[k] = l+1;			
 					n_free = n_free+1;
 					k = k+1;
@@ -95,19 +88,15 @@ int divide(Model *mod, int *row, int *col)
 		}
 	}
 
-	for(k=0; k<8; k++)
-	{	
-		printf("row: %d | col: %d \n", nf_row[k],nf_col[k]);
-		printf("idx_ngh: %d \n",idx_ngh[k]);
-	}
 
 	/*no free neighbor*/
 	if(n_free==0)
 	{
 		/* no free site, selection in general list */
 		chosen_site = (rand() % 
-		(8-1 - 0 + 1)) + 0; 
-		interm_row = *row ;  interm_col = *col;
+		(7 - 0 + 1)) + 0; 
+		interm_row = row ;  interm_col = col;
+		
 		/*Si la case n'est pas vide on passe à côté*/
 		while((*mod).M_Cell.Grid[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]]!=0)
 		{
@@ -118,10 +107,17 @@ int divide(Model *mod, int *row, int *col)
 
 		/* now interm_row/col is on the border */
 		/* as long as the intermediate position is not back to before you switch and skip*/
-		while(interm_row!=*row||interm_col!=*col) 
+		while(interm_row!=row||interm_col!=col) 
 		{
-			/*1.shift the grid*/
+			/*1.shift the grids*/
 			(*mod).M_Cell.Grid[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Cell.Grid[interm_row][interm_col];
+			(*mod).M_Cell.state[(*mod).M_Cell.Grid[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]]-1][7] = (float)(interm_row+row_shift[chosen_site]);
+			(*mod).M_Cell.state[(*mod).M_Cell.Grid[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]]-1][8] = (float)(interm_col+col_shift[chosen_site]);			
+			(*mod).M_Cell.LD[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Cell.LD[interm_row][interm_col];
+			(*mod).M_Nutr.DSm[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.DSm[interm_row][interm_col];
+			(*mod).M_Nutr.DOm[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.DOm[interm_row][interm_col];
+			(*mod).M_Nutr.kS[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.kS[interm_row][interm_col];
+			(*mod).M_Nutr.kO[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.kO[interm_row][interm_col];
 
 			/*2. shift back*/			
 			interm_row = interm_row-row_shift[chosen_site];
@@ -129,16 +125,33 @@ int divide(Model *mod, int *row, int *col)
 		}
 
 		/*shift is done new cell is placed*/
+		
+		
+		/*state vector update*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][0] = 0.0;
+		(*mod).M_Cell.state[cell_idx-1][0] = 0.0; /*divison timer*/
+
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][1] = (*mod).M_Cell.state[cell_idx-1][1];/* prolif index*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][2] = (*mod).M_Cell.state[cell_idx-1][2];/* state change timer*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][3] = (*mod).M_Cell.state[cell_idx-1][3];/*substrate consumption*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][4] = (*mod).M_Cell.state[cell_idx-1][4];/*substrate consumption evolution*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][5] = (*mod).M_Cell.state[cell_idx-1][5];/*oxygen consumption*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][6] = (*mod).M_Cell.state[cell_idx-1][6];/*oxygen consumption evolution*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][7] = (float)(interm_row+row_shift[chosen_site]);/*row*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][8] = (float)(interm_col+col_shift[chosen_site]);/*column*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][9] = (float)(cell_idx);/*parent*/
+
 		(*mod).M_Cell.N_Cell = (*mod).M_Cell.N_Cell+1; 
+
+
 		(*mod).M_Cell.Grid[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Cell.N_Cell;
 		(*mod).M_Cell.LD[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = 1;
-		(*mod).M_Nutr.DSm[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.DSm[*row][*col];
-		(*mod).M_Nutr.DOm[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.DOm[*row][*col];		
-		(*mod).M_Nutr.kS[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.kS[*row][*col];
-		(*mod).M_Nutr.kO[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.kO[*row][*col];		
+		(*mod).M_Nutr.DSm[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.DSm[row][col];
+		(*mod).M_Nutr.DOm[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.DOm[row][col];		
+		(*mod).M_Nutr.kS[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.kS[row][col];
+		(*mod).M_Nutr.kO[interm_row+row_shift[chosen_site]][interm_col+col_shift[chosen_site]] = (*mod).M_Nutr.kO[row][col];		
 
-		printf("chosen site: %d \n",chosen_site);
-		printf("row: %d | col: %d \n",n_row[chosen_site],n_col[chosen_site]);
+	
 	}
 
 	/* one free neighbor*/
@@ -146,46 +159,74 @@ int divide(Model *mod, int *row, int *col)
 	{	
 		/*if only one site, it is chosen */
 
-		(*mod).M_Cell.N_Cell = (*mod).M_Cell.N_Cell+1; 
+		interm_row = row ;  interm_col = col;
+
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][0] = 0.0; /*divison timer*/
+		(*mod).M_Cell.state[cell_idx-1][0] = 0.0; 
+	
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][1] = (*mod).M_Cell.state[cell_idx-1][1];/* prolif index*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][2] = (*mod).M_Cell.state[cell_idx-1][2];/* state change timer*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][3] = (*mod).M_Cell.state[cell_idx-1][3];/*substrate consumption*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][4] = (*mod).M_Cell.state[cell_idx-1][4];/*substrate consumption evolution*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][5] = (*mod).M_Cell.state[cell_idx-1][5];/*oxygen consumption*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][6] = (*mod).M_Cell.state[cell_idx-1][6];/*oxygen consumption evolution*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][7] = (float)(nf_row[chosen_site]);/*row*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][8] = (float)(nf_col[chosen_site]);/*column*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][9] = (float)(cell_idx);/*parent*/
+
+		(*mod).M_Cell.N_Cell = (*mod).M_Cell.N_Cell+1;
+ 
 		(*mod).M_Cell.Grid[nf_row[0]][nf_col[0]] = (*mod).M_Cell.N_Cell;
 		(*mod).M_Cell.LD[nf_row[0]][nf_col[0]] = 1;
-		(*mod).M_Nutr.DSm[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.DSm[*row][*col];
-		(*mod).M_Nutr.DOm[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.DOm[*row][*col];
-		(*mod).M_Nutr.kS[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.kS[*row][*col];
-		(*mod).M_Nutr.kO[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.kO[*row][*col];
+		(*mod).M_Nutr.DSm[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.DSm[row][col];
+		(*mod).M_Nutr.DOm[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.DOm[row][col];
+		(*mod).M_Nutr.kS[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.kS[row][col];
+		(*mod).M_Nutr.kO[nf_row[0]][nf_col[0]] = (*mod).M_Nutr.kO[row][col];
 
 		
-		printf("chosen site:\n");
-		printf("row: %d | col: %d \n",nf_row[0],nf_col[0]);
+		/*printf("\t chosen site:\n");
+		printf("\t row: %d | col: %d \n",nf_row[0],nf_col[0]);*/
 	}
 
 	/*several free neighbors*/
 	if(n_free>1)
 	{
+
+		interm_row = row ;  interm_col = col;
+		/*Si la case n'est pas vide on passe à côté*/
+
+		/*printf("here, \t row: %d \t col : %d \n",row,col);*/
+
 		/*if several free site, random selection in list */
 		chosen_site = (rand() % 
-		(n_free-1 - 0 + 1)) + 0; 
+		((n_free-1) - 0 + 1)) + 0; 
+		
+
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][0] = 0.0; /*divison timer*/
+		(*mod).M_Cell.state[cell_idx-1][0] = 0.0; 
+
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][1] = (*mod).M_Cell.state[cell_idx-1][1];/* prolif index*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][2] = (*mod).M_Cell.state[cell_idx-1][2];/* state change timer*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][3] = (*mod).M_Cell.state[cell_idx-1][3];/*substrate consumption*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][4] = (*mod).M_Cell.state[cell_idx-1][4];/*substrate consumption evolution*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][5] = (*mod).M_Cell.state[cell_idx-1][5];/*oxygen consumption*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][6] = (*mod).M_Cell.state[cell_idx-1][6];/*oxygen consumption evolution*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][7] = (float)(nf_row[chosen_site]);/*row*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][8] = (float)(nf_col[chosen_site]);/*column*/
+		(*mod).M_Cell.state[(*mod).M_Cell.N_Cell][9] = (float)(cell_idx);/*parent*/
+
 		(*mod).M_Cell.N_Cell = (*mod).M_Cell.N_Cell+1;
+
 		(*mod).M_Cell.Grid[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Cell.N_Cell ;
 		(*mod).M_Cell.LD[nf_row[chosen_site]][nf_col[chosen_site]] = 1;
-		(*mod).M_Nutr.DSm[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.DSm[*row][*col];
-		(*mod).M_Nutr.DOm[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.DOm[*row][*col];
-		(*mod).M_Nutr.kS[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.kS[*row][*col];
-		(*mod).M_Nutr.kO[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.kO[*row][*col];
+		(*mod).M_Nutr.DSm[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.DSm[row][col];
+		(*mod).M_Nutr.DOm[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.DOm[row][col];
+		(*mod).M_Nutr.kS[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.kS[row][col];
+		(*mod).M_Nutr.kO[nf_row[chosen_site]][nf_col[chosen_site]] = (*mod).M_Nutr.kO[row][col];
 
-		printf("chosen site:\n");
-		printf("row: %d | col: %d \n",nf_row[chosen_site],nf_col[chosen_site]);
 	}
 
+	/*printf("div finished \n\n");*/
 
-
-
-
-	/*printf("nfree: %d \n",n_free);
-	printf("chosen_site: %d \n",chosen_site);*/
-
-
-	/*(*mod).M_Cell.Grid[4][5]=2;
-	(*mod).M_Cell.N_Cell=(*mod).M_Cell.N_Cell+1;*/
 	return 0;
 } 

@@ -10,5 +10,5 @@
 
 void centroid(Model *mod, int *row_ctrd, int *col_ctrd);
 
-void perim(Model *mod,unsigned int sz,int *lgth_perim,int row_perim[sz], int col_perim[sz]);
+void perim(Model *mod,unsigned int sz,int *lgth_perim,int row_perim[400], int col_perim[400]);
 

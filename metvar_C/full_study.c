@@ -6,13 +6,15 @@
 #include <unistd.h>        
 #include <sys/stat.h>      
 
-int full_study(char* folder, char* file)
+int full_study(char* folder, char* behavior)
 {
 	/*consumption values and vector*/
-	float kS_ = 0.05;
-	float kO_ = 0.4;
-	char behavior[] = "ref";
-	char fil[] = "Id";
+	float kS_ = 0.2;
+	float kO_ = 1.6;
+	/*float kS_ = 1.5;
+	float kO_ = 12.0;*/
+
+	printf("full_study\n\n");
 
 	/*part that creates the folder*/
 	if ( mkdir(folder, 0755 ) != 0 ) 
@@ -41,7 +43,17 @@ int full_study(char* folder, char* file)
 
 	if (fopen("Id","r+") == 0 )/*En gros si le fichier n'existe pas, metvar*/ 
 	{
-		metvar_f(kS_,kO_,behavior,fil);
+		metvar_f(kS_,kO_,behavior,"Id");
+	}
+
+	if (fopen("Gl","r+") == 0 )/*En gros si le fichier n'existe pas, metvar*/ 
+	{
+		metvar_f(kS_,kO_/5.0,behavior,"Gl");
+	}
+
+	if (fopen("Ox","r+") == 0 )/*En gros si le fichier n'existe pas, metvar*/ 
+	{
+		metvar_f(kS_/5.0,kO_,behavior,"Ox");
 	}
 
 	return EXIT_SUCCESS;

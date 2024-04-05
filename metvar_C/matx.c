@@ -5,9 +5,9 @@
 #include <unistd.h>        
 #include <sys/stat.h>
 
-int find_int( unsigned int sz, unsigned int value, unsigned int Mat[sz][sz], int *row, int *col)
+int find_int( int sz, int value, int Mat[sz][sz], int *row, int *col)
 {
-
+	/*printf("find_int\n");*/
 	int i, j;
 	for (i=0; i<sz; i++)
 	{
@@ -17,22 +17,22 @@ int find_int( unsigned int sz, unsigned int value, unsigned int Mat[sz][sz], int
 			if(Mat[i][j]==value)
 			{
 				*col = j;
-				break;
+				*row = i;
+				return;
 			} 
 			
 		}
-		if(Mat[i][j]==value)
-		{
-			*row = i;
-			break;
-		}
 
 	}
+	*row = -1;
+	*col = -1;
+	/*printf("row : %d | col : %d \n",*row,*col);
+	printf("\n");*/
 	return 0;
 	
 }
 
-int find_float(float value, float** Mat, unsigned int sz, int* row, int* col)
+int find_float(float value, float** Mat, int sz, int* row, int* col)
 {
 	int i, j;
 	for (i=0; i<sz; i++)
