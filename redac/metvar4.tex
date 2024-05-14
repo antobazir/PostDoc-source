@@ -30,29 +30,27 @@ It should be noted that this model does not address mechanical aspects in any sp
 
 \newpage
 \section{The model}
+In that model, the goal is not so much to reproduce the data of a single cell line as it is to explore possible configurations in "controlled fashion". In order to do this, the nutrients dynamics described with a widespread diffusion-reaction equation, the cells are on-lattice with consumption being set by thresholds of nutrients.\\
 
 \subsection{The diffusion reaction model}
-In that model, the goal is not so much to reproduce the data of a single cell line as it is to explore possible configurations in "controlled fashion". In order to do this, the nutrients dynamics described based on hypotheses that are detailed in the following.\\
-
 Two active substances have been included in the model by the authors. This choice came, both the observed dynamics and response to different substances observed in tissues, as well as several modelling studies on related subjects.\cite{Bull2020}\cite{Kempf2005}\cite{Mao2018}\cite{Jagiella2016} The two substances are: Substrate (S) and  Oxygen (O). Substrate represents anything used by the cell to function, proliferate and move. This encompasses glucose, glutamine, amino acids, vitamins. Oxygen is represented specifically for its impact on the electron transport chain both in terms in biosynthesis and energy production, and is therefore not treated symmetrically to substrate as will be shown later. \\
 
-In order to model the evolution of the concentration of those species, the physical model used in this study is the reaction-diffusion equation, which has been used in some shape or form in several similar agent-based model involving nutrient dynamics and interactions with cells.\cite{Kempf2005}\cite{Mao2018} \cite{Bull2020} 
-\cite{Cleri2019}\cite{Kempf2015}
+In order to model the evolution of the concentration of those species, the physical model used in this study is the reaction-diffusion equation, which has been used in some shape or form in several similar agent-based model involving nutrient dynamics and interactions with cells.\cite{Bull2020}\cite{Kempf2005}\cite{Mao2018}\cite{Cleri2019}\cite{Kempf2015}
 The equation is usually written as follows : 
 \[ \frac{d [C]}{\partial t}  -  D \Delta [C] = k_C  \]
 
-With $[C]$, the concentration of the species, , $D$ the diffusion coefficient of the species and $k_C$ the consumption of the species by cells. The previous equation is valid only for homogeneous material. In the model presented in this study, diffusion coefficient car vary in space and time which lead to a different formulation in this study : 
+%With $[C]$, the concentration of the species, $D$ the diffusion coefficient of the molecule and $k_C$ the consumption of the species by cells. The previous equation is valid only for homogeneous material. In the model presented in this study, diffusion coefficient car vary in space and time which lead to a different formulation in this study : 
 
-\[ \frac{d [C]}{\partial t}  +   \nabla \cdot \vec{j} = k_C  \]
-with, 
-\[ \vec{j_{a,b}} = \frac{-2 D_{a}D_{b}}{D_{a} + D_{b}} \vec{\nabla}[C]  \]
+%\[ \frac{d [C]}{\partial t}  +   \nabla \cdot \vec{j} = k_C  \]
+%with, 
+%\[ \vec{j_{a,b}} = \frac{-2 D_{a}D_{b}}{D_{a} + D_{b}} \vec{\nabla}[C]  \]
 
-with  $\vec{j_{a,b}}$ the flux between two points $a$ and $b$ with different diffusion coefficients $D_a$ and $D_b$. It should be noted that if $D_a = D_b$, the equation becomes Fick's second law, This is inspired by a method proposed by Fidelle and Kirk\cite{Fidelle1971}. In their study they express temperature variation by summation of thermal fluxes for a sphere embedded in matrix.\\
+%with  $\vec{j_{a,b}}$ the flux between two points $a$ and $b$ with different diffusion coefficients $D_a$ and $D_b$. It should be noted that if $D_a = D_b$, the equation becomes Fick's second law, This is inspired by a method proposed by Fidelle and Kirk.\cite{Fidelle1971} In their study they express temperature variation by summation of thermal fluxes for a sphere embedded in matrix.\\
 
 The equation is also non-dimensionalised in order to have dimensionless concentrations and diffusion coefficient with values ranging between 0 and 1:
-\[ \rightarrow \tau \frac{d C}{\partial t}  =   d_0^2 \frac{D}{D_{med}} \Delta C + \frac{\tau k_C}{C_{ext}}  \]
+\[  \tau \frac{d C}{\partial t}  =   d_0^2 \frac{D}{D_{med}} \Delta C + \frac{\tau k_C}{C_{ext}}  \]
 
- with $\tau  = \frac{d_0^2}{D_{med}}$, $D_{med}$, the diffusion coefficient of oxygen in medium and $C_{ext}$ the external concentration of the model nutrient.\\ %This leads to the following general finite different equation for concentrations: 
+ with $\tau  = \frac{d_0^2}{D_{med}}$, $D_{med}$, the diffusion coefficient of oxygen in medium and $C_{ext}$ the external concentration of the modelled nutrient.\\ %This leads to the following general finite different equation for concentrations: 
 
 %\begin{align}
 %C_{i,j}^{n+1} = &  C_{i,j}^{n} +\\ 
@@ -60,7 +58,7 @@ The equation is also non-dimensionalised in order to have dimensionless concentr
 %\end{align}
 
 
-As cells can go back and forth between the quiescent and proliferating state, so will the consumption go back and forth between two levels . But it will irreversibly becomes 0 if it falls below the starvation threshold. This can lead to interesting behavior in terms of nutrient dynamics because it completely non-linear in nature.\\
+As cells can go back and forth between the quiescent and proliferating state, so will the consumption go back and forth between two levels. However, it will irreversibly becomes 0 if it falls below the starvation threshold. This can lead to interesting behavior in terms of nutrient dynamics because it is completely non-linear in nature.\\
 
 \subsection{Numerics}
 In order to assess the behavior of the reaction-diffusion model its results will be presented in simple configurations in this section. Some important parameters of the model will also be justified and presented.\\
@@ -81,26 +79,25 @@ with $D$ being the diffusion coefficient, and $\Delta t$ and $\Delta x$ being th
 %PMID: 33212982 extracellular ATP impacts biology
 %PMID: 27321181 Tumor cell killing by mmol/l ATP concentrations is a long-standing observation
 \subsubsection{Substrate}
-The question of which species to model in that simplified model was the first coming to the mind of the authors. Glucose seemed like an obvious choice. It is the best known nutrient and the one on which the most data has been gathered both in terms of diffusion and consumption in tissues.\\
+The question of which species to model in that simplified model was the first coming to the mind of the authors. Glucose seemed like an obvious choice. It is the best-known nutrient and the one on which the most data has been gathered both in terms of diffusion and consumption in tissues.\\
 
-However, while all cells consume glucose when it is available, none of them can survive and thrive on glucose only. Cells need sources of glucose, nitrogen, oxygen, phosphate and sulfur in order to maintain and replicate. This is why culture medium for mammalian cells contains many different molecules and vitamins that act both as nutrient sources and also as regulatory cues that ensure proper survival and proliferation for cultivated cells.\\
+However, while all cells consume glucose when it is available, none of them can survive and thrive on glucose only. Cells need sources of glucose, nitrogen, oxygen, phosphate and sulfur in order to maintain and replicate.\cite{Cooper2006}\cite{Spinelli2021} This is why culture medium for mammalian cells contains many different molecules and vitamins that act both as nutrient sources and also as regulatory cues that ensure proper survival and proliferation for cultivated cells.\\
 
-All the aforementioned nutrients are present and consumed by living cells for their physiological needs. In some cases, one can replace the other. The most well known case being that glutamine can replace glucose as a carbon source.\cite{Stuart2023}\cite{Mazurek1997} However, in most cases, if for some reason glucose has depleted significantly, glutamine has also been consumed in the meantime, and even with the switch, is likely to depleted in short order as well. Besides, when medium is supplied it is generally supplied with all nutrients. It can therefore appear irrelevant to treat them separately, and a model that would model every nutrient would have prohibitive computational cost anyway.\\
+All the aforementioned nutrients are present and consumed by living cells for their physiological needs. In some cases, one can replace the other. The most well known case being that glutamine can replace glucose as a carbon source.\cite{Stuart2023}\cite{Mazurek1997} However, in most cases, if for some reason glucose has depleted significantly, glutamine has also been consumed in the meantime, and even with the switch, is likely to depleted in short order as well. Besides, when medium is supplied it is generally supplied with all nutrients, even though the relative concentrations may vary. It can therefore appear irrelevant to treat them separately, and a model that would model every nutrient would have prohibitive computational cost anyway.\\
 
-In order to account for all the previous facts, it has been chosen to encompass all nutrients (sugars, amino acids and vitamins) within a single effective species that diffuses roughly like glucose and is consumed roughly at the same speed. It will be designated as substrate. Its role in the model is to support both maintenance and proliferation.\\
+In order to account for all the previous facts, it has been chosen to encompass all nutrients (sugars, amino acids and vitamins) within a single effective moleucle that has the diffusion properties of glucose and is consumed similarly by cells. It will be designated as substrate. Its role in the model is to support both maintenance and proliferation.\\
 
 \subsubsection{Oxygen}
 Molecular oxygen has a specific role in cell metabolism. It is used as a terminal electron acceptor in the electron transport chain (ETC). Proper function of the electron transport chain is important for ATP production but also for proliferation as some cellular building block synthesis are possible only if the ETC functions.\cite{Martinez2020}\\
 
-It is also known that in case of hypoxia some other molecules can serve as terminal electron acceptor, meaning that proliferation and ATP generation can be maintained in the mitochondria, albeit at a reduced rate, and possibly with adverse effects if the degraded condition lasts too long.\cite{Spinelli2021}\\
+It is also known that in case of hypoxia some other molecules can serve as terminal electron acceptor, meaning that proliferation and ATP generation can be maintained in the mitochondria, albeit at a reduced rate, and possibly with adverse effects if the degraded condition lasts too long.\cite{Spinelli2021} However, at this stage oxygen will only be modelled as a "booster", and its depletion will not be considered lethal.\\
 
-Oxygen is thus modelled mainly as an energy booster. Behavior where the lack of oxygen is toxic on its own will be treated but in most cases, lack of oxygen will not be treated as lethal.\\
 
 
 \subsubsection{Diffusion properties}
-In the reaction-diffusion model, availability of the nutrient will be set by the conjunction of diffusion and consumption. While consumption will be detailed later and will vary between configuration and during simulations, diffusive properties will be considered to be more "static" and detailed here.\\
+In the reaction-diffusion model, availability of the nutrients will be determined by the conjunction of diffusion and consumption. While consumption will be detailed later and will vary between configuration and during simulations, diffusive properties will be considered to be more "static" and detailed here.\\
 
-Oxygen is taken as the fastest diffusing species in the model and therefore, in the normalised model, its diffusion constant in medium, which is approximated by that of 37°C water, $D_{ox,med}$ is taken to be one with other species diffusion constants being expressed as a fraction of that of oxygen.\\
+Oxygen is taken as the fastest diffusing species in the model and therefore, in the normalised model, its diffusion constant in medium, which is approximated by that of 37°C water, $D_{ox,med}$ is taken to be unity with other species diffusion constants being expressed as a fraction of that of oxygen.\\
 
 The diffusion of subtrate in medium $D_{su,med}$ was set to be 20 \% of oxygen in 37°C water, which correspond to a real value of 40000 \textmu m$^2$/min. This value is close to those measured for the diffusion of glucose in water.\cite{Hober1947} The diffusion of oxygen in tissue was set to be 60 \% of that in water/medium. This value is in line with values from other studies.\cite{Mao2018}\cite{Grote1977} and the diffusion of substrate was set to be 3.5 \% of that oxygen in water/medium (7000 \textmu m$^2$/min), which is also close to values measured experimentally in tissues.\cite{Grote1977}\cite{Pfeuffer2000}\\
 
@@ -111,7 +108,7 @@ The cells are modelled as part of a square grid of the same size as the ones use
 \subsubsection{Metabolic response}
 The specific behaviors implemented will not be listed here, however, sepcific features that they have in common as well as the rationale  behind the design of this aspect of the study can be detailed. \\
 
-First, the change between behavior will be determined by thresholds rather than mapped to continuous fonction. For example, if hypoxia is taken to reduce proliferation, implementation will be :"below concentration X, proliferation stops. Above X, proliferation resumes/continues". The number of possibilites is already significant in that case and this type of model is less computationally demanding.\\
+First, the change between different behaviors will be determined by thresholds rather than mapped to continuous fonction. For example, if hypoxia is taken to reduce proliferation, implementation will be :"below concentration X, proliferation stops. Above X, proliferation resumes/continues". The number of possibilites is already significant in that case and this type of model is less computationally demanding.\\
 
 Second, as much as possible, the responses to the various thresholds will also be encoded in binary fashion when possible. For example, proliferation rate/doubling time will not vary continually with the level of a given molecule but rather stop or resume whenever the threshold is passed.\\
 
@@ -161,11 +158,11 @@ In order to illustrate the interplay of the modules a reference configuration is
 \caption{(a) Number of cells in the inactive as a function of time (b) cell map for the reference configuration at the end of the simulation \label{ref_population}}
 \end{figure}
 
-In that case, as shown in figure \ref{ref_numbers}, nothing impacts growth and so, the cell number increases following an exponential trend. This is due to all cells having the same cycle duration and only the first 16 cells having different, randomly picked, timers. Therefore, cells mutiply in batches. The duration of the cell cycle is 1500 minutes.\\
-
-As can be seen in fig.\ref{ref_Grid}, cells are organised in a roughly spherical agregate. The color gives the index of the cells. Younger cells are yellow while older cells are blue. As can be seen the division method tend to leave older cells at the center even though some blue spots can be spotted near the rim. \\ 
+In that case, as shown in figure \ref{ref_numbers}, nothing impacts growth and so, the cell number increases following an exponential trend. This is due to all cells having the same cycle duration and only the first 16 cells having different, randomly picked, timers. Therefore, cells mutiply in batches. The duration of the cell cycle is 1500 minutes. As can be seen in fig.\ref{ref_Grid}, cells are organised in a roughly spherical agregate. The color gives the index of the cells. Younger cells are yellow while older cells are blue. \\ 
 
 \subsubsection{Nutrients}
+In terms of consumption, the substrate consumption value for live cells is chosen to be 1.0 min$^{-1}$, which, for an external concentration of 5.5 mM, corresponds to 5.5 mM/min, which is in the range of values measured and used in modelling studies for spheroids.\cite{Kempf2005}\cite{Mao2018} \\
+
 \begin{figure}[ht!]
 \begin{subfigure}{0.5\textwidth}
 	\centering
@@ -178,19 +175,19 @@ As can be seen in fig.\ref{ref_Grid}, cells are organised in a roughly spherical
 	\input{S_ref_midline.tex}
 	\caption{\label{S_ref_midline}}
 \end{subfigure}
-\caption{(a)Concentration of substrate at the center of the agregate vs time (b) Concentration of agregate on the midline of the agregate \label{ref_nutrients}}
+\caption{(a) Concentration of substrate at the center of the agregate vs time (b) Concentration of substrate on the midline of the agregate \label{ref_nutrients}}
 \end{figure}
 
-It can be seen in figure \ref{ref_S_center} that the  substrate concentration at the center decreases gradually as the cell number increases. Figure \ref{S_ref_midline} illustrates that cell consumption is set to zero when the concentration becomes zero. This is why the central concentration remains zero despite a growing number of cells.
+It can be seen in figure \ref{ref_S_center} that the substrate concentration at the center decreases gradually as the cell number increases. Figure \ref{S_ref_midline} illustrates that cell consumption is set to zero when the concentration becomes zero. This is why the central concentration remains zero despite a growing number of cells.\\
+
+It can also be seen that the substrate concentration falls to zero at a depth of 160 \textmu m, which is close to both the thickness of variable cells and the diameters for onset of necrosis reported by Freyer et al.\cite{Freyer1986}\cite{Freyer1988}
 
 \subsection{A simple response: Starvation}
-To illustrate the behavior module of the model, a simple case is treated first. Therefore, the consumption rates for each state and the threshold separating them needs to be specified. In this case, only two states exist, well-fed/profilerating and starved/dying.
+To illustrate the behavior module of the model, a simple case is treated first. Therefore, the consumption rates for each state and the threshold separating them needs to be specified. In this case, only two states exist, well-fed/profilerating and starved/dying.\\
 
-In terms of consumption, the substrate consumption value for live cells is chosen to be 2.0 min$^{-1}$, which corresponds to 2.5 mM/min, which is in the range of values measured and used in modelling studies for spheroids.\cite{Mao2018}\cite{Kempf2005}
+The cells commit to cell death if they cross the starvation threshold. The threshold for cell death was set at 10 \% of the external concentration. Assuming an external concentration of 5.5 mM, this corresponds to 0.5 mM. This criterion was chosen in order to keep a thickness of variable cells between 100 and 300 \textmu m and a necrosis starting between 400 and 500 \textmu m, as reported by Freyer et \textit{al}.\cite{Freyer1986}\\
 
-The cells commit to cell death if they cross the starvation threshold. The threshold for cell death was set at 10 \% of the external concentration. Assuming an external concentration of 5 mM, this corresponds to 0.5 mM, which is below the lowest concentration of glucose used for spheroid culture found by authors in the literature(0.8 mM).\cite{Freyer1986}\\
-
-It is known that in many experiments, the glucose concentration is 25 mM and that this difference impacts the cell proliferation rate. For this study, the question of how cells adapt to proliferate at different culture concentration is left aside and the external concentration is assumed to be in the low range so that decrease rapidly leads to cell cycle arrest and/or cell death.
+It is known that in many experiments, the glucose concentration is 25 mM and that this difference impacts the cell proliferation rate. However, for this study, the question of how cells adapt to proliferate at different culture concentration is not treated.\textbf{[calculer combien les épaisseurs à seuils constants et voir où sont les vrais seuils.]}
 \\
 
 As a reminder, cell death in this model is implemented by decreasing the consumption gradually to zero and removing the cell from the simulation subsequently, leaving the grid site unoccupied.\\
@@ -230,13 +227,15 @@ As can be seen in \ref{starv_numbers}, the number of live cells is not monotonou
 \caption{(a) Concentration of substrate vs time (b) Concentration on the midline of the agregate at the end of the simulation \label{tarv_SO}}
 \end{figure}
 
-As can be seen in figure \ref{starv_S_center}, once the threshold is crossed, the consumption of cells start decreasing. The decrease of consumption leads to an increase of concentration which impacts the dynamics of behavior. This results in visible oscillations of the concentration as cells on the outer rim keep dividing and can impact the concentration as well.\\
+As can be seen in figure \ref{starv_S_center}, once the threshold is crossed, the consumption of cells start decreasing. The decrease of consumption leads to an increase of concentration which impacts behavior. This results in visible oscillations of the concentration as cells on the outer rim keep dividing and can impact the concentration as well.\\
 
 
 \subsection{Starvation and savyness}
-It is known that cell can reduce their consumption of a nutrient if it goes missing, such as cell reducing the activity of their ETC in hypoxia, even if the ETC could still function at the concentration when the phenomenon occurs.\cite{Lee2020} A possibility for modelling that phenomenon could have been to build a function linking concentration to the value of $k_{max}$, which is frequently done in agent-based model studies on cancer spheroids. In this model, threshold are used to make the complete model simpler.\\
+Cells in nutrient-deprived environment can go into quiescence. Cell cycle arrest also leads to reduced nutrient consumption as proliferation requires a significant portion of the energy of a cell. The magnitude of reduction/amplification range from a factor of 50 (rat T lymphocytes) to a 50 \% (decrase in primary human fibroblasts)\cite{Valcourt2012}\\
+%A possibility for modelling that phenomenon could have been to build a function linking concentration to the value of $k_{max}$, which is frequently done in agent-based model studies on cancer spheroids. In this model, threshold are used to make the complete model simpler.\\
+%It is known that cells can reduce their consumption of a nutrient if it goes scarce, such as cell reducing the activity of their ETC in hypoxia, even if the ETC could still function at the concentration when the phenomenon occurs.\cite{Lee2020}
 
-To illustrate, the case of substrate is helpful. Once the substrate concentration near cell goes below $S_{maint}$, savyness means the consumption is gradually decreased to $kS_{maint}$. The reason behind this decrease in consumption can be manifold. But possibilities could include reduced expression of the glucose transporter protein in response to lower glucose concentration or a response to increasing lactate concentratioin at the cell level.\\
+To further illustrate the behavior module, the case of substrate is helpful. Once the substrate concentration near cell goes below $S_{maint}$, proliferation is stopped and the consumption is gradually decreased to $kS_{maint} = 0.3 kS_{prol}$. The quiescence is reversible, reversible provided the nutrient concentration reincreases above the proliferation threshold. \\
 
 
 \subsubsection{Population}
@@ -255,9 +254,9 @@ To illustrate, the case of substrate is helpful. Once the substrate concentratio
 \caption{(a) number of live cells for the starvation behavior (solid line) and reference behavior (dashed line) (b) cell map for the savy configuration at the end simulation \label{savy_numbers_Grid}}
 \end{figure}
 
-As could be expected, figure \ref{savy_numbers} indicates  that the nutrient consumption reduction strategy allows for a higher count of live cells over time. The slight oscillations in population also start later due to the delayed onset of necrosis.\\
+As could be expected, figure \ref{savy_numbers} indicates that the quiescence strategy allows for a higher count of live cells over time. The slight oscillations in population also start later due to the delayed onset of necrosis compared to the starvation-only behavior.\\
 
-Another observation that can be made in figure \ref{savy_Grid} is that the fact that the model starts with 16 different cell cycle states means that cell tend to divide in batches. The distribution spreads a little due to maintenance state stopping the division timer. However, it can be seen that this still results in "waves" of division as the yellow patch on the left side of figure \ref{savy_Grid} shows.\\
+Another observation that can be made in figure \ref{savy_Grid} is the fact that the model starts with 16 different cell cycle states means that cell tend to divide in batches. The distribution spreads a little due to the division timer being stopped in the quiescent state. \\
 
 \subsubsection{Nutrients dynamics}
 \begin{figure}[h]
@@ -272,27 +271,25 @@ Another observation that can be made in figure \ref{savy_Grid} is that the fact 
 	\input{S_savy_midline.tex}
 	\caption{\label{S_savy_midline}}
 \end{subfigure}
-\caption{(a) Concentration of substrate vs time (b) Concentration on the midline of the agregate at the end of the simulation \label{savy_nutr}}
+\caption{(a) Concentration of substrate at the center of the agregate vs time (b) Concentration on the midline of the agregate at the end of the simulation \label{savy_nutr}}
 \end{figure}
 
-The concentration at the center of the agregate shown in figure \ref{savy_S_center} features three trends. First, it drops stepwise indicating that division is the only phenomenon influence that drives nutrient dynamics. When the "maintenance" threshold is passed fluctuations appear but the trend remains decreasing overall. When the survival threshold is crossed. the concentration oscillates with larger amplitude around a fixed value slightly above the threshold. The spatial information shown in \ref{S_savy_midline} confirms that the dead zone sees its concentration stabilize at 0.4, just above the survival threshold.\\
+The concentration at the center of the agregate shown in figure \ref{savy_S_center} features three trends. First, it drops stepwise indicating that division is the only phenomenon that drives nutrient dynamics. When the "maintenance" threshold is passed fluctuations appear but the trend remains decreasing overall. When the survival threshold is crossed. the concentration oscillates with an amplitude of close to 0.1 around a fixed value slightly above the threshold. The spatial information shown in \ref{S_savy_midline} confirms that the dead zone sees its concentration stabilize at 0.2, just above the survival threshold.\\
 
 
 
 \newpage
 \section{Substrate and oxygen configurations}
-The main characteristics of the model have been illustrated in the preceding section. The principle of behavior being regulated by well-defined threshold is now applied to both substrate and oxygen.\\
+The main characteristics of the model have been illustrated in the preceding section. The principle of behavior being regulated by well-defined threshold is now applied to both substrate and oxygen. It is thus necessary to redo the work done for substrate for oxygen by defining the standard concentration levels as well as the threshold for between the states of normoxia and hypoxia.\\
 
-It is thus necessary to redo the work done for substrate for oxygen by defining the standard concentration levels as well as the threshold for between the states of normoxia and hypoxia.\\
+The consumption of oxygen in normal condition is taken to be 15.0 min$^{-1}$, which assuming a medium concentration of 150 \textmu M (20-21\%), corresponds to a consumption of 2.25 mM/min, which is in the range of values used in other studies.\cite{Kempf2005}\cite{Mao2018} \\
 
-The consumption of oxygen in normal condition is taken to be 30.0 min$^{-1}$, which assuming a medium concentration of 150 \textmu M (20-21\%) correspond to consumption 4.5 mM, which is in the range of values used in other studies.\cite{Kempf2005}\cite{Mao2018}. \\
-
-The hypoxia threshold is taken to be 0.2 which correspond to 0.03 \textmu M (4 \% $p_{O_{2}}$).This value is in the range of value reported for the onset of hypoxia response.\cite{McKeown2014}\cite{Saxena2019} It has also been used in modelling studies where the focus was hypoxia.\cite{Bull2020}\cite{Kempf2015}
+The hypoxia threshold is taken to be 0.2 which correspond to 30 \textmu M (4 \% $p_{O_{2}}$).This value is in the range of value reported for the onset of hypoxia response.\cite{McKeown2014}\cite{Saxena2019} It has also been used in modelling studies where the focus was hypoxia.\cite{Bull2020}\cite{Kempf2015}
 
 \subsection{Relative abundance of nutrients}
 The simultaneous presence of two nutrients complexifies the picture as their concentration may vary independently and all situations of relative availability should be considered.\\
 
-With two nutrients 3 situations should be considered. Similar availability, oxygen-rich and substrate rich configurations. Though these three configurations could be achieved by setting consumption and tissue diffusion, it has been chosen to take tissue diffusion as constant a vary consumptions in order to achieve the  three cases of relative abundance.\\
+With two nutrients, 3 situations should be considered. Similar availability, oxygen-rich and substrate-rich configurations. Though these three configurations could be achieved by setting consumption and tissue diffusion, it has been chosen to take tissue diffusion as constant a vary consumptions in order to achieve the three cases of relative abundance.\\
 
 \begin{figure}[ht!]
 \begin{subfigure}{0.32\textwidth}
@@ -323,7 +320,7 @@ The three configurations shown in figure \ref{ref_mid} are :
 \end{itemize}
 
 
-The consumption values were set following several criteria. First, necrosis should start at diameter of 400 \textmu m or less\cite{Freyer1986}\cite{Freyer1988}. Second, there should a factor a 5 between the highest and lowest consumption values for both nutrients.\cite{Kammerer2015} This can be verified in figure \ref{ref_mid}. The relative availability is checked at diameters close to 1-mm which is the upper range of values for avascular tumor spheroids.\cite{Freyer1986}\cite{MullerKlieser1986} Cell death occuring depends on the consumption but also on the threshold value for cell death, which will be the next point of discussion.\\
+The consumption values were set following several criteria. First, necrosis should start at diameter between 400 and 500 \textmu m\cite{Freyer1986}\cite{Freyer1988}. Second, there should a factor a 5 between the highest and lowest consumption values for both nutrients.\cite{Kammerer2015} This can be verified in figure \ref{ref_mid}. The relative availability is checked at diameters close to 1-mm which is the upper range of values for avascular tumor spheroids.\cite{Freyer1986}\cite{MullerKlieser1986} Cell death occuring depends on the consumption but also on the threshold value for cell death, which will be the next point of discussion.\\
 
 Three thresholds need to be set in order to account for reaction for the two nutrients
 \begin{itemize}
@@ -343,7 +340,7 @@ Three thresholds need to be set in order to account for reaction for the two nut
 At this point no mechanism account for the possibility of "oxygen-scarcity-induced-cell-death".\\
 
 
-Applying conditions on both nutrients increases the number of cases to be treated. Indeed, which nutrient is going to be abundant or not. Abundant here meaning that it is present in sufficient amount to not trigger a response in the cell. If one nutrient becomes scarce, then what is the response ?. These study aims at exploring the different answers to these questions.\\
+Applying conditions on both nutrients increases the number of cases to be treated. Indeed, each nutrient is going to be abundant or not.  "Not abundant" here meaning that the concentration is low enough trigger a response in the cell. The behavior module is the part of the model that determines the nature of this response.\\
 
 \subsection{Studied behaviors}
 The metabolic behaviors can be summarized with tables. Four behaviors are studied. The table gives the substrate and oxygen consumption for  and the proliferation index as a function of the nutrient concentrations.\\
@@ -368,7 +365,7 @@ $O< O_{hypox}$ & $kO_{maint}$ & $kO_{maint}$ & 0 \\
 \end{center}
 \end{table}
 
-The "fragile" behavior describe cells that stop proliferating as soon as the nutritive envrionment is not favorable. They reduce their consumption of substrate and oxygen is  any of the two nutrients become scarce and die if the two become scarce. In that case, the lowered consumption of glucose is justified by the fact that cells in quiescence consume less energy than those in proliferation due to the reduced biosynthesis.\\
+The "fragile" behavior describe cells that stop proliferating as soon as the nutritive envrionment is not favorable. They reduce their consumption of substrate and oxygen is  any of the two nutrients become scarce and die if the two become scarce. It is known that both hypoxia and low-nutrient level, among other things, can trigger quiescence in cells.\cite{Valcourt2012}\cite{Nabil2021}\\
 
 \begin{table}[h!]
 \begin{center}
@@ -390,7 +387,7 @@ $O< O_{hypox}$ & $kO_{maint}$ & $kO_{maint}$ & 0 \\
 \end{center}
 \end{table}
 
-The "hyposia tolerance" behavior correspond to cells that can maintain proliferation when substrate concentration is lower than normal. This behavior is the author transcription of observation on D-54MG and GL261 glioma cell lines.\cite{Griguer2005}. The assumption is that they maintain proliferation through consumption of additional oxygen. However, when oxygen goes scarce they stop proliferation but still compensate by raising substrate consumption.  
+The "hyposia tolerance" behavior correspond to cells that can maintain proliferation when substrate concentration is lower than normal. This behavior is the author transcription of observation on D-54MG and GL261 glioma cell lines.\cite{Griguer2005}. The assumption is that they maintain proliferation through consumption of additional oxygen. However, when oxygen goes scarce they stop proliferation but still compensate by raising substrate consumption.%they proliferate slowly and do not decrease glucose consumption  
 
 \begin{table}[h!]
 \begin{center}
@@ -412,7 +409,7 @@ $O< O_{hypox}$ & $kO_{maint}$ & $kO_{maint}$ & 0 \\
 \end{center}
 \end{table}
 
-The "hypoxia tolerance" behavior correspond to cells that can maintain proliferation when oxygen concentration is lower than normal. This is a commonly observed response to hypoxia.\cite{Shen2020}\cite{Jozwiak2014} To do so, they compensate by consuming more substrate. However, when substrate goes scarce they stop proliferation but still compensate by raising oxygen consumption.  
+The "hypoxia tolerance" behavior correspond to cells that can maintain proliferation when oxygen concentration is lower than normal. This is a commonly observed response to hypoxia.\cite{Shen2020}\cite{Jozwiak2014} It is assumed that these cells compensate by consuming more substrate. However, when substrate goes scarce they stop proliferation but still compensate by raising oxygen consumption.  
 
 \begin{table}[h!]
 \begin{center}
@@ -434,7 +431,7 @@ $O< O_{hypox}$ & $kO_{maint}$ & $kO_{maint}$ & 0 \\
 \end{center}
 \end{table}
 
-The "hypoxia boost" behavior correspond to cells that increase proliferation when oxygen concentration is lower that normal. To do so, they compensate by consuming more substrate. However, when substrate goes scarce proliferation comes back to normal level and substrate consumption decrease back to the initial level.\\ 
+The "hypoxia boost" behavior correspond to cells that increase proliferation when oxygen concentration is lower that normal. To do so, they compensate by consuming more substrate. However, when substrate goes scarce proliferation comes back to normal level and substrate consumption decrease back to the initial level. This has been observed in two ovarian cancer cell lines (HO-8910 and A2780).\cite{Li2023}\\ 
 
 \newpage
 \subsection{Id}
