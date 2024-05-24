@@ -5,11 +5,13 @@
 #include <math.h>
 #include "matx.h"
 #include "divide.h"
-#include "structdef.h"
 #include "perim_centroid.h"
 
 #include <unistd.h>        
 #include <sys/stat.h>  
 
-int migrate_sphere(Model *mod);
+int migrate_sphere();
 
+void migrate_chip();
+
+void migrate_chip2(int cell_idx);

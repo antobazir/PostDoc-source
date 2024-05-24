@@ -1,10 +1,15 @@
-#ifndef INCLUDE_STRUCTDEF_H
-#define INCLUDE_STRUCTDEF_H
 
-#define SZ 70
+#if GEOM==0 
+	#define SZ 70
+#elif GEOM==1 
+	#define SZ 400
+#else 
+	#define SZ 70
+#endif
 
 	typedef struct Nutrs
 	{
+
 		/*nutrient*/
 		float S[SZ][SZ];
 		float O[SZ][SZ];
@@ -13,6 +18,10 @@
 		float DSm[SZ][SZ];
 		float DOm[SZ][SZ];
 		float DS_med;
+		float DS_tiss;
+		float DO_tiss;
+		float DO_mat;
+		float DS_mat;
 		
 		/*consommation*/
 		float kS[SZ][SZ];
@@ -24,6 +33,7 @@
 		float d0;
 		float tau;
 		int sz;
+		
 	}Nutr;   
 
 	typedef struct Cells
@@ -32,9 +42,9 @@
 		int Grid[SZ][SZ];
 		int LD[SZ][SZ];
 		unsigned char state_mat[SZ][SZ];
-		float state[10*SZ*SZ][10];
-		/*|1 d_time| 2 div_ind | 3 chg_timer |4 kS 
-		|5 dkS |6 kO |7 dkO|8 row| 9 cols| 10 prt| */
+		float state[SZ*SZ][11];
+		/*|1 d_time| 2 cycl dur | 3 chg_timer |4 kS 
+		|5 dkS |6 kO |7 dkO|8 row| 9 col| 10 prt|11 bhvr */
 
 		/*limits*/
 		float S_prol;
@@ -57,6 +67,4 @@
 		Nutr M_Nutr;
 	}Model;
 
-
-#endif /* INCLUDE_FOO_H */
 

@@ -3,23 +3,25 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <math.h>
+#include "structdef.h"
 
 #include <unistd.h>        
 #include <sys/stat.h>
 #include <time.h>
-#include "structdef.h"
 
-void centroid(Model *mod, int *row_ctrd, int *col_ctrd)
+
+extern Model Mod;
+void centroid(int sz, int *row_ctrd, int *col_ctrd)
 {
 
 	int N_pts = 0;
-	int i,j,sz;	
+	int i,j;	
 	int mod_div;
 	*row_ctrd = 0;
 	*col_ctrd = 0;
 	/*printf("here...1\n");
-	/*printf("wtf: %d \n", (*mod).M_Nutr.sz);*/
-	sz = (*mod).M_Nutr.sz;
+	/*printf("wtf: %d \n", Mod.M_Nutr.sz);*/
+	/*sz = Mod.M_Nutr.sz;*/
 
 	
 	for (i=0; i<sz; i++)
@@ -28,7 +30,7 @@ void centroid(Model *mod, int *row_ctrd, int *col_ctrd)
 		{
 			/*printf("here...2\n");*/
 			/* if the spot is not empty*/
-			if((*mod).M_Cell.Grid[i][j]!=0) 
+			if(Mod.M_Cell.Grid[i][j]!=0) 
 			{
 				*row_ctrd = *row_ctrd + i;
 				*col_ctrd = *col_ctrd + j;
@@ -69,7 +71,7 @@ void centroid(Model *mod, int *row_ctrd, int *col_ctrd)
 
 }
 
-void perim(Model *mod,int sz,int *lgth_perim,int row_perim[400], int col_perim[400])
+void perim(int sz,int *lgth_perim,int row_perim[sz], int col_perim[sz])
 {
 
 	/*caution: this alogrithm works for the LD grid
@@ -100,7 +102,7 @@ void perim(Model *mod,int sz,int *lgth_perim,int row_perim[400], int col_perim[4
 			for(k=0;k<8;k++)
 			{
 				/*Si un des voisins est vide, le point est sur le périmètre*/
-				if(((*mod).M_Cell.LD[i][j]!=0)&&((*mod).M_Cell.LD[i+row_shift[k]][j+col_shift[k]]==0))
+				if((Mod.M_Cell.LD[i][j]!=0)&&(Mod.M_Cell.LD[i+row_shift[k]][j+col_shift[k]]==0))
 				{
 					i_val[*lgth_perim] = i; j_val[*lgth_perim]=j;
 					row_perim[*lgth_perim] = i;

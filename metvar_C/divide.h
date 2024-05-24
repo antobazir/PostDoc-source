@@ -1,4 +1,6 @@
-#include "structdef.h"
 
-int divide(Model *mod, int cell_idx); 
+
+int divide(int cell_idx); 
+
+int divide_s(int cell_idx);
 

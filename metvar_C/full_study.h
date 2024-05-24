@@ -6,6 +6,6 @@
 #include <unistd.h>        
 #include <sys/stat.h>      
 
-int full_study(char* folder, char* behavior);
+int full_study(char* folder, float kS, float kO, float behav_code);
 
-
+int full_study_chip(char* folder, float kS, float kO, float behav_code);
