@@ -22,22 +22,177 @@
 \setlength{\unitlength}{1cm}
 
 \begin{document}
+\section{Rappel}
+\begin{frame}
+\frametitle{Rappels : Signaux }
+\textbf{Signal numérique =  codage + échantillonnage}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g(t)$}};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=purple,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.4,xshift=14cm]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g_{Te}(t)$}};
+%\draw (4.5,-0.3) node {1};
+\draw[|-|] (-2.95,2.1)--(-3.35,2.1);
+\draw (-3.15,2.8) node {\footnotesize{$T_e$}};
+
+\draw[domain=-4.9:4.9,color=purple,samples=32] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+%\draw[domain=-4.9:4.9,dotted,color=purple,samples=32] plot[xcomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+	\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+\begin{itemize}
+\item \'Echantillonage : discrétisation en temps
+\vspace{0.3cm}
+\item Codage : discrétisation en amplitude
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Rappel : Analyse de signaux}
+Pour les signaux discrets on utilise TOUJOURS la transformée en Z
+\[\boxed{TZ\{ f \}(z) = \sum_{n = -\infty}^{\infty} f[n] z^{-n}} \]
+On en dérive la transformée de Fourier 
+\[\boxed{TF\{ f \}(\nu) = \sum_{n = -\infty}^{\infty} f[n] e^{-j 2 \pi n \nu T_e}} \]
+\vspace{0.2cm}
+La transformée de Fourier donne ce qu'on appelle le \textbf{spectre fréquentiel/réponse en fréquence} d'un signal/système
+\end{frame}
+
+\begin{frame}
+\frametitle{Rappel : Analyse de signaux}
+Les spectres fréquentiels/réponses en fréquences sont \textbf{généralement complexes}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g_{Te}(t)$}};
+%\draw (4.5,-0.3) node {1};
+\draw[|-|] (-2.95,2.1)--(-3.35,2.1);
+\draw (-3.15,2.8) node {\footnotesize{$T_e$}};
+
+\draw[domain=-4.9:4.9,color=purple,samples=32] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+%\draw[domain=-4.9:4.9,dotted,color=purple,samples=32] plot[xcomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+	\end{tikzpicture}
+\end{center}
+
+\begin{columns}
+\column{60mm}
+\underline{\small{Réponse en amplitude (Module  TF)}}:\\
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}
+\draw[->] (-2.5,0)--(2.5,0) node[right]{\footnotesize{$\nu$}};
+\draw[->] (0,-1)--(0,1) node[above]{\footnotesize{$|G_2(\nu)|$}};
+\draw[->,purple,thick] (-1/4,0)--(-1/4,0.55) ;
+\draw[->,purple,thick] (1/4,0)--(1/4,0.55) ;
+\draw[->,purple,thick] (-2/4,0)--(-2/4,0.45) ;
+\draw[->,purple,thick] (2/4,0)--(2/4,0.45) ;
+
+\draw[->,purple,thick] (-1/4+1.5,0)--(-1/4+1.5,0.55) ;
+\draw[->,purple,thick] (1/4+1.5,0)--(1/4+1.5,0.55) ;
+\draw[->,purple,thick] (-2/4+1.5,0)--(-2/4+1.5,0.45) ;
+\draw[->,purple,thick] (2/4+1.5,0)--(2/4+1.5,0.45) ;
+
+\draw[->,purple,thick] (-1/4-1.5,0)--(-1/4-1.5,0.55) ;
+\draw[->,purple,thick] (1/4-1.5,0)--(1/4-1.5,0.55) ;
+\draw[->,purple,thick] (-2/4-1.5,0)--(-2/4-1.5,0.45) ;
+\draw[->,purple,thick] (2/4-1.5,0)--(2/4-1.5,0.45) ;
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+\column{60mm}
+\underline{\small{Réponse en phase (Argument TF)}}:\\
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}
+\draw[->] (-2,0)--(2,0) node[right]{\footnotesize{$\nu$}};
+\draw[->] (0,-1)--(0,1) node[above]{\footnotesize{$\text{arg}(G_2(\nu))$}};
+\draw[->,purple,thick] (-0.65/4,0)--(-0.65/4,-0.65) ;
+\draw[->,purple,thick] (0.65/4,0)--(0.65/4,0.65) ;
+
+\draw[->,purple,thick] (-0.65/4-1.5,0)--(-0.65/4-1.5,-0.65) ;
+\draw[->,purple,thick] (0.65/4-1.5,0)--(0.65/4-1.5,0.65) ;
+
+\draw[->,purple,thick] (-0.65/4+1.5,0)--(-0.65/4+1.5,-0.65) ;
+\draw[->,purple,thick] (0.65/4+1.5,0)--(0.65/4+1.5,0.65) ;
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\[TF\{ x \}(\nu) = \sum_{n = -\infty}^{\infty} x[n] e^{-j 2 \pi n \nu T_e} \]
+La transformée de Fourier d'un signal discret n'est pas calculables par un ordinateur...\\
+\vspace{0.6cm}
+Transformée de Fourier \textbf{Discrète}
+\[ TFD\{ x \}[m] = \frac{1}{N} \sum_{n = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}  \] 
+\vspace{0.3cm}
+Approximation de la transformée de Fourier...
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g_{Te}(t)$}};
+%\draw (4.5,-0.3) node {1};
+\draw[|-|] (-2.95,2.1)--(-3.35,2.1);
+\draw (-3.15,2.8) node {\footnotesize{$T_e$}};
+
+\draw[domain=-4.9:4.9,color=purple,samples=32] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+%\draw[domain=-4.9:4.9,dotted,color=purple,samples=32] plot[xcomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+	\end{tikzpicture}
+\end{center}
+\end{frame}
+
 \section{Application TFD}
 \subsection{Introduction}
 \begin{frame}
 \frametitle{Introduction}
 Rappel :  Définition transformée de Fourier discrète (TFD)\\
 \vspace{0.3cm} 
-\[ TFD\{ x[n] \} =  \sum_{k = 0}^{N-1} x[k] \; e^{-j 2 \pi k \frac{m}{N}}  \] \\
+\[ TFD\{ x \}[m] =  \sum_{k = 0}^{N-1} x[k] \; e^{-j 2 \pi k \frac{m}{N}}  \] \\
 \vspace{0.3cm}
 \only<2->{
 \begin{itemize}
 \item Somme finie sur les échantillons temporels
+\vspace{0.1cm}
 \item Nombre fini de valeurs de fréquence
 \end{itemize}
 }
  
 \only<3->{
+\vspace{0.5cm}
 On va prendre des exemples de signaux simples pour illustrer clairement certains aspects techniques et le lien avec la transformée de Fourier
 }
 \end{frame}
@@ -75,7 +230,7 @@ On va calculer la TFD du signal discret correspondant...
 
 \begin{frame}
 \frametitle{Signal porte} 
-On échantillonne le signal porte sur 9 valeurs dont 5 non-nulle
+On échantillonne le signal porte sur 9 valeurs dont 5 non-nulles
 \begin{columns}
 \column{60mm}
 \begin{center}
@@ -117,11 +272,11 @@ On va appliquer la formule de la TFD à ces neufs valeurs.
 \[ \Pi_5[n] = [\; 0 \; 0 \; 1 \; 1 \; 1 \; 1 \; 1 \; 0 \; 0 \;] \] \\
 \only<2->{
 \vspace{0.5cm}
-\[ TFD\{ x[n] \} =  \frac{1}{N} \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}  \]\\
+\[ TFD\{ x \}[m] =  \frac{1}{N} \sum_{k = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}  \]\\
 \vspace{0.5cm}
 }
 \only<3->{
-\[ TFD\{ \Pi_5[n] \} = \tilde{\Pi_5}[m]  = \sum_{k = 0}^{8} \Pi_5[k] \; e^{-j 2 \pi k \frac{m}{9}}  \]\\
+\[ TFD\{ \Pi_5 \}[m] = \tilde{\Pi_5}[m]  = \sum_{k = 0}^{8} \Pi_5[k] \; e^{-j 2 \pi k \frac{m}{9}}  \]\\
 \vspace{0.5cm}
 }
 \only<4->{
@@ -132,16 +287,37 @@ $m$ indexe les échantillons du spectre résultant du calcul.
 
 \begin{frame}
 \frametitle{Signal porte} 
-\[ TFD\{ \Pi_5[n] \} = \tilde{\Pi_5}[m]  = \frac{1}{N} \sum_{k = 0}^{8} \Pi[k] \; e^{-j 2 \pi k \frac{m}{9}}  \]\\
+\[ TFD\{ \Pi_5 \}[m] = \tilde{\Pi_5}[m]  = \frac{1}{N} \sum_{k = 0}^{8} \Pi[k] \; e^{-j 2 \pi k \frac{m}{9}}  \]\\
 \only<2->{
 \vspace{0.5cm}
+On somme sur $k$
 \[  \tilde{\Pi}[m]  = \frac{1}{9}(  \Pi_5[0] \; e^{-j 2 \pi m \frac{0}{9}}  \; \; + \; \;  \Pi_5[1] \; e^{-j 2 \pi  m \frac{1}{9}} \; \; \; \; + \cdots \; \; \; \; \; +  \Pi_5[8] \; e^{-j 2 \pi m \frac{8}{9}} ) \]\\
 }
 \only<3->{
-\vspace{0.5cm}
-\[  \tilde{\Pi_5}[m]  =  \frac{1}{9} (  e^{-j 2 \pi  m \frac{2}{9}} +  e^{-j 2 \pi  m \frac{3}{9}} +  e^{-j 2 \pi  m \frac{4}{9}} +  e^{-j 2 \pi  m \frac{5}{9}} + e^{-j 2 \pi  m \frac{6}{9}}) \]
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+\draw[->] (0,0)--(0,1.2)node[above]{\tiny{$\Pi_5 [n]$}}; 
+\draw[->] (-2,0)--(2,0)node[right]{\tiny{$n$}};  
+
+%\draw[blue,thick] (-2,0)--(-1,0)node[black,below] {$-a/2$}--(-1,1)--(1,1)--(1,0)node[black,below] {$a/2$}--(2,0); 
+\draw[->,blue,thick] (0,0)--(0,1);
+\draw[->,blue,thick] (0.5,0)--(0.5,1);
+\draw[->,blue,thick] (-0.5,0)--(-0.5,1);
+\draw[->,blue,thick] (1,0)--(1,1);
+\draw[->,blue,thick] (-1,0)--(-1,1);
+\draw[->,blue,thick] (1.5,0)--(1.5,0);
+\draw[->,blue,thick] (-1.5,0)--(-1.5,0);
+\draw[->,blue,thick] (2,0)--(2,0);
+\draw[->,blue,thick] (-2,0)--(-2,0);
+\end{scope}
+\end{tikzpicture}
+\end{center}
 }
 \only<4->{
+\[  \tilde{\Pi_5}[m]  =  \frac{1}{9} (  e^{-j 2 \pi  m \frac{2}{9}} +  e^{-j 2 \pi  m \frac{3}{9}} +  e^{-j 2 \pi  m \frac{4}{9}} +  e^{-j 2 \pi  m \frac{5}{9}} + e^{-j 2 \pi  m \frac{6}{9}}) \]
+}
+\only<5->{
 \vspace{0.3cm}
 Seuls les échantillons dans la partie non nulle impactent le résultat...
 }
@@ -181,8 +357,8 @@ Seuls les échantillons dans la partie non nulle impactent le résultat...
 \end{frame}
 
 \begin{frame}
-\frametitle{Signal porte}
-On obtient donc les valeurs suivantes pour le spectre 
+\frametitle{Signal porte: Amplitude}
+On obtient donc les valeurs complexes suivantes pour le spectre 
 \begin{columns}
 \column{60mm}
 \[  \tilde{\Pi_5}[0]  =  0.56 \]
@@ -190,16 +366,26 @@ On obtient donc les valeurs suivantes pour le spectre
 \[  \tilde{\Pi_5}[2]  =   -0.04 - 0.04j \]
 \[ \tilde{\Pi_5}[3]  =   0.06 + 0.09j \]
 \[ \tilde{\Pi_5}[4]  =   0.01 + 0.07j \]
-\column{60mm}
 \[ \tilde{\Pi_5}[5]  =   0.01 - 0.07j \]
 \[ \tilde{\Pi_5}[6]  =   0.06 - 0.09j \]
 \[  \tilde{\Pi_5}[7]  =   -0.04 + 0.04j \]
 \[ \tilde{\Pi_5}[8]  =   -0.30 + 0.11j \]
+\column{60mm}
+\only<2>{
+\[  |\tilde{\Pi_5}[0]|  =  0.56 \]
+\[  |\tilde{\Pi_5}[1]|  =   0.3195 \]
+\[  |\tilde{\Pi_5}[2]|  =   0.05657 \]
+\[ |\tilde{\Pi_5}[3]|  =   0.1082 \]
+\[ |\tilde{\Pi_5}[4]|  =   0.07071 \]
+\[ |\tilde{\Pi_5}[5]|  =   0.07071 \]
+\[ |\tilde{\Pi_5}[6]|  =   0.1082 \]
+\[  |\tilde{\Pi_5}[7]|  =    0.05657 \]
+\[ |\tilde{\Pi_5}[8]|  =   0.3195 \]
+}
+
 \end{columns}
 \vspace{0.5cm}
-\begin{center}
-On peut tracer les modules correspondants 
-\end{center}
+
 \end{frame}
 
 \begin{frame}
@@ -210,9 +396,9 @@ Module du spectre obtenu par TFD
 \begin{center}
 \begin{tikzpicture}
 \draw[->] (0,0)--(0,3)node[above]{$|\tilde{\Pi_5}|$}; 
-\draw[->] (0,0)--(4.5,0)node[right]{$\nu$};  
+\draw[->] (0,0)--(4.5,0)node[right]{$m$};  
 
-\draw[blue,thick] (0,0.55*4)node[left] {0.55}--(0.5,0.32*4)--(1,0.06*4)--(1.5,0.11*4)--(2,0.07*4)--(2.5,0.07*4)--(3,0.11*4)--(3.5,0.06*4)--(4,0.32*4);
+\draw[blue,thick] (0,0.55*4)node[left] {0.56}--(0.5,0.32*4)--(1,0.06*4)--(1.5,0.11*4)--(2,0.07*4)--(2.5,0.07*4)--(3,0.11*4)--(3.5,0.06*4)--(4,0.32*4);
 
 \only<3->{
 \draw[dashed] (2,0)--(2,3);
@@ -225,9 +411,10 @@ C'est ce que trace MATLAB
 \only<2-> {\textbf{Comment lire ce spectre ?}}\\
 \vspace{0.2cm}
 \begin{itemize}
+\item 9 points signal =  9 points spectre
 \item<3-> Symétrie à partir du 5e échantillon
-\item<4-> Fréquences positives pour $m \in [0,4]$
-\item<5-> Fréquences négatives pour $m \in [5,8]$
+\item<4-> Fréquences "positives" pour $m \in [0,4]$
+\item<5-> Fréquences "négatives" pour $m \in [5,8]$
 \end{itemize}
 \vspace{0.3cm} 
 \only<6->{\textbf{Pourquoi ?}}
@@ -235,7 +422,7 @@ C'est ce que trace MATLAB
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 On repart de la TF
 \only<2->{
 \[ TF\{ g\}(\nu) = \tilde{G}(\nu) = \int^{\infty}_{-\infty} g(t) e^{-2\pi j \nu t} \; dt\]\\
@@ -255,7 +442,7 @@ Les complexes  $e^{-2\pi j \nu_0 t}$ et  $e^{2\pi j \nu_0 t}$ sont dit \textbf{c
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 Les complexes  $e^{-2\pi j \nu_0 t}$ et  $e^{2\pi j \nu_0 t}$ sont dit \textbf{conjugués} (mêmes parties réelles, parties imaginaires opposées)\\
 \vspace{0.3cm}
 \only<2->{
@@ -280,18 +467,147 @@ D'où la symétrie observée pour le spectre en amplitude du signal continu:
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
+En résumé,
+\[\text{Soit } G(\nu) \text{, spectre d'une fonction } g(t). \]
+\vspace{0.5cm}
+Par définition, $e^{-2\pi j \nu_0 t}$ et  $e^{2\pi j \nu_0 t}$ sont dit \textbf{conjugués} 
+\vspace{0.5cm}
+\[\tilde{G}(\nu) = \int^{\infty}_{-\infty} g(t) e^{-2\pi j \nu t} \; dt \rightarrow |\tilde{G}(\nu_0)| = |\tilde{G}(-\nu_0)| \]
+\vspace{0.5cm}
+Donc symétrie de la réponse en amplitude\\
+\vspace{0.5cm}
+\only<2->{
+Et la phase ?
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Signal porte: Phase}
+\begin{columns}
+\column{60mm}
+\[  \tilde{\Pi_5}[0]  =  0.56 \]
+\[  \tilde{\Pi_5}[1]  =   -0.30 - 0.11j \]
+\[  \tilde{\Pi_5}[2]  =   -0.04 - 0.04j \]
+\[ \tilde{\Pi_5}[3]  =   0.06 + 0.09j \]
+\[ \tilde{\Pi_5}[4]  =   0.01 + 0.07j \]
+\[ \tilde{\Pi_5}[5]  =   0.01 - 0.07j \]
+\[ \tilde{\Pi_5}[6]  =   0.06 - 0.09j \]
+\[  \tilde{\Pi_5}[7]  =   -0.04 + 0.04j \]
+\[ \tilde{\Pi_5}[8]  =   -0.30 + 0.11j \]
+\column{60mm}
+\only<2>{
+\[  \text{arg}(\tilde{\Pi_5}[0])  =  0 \]
+\[ \text{arg}(\tilde{\Pi_5}[1])  =   -2.7901 \]
+\[  \text{arg}(\tilde{\Pi_5}[2])  =   -2.3562 \]
+\[ \text{arg}(\tilde{\Pi_5}[3])  =   0.9828 \]
+\[ \text{arg}(\tilde{\Pi_5}[4])  =   1.4289 \]
+\[ \text{arg}(\tilde{\Pi_5}[5])  =   -1.4289 \]
+\[ \text{arg}(\tilde{\Pi_5}[6])  =   -0.9828 \]
+\[ \text{arg}(\tilde{\Pi_5}[7])  =    2.3562 \]
+\[ \text{arg}(\tilde{\Pi_5}[8])  =  2.7901 \]
+}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Signal porte: Phase}
+\begin{columns}
+\column{60mm}
+Module du spectre obtenu par TFD
+\begin{center}
+\begin{tikzpicture}
+\draw[->] (0,-1.5)--(0,1.5)node[above]{$|\tilde{\Pi_5}|$}; 
+\draw[->] (0,0)--(4.5,0)node[right]{$m$};  
+
+\draw[blue,thick] (0,0*4)node[left] {0}--(0.5,-2.79/2)--(1,-2.3562/2)--(1.5,0.9828/2)--(2,1.4289/2)--(2.5,-1.4289/2)--(3,-0.9828/2)--(3.5,2.3562/2)--(4,2.79/2);
+
+\only<3->{
+\draw[dashed] (2,0)--(2,1.5);
+}
+\end{tikzpicture}
+\end{center}
+C'est ce que trace MATLAB pour $\mathtt{arg(fft(f))}$
+
+\column{60mm}
+
+\begin{itemize}
+\item 9 points signal =  9 points spectre
+\item<3-> Anti-symétrie des points
+\item<4-> Fréquences "positives" pour $m \in [0,4]$
+\item<5-> Fréquences "négatives" pour $m \in [5,8]$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Signal Porte : Spectre (TFD)}
+En résumé
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.8]
+\draw[->] (0,0)--(0,1.2)node[above]{\footnotesize{$\Pi_5 [n]$}}; 
+\draw[->] (-2,0)--(2,0)node[right]{\footnotesize{$n$}};  
+
+%\draw[blue,thick] (-2,0)--(-1,0)node[black,below] {$-a/2$}--(-1,1)--(1,1)--(1,0)node[black,below] {$a/2$}--(2,0); 
+\draw[->,blue,thick] (0,0)--(0,1);
+\draw[->,blue,thick] (0.5,0)--(0.5,1);
+\draw[->,blue,thick] (-0.5,0)--(-0.5,1);
+\draw[->,blue,thick] (1,0)--(1,1);
+\draw[->,blue,thick] (-1,0)--(-1,1);
+\draw[->,blue,thick] (1.5,0)--(1.5,0);
+\draw[->,blue,thick] (-1.5,0)--(-1.5,0);
+\draw[->,blue,thick] (2,0)--(2,0);
+\draw[->,blue,thick] (-2,0)--(-2,0);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{columns}
+\column{60mm}
+\underline{Amplitude}:
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.6]
+\draw[->] (0,0)--(0,3)node[above]{\footnotesize{$|\tilde{\Pi_5}|$}}; 
+\draw[->] (0,0)--(4.5,0)node[right]{\footnotesize{$m$}};  
+
+\draw[blue,thick] (0,0.55*4)node[left] {0.56}--(0.5,0.32*4)--(1,0.06*4)--(1.5,0.11*4)--(2,0.07*4)--(2.5,0.07*4)--(3,0.11*4)--(3.5,0.06*4)--(4,0.32*4);
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\underline{Phase}:
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.6]
+\draw[->] (0,-1.5)--(0,1.5)node[above]{\footnotesize{$|\tilde{\Pi_5}|$}}; 
+\draw[->] (0,0)--(4.5,0)node[right]{\footnotesize{$m$}};  
+
+\draw[blue,thick] (0,0*4)node[left] {0}--(0.5,-2.79/2)--(1,-2.3562/2)--(1.5,0.9828/2)--(2,1.4289/2)--(2.5,-1.4289/2)--(3,-0.9828/2)--(3.5,2.3562/2)--(4,2.79/2);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\only<2->{
+\vspace{0.2cm}
+Etudions le lien avec la transformée de Fourier (non-discrète) du signal discret}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Propriétés des spectres}
 Pour les signaux discrets, on a :
 \[TZ\{ x[n] \} \rightarrow TF\{x[n]\} = \tilde{X}(\nu)  = \sum_{n = -\infty}^{\infty} x[n] e^{-j 2 \pi n \nu T_e}\]\\
 
-Comme auparavant, on prend une porte non-nulle sur 5 échantillons,\\
+On reprend le signal porte précédent,\\
 
 \[TF\{\Pi_5\} = \tilde{\Pi_5}(\nu)  = \sum_{n = -\infty}^{\infty} \Pi_5[n] e^{-j 2 \pi n \nu T_e} = \sum_{n = -2}^{2}  e^{-j 2 \pi n \nu T_e}\]\\
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 \[TF\{\Pi_5\} = \tilde{\Pi_5}(\nu)  = \sum_{n = -\infty}^{\infty} \Pi_5[n] e^{-j 2 \pi n \nu T_e} = \sum_{n = -2}^{2}  e^{-j 2 \pi n \nu T_e}\]\\
 
 \only<2->{
@@ -307,24 +623,29 @@ Donc,
 \draw[thick,domain=-2:2,color=blue,samples=160] plot (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
 
 %\draw[dashed,thick,domain=-2:2,color=red,samples=160] plot (\x,{abs(sin(3.14*\x/0.2 r)/(3.14*\x/0.2))});
+\only<4->{
+\draw[dashed] (1,0)--(1,1);
+\draw (1,-0.3) node{\scriptsize{$\nu_e$}};
+}
+
 \end{tikzpicture}\\
 \end{center}}
 \vspace{0.3cm}
 \only<4->{
-Cette fois-ci le spectre est symétrique ET périodique de période $f_e$
+Cette fois-ci le spectre est symétrique ET périodique de période $\nu_e$
 }
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 \begin{columns}
 \column{60mm}
 {\color{blue}\[|TF(\Pi_5 (t))| = \] 
-\[ 1 + 2 \cos(2\pi \nu T_e) + 2 \cos(4\pi \nu T_e)\]}
+\[ |1 + 2 \cos(2\pi \nu T_e) + 2 \cos(4\pi \nu T_e)|\]}
 
 \column{60mm}
 \only<2->{
-{\color{red}\[|TF(\Pi_a (t))| =  \frac{\sin(a \pi\nu)}{\pi\nu}\]}
+{\color{red}\[|TF(\Pi_a (t))| =  |\frac{\sin(a \pi\nu)}{\pi\nu}|\]}
 }
 
 \end{columns}
@@ -352,7 +673,7 @@ Cette fois-ci le spectre est symétrique ET périodique de période $f_e$
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 On vient de calculer\\
 \[ TF\{\Pi_a\} = \tilde{\Pi_a}(\nu)= \sum_{n = -2}^{2}  e^{-j 2 \pi n \nu T_e} = 1 + 2 \cos(2\pi \nu T_e) + 2 \cos(4\pi \nu T_e) \]\\
 \only<2->{
@@ -367,8 +688,41 @@ Avec cette définition, on a bien :
 }
 \end{frame}
 
+%\begin{frame}
+%\frametitle{Propriétés des spectres}
+%Si on replace les $\nu_d$ dans le graphe précédent\\
+%\begin{center}
+%\begin{tikzpicture}
+%\begin{scope}[scale=2]
+%\draw[->] (0,0)--(0,1.2)node[above]{$|TF(\Pi))|$}; 
+%\draw[->] (-2,0)--(2,0)node[right]{$\nu$};  
+%
+%\draw[dashed,thick,domain=-2:2,color=blue,samples=160] plot (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
+%
+%\draw[dotted,thick,domain=-2:2,color=red,samples=160] plot (\x,{abs(sin(3.14*\x/0.2 r)/(3.14*\x/0.2))});
+%
+%\only<2>{
+%\draw[very thick,domain=0:(6/7),color=blue,samples=7] plot[ycomb] (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
+%}
+%
+%\only<3>{
+%\draw[very thick,domain=0:(8/9),color=blue,samples=9] plot[ycomb] (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
+%}
+%
+%
+%\draw[dashed] (1,0)node[below]{$\nu_e$}--(1,1);
+%\end{scope}
+%\end{tikzpicture}\\
+%\end{center}
+%\begin{itemize}
+% \item<2-> On peut placer 7 échantillons en fréquence
+% \item<3-> Ou 9...
+%\end{itemize}
+%\end{frame}
+
+
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 Si on replace les $\nu_d$ dans le graphe précédent\\
 \begin{center}
 \begin{tikzpicture}
@@ -380,27 +734,22 @@ Si on replace les $\nu_d$ dans le graphe précédent\\
 
 \draw[dotted,thick,domain=-2:2,color=red,samples=160] plot (\x,{abs(sin(3.14*\x/0.2 r)/(3.14*\x/0.2))});
 
-\only<2>{
-\draw[very thick,domain=0:(6/7),color=blue,samples=7] plot[ycomb] (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
-}
 
-\only<3>{
+\only<2>{
 \draw[very thick,domain=0:(8/9),color=blue,samples=9] plot[ycomb] (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
 }
-
 
 \draw[dashed] (1,0)node[below]{$\nu_e$}--(1,1);
 \end{scope}
 \end{tikzpicture}\\
 \end{center}
 \begin{itemize}
- \item<2-> On peut placer 7 échantillons en fréquence
- \item<3-> Ou 9...
+ \item<2-> On place 9 échantillons en fréquence
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 On aurait aussi bien pu décider que\\
 \vspace{0.3cm}
  $\nu_d^* = k \Delta f \in [-\nu_e/2, \nu_e/2[$ avec $k \in [-N/2,N/2]$\\
@@ -415,7 +764,7 @@ On aurait aussi bien pu décider que\\
 \draw[dotted,thick,domain=-2:2,color=red,samples=160] plot (\x,{abs(sin(3.14*\x/0.2 r)/(3.14*\x/0.2))});
 
 \only<2->{
-\draw[very thick,domain=-3/7:(3/7),color=blue,samples=7] plot[ycomb] (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
+\draw[very thick,domain=-3/7:(3/7),color=blue,samples=9] plot[ycomb] (\x,{0.2*abs(1 + 2*cos(2*3.14*\x r) + 2*cos(4*3.14*\x r)) });
 \draw[dashed] (0.5,0)node[below]{$\nu_e/2$}--(0.5,0.3);
 \draw[dashed] (0.5,0)node[below]{$\nu_e/2$}--(0.5,0.3);
 }
@@ -431,7 +780,7 @@ Même information en fréquence au final... \only<4->{Pourquoi avoir choisi l'au
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la  TF}
+\frametitle{Propriétés des spectres}
 Dans le cas $\nu_d  = k \Delta f \in [0,\frac{(N-1) \nu_e}{N}]$, la fréquence nulle est TOUJOURS le premier échantillon du spectre
 
 \begin{center}
@@ -461,7 +810,7 @@ Dans le cas $\nu_d  = k \Delta f \in [0,\frac{(N-1) \nu_e}{N}]$, la fréquence n
 \end{frame}
 
 \begin{frame}
-\frametitle{Spectre de la TF}
+\frametitle{Propriétés des spectres}
 On résume :
 \begin{columns}
 \column{60mm}

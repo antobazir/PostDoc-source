@@ -21,6 +21,178 @@
 \setlength{\unitlength}{1cm}
 
 \begin{document}
+\section{Rappel}
+\begin{frame}
+\frametitle{Rappels : Signaux }
+\textbf{Signal numérique =  codage + échantillonnage}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g(t)$}};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=purple,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.4,xshift=14cm]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g_{Te}(t)$}};
+%\draw (4.5,-0.3) node {1};
+\draw[|-|] (-2.95,2.1)--(-3.35,2.1);
+\draw (-3.15,2.8) node {\footnotesize{$T_e$}};
+
+\draw[domain=-4.9:4.9,color=purple,samples=32] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+%\draw[domain=-4.9:4.9,dotted,color=purple,samples=32] plot[xcomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+	\end{tikzpicture}
+\end{center}
+\vspace{0.5cm}
+\begin{itemize}
+\item \'Echantillonage : discrétisation en temps
+\vspace{0.3cm}
+\item Codage : discrétisation en amplitude
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Rappel : Analyse de signaux}
+Pour les signaux discrets on utilise TOUJOURS la transformée en Z
+\[\boxed{TZ\{ f \}(z) = \sum_{n = -\infty}^{\infty} f[n] z^{-n}} \]
+On en dérive la transformée de Fourier 
+\[\boxed{TF\{ f \}(\nu) = \sum_{n = -\infty}^{\infty} f[n] e^{-j 2 \pi n \nu T_e}} \]
+\vspace{0.2cm}
+La transformée de Fourier donne ce qu'on appelle le \textbf{spectre fréquentiel/réponse en fréquence} d'un signal/système
+\end{frame}
+
+\begin{frame}
+\frametitle{Rappel : Analyse de signaux}
+Les spectres fréquentiels/réponses en fréquences sont \textbf{généralement complexes}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g_{Te}(t)$}};
+%\draw (4.5,-0.3) node {1};
+\draw[|-|] (-2.95,2.1)--(-3.35,2.1);
+\draw (-3.15,2.8) node {\footnotesize{$T_e$}};
+
+\draw[domain=-4.9:4.9,color=purple,samples=32] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+%\draw[domain=-4.9:4.9,dotted,color=purple,samples=32] plot[xcomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+	\end{tikzpicture}
+\end{center}
+
+\begin{columns}
+\column{60mm}
+\underline{\small{Réponse en amplitude (Module  TF)}}:\\
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}
+\draw[->] (-2.5,0)--(2.5,0) node[right]{\footnotesize{$\nu$}};
+\draw[->] (0,-1)--(0,1) node[above]{\footnotesize{$|G_2(\nu)|$}};
+\draw[->,purple,thick] (-1/4,0)--(-1/4,0.55) ;
+\draw[->,purple,thick] (1/4,0)--(1/4,0.55) ;
+\draw[->,purple,thick] (-2/4,0)--(-2/4,0.45) ;
+\draw[->,purple,thick] (2/4,0)--(2/4,0.45) ;
+
+\draw[->,purple,thick] (-1/4+1.5,0)--(-1/4+1.5,0.55) ;
+\draw[->,purple,thick] (1/4+1.5,0)--(1/4+1.5,0.55) ;
+\draw[->,purple,thick] (-2/4+1.5,0)--(-2/4+1.5,0.45) ;
+\draw[->,purple,thick] (2/4+1.5,0)--(2/4+1.5,0.45) ;
+
+\draw[->,purple,thick] (-1/4-1.5,0)--(-1/4-1.5,0.55) ;
+\draw[->,purple,thick] (1/4-1.5,0)--(1/4-1.5,0.55) ;
+\draw[->,purple,thick] (-2/4-1.5,0)--(-2/4-1.5,0.45) ;
+\draw[->,purple,thick] (2/4-1.5,0)--(2/4-1.5,0.45) ;
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+
+\column{60mm}
+\underline{\small{Réponse en phase (Argument TF)}}:\\
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}
+\draw[->] (-2,0)--(2,0) node[right]{\footnotesize{$\nu$}};
+\draw[->] (0,-1)--(0,1) node[above]{\footnotesize{$\text{arg}(G_2(\nu))$}};
+\draw[->,purple,thick] (-0.65/4,0)--(-0.65/4,-0.65) ;
+\draw[->,purple,thick] (0.65/4,0)--(0.65/4,0.65) ;
+
+\draw[->,purple,thick] (-0.65/4-1.5,0)--(-0.65/4-1.5,-0.65) ;
+\draw[->,purple,thick] (0.65/4-1.5,0)--(0.65/4-1.5,0.65) ;
+
+\draw[->,purple,thick] (-0.65/4+1.5,0)--(-0.65/4+1.5,-0.65) ;
+\draw[->,purple,thick] (0.65/4+1.5,0)--(0.65/4+1.5,0.65) ;
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{TFD}
+\[TF\{ x \}(\nu) = \sum_{n = -\infty}^{\infty} x[n] e^{-j 2 \pi n \nu T_e} \]
+La transformée de Fourier d'un signal discret n'est pas calculables par un ordinateur...\\
+\vspace{0.6cm}
+Transformée de Fourier \textbf{Discrète}
+\[ TFD\{ x \}[m] = \frac{1}{N} \sum_{n = 0}^{N-1} x[n] \; e^{-j 2 \pi n \frac{m}{N}}  \] 
+\vspace{0.3cm}
+Approximation de la transformée de Fourier...
+\end{frame}
+
+\begin{frame}
+\frametitle{TFD}
+Transformée de Fourier Discrète (TFD) $=$ Approximation du spectre sur $N$ points
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+\draw[->] (-5,0)-- (5,0);
+\draw[->] (0,-3)-- (0,3);
+\draw (5.1,0.25) node {\footnotesize{$t$}};
+\draw (0,3.5) node {\footnotesize{$g_{Te}(t)$}};
+%\draw (4.5,-0.3) node {1};
+\draw[|-|] (-2.95,2.1)--(-3.35,2.1);
+\draw (-3.15,2.8) node {\footnotesize{$T_e$}};
+
+\draw[domain=-4.9:4.9,color=purple,samples=32] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+%\draw[domain=-4.9:4.9,dotted,color=purple,samples=32] plot[xcomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+\end{tikzpicture}\\
+\footnotesize{\textit{Signal numérisée}}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+\draw[->] (0,0)-- (7,0);
+\draw[->] (0,0)-- (0,6);
+\draw (7.3,0.25) node {\footnotesize{$m$}};
+\draw (0,6.5) node {\footnotesize{$TFD$}};
+\draw[thick,purple] plot file {tfd_2cos.txt};
+\end{scope}
+\end{tikzpicture}\\
+\footnotesize{\textit{TFD obtenue en Matlab (amplitude)}}
+\end{center}
+\end{columns}
+Note: Si on rajoute des zéros à la fin du signal on interpole le spectre. (zero-padding)
+\end{frame}
+
+%\draw[thick,blue] plot file {module_freq_samp.txt};
 
 \section{Détection complexe QRS}
 \begin{frame}
@@ -77,7 +249,7 @@ Importance du filtrage passe-bande...
 \textit{\scriptsize Spectre en amplitude de l'ECG, Tompkins,2000}\\
 \vspace{0.1cm}
 \end{center}
-Comment choisir $T_e$ ? \only<2-> {Shannon $\rightarrow f_e > 80 Hz$  \only<3->{ Dans les faits, $f_e$ 500 Hz} }
+Comment choisir $T_e$ ? \only<2-> {Shannon $\rightarrow \nu_e > 80 Hz$  \only<3->{ Dans les faits, $\nu_e = $ 500 Hz} }
 
 
 \end{frame}
@@ -111,6 +283,24 @@ Filtrage temps réel du signal numérique \& Extraction du QRS
  \vspace{0.2cm}
  \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
+ \vspace{0.3 cm}
+ Forme possible de la fonction de transfert :
+ \[H(z) = \frac{c_1}{z-p_1} + \frac{c_2}{z-p_2} \]\\
+  \vspace{0.3 cm}
+\only<2->{
+  Tout filtre récursif analogique peut se décomposer sous la forme 
+\[ H(s)  =  \frac{(s-z_1)(s-z_2)...(s-z_n)}{(s-p_1)(s-p_2)...(s-p_n)} = \frac{c_1}{s-p_1} + \frac{c_2}{s-p_2} + \cdots + \frac{c_n}{s-p_n} \] 
+}
+\only<3>{
+Cela permet de construire des filtres numériques avec les bonnes propriétés à partir de sous-unités de forme  $\frac{\displaystyle c_k}{ \displaystyle 1-e^{p_k T_e}z^{-1}}$ (Invariance impulsionnelle)
+}  
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Détection QRS: Filtrage passe-bande}
@@ -160,19 +350,19 @@ Filtrage temps réel du signal numérique \& Extraction du QRS
   Fonction de transfert :
    \[H(z) = \frac{1 - z^{-2}}{1 - 1.875 z^{-1} + 0.9219 z^{-2}} \]  \\
   \vspace{0.3cm}
-   \[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
+   \[H(\nu) = \frac{1 - e^{-4 j \pi \frac{\nu}{500}}}{1 - 1.875 e^{-2 j \pi \frac{\nu}{500}} + 0.9219  e^{-4 j \pi \frac{\nu}{500}}} \] 
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Détection QRS: Filtrage passe-bande}
  \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
-\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \] 
+\[H(\nu) = \frac{1 - e^{-4 j \pi \frac{\nu}{500}}}{1 - 1.875 e^{-2 j \pi \frac{\nu}{500}} + 0.9219  e^{-4 j \pi \frac{\nu}{500}}} \] 
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale=2.5]
-\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_passebande1.txt};
 
 \draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);
@@ -182,7 +372,7 @@ Filtrage temps réel du signal numérique \& Extraction du QRS
 \end{tikzpicture}
 \end{center}
 \vspace{0.3cm}
-On sélectionne bien dans une gamme de fréquence autour du QRS
+On sélectionne bien dans une gamme de fréquence autour du QRS (0-35 Hz)
 \end{frame}
 
 \begin{frame}
@@ -190,13 +380,13 @@ On sélectionne bien dans une gamme de fréquence autour du QRS
  \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
 \begin{columns}
 \column{60mm}
-\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \]
+\[H(\nu) = \frac{1 - e^{-4 j \pi \frac{\nu}{500}}}{1 - 1.875 e^{-2 j \pi \frac{\nu}{500}} + 0.9219  e^{-4 j \pi \frac{\nu}{500}}} \]
 \column{60mm} 
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale=2.5]
-\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_passebande1.txt};
 
 \draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,1);
@@ -219,13 +409,13 @@ Remarques :
  \textbf{Filtrage passe-bande numérique: Filtre récursif à  2 pôles}\\
 \begin{columns}
 \column{60mm}
-\[H(z) = \frac{1 - e^{-4 j \pi \frac{f}{500}}}{1 - 1.875 e^{-2 j \pi \frac{f}{500}} + 0.9219  e^{-4 j \pi \frac{f}{500}}} \]
+\[H(\nu) = \frac{1 - e^{-4 j \pi \frac{\nu}{500}}}{1 - 1.875 e^{-2 j \pi \frac{\nu}{500}} + 0.9219  e^{-4 j \pi \frac{\nu}{500}}} \]
 \column{60mm} 
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale=2.5]
-\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(f))$};
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,-0.6)-- (0,0.6)node[above] {\scriptsize  $\text{arg}(H(\nu))$};
 \draw[thick,blue] plot file {argument_passebande1.txt};
 
 \draw[dashed] (0.07,0) node[below]{\scriptsize 17 Hz}--(0.07,0);
@@ -245,8 +435,37 @@ On utilise un autre type de filtre...
 }
 \end{frame}
 
+\begin{frame}
+\frametitle{Détection QRS: Filtrage passe-bande}
+ \[y[n] = b_1 y[n-1] - b_2 y[n-2] + x[n] - x[n-2] \]
+\begin{columns}[T]
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.1,0)node[right] {\scriptsize $n$} ;
+\draw[->] (0,-0.6)-- (0,1.2)node[above] {\scriptsize  $x[n]$};
+\draw[thick,blue] plot file {x_ecg_tompkins.txt};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=2]
+\draw[->] (0,0)-- (2.1,0)node[right] {\scriptsize $n$} ;
+\draw[->] (0,-0.6)-- (0,1.2)node[above] {\scriptsize  $y[n]$};
+\draw[thick,blue] plot file {ecg_tompkins.txt};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\begin{center}
+\begin{tikzpicture}
 
-
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
 
 \begin{frame}
 \frametitle{Détection QRS: Filtrage passe-bande}
@@ -291,8 +510,8 @@ On utilise un autre type de filtre...
 	\begin{center}
 	\begin{tikzpicture}
 	\begin{scope}[scale=3]
-\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (0,0)-- (1.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.2)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_passebas.txt};
 
 \draw[dashed] (0.33,0) node[below]{\scriptsize 33 Hz}--(0.33,0);

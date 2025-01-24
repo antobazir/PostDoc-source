@@ -48,22 +48,74 @@ Différents types de signaux biomédicaux: \\
 \textbf{Potentiel électrochimique de membrane}
 \begin{columns}
 \column{60mm}
- \includegraphics[scale=0.2]{membrane_ions.png}
- \footnotesize \textit{Najarian \& Splinter, 2005}
+ \includegraphics[scale=0.2]{membrane_ions2.png}
+ \footnotesize \textit{wikipedia.org}
 \column{60mm}
+\begin{enumerate}
+\item Absorption de nutriments extérieurs
+\vspace{0.3cm}
+\item Conversion en ions/molécules
+\vspace{0.3cm}
+\item Potentiel de membrane
+\end{enumerate}
+\vspace{0.4cm}
 \begin{itemize}
-\item ions = potentiel électrique à travers la membrane
-\vspace{0.2cm}
-\item -70 mV et -40 mV par cellules
-\vspace{0.2cm}
-\item Peut fournir de l'énergie 
+\item -80 mV et -40 mV par cellules
 \vspace{0.2cm}
 \item Utilisé par les cellules nerveuses et musculaires pour leur fonctionnement
-\vspace{0.2cm}
-\item Mesuré par le biais d'électrodes sur une ou plusieurs cellules
 \end{itemize}
 \end{columns}
 \end{frame}
+
+\begin{frame}
+\frametitle{Signaux Bioélectriques}
+\textbf{Potentiel d'action}
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.2]{Potentiel_action.png}
+\column{60mm}
+Changement de potentiel des cellules suite à une excitation
+\begin{enumerate}
+\item Dépolarisation
+\item Repolarisation
+\item Période Réfractaire
+\item Repos
+\end{enumerate}
+\end{columns}
+\only<2->{
+\begin{block}{}
+Comment mesurer le potentiel d'action ?
+\end{block}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Signaux Bioélectriques}
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.2]{galvanic.png}\\
+\textit{\footnotesize{Principe d'une cellule galvanique}}\\
+\vspace{0.3cm}
+\small{En aposant des électrodes sur la peau, on recrée des cellules galvaniques\\
+\vspace{0.3cm}
+Le corps et ses cellules jouent le rôle de solutions ioniques
+}
+
+
+\column{60mm}
+\includegraphics[scale=0.3]{electrodes.png}\\
+\textit{\footnotesize{Structures possibles d'électrodes et vues en coupe}}\\
+\vspace{0.3cm}
+\small{Important : Polarisabilité des électrodes\\
+
+\vspace{0.3cm}
+\'Electrode hautement polarisable = inadaptées aux mesures basses fréquences
+
+}
+
+\end{columns}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Bioimpédances}
@@ -96,6 +148,35 @@ Différents types de signaux biomédicaux: \\
 \end{frame}
 
 \begin{frame}
+\frametitle{Bioimpédances}
+\textbf{\underline{Impédance}} : Extension de la notion de résistance aux tensions/courants alternatifs 
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\draw (0,1) node{cellule};
+\draw[fill=blue!10!white] (0,0) ellipse (1 and 0.6);
+\draw[fill=blue!70!green] (-0.3,0) circle(0.3);
+\draw(1,0)--(2,0); 
+\draw (2.3,0) circle(0.3) node{V};
+ \draw (2.3,-0.5) node{tension alt.};
+ \draw(0,-0.6)--(0,-1.6); 
+ \draw (-0.6,-2.1) rectangle node[text centered]{Impéd.} (0.6,-1.6) ;
+\end{tikzpicture} 
+\end{center}
+\column{60mm}
+\underline{Applications:} 
+\begin{itemize}
+\item  Suivi respiratoire et détection d'apnée
+\vspace{0.4cm}
+\item Suivi de flux sanguins dans les membres et détection de thromboses
+\vspace{0.4cm}
+\item Mesure de composition (taux de tissus adipeux etc...)
+\end{itemize}
+\end{columns} 
+\end{frame}
+
+\begin{frame}
 \frametitle{Signaux Bioacoustiques}
 \textbf{Ondes mécaniques/acoustiques émises par le corps}
 \begin{columns}
@@ -123,8 +204,43 @@ Différents types de signaux biomédicaux: \\
 \item Mesuré par le biais de traducteurs acoustiques
 \end{itemize}
 \end{columns}
+\begin{block}{}
+Comment fonctionnent les traducteurs ultrasonores ?
+\end{block}
 \end{frame}
 %https://sigport.org/topic-tags/bioacoustics-and-medical-acoustics pour les exemples
+
+\begin{frame}
+\frametitle{Signaux Bioacoustiques}
+\textbf{Traducteurs Ultrasonores}
+\begin{columns}
+\column{70mm}
+\includegraphics[scale=0.3]{piezo.png}\\
+\textit{\footnotesize{Structure d'un traducteur ultrasonore (J.Bronzino) }}
+\column{50mm}
+\begin{itemize}
+\item Plaque avant (protection)
+\vspace{0.2cm}
+\item Couche d'adaptation d'impédance 
+\vspace{0.2cm}
+\item Matériau piézoélectrique
+\vspace{0.2cm}
+\item Couche arrière 
+\end{itemize}
+\vspace{0.4cm}
+Les traducteurs sont souvent composés de plusieurs éléments
+\end{columns}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Signaux Bioacoustiques}
+\textbf{Traducteurs Ultrasonores}
+\center
+\includegraphics[scale=0.4]{phased.png}\\
+\textit{\footnotesize{Principe de fonctionnement des traducteurs multiéléments}}
+
+\end{frame}
 
 \begin{frame}
 \frametitle{Signaux Biomagnétiques}
@@ -151,7 +267,7 @@ Différents types de signaux biomédicaux: \\
 
 \begin{frame}
 \frametitle{Signaux Biomécaniques}
-\textbf{Mouvements issus d'actions/contraintes mécaniques}
+\textbf{Signaux issus d'actions/contraintes mécaniques liées aux fonctions du corps}
 \begin{columns}
 \column{60mm}
  \includegraphics[scale=0.33]{gait.png}\\
@@ -171,6 +287,40 @@ Différents types de signaux biomédicaux: \\
 \end{frame}
 
 \begin{frame}
+\frametitle{Signaux Biomécaniques}
+\textbf{Signaux issus d'actions/contraintes mécaniques liées aux fonctions du corps}
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.33]{accelerometre.png}\\
+\footnotesize{\textit{Schéma de principe d'un accéléromètre (Bronzino)}}
+\column{60mm}
+\includegraphics[scale=0.33]{mems.png}\\
+\footnotesize{\textit{Microaccélèmètre de type MEMS (Bronzino)}}
+
+\end{columns}
+\begin{block}{}
+Variante non-optique...
+\end{block} 
+
+ \end{frame}
+
+\begin{frame}
+\frametitle{Signaux Biomécaniques}
+\textbf{Signaux issus d'actions/contraintes mécaniques liées aux fonctions du corps}
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.23]{lsm6dsm.png}\\
+\footnotesize{\textit{Centrale inertielle (STMicroelectronics)}}
+\column{60mm}
+\includegraphics[scale=0.5]{MotionCapture.jpeg}\\
+\footnotesize{\textit{Scène de Motion Capture}}
+
+\end{columns}
+\vspace{0.3cm}
+\underline{Applications: Biomédical, Navigation, Jeux vidéos, Cinéma...}
+\end{frame}
+
+\begin{frame}
 \frametitle{Signaux Biochimiques}
 \begin{columns}
 \column{60mm}
@@ -178,8 +328,15 @@ Différents types de signaux biomédicaux: \\
  \vspace{0.1cm}
  \textit{Cleveland Clinic, 2022}
 \column{60mm}
+ \underline{Estimation de concentrations}:
 \begin{itemize}
-\item Estimation de concentrations
+\item Marquages immunologiques + fluorescence
+\vspace{0.2cm}
+\item Mesure photométriques (marqueur + photomètre)
+\vspace{0.2cm}
+\item Mesure par électrodes
+\vspace{0.2cm}
+\item Comptage de cellule 
 \vspace{0.2cm}
 \item Signaux variant généralement très lentement
 \end{itemize}
@@ -250,10 +407,91 @@ Différents types de signaux biomédicaux: \\
  \vspace{0.1cm}
  \item \textbf{Quasi-Périodique}
  \vspace{0.1cm}
- \item \textbf{Transitoire} : Croissance/Décroissance monotone
+ \item \textbf{Transitoire} 
 \end{itemize}
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Signaux Déterministes Périodiques}
+\begin{columns}
+\column{60mm}
+\underline{\textbf{Sinusoïdal}}: \\
+ex: $g_1(t) = 0.55\cos(2 t)$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.45]
+	\draw[->] (-6.28,0)-- (6.28,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (2*pi+0.2,0.25) node {\scriptsize  $t$};
+\draw (0,3.5) node {\scriptsize $ g_1(t)$};
+%\draw (4.5,-0.3) node {1};
+
+		\draw[domain=-6.28:6.28,color=blue,samples=160] plot (\x,{2*(0.55*cos(2*\x r))});
+	\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\underline{\textbf{Complexe}}:\\
+ex: $g_2(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3})$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4,yshift=-6cm]
+	\draw[->] (-6.28,0)-- (6.28,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (2*pi+0.2,0.25) node {\scriptsize $t$};
+\draw (0,3.5) node {\scriptsize $g_2(t)$};
+%\draw (4.5,-0.3) node {1};
+
+		\draw[domain=-6.28:6.28,color=blue,samples=160] plot (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+	\end{scope}
+	\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Signaux Déterministes Périodiques}
+\begin{columns}
+\column{60mm}
+\underline{\textbf{Quasi-périodique}}: \\
+ex: $g_1(t) = \sin(x) + \sin(\pi x)$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.45]
+	\draw[->] (-6.28,0)-- (6.28,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (2*pi+0.2,0.25) node {\scriptsize  $t$};
+\draw (0,3.5) node {\scriptsize $ g_1(t)$};
+%\draw (4.5,-0.3) node {1};
+
+		\draw[domain=-6.28:6.28,color=blue,samples=240] plot (\x,{1*(sin(2*\x r)+sin(2*3.14*\x r))});
+	\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\underline{\textbf{Transitoire}}:\\
+ex: $g_2(t) = 1-\exp(-t)$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4,yshift=-6cm]
+	\draw[->] (-6.28,0)-- (6.28,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (2*pi+0.2,0.25) node {\scriptsize $t$};
+\draw (0,3.5) node {\scriptsize $g_2(t)$};
+%\draw (4.5,-0.3) node {1};
+
+		\draw[domain=-0:6.28,color=blue,samples=160] plot (\x,{2*(1-exp(-\x))});
+	\end{scope}
+	\end{tikzpicture}
+\end{center}
+\end{columns}
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Caractéristiques des signaux biomédicaux stochastiques}
@@ -329,7 +567,7 @@ Différents types de signaux biomédicaux: \\
 \begin{itemize}
 \item Le signal correspond aux polarisations/dépolarisations de différentes parties du coeur.
 \item Chaque partie du signal a une durée de $\approx$ 100 ms
-\item Signal quasi-périodique
+\item Chaque partie contient de l'information qui doit potentiellement être analysée.
 \end{itemize}
 \end{frame}
 
@@ -339,15 +577,178 @@ Différents types de signaux biomédicaux: \\
 \includegraphics[scale=0.35]{PQRSTU.png}\\
 \textit{\footnotesize (a) Forme caractéristique d'un ECG. (b) ECG d'un patient normal. Najarian \& Splinter}
 \end{center}
-Analyses: 
+De plus, le contenu fréquentiel des parties peut évoluer en fonction de l'état du patient
 \vspace{0.1cm}
+\begin{block}{}
+Comment analyser ces signaux  ?
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemple de signaux : \'Electrocardiogramme (ECG)}
+\begin{center}
+\includegraphics[scale=0.32]{PQRSTU.png}\\
+\textit{\footnotesize (a) Forme caractéristique d'un ECG. (b) ECG d'un patient normal. Najarian \& Splinter}
+\end{center}
+Dans ce cas, la transformée de Fourier est peu utile...
 \begin{itemize}
-\item Détermination du rythme cardiaque
-\vspace{0.1cm}
-\item Contenu fréquentiel des signaux
-\vspace{0.1cm} 
+\item Transformée de Fourier court terme/Short-term Fourier Transform (STFT)
 \item Analyse en ondelettes
+\item Algorithmes spécifiques
 \end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analyse de signaux}
+\textbf{Transformée de Fourier court terme/Short-term Fourier Transform (STFT)}
+\vspace{1cm}
+\begin{columns}
+\column{60mm}
+\underline{Produit de convolution}:
+$(f \star g) (x) =  \displaystyle \int^{\infty}_{-\infty} f(x-t)g(t) \; dt  $
+\column{60mm}
+\underline{Transformée de Fourier}:
+	$ TF\{ f \}(\nu) = \displaystyle \int^{\infty}_{-\infty} f(t) e^{-j2\pi \nu t} dt $
+\end{columns}
+\vspace{1cm}
+TFCT/STFT: TF du produit d'un \textbf{signal} $f(t)$ et d'une \textbf{fenêtre} $w(t)$ centrée sur $\tau$.\\
+
+\[ \boxed{STFT\{ f \}(\tau,\nu) =  \int^{\infty}_{-\infty} w(t-\tau )f(t) e^{-j2\pi \nu t }\; dt} \] 
+
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Analyse ECG STFT}
+%
+%	\begin{center}
+%	\begin{tikzpicture}
+%	\begin{scope}[scale=1]
+%\draw[->] (0,0)-- (7,0)node[right] {\scriptsize $t$} ;
+%\draw (6,-0.3)node {\scriptsize $6$} ;
+%\draw (0,-0.3)node {\scriptsize $0$} ;
+%\draw[->] (0,0)-- (0,4)node[above] {\scriptsize  $e(t)$};
+%\draw[thick,blue] plot file {ecg_1.txt};
+%	\end{scope}
+%	\end{tikzpicture}
+%	\end{center}
+%	\footnotesize{\textit{Signal d'ECG}}
+%
+%\end{frame}
+
+\begin{frame}
+\frametitle{Analyse en Ondelettes}
+La transformée de Fourier 'projète' le signal sur une base de sinusoïde...\\
+\vspace{0.5cm}
+\only<2->{
+Pas toujours adaptée...\\
+\vspace{0.5cm}
+}
+\only<3->{
+\textbf{"Continuous Wavelet Transform"/"Transformée en ondelettes continue"}
+\[ \boxed{CWT\{s(t) \}(a,b) = \frac{1}{\sqrt{a}}\int^{\infty}_{-\infty}s(t)\overline{\phi}(\frac{t-b}{a})\; dt} \]
+}
+\only<4->{
+\begin{itemize}
+\item $s(t)$ : signal à analyser
+\item $\phi(t)$ : ondelette d'analyse
+\item $a$ : facteur d'élargissement/contraction
+\item $b$ : décalage temporel
+\end{itemize}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analyse en Ondelettes}
+La transformée de Fourier 'projète' le signal sur une base de sinusoïde...\\
+\vspace{0.5cm}
+
+
+Pas toujours adaptée...\\
+\vspace{0.5cm}
+
+\textbf{"Continuous Wavelet Transform"/"Transformée en ondelettes continue"}
+\[ \boxed{CWT\{s(t) \}(a,b) = \frac{1}{\sqrt{a}}\int^{\infty}_{-\infty}s(t)\overline{\phi}(\frac{t-b}{a})\; dt} \]
+\vspace{0.5cm}
+\only<2>{
+\begin{block}{}
+Convolution entre l'ondelette et le signal $\longrightarrow$ Localisation de l'énergie dans le signal
+\end{block}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analyse en Ondelettes: exemple}
+\textbf{Effet d'une angioplastie sur un ECG}\\
+\vspace{0.3cm}
+%\includegraphics[scale=0.25]{ecg_2.png}\\
+%\textit{\footnotesize ECG avant angioplastie, Gramatikov 1995 }
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.27]{coarse_wavelet.png}
+\column{60mm}
+\includegraphics[scale=0.27]{details_ecg.png}
+\end{columns}
+\textit{\footnotesize Deux familles d'ondelettes utilisées pour la transformée multirésolution, Gramatikov 1995 }
+\end{frame}
+
+\begin{frame}
+\frametitle{Analyse en Ondelettes: exemple}
+\textbf{Effet d'une angioplastie sur un ECG}\\
+\vspace{0.3cm}
+%\includegraphics[scale=0.25]{ecg_2.png}\\
+%\textit{\footnotesize ECG avant angioplastie, Gramatikov 1995 }
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.27]{coarse_wavelet.png}
+\column{60mm}
+Remarques: 
+\begin{itemize}
+\item Chaque fonction correspond à une étape de décomposition
+\item \`A chaque étape on divise la fréquence d'échantillonnage par deux
+\end{itemize}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{Analyse en Ondelettes: exemple}
+\textbf{Effet d'une angioplastie sur un ECG}\\
+\vspace{0.3cm}
+%\includegraphics[scale=0.25]{ecg_2.png}\\
+%\textit{\footnotesize ECG avant angioplastie, Gramatikov 1995 }
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.30]{scaling.jpg}\\
+\includegraphics[scale=0.30]{wavelet.png}\\
+
+\column{60mm}
+\includegraphics[scale=0.36]{ecg_decomp.png}
+
+\end{columns}
+\textit{\footnotesize Construction des signaux "détails" et "approximation", Gramatikov 1995 }
+\end{frame}
+
+\begin{frame}
+\frametitle{Analyse en Ondelettes: exemple}
+\textbf{Effet d'une angioplastie sur un ECG}\\
+\vspace{0.3cm}
+%\includegraphics[scale=0.25]{ecg_2.png}\\
+%\textit{\footnotesize ECG avant angioplastie, Gramatikov 1995 }
+\begin{columns}
+\column{60mm}
+\includegraphics[scale=0.30]{ecg_3.png}\\
+
+
+\column{60mm}
+\includegraphics[scale=0.36]{results_decomp.png}\\
+
+\end{columns}
+\textit{\footnotesize Résultats de la méthode multirésolution, Gramatikov 1995 }\\
+\vspace{0.3cm}
+\only<2->{
+\begin{block}{}
+Le changement peut être quantifié par la décomposition
+\end{block}
+}
 \end{frame}
 
 \begin{frame}

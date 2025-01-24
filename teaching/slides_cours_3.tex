@@ -201,6 +201,72 @@ La suite $x[n]$ retardée de $k \in \mathbb{N}$ s'écrit $x[n-k]$
 \end{frame}
 
 \begin{frame}
+\frametitle{Retard d'une fonction: exemple}
+On prend l'échelon de Heaviside en continu
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1]
+	\draw[->] (-2,0)-- (2,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.2);
+\draw (2.3,0.25) node {\scriptsize $t$};
+\draw (0,1.5) node {\scriptsize $u(t)$};
+
+\draw[thick,blue] (-2,0)--(0,0)--(0,1)--(2,1);
+%\draw[domain=-4.9:4.9,color=blue,samples=16] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+L'échelon est défini comme :
+\[ u(t<0) = 0 \text{ et, } u(t>=1) = 1\]
+\end{frame}
+
+\begin{frame}
+\frametitle{Retard d'une fonction: exemple}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1]
+	\draw[->] (-2,0)-- (2,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.2);
+\draw (2.3,0.25) node {\scriptsize $t$};
+\draw (0,1.5) node {\scriptsize $u(t)$};
+
+\draw[thick,blue] (-2,0)--(0,0)--(0,1)--(2,1);
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+L'échelon est défini comme :
+\[ u(t<0) = 0 \text{ et, } u(t>=1) = 1\]
+Prenons $u(t-1)$
+\only<2->{
+\[ t-1>0 \rightarrow t>1 \]
+}
+\only<3->{
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1]
+	\draw[->] (-2,0)-- (2,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,0)-- (0,1.2);
+\draw (2.3,0.25) node {\scriptsize $t$};
+\draw (0,1.5) node {\scriptsize $u(t-1)$};
+
+\draw[thick,blue] (-2+1,0)--(0+1,0)--(0+1,1)--(2+1,1);
+\draw (1,-0.5) node{1};
+
+\end{scope}
+\end{tikzpicture}
+\end{center}
+}
+\end{frame}
+
+
+
+\begin{frame}
 \frametitle{Invariance dans le temps}
 
 \begin{block}{Attention}
@@ -211,7 +277,8 @@ La notion d'invariance dans le temps est ici appliqué au \textbf{filtre/systèm
 
 \begin{frame}
 \frametitle{Invariance dans le temps}
-Soit $F$ un filtre de telle sorte que, pour $x(t)$ et $y(t)$ deux fonctions , $ \forall \; t \in \mathbb{R}, \; y(t) = F(x(t))$ ou $ \forall \; n \in \mathbb{N}, \; y[n] = F(x[n])$ \\
+Soit $F$ un filtre de telle sorte que, pour $x(t)$ et $y(t)$ deux fonctions ,\\
+\vspace{0.2cm} $ \forall \; t \in \mathbb{R}, \; y(t) = F(x(t))$ ou $ \forall \; n \in \mathbb{N}, \; y[n] = F(x[n])$ \\
 
 \only<2->
 {
@@ -254,122 +321,135 @@ Un système $F$ est linéaire et invariant dans le temps (LIT) si :
 \frametitle{Système linéaire et invariant dans le temps (LIT) }
 Soit un signal d'entrée $x$ (continu ou discret) et $F$ un filtre/système LIT\\
 \vspace{1 cm}
-\begin{columns}
-\column{65mm}
 \begin{center}
 $x(t) = \displaystyle \int x(\tau)  \; \delta(t-\tau) \; d\tau$\\
-\only<2->{
-\vspace{0.5cm}!
-$F(x(t)) = y(t)$\\
-$ = F( \displaystyle \int x(\tau)\;  \delta(t-\tau) \; d\tau)$\\
-\vspace{0.5cm}
-}
-
-\only<3->{
-F linéaire donc, \\
-\vspace{0.5cm}
-$F(x(t)) = y(t) $\\
-$= \displaystyle \int F (x(\tau) \; \delta(t-\tau) \; d\tau)$
-}
 \end{center}
 
-\column{55mm}
-\begin{center}
-$x[n] =  \displaystyle \sum \; x[k] \; \delta[n-k] $ \\
-\vspace{0.5cm}
-
-\only<2->{
-$F(x[n]) = y[n] $\\
-
-$= F(\displaystyle \sum \; x[k] \;  \delta[n-k]) $ \\
-\vspace{0.5cm}
-}
-
-\only<3->{
-F linéaire donc, \\
-\vspace{0.5cm}
-$F(x[n]) = y[n] $\\
-$ = \displaystyle \sum F( x[k] \; \delta[n-k]) $ \\
-}
-
-\end{center}
-\end{columns}
-\end{frame}
-
-\begin{frame} 
-\frametitle{Système linéaire et invariant dans le temps (LIT) }
-Soit un signal d'entrée $x$ (continu ou discret) et $F$ un filtre/système LIT\\
-\vspace{1 cm}
-\begin{columns}
-\column{65mm}
-\begin{center}
-$F(x(t)) = y(t) $\\
-$= \displaystyle \int F (x(\tau) \; \delta(t-\tau) \; d\tau)$\\
-\vspace{0.5cm}
-
-$F$ s'applique aux fonctions de $t$\\
-\vspace{0.5cm}
-
-$y(t) = \displaystyle \int x(\tau) \; F(\delta(t-\tau) \; )d\tau$\\
-\vspace{0.5cm}
-
-\end{center}
-
-\column{55mm}
-\begin{center}
-$F(x[n]) = y[n] $\\
-$ = \displaystyle \sum \; F( x[k] \; \delta[n-k]) $ \\
-\vspace{0.5cm}
-
-$F$ s'applique aux suites sur $n$\\
-\vspace{0.5cm}
-
-$ y[n] = \displaystyle \sum \; x[k] \;  F(\delta[n-k]) $ \\
-\vspace{0.5cm}
-
-
-\end{center}
-\end{columns}
-\end{frame}
-
-\begin{frame} 
-\frametitle{Système linéaire et invariant dans le temps (LIT) }
-Soit un signal d'entrée $x$ (continu ou discret) et $F$ un filtre/système LIT\\
-\vspace{1 cm}
-\begin{columns}
-\column{65mm}
-\begin{center}
-$y(t) = \displaystyle \int x(\tau) \; F(\delta(t-\tau) ) \;d\tau$\\
-\vspace{0.5cm}
-
-Puisque $F$ invariant dans le temps,\\
-\vspace{0.5cm}
-
-$y(t) = \displaystyle \int x(\tau) \; h(t-\tau) \; d\tau$\\
-\vspace{0.5cm}
-
-avec $h[t]$ la\\ \textbf{réponse impulsionnelle} du filtre $F$
-
-\end{center}
-
-\column{55mm}
-\begin{center}
-
-$ y[n] = \displaystyle\sum x[k]  F(\delta[n-k]) $ \\
-\vspace{0.5cm}
-
-Puisque $F$ invariant dans le temps,\\
-\vspace{0.5cm}
-
-$ y[n] = \displaystyle\sum x[k]  h[n-k] $ \\
-\vspace{0.5cm}
-
-avec $h[n]$ la\\ \textbf{réponse impulsionnelle} du filtre $F$
-
-\end{center}
-\end{columns}
 \begin{block}{}
-Ces deux relations sont ce qu'on appelle \textbf{l'équation de convolution}
+On peut réécrire la fonction $x$ comme une somme d'impulsions
+\end{block}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Soit un signal d'entrée $x$ (continu ou discret) et $F$ un filtre/système LIT\\
+\vspace{1 cm}
+\begin{center}
+$x(t) = \displaystyle \int x(\tau)  \; \delta(t-\tau) \; d\tau$\\
+\end{center}
+
+On note également 
+\[y(t) = F(x(t))\]
+
+ \begin{block}{}
+On exprime l'équation de fonctionnement du filtre
+\end{block}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Soit un signal d'entrée $x$  et $F$ un filtre/système LIT\\
+\vspace{1 cm}
+\begin{center}
+$x(t) = \displaystyle \int x(\tau)  \; \delta(t-\tau) \; d\tau$\\
+\end{center}
+
+On note également 
+\[y(t) = F(x(t)) = F(\int x(\tau)  \; \delta(t-\tau) \; d\tau)\]
+
+ \begin{block}{}
+On remplace $x(t)$ dans l'équation de fonctionnement
+\end{block}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Soit un signal d'entrée $x$  et $F$ un filtre/système LIT\\
+
+\[y(t) = F(x(t)) = F(\int x(\tau)  \; \delta(t-\tau) \; d\tau)\]
+
+\only<2->{On applique la linéarité de F dans l'intégrale
+}
+\vspace{0.2cm}
+\only<3->{
+\[y(t) =  \int F( x(\tau)  \; \delta(t-\tau) \;) d\tau\]
+}
+\vspace{0.2cm}
+\only<4->{
+F s'applique aux fonctions de $t$ donc on peut "sortir" $x(\tau)$ de $F$
+}
+\vspace{0.2cm}
+\only<5->{
+\[y(t) =  \int  x(\tau)  \; F(\delta(t-\tau)) \; d\tau\]
+}
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+\[y(t) =  \int  x(\tau)  \; F(\delta(t-\tau)) \; d\tau\]
+\begin{itemize}
+\item<2-> $y(t)$  : signal de sortie 
+\item<3-> $x(t)$  : signal d'entrée
+\item<4-> $F(\delta(t-\tau))$  : Réponse du filtre à une impulsion
+\end{itemize}
+\vspace{0.3cm}
+\only<6->{
+\begin{block}{}
+$F(\delta(t))$ est ce qu'on appelle la réponse impulsionnelle du filtre 
+\end{block}
+}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+Cas des systèmes temps discrets :\\
+\vspace{0.3cm}
+Même principe du signal comme somme d'impulsions
+\[x[n] =  \displaystyle \sum \; x[k] \; \delta[n-k] \] 
+\only<2->{
+On réécrit le signal de sortie,
+\[ y[n] = F(x[n]) =  F(\sum x[k] \; \delta[n-k]) \]
+}
+\only<3->{
+On applique la linéarité de $F$
+\[ y[n] =  \sum x[k] \;F(\delta[n-k]) \]
+}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Système linéaire et invariant dans le temps (LIT) }
+\[ y[n] =  \sum x[k] \;F(\delta[n-k]) \]
+\begin{itemize}
+\item<2-> $y[n]$  : signal de sortie 
+\item<3-> $x[k]$  : signal d'entrée
+\item<4-> $F(\delta[n-k])$  : Réponse du filtre à une impulsion
+\end{itemize}
+\vspace{0.3cm}
+\only<6->{
+\begin{block}{}
+$F(\delta[k])$ est ce qu'on appelle la réponse impulsionnelle du filtre 
+\end{block}
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\begin{columns}
+\column{60mm}
+Système temps continu :  
+\[y(t) =  \int  x(\tau)  \; F(\delta(t-\tau)) \; d\tau\]
+\column{60mm}
+Système temps discret :
+\[ y[n] =  \sum x[k] \;F(\delta[n-k]) \]
+\end{columns}
+\vspace{0.5cm}
+Dans les deux cas, on appelle cette relation \textbf{l'équation de convolution} \\
+\vspace{1cm}
+Elle traduit le fait que:\\
+
+\begin{block}{}
+Si on dispose de \textbf{l'entrée} et de \textbf{la réponse impulsionnelle} d'un système LIT, on peut \textbf{prédire la sortie} 
 \end{block}
 \end{frame}
 
@@ -394,21 +474,21 @@ Le fait que le sytème soit LIT et les équations de convolution sous-tendent: \
 Il existe trois façons équivalentes de définir un filtre numérique :\\
 \vspace{0.5cm}
 \begin{columns}[T]
-\column{40mm}
+\column{39mm}
 \only<2->{
-Equation de récurrence :\\
+\textbf{\'Equation de récurrence:}\\
 \vspace{1cm} 
 \small \[ y[n] = x[n] + a y[n-1]\]
 }
-\column{40mm}
+\column{39mm}
 \only<3->{
-Fonction de transfert :\\
+\textbf{Fonction de transfert:}\\
 \vspace{1cm}
 \small \[ H(z) = \frac{Y(z)}{X(z)} = \frac{z}{z-a} \]
 } 
-\column{40mm}
+\column{39mm}
 \only<4->{
-Réponse impulsionnelle:\\
+\textbf{Réponse impulsionnelle:}\\
 \vspace{1cm}
 \small \[ h[n] = a^{n} \]
 }
@@ -441,6 +521,60 @@ Réponse impulsionnelle:\\
 \end{frame}
 
 \subsection{Fonction de transfert, équation de récurrence et réponse impulsionnelle: Exemples}
+
+\begin{frame}
+\frametitle{Exemple de définition d'un filtre}
+On part de l'équation de récurrence:   $ y_1[n] = \frac{\displaystyle x_1[n] + x_1[n-1]}{\displaystyle 2}$\\ 
+\vspace{1cm}
+\only<2->{
+Transformée en Z de $y_1[n]$ ?\\ 
+}
+\only<3->{
+$y_1[n]$ est une somme de deux signaux d'entrée, dont un décalé
+}
+
+\only<4->{
+\[ TZ(x_1[n]) = X_1(z) \]
+}
+
+\only<5->{
+Propriété de décalage temporel de la TZ
+\[ TZ(x_1[n-1]) = X_1(z)z^{-1} \]
+}
+
+\only<6->{
+Propriété de décalage temporel de la TZ
+\[ TZ(y_1[n-1]) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \]
+}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Exemple de définition d'un filtre}
+On part de l'équation de récurrence:   $ y_1[n] = \frac{\displaystyle x_1[n] + x_1[n-1]}{\displaystyle 2}$\\
+\vspace{0.3cm}
+Fonction de transfert : 
+\vspace{0.2cm}
+
+\only<2->{
+\[ y_1[n] = \frac{x_1[n] + x_1[n-1]}{2}  \; -\boxed{TZ} \;  \rightarrow Y_1(z) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \]
+}
+\vspace{0.2cm}
+
+\only<3->{
+\[ Y_1(z) = \frac{X_1(z) + X_1(z)z^{-1}}{2} \rightarrow Y_1(z) = X_1(z)\frac{(1 + z^{-1})}{2}  \]
+}
+
+\vspace{0.3cm}
+\only<4->{
+\[ \boxed{ \rightarrow \frac{Y_1(z)}{X_1(z)} = H_1(z) = \frac{(1 + z^{-1})}{2}}  \]
+}
+
+\end{frame}
+
+
 
 \begin{frame}
 \frametitle{Exemple de définition d'un filtre}
@@ -503,6 +637,7 @@ On part de la fonction de transfert : $H_2(z) = \frac{\displaystyle z}{\displays
 \vspace{0.3cm}
 
 \only<2->{
+On cherche à avoir du $z^{-1}$ plus que du $z$,
 \[H_2(z) = \frac{ z}{ z-1 } =\frac{1}{(1 - z^{-1})}\]
 }
 \vspace{0.3cm}
@@ -556,26 +691,41 @@ Reprenons les filtres précédents
 
 \begin{frame}
 \frametitle{Réponse en fréquence de filtres numériques} 
-\[ y_1[n] = \frac{x_1[n] + x_1[n-1]}{2}  \; \rightarrow \; H_1(z) = \frac{(1 + z^{-1})}{2} \]
-
-\vspace{0.3cm}
+\[ y_1[n] = \frac{x_1[n] + x_1[n-1]}{2}  \; \longrightarrow \; H_1(z) = \frac{(1 + z^{-1})}{2} \]\\
+\vspace{1cm}
 \only<2->{
-\[H_1(z) = \frac{(1 + z^{-1})}{2} \rightarrow  H_1(\nu) = \frac{(1 + e^{-2 j \pi \nu T_e})}{2} \]
+Quelle est l'opération réalisée  par ce filtre ?\\
 }
-\vspace{0.3cm}
-\only<2->{
-\[H_1(\nu) = \frac{(1 + e^{-2 j \pi \nu T_e})}{2} =  e^{- j \pi \nu T_e} \frac{(e^{ j \pi \nu T_e} + e^{- j \pi \nu T_e})}{2} \]
-}
-
-\vspace{0.3cm}
+\vspace{1cm}
 \only<3->{
-\[\boxed{H_1(\nu) =   \cos(\pi \nu T_e)e^{- j \pi \nu T_e}} \]
+C'est un filtre moyenneur à  2 termes
 }
+
 \end{frame}
 
 \begin{frame}
 \frametitle{Réponse en fréquence de filtres numériques} 
-\underline{Rappel} : Réponse en fréquence = Module + phase \\
+Réponse en fréquence du filtre $H_1$:
+\[ y_1[n] = \frac{x_1[n] + x_1[n-1]}{2}  \; \longrightarrow \; H_1(z) = \frac{(1 + z^{-1})}{2} \]
+
+\vspace{0.3cm}
+\only<2->{
+Changement de variable: $z$ $\rightarrow$ Fourier
+\[H_1(z) = \frac{(1 + z^{-1})}{2} \longrightarrow  H_1(\nu) = \frac{(1 + e^{-2 j \pi \nu T_e})}{2} \]
+}
+\vspace{0.3cm}
+\only<2->{
+On réécrit pour obtenir une fonction de forme $r e^{i\theta}$,
+\[H_1(\nu) = \frac{(1 + e^{-2 j \pi \nu T_e})}{2} =  e^{- j \pi \nu T_e} \frac{(e^{ j \pi \nu T_e} + e^{- j \pi \nu T_e})}{2} = \cos(\pi \nu T_e)e^{- j \pi \nu T_e} \]
+}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques} 
+On a une écriture module/argument de $H_1$
+\[ \boxed{H_1(\nu) = \cos(\pi \nu T_e)e^{- j \pi \nu T_e}} \]
+\underline{Rappel} : Réponse en fréquence = amplitude + phase \\
 \vspace{0.5cm}
 \begin{columns}[T]
 \column {60mm}
@@ -591,7 +741,7 @@ Reprenons les filtres précédents
 \draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
 \draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
 \draw (0,2) node {$\scriptstyle |H_1(\nu)|$};
-\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
 
 \draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
 \draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
@@ -618,7 +768,7 @@ Reprenons les filtres précédents
 \draw[dashed,thick,blue] (1,-1)--(3,1);
 
 
-\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{f_e}{2}$} --(1,1) ;
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
 \draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
 \end{tikzpicture}
 \end{center}
@@ -629,7 +779,7 @@ Reprenons les filtres précédents
 
 \begin{frame}
 \frametitle{Réponse en fréquence de filtres numériques} 
-La fonction de transfert possède un zéro en $\frac{\displaystyle f_e}{\displaystyle 2}$\\
+La fonction de transfert possède des zéros aux  $\pm n \frac{\displaystyle \nu_e}{\displaystyle 2}$. Pourquoi ?\\
 \vspace{0.2cm}
 \begin{columns}
 \column{60mm}
@@ -638,7 +788,7 @@ La fonction de transfert possède un zéro en $\frac{\displaystyle f_e}{\display
 \draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
 \draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
 \draw (0,2) node {$\scriptstyle |H_1(\nu)|$};
-\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
 
 \draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
 \draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
@@ -647,10 +797,11 @@ La fonction de transfert possède un zéro en $\frac{\displaystyle f_e}{\display
 
 \column{60mm}
 \only<2->{
-\vspace{1.5cm}
+$\nu_s = \nu_e/2$ $\rightarrow$ $T_s = 2 T_e$
+\vspace{1.0cm}
 \begin{center}
 \begin{tikzpicture}
-\draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle t$};
 \draw[->] (0,-1.5)-- (0,1.5) ;
 %%\draw (0,2) node {$\scriptstyle |H_1(\nu)|$};
 %%\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
@@ -668,10 +819,233 @@ La fonction de transfert possède un zéro en $\frac{\displaystyle f_e}{\display
 \end{columns}
 \vspace{0.5cm}
 \only<3->{
-Si le signal est de fréquence $f_e/2$ alors les échantillons prélevés sont toujours de signe oppopsés et s'annulent...
+Si le signal est de fréquence $\nu_e/2$ alors les échantillons prélevés sont toujours de signe opposés et s'annulent...
 }
 
 
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+Reprenons notre signal exemple: $ g(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) $\\
+\vspace{0.5cm}
+Si  $\nu_e >> 4/\pi$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.33,xshift= 15cm]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\draw[domain=-4.9:4.9,color=red,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*(\x +-0.153125 )r)+ 0.45*cos(2*2*(\x+3.14/12-0.153125) r))});
+
+%\draw[domain=-4.9:4.9,color=blue,samples=16] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.6125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.6125) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.153125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.153125) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
+\draw (0,2) node {$\scriptstyle |H_1(\nu)|$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
+
+\draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
+\draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.153125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.153125) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)-- (2,0) node[right] {$\scriptstyle \nu$};
+\draw[->] node[below right]{\scriptsize 0} (0,-1.5) -- (0,1.5) node[above] {$\scriptstyle \textrm{arg}(H_1(\nu))$} ;
+
+\draw[thick,blue] (-1,-1)--(1,1); 
+\draw[dashed,thick,blue] (-3,-1)--(-1,1); 
+\draw[dashed,thick,blue] (1,-1)--(3,1);
+
+
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
+\draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\begin{block}{}
+Impact du filtre en phase et en amplitude faible car $\nu_s << \nu_e/2$ 
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+Reprenons notre signal exemple: $ g(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) $
+\vspace{0.5cm}
+Si  $\nu_e \approx 4/\pi$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.33,xshift= 15cm]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\draw[domain=-4.9:4.9,color=red,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*(\x +-0.40833 )r)+ 0.45*cos(2*2*(\x+3.14/12-0.40833) r))});
+
+%\draw[domain=-4.9:4.9,color=blue,samples=16] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.6125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.6125) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.40833 )r) +  0.45*cos(2*2*(\x+3.14/12-0.40833) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
+\draw (0,2) node {$\scriptstyle |H_1(\nu)|$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
+
+\draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
+\draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.40833 )r) +  0.45*cos(2*2*(\x+3.14/12-0.40833) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)-- (2,0) node[right] {$\scriptstyle \nu$};
+\draw[->] node[below right]{\scriptsize 0} (0,-1.5) -- (0,1.5) node[above] {$\scriptstyle \textrm{arg}(H_1(\nu))$} ;
+
+\draw[thick,blue] (-1,-1)--(1,1); 
+\draw[dashed,thick,blue] (-3,-1)--(-1,1); 
+\draw[dashed,thick,blue] (1,-1)--(3,1);
+
+
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
+\draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\begin{block}{}
+Impact du filtre en phase et en amplitude important car $\nu_s \approx \nu_e/2$ 
+\end{block}
 \end{frame}
 
 
@@ -689,7 +1063,7 @@ Si le signal est de fréquence $f_e/2$ alors les échantillons prélevés sont t
 \draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
 \draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
 \draw (0,2) node {$\scriptstyle |H_1(\nu)|$};
-\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
 
 \draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
 \draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(cos(3.14 *\x r))});
@@ -711,16 +1085,14 @@ Si le signal est de fréquence $f_e/2$ alors les échantillons prélevés sont t
 \draw[dashed,thick,blue] (-3,-1)--(-1,1); 
 \draw[dashed,thick,blue] (1,-1)--(3,1);
 
-\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{f_e}{2}$} --(1,1) ;
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
 \draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
 \end{tikzpicture}
 \end{center}
-
-
 \end{columns}
 \vspace{0.5cm}
 \only<2->{
-Et si on veut un filtre similaire que ne coupe pas en $f_e/2$ ?
+Et si on veut un filtre similaire que ne coupe pas en $\nu_e/2$ ?
 }
 \end{frame}
 
@@ -736,8 +1108,8 @@ Et si on veut un filtre similaire que ne coupe pas en $f_e/2$ ?
 \begin{tikzpicture}
 \draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
 \draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
-\draw (0,2) node {$\scriptstyle |H_1*(\nu)|$};
-\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+\draw (0,2) node {$\scriptstyle |H_1^{*}(\nu)|$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
 
 \draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(sin(3.14 *\x r))});
 \draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(sin(3.14 *\x r))});
@@ -760,7 +1132,7 @@ Et si on veut un filtre similaire que ne coupe pas en $f_e/2$ ?
 \draw[dashed,thick,blue] (1,0)--(2,-1); 
 \draw[dashed,thick,blue] (-1,0)--(-2,1); 
 
-\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{f_e}{2}$} --(1,1) ;
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
 \draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
 \end{tikzpicture}
 \end{center}
@@ -772,6 +1144,233 @@ On voit que ce filtre ci va plutôt couper les composantes basses fréquences
 }
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+Reprenons notre signal exemple: $ g(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) $\\
+\vspace{0.5cm}
+Si  $\nu_e >> 4/\pi$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.33,xshift= 15cm]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\draw[domain=-4.9:4.9,color=red,samples=64] plot[ycomb] (\x,{-2*(0.55*cos(2*(\x -0.153125 )r) + 0.45*cos(2*2*(\x+3.14/12-0.153125) r))});
+
+%\draw[domain=-4.9:4.9,color=blue,samples=16] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.6125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.6125) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1^{*}(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) - (0.55*cos(2*(\x +-0.153125 )r) + 0.45*cos(2*2*(\x+3.14/12-0.153125) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
+\draw (0,2) node {$\scriptstyle |H_1^{*}(\nu)|$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
+
+\draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(sin(3.14 *\x r))});
+\draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(sin(3.14 *\x r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1^{*}(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=64] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) - (0.55*cos(2*(\x +-0.153125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.153125) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)-- (2,0) node[right] {$\scriptstyle \nu$};
+\draw[->] node[below right]{\scriptsize 0} (0,-1.5) -- (0,1.5) node[above] {$\scriptstyle \textrm{arg}(H_1^*(\nu))$} ;
+
+
+\draw[thick,blue] (0,1)--(1,0);
+\draw[thick,blue] (-1,0)--(0,-1); 
+\draw[dashed,thick,blue] (1,0)--(2,-1); 
+\draw[dashed,thick,blue] (-1,0)--(-2,1); 
+
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
+\draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\begin{block}{}
+Impact du filtre en phase et en amplitude important car $\nu_s << \nu_e/2$ 
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+Reprenons notre signal exemple: $ g(t) = 0.55\cos(2 t) + 0.45 \cos(4 t + \frac{\pi}{3}) $
+\vspace{0.5cm}
+Si  $\nu_e \approx 4/\pi$
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.33,xshift= 15cm]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\draw[domain=-4.9:4.9,color=red,samples=24] plot[ycomb] (\x,{-2*(0.55*cos(2*(\x +-0.40833 )r)- 0.45*cos(2*2*(\x+3.14/12-0.40833) r))});
+
+%\draw[domain=-4.9:4.9,color=blue,samples=16] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.6125 )r) +  0.45*cos(2*2*(\x+3.14/12-0.6125) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1^{*}(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) - (0.55*cos(2*(\x +-0.40833 )r) + 0.45*cos(2*2*(\x+3.14/12-0.40833) r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Réponse en fréquence de filtres numériques: Illustration}
+\begin{columns}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $g[n]$};
+%\draw (4.5,-0.3) node {1};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{2*(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
+\draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
+\draw (0,2) node {$\scriptstyle |H_1^{*}(\nu)|$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
+
+\draw[domain=-0.5:0.5,color=blue,samples=100] plot (\x,{abs(sin(3.14 *\x r))});
+\draw[dashed,domain=-1.5:1.5,color=blue,samples=100] plot (\x,{abs(sin(3.14 *\x r))});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\column{60mm}
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.33]
+	\draw[->] (-5,0)-- (5,0);
+%\draw (-0.3,-0.3) node {0};
+\draw[->] (0,-3)-- (0,3);
+\draw (5.3,0.25) node {\scriptsize $n$};
+\draw (0,3.5) node {\scriptsize $F_1^{*}(g[n])$};
+
+\draw[domain=-4.9:4.9,color=blue,samples=24] plot[ycomb] (\x,{(0.55*cos(2*\x r)+ 0.45*cos(2*2*(\x+3.14/12) r)) + (0.55*cos(2*(\x +-0.40833 )r) -  0.45*cos(2*2*(\x+3.14/12-0.40833) r))});
+\end{scope}
+
+\begin{scope}[scale=0.9,yshift=-4cm]
+\draw[->] (-2,0)-- (2,0) node[right] {$\scriptstyle \nu$};
+\draw[->] node[below right]{\scriptsize 0} (0,-1.5) -- (0,1.5) node[above] {$\scriptstyle \textrm{arg}(H_1^*(\nu))$} ;
+
+
+\draw[thick,blue] (0,1)--(1,0);
+\draw[thick,blue] (-1,0)--(0,-1); 
+\draw[dashed,thick,blue] (1,0)--(2,-1); 
+\draw[dashed,thick,blue] (-1,0)--(-2,1); 
+
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
+\draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{columns}
+\begin{block}{}
+Impact du filtre en phase et en amplitude faible car $\nu_s \approx \nu_e/2$ 
+\end{block}
+\end{frame}
+
+
 
 
 \subsection{Types de filtres}
@@ -1105,12 +1704,12 @@ Exemple d'un gabarit d'un filtre passe bas filtre passe-bas:\\
 \draw[->] (0,0)-- (0,3);
 \draw (4.1,0.25) node {$f$};
 \draw (0,3.5) node {$|H(f)|$};
-\draw (1,-0.3) node {$f_1$};
-\draw (2,-0.3) node {$f_2$};
+\draw (1,-0.3) node {$\nu_1$};
+\draw (2,-0.3) node {$\nu_2$};
 \draw (-0.6,1.7) node {$1 - \delta_1$};
 \draw (-0.6,2.3) node {$1 + \delta_1$};
 \draw (-0.3,0.3) node {$\delta_2$};
-\draw (3.5,-0.3) node {$f_e/2$};
+\draw (3.5,-0.3) node {$\nu_e/2$};
 
 
 \draw[thick,blue](0,1.7)--(1,1.7)--(1,0);
@@ -1126,9 +1725,9 @@ Exemple d'un gabarit d'un filtre passe bas filtre passe-bas:\\
 \vspace{0.2cm}
 \item<3->$\delta_2$ : Tolérance en bande affiablie  
 \vspace{0.2cm}
-\item<4-> $f_1$ : fréquence de transition-bande passante 
+\item<4-> $\nu_1$ : fréquence de transition-bande passante 
 \vspace{0.2cm}
-\item<5-> $f_2$ : fréquence de transition-bande affaiblie 
+\item<5-> $\nu_2$ : fréquence de transition-bande affaiblie 
 \end{itemize}
 
 \end{columns}
@@ -1176,7 +1775,7 @@ Réponse en fréquence du filtre: $H_2(z)  = \frac{\displaystyle  z}{ \displayst
 \draw[->] (-2,0)--(2,0) node[right] { $\scriptstyle \nu$};
 \draw[->] (0,0)node[below] {\scriptsize 0} -- (0,1.5) ;
 \draw (0,2) node {$\scriptstyle |H_2(\nu)|$};
-\draw (0.5,-0.4) node {$\frac{f_e}{2}$};
+\draw (0.5,-0.4) node {$\frac{\nu_e}{2}$};
 
 \draw[domain=0.1:0.5,color=blue,samples=100] plot (\x,{1/(2*abs(sin(3.14 *\x r)))});
 \draw[dashed,domain=0.1:0.9,color=blue,samples=100] plot (\x,{1/(2*abs(sin(3.14 *\x r)))});
@@ -1186,7 +1785,7 @@ Réponse en fréquence du filtre: $H_2(z)  = \frac{\displaystyle  z}{ \displayst
 \draw[dashed,domain=-0.9:-0.1,color=blue,samples=100] plot (\x,{1/(2*abs(sin(3.14 *\x r)))});
 \draw[dashed,domain=-1.9:-1.1,color=blue,samples=100] plot (\x,{1/(2*abs(sin(3.14 *\x r)))});
 
-\draw[dashed](1,0) node[below]{\scriptsize $f_e$}--(1,2);
+\draw[dashed](1,0) node[below]{\scriptsize $\nu_e$}--(1,2);
 \end{tikzpicture}
 \end{center}
 }
@@ -1207,7 +1806,7 @@ Réponse en fréquence du filtre: $H_2(z)  = \frac{\displaystyle  z}{ \displayst
 \draw[dashed,thick,blue] (1,0)--(2,1); 
 \draw[dashed,thick,blue] (-1,0)--(-2,-1); 
 
-\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{f_e}{2}$} --(1,1) ;
+\draw[dashed] (1,0) node[below] {$\scriptstyle \frac{\nu_e}{2}$} --(1,1) ;
 \draw[dashed] (0,1) node[left] {$\scriptstyle \frac{\pi}{2}$} --(1,1)  ; 
 \end{tikzpicture}
 \end{center}
@@ -1215,7 +1814,7 @@ Réponse en fréquence du filtre: $H_2(z)  = \frac{\displaystyle  z}{ \displayst
 \end{columns}
 \vspace{0.2cm}
 \only<4->{
-Le filtres est \textbf{instable} aux fréquences multiples de $f_e$... 
+Le filtres est \textbf{instable} aux fréquences multiples de $\nu_e$... 
 }
 
 \end{frame}
@@ -1227,7 +1826,7 @@ Au-delà des caractéristiques fréquentielles deux grandes classes de filtres n
 \vspace{0.2cm}
 \begin{columns}[T]
 \column{60mm}
-Filtre non-récursifs:\\
+Filtres non-récursifs:\\
 \vspace{0.3cm}
 \only<2->{
 \begin{center}
@@ -1251,7 +1850,7 @@ Filtre non-récursifs:\\
 }	 
 
 \column{60mm}
-Filtre récursifs: \\
+Filtres récursifs: \\
 \vspace{0.3cm}
 \only<2->{
 \begin{center}
@@ -1406,30 +2005,6 @@ Coeffs réels $\rightarrow$ pôles doubles et réels ou complexes conjugués
 \end{enumerate}
 \end{frame}
 
-
-\begin{frame} 
-\frametitle{Structure du cours}
-\vspace{0.3cm}
-\begin{enumerate}
-\item Outils mathématiques généraux  
-\vspace{0.3cm}
-\item Signaux numériques  
-\vspace{0.3cm}
-\item Filtres numériques : Généralités 
-\vspace{0.3cm}
-\item Filtres récursifs et méthodes de synthèse
-\vspace{0.3cm}
-\item Filtres non-récursifs et méthodes de synthèse
-\vspace{0.3cm}
-\item Signaux Biomédicaux
-\vspace{0.3cm}
-\item Application : Détection complexe QRS
-\vspace{0.3cm}
-\item Ultrasons Doppler
-\vspace{0.3cm}
-\item Application Doppler: Détection embolie gazeuse veineuse
-\end{enumerate}
-\end{frame} 
 
 
 

@@ -28,7 +28,7 @@
 \subsection{Introduction}
 \begin{frame}
 \frametitle{Introduction}
-Dans la section précédente on a étudié un filtre récursif et un filtre non récursif \\
+Dans la section précédente, nous avons étudié un filtre récursif et un filtre non-récursif \\
 \vspace{0.3cm}
 
 \begin{columns}
@@ -55,15 +55,15 @@ Dans la section précédente on a étudié un filtre récursif et un filtre non 
 \only<1->{
 \begin{center}
 	\begin{tikzpicture}
-	\draw (2.15,0) node {$x(n)$};
+	\draw (2.15,0) node {$x[n]$};
 
 	
 	\draw[->] (2.75,0)-- (3.5,0);
 	\draw (3.5,-0.5) rectangle(5.5,0.5) ;
-	\draw (4.5,0) node {$h(n)$};
+	\draw (4.5,0) node {$h[n]$};
 	
 	\draw[->] (5.5,0)-- (6,0); 
-	\draw (6.5,0) node {$y(n)$};
+	\draw (6.5,0) node {$y[n]$};
 
 	%\draw (4.5,-2) node {filtre récursif};
 	
@@ -87,7 +87,7 @@ On a étudié les propriétés de filtres existants mais on ne sait pas comment 
 
 \begin{frame}
 \frametitle{Introduction}
-Les méthodes de synthèse pour les filtres récursifs et non récursifs sont assez différentes...\\
+Les méthodes de synthèse pour les filtres récursifs et non-récursifs sont assez différentes...\\
 \vspace{0.3cm}
 
 \begin{columns}
@@ -121,10 +121,10 @@ Les méthodes de synthèse pour les filtres récursifs et non récursifs sont as
 	
 	\draw[->] (2.75,0)-- (3.5,0);
 	\draw (3.5,-0.5) rectangle(5.5,0.5) ;
-	\draw (4.5,0) node {$h(n)$};
+	\draw (4.5,0) node {$h[n]$};
 	
 	\draw[->] (5.5,0)-- (6,0); 
-	\draw (6.5,0) node {$y(n)$};
+	\draw (6.5,0) node {$y[n]$};
 
 	%\draw (4.5,-2) node {filtre récursif};
 	
@@ -159,16 +159,16 @@ synthèse de filtre : Passe-bas idéal\\
 	\draw[->] (-0.5,0)-- (3.5,0);
 \draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3);
-\draw (3.6,0.25) node {$f$};
-\draw (0,3.5) node {$|H(f)|$};
+\draw (3.6,0.25) node {$\nu$};
+\draw (0,3.5) node {$|H(\nu)|$};
 \only<1>{
-\draw (1,-0.3) node {$f_1$};
-\draw (2,-0.3) node {$f_2$};
+\draw (1,-0.3) node {$\nu_1$};
+\draw (2,-0.3) node {$\nu_2$};
 \draw (-0.6,1.7) node {$1 - \delta_1$};
 \draw (-0.6,2.3) node {$1 + \delta_1$};
 \draw (-0.3,0.3) node {$\delta_2$};
 }
-\draw (3,-0.3) node {$f_e/2$};
+\draw (3,-0.3) node {$\nu_e/2$};
 
 \only<1>{
 \draw[thick,blue](0,1.7)--(1,1.7)--(1,0);
@@ -184,7 +184,7 @@ synthèse de filtre : Passe-bas idéal\\
 
 \only<2->{
 	\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
-	\draw (1.5,-0.3) node {$f_e/4$};
+	\draw (1.5,-0.3) node {$\nu_e/4$};
 }
 
 \end{tikzpicture}
@@ -192,7 +192,7 @@ synthèse de filtre : Passe-bas idéal\\
 
 \column{60mm}
 \only<3->{
-Ce filtre va correspondre à une réponse impulsionnelle...\\
+Cette réponse en amplitude va correspondre à une \textbf{réponse impulsionnelle}...\\
 \vspace{0.5cm}
 Comment l'obtenir ?
 
@@ -210,6 +210,55 @@ Comment l'obtenir ?
 
 \end{frame}
 
+\begin{frame}
+\frametitle{Premier exemple :  Filtre passe-bas idéal}
+Développement en série de Fourier ?
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-7,0)-- (7,0);
+\draw (-0.3,-0.6) node {\footnotesize{$0$}};
+\draw[->] (0,0)-- (0,3);
+\draw (7.6,-0.25) node {\scriptsize{$\nu$}};
+\draw (0,3.5) node {\scriptsize{$|H(\nu)|$}};
+
+\draw (3,-0.6) node {\scriptsize{$\frac{\nu_e}{2}$}};
+
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	\draw[thick,red]   (-3,0)--(-1.5,0)--(-1.5,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[dashed,thick,red]   (-3-6,0)--(-1.5-6,0)--(-1.5-6,2)--(1.5-6,2)--(1.5-6,0)--(3-6,0);
+	\draw[dashed,thick,red]   (-3+6,0)--(-1.5+6,0)--(-1.5+6,2)--(1.5+6,2)--(1.5+6,0)--(3+6,0);
+	\draw (1.5,-0.6) node {\scriptsize{$\frac{\nu_e}{4}$}};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\only<2->{
+\footnotesize{Le spectre du signal est une fonction périodique.}\\
+}
+
+\only<3->{
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1]
+\draw[->] (-2.5,0)-- (2.5,0) node[right]{\scriptsize{$n$}};
+\draw (0,-0.3) node {\scriptsize{0}};
+\draw[->] (0,0)-- (0,1.5)node[right]{\scriptsize{$h[n]$}};
+
+%\draw[dotted,thick, domain=-2.4:2.4,color=red,samples=80] plot (\x,{160*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick, domain=-2.4:2.4,color=red,samples=31] plot [ycomb] (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\footnotesize{En développant en série de Fourier la fonction périodique en fréquence on obtient des \textbf{échantillons dans le domaine temporel}}
+}
+
+\end{frame}
+
 
 \begin{frame}
 \frametitle{Premier exemple :  Filtre passe-bas idéal}
@@ -222,22 +271,50 @@ Pour comprendre les défis de la synthèse de filtre : Passe-bas idéal\\
 \column{60mm}
 \begin{center}
 \begin{tikzpicture}
-
-	\draw[->] (-0.5,0)-- (3.5,0);
-\draw (-0.3,-0.3) node {0};
+\begin{scope}[scale=0.3]
+	\draw[->] (-7,0)-- (7,0);
+\draw (-0.3,-0.6) node {\footnotesize{$0$}};
 \draw[->] (0,0)-- (0,3);
-\draw (3.6,0.25) node {$f$};
-\draw (0,3.5) node {$|H(f)|$};
+\draw (7.6,-0.25) node {\scriptsize{$\nu$}};
+\draw (0,3.5) node {\scriptsize{$|H(\nu)|$}};
 
-\draw (3,-0.3) node {$f_e/2$};
+\draw (3,-0.6) node {\scriptsize{$\frac{\nu_e}{2}$}};
 
 
 \draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
 \draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
 \draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
 
-	\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
-	\draw (1.5,-0.3) node {$f_e/4$};
+	\draw[thick,red]   (-3,0)--(-1.5,0)--(-1.5,2)--(1.5,2)--(1.5,0)--(3,0);
+	\draw[dashed,thick,red]   (-3-6,0)--(-1.5-6,0)--(-1.5-6,2)--(1.5-6,2)--(1.5-6,0)--(3-6,0);
+	\draw[dashed,thick,red]   (-3+6,0)--(-1.5+6,0)--(-1.5+6,2)--(1.5+6,2)--(1.5+6,0)--(3+6,0);
+	\draw (1.5,-0.6) node {\scriptsize{$\frac{\nu_e}{4}$}};
+\end{scope}
+
+
+\begin{scope}[scale=1,yshift=-3cm]
+\draw[->] (-2.5,0)-- (2.5,0) node[right]{\scriptsize{$n$}};
+\draw (0,-0.3) node {\scriptsize{0}};
+\draw[->] (0,0)-- (0,1.5)node[right]{\scriptsize{$h[n]$}};
+
+%\draw[dotted,thick, domain=-2.4:2.4,color=red,samples=80] plot (\x,{160*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick, domain=-2.4:2.4,color=red,samples=31] plot [ycomb] (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\end{scope}
+%	\draw[->] (-0.5,0)-- (3.5,0);
+%\draw (-0.3,-0.3) node {0};
+%\draw[->] (0,0)-- (0,3);
+%\draw (3.6,-0.25) node {$\nu$};
+%\draw (0,3.5) node {$|H(\nu)|$};
+%
+%\draw (3,-0.3) node {$\nu_e/2$};
+%
+%
+%\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+%\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+%\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+%
+%	\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+%	\draw (1.5,-0.3) node {$\nu_e/4$};
 
 \end{tikzpicture}
 \end{center}
@@ -246,18 +323,86 @@ Pour comprendre les défis de la synthèse de filtre : Passe-bas idéal\\
 Développement en série de Fourier ? \\
 \vspace{0.1cm}
 \begin{itemize}
-\item<2-> Spectre jusqu'à $f_e/2$ $\rightarrow$ signal discret
+\item<2->   signal discret $\rightarrow$ Spectre périodique, info [0,$\nu_e/2$]
 \vspace{0.1cm}
-\item<3-> Signal discret  $f_e/2$ $\rightarrow$ spectre périodique
+\item<3-> Spectre périodique  $\rightarrow$ spectre développable en série de Fourier 
 \vspace{0.1cm}
-\item<4-> Spectre périodique  $f_e/2$ $\rightarrow$ spectre développable en série de Fourier 
-\vspace{0.1cm}
-\item<5-> Coefficients de fourier d'une fct°  $f_e/2$ $\rightarrow$ réponse impulsionnelle discrète...
+\item<4-> Coefficients de fourier d'une fct° domaine fréquentiel $\rightarrow$ coeff réponse impulsionnelle domaine temporelle...
 \end{itemize}
 
 \end{columns}
 
 \end{frame}
+
+\begin{frame}
+\frametitle{Premier exemple :  Filtre passe-bas idéal}
+Réponse impulsionnelle continue + échantillonnage ? 
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=0.4]
+	\draw[->] (-7,0)-- (7,0);
+\draw (-0.3,-0.6) node {\footnotesize{$0$}};
+\draw[->] (0,0)-- (0,3);
+\draw (7.6,-0.25) node {\scriptsize{$\nu$}};
+\draw (0,3.5) node {\scriptsize{$|H(\nu)|$}};
+
+\draw (3,-0.6) node {\scriptsize{$\frac{\nu_e}{2}$}};
+
+
+\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+
+	\draw[thick,red]   (-7,0)--(-1.5,0)--(-1.5,2)--(1.5,2)--(1.5,0)--(7,0);
+	%\draw[dashed,thick,red]   (-3-6,0)--(-1.5-6,0)--(-1.5-6,2)--(1.5-6,2)--(1.5-6,0)--(3-6,0);
+	%\draw[dashed,thick,red]   (-3+6,0)--(-1.5+6,0)--(-1.5+6,2)--(1.5+6,2)--(1.5+6,0)--(3+6,0);
+	\draw (1.5,-0.6) node {\scriptsize{$\frac{\nu_e}{4}$}};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\only<2->{
+\footnotesize{On "convertit" le spectre périodique en spectre "simple"}\\
+}
+
+\only<3>{
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1]
+\draw[->] (-2.5,0)-- (2.5,0) node[right]{\scriptsize{$t$}};
+\draw (0,-0.3) node {\scriptsize{0}};
+\draw[->] (0,0)-- (0,1.5)node[right]{\scriptsize{$h(t)$}};
+
+%\draw[dotted,thick, domain=-2.4:2.4,color=red,samples=80] plot (\x,{160*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick, domain=-2.4:2.4,color=red,samples=300] plot  (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\footnotesize{On obtient un signal temporel continu... }
+}
+
+\only<4->{
+
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=1]
+\draw[->] (-2.5,0)-- (2.5,0) node[right]{\scriptsize{$n$}};
+\draw (0,-0.3) node {\scriptsize{0}};
+\draw[->] (0,0)-- (0,1.5)node[right]{\scriptsize{$h[n]$}};
+
+%\draw[dotted,thick, domain=-2.4:2.4,color=red,samples=80] plot (\x,{160*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick, domain=-2.4:2.4,color=red,samples=31] plot[ycomb]  (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick,dotted, domain=-2.4:2.4,color=red,samples=300] plot  (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\footnotesize{On obtient un signal temporel continu... qu'on échantillonne}
+}
+
+\end{frame}
+
+
+
 
 \begin{frame}
 \frametitle{Premier exemple :  Filtre passe-bas idéal}
@@ -272,21 +417,51 @@ Pour comprendre les défis de la synthèse de filtre : Passe-bas idéal\\
 \begin{center}
 \begin{tikzpicture}
 
-	\draw[->] (-0.5,0)-- (3.5,0);
-\draw (-0.3,-0.3) node {0};
+\begin{scope}[scale=0.4]
+	\draw[->] (-7,0)-- (7,0);
+\draw (-0.3,-0.6) node {\footnotesize{$0$}};
 \draw[->] (0,0)-- (0,3);
-\draw (3.6,0.25) node {$f$};
-\draw (0,3.5) node {$|H(f)|$};
+\draw (7.6,-0.25) node {\scriptsize{$\nu$}};
+\draw (0,3.5) node {\scriptsize{$|H(\nu)|$}};
 
-\draw (3,-0.3) node {$f_e/2$};
+\draw (3,-0.6) node {\scriptsize{$\frac{\nu_e}{2}$}};
 
 
 \draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
 \draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
 \draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
 
-	\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
-	\draw (1.5,-0.3) node {$f_e/4$};
+	\draw[thick,red]   (-7,0)--(-1.5,0)--(-1.5,2)--(1.5,2)--(1.5,0)--(7,0);
+	%\draw[dashed,thick,red]   (-3-6,0)--(-1.5-6,0)--(-1.5-6,2)--(1.5-6,2)--(1.5-6,0)--(3-6,0);
+	%\draw[dashed,thick,red]   (-3+6,0)--(-1.5+6,0)--(-1.5+6,2)--(1.5+6,2)--(1.5+6,0)--(3+6,0);
+	\draw (1.5,-0.6) node {\scriptsize{$\frac{\nu_e}{4}$}};
+\end{scope}
+
+\begin{scope}[scale=1,yshift=-3cm]
+\draw[->] (-2.5,0)-- (2.5,0) node[right]{\scriptsize{$n$}};
+\draw (0,-0.3) node {\scriptsize{0}};
+\draw[->] (0,0)-- (0,1.5)node[right]{\scriptsize{$h[n]$}};
+
+%\draw[dotted,thick, domain=-2.4:2.4,color=red,samples=80] plot (\x,{160*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick, domain=-2.4:2.4,color=red,samples=31] plot[ycomb]  (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\draw[thick,dotted, domain=-2.4:2.4,color=red,samples=300] plot  (\x,{80*sin(5*3.14*\x r  )/(5*3.14*\x r)});
+\end{scope}
+%
+%	\draw[->] (-0.5,0)-- (3.5,0);
+%\draw (-0.3,-0.3) node {0};
+%\draw[->] (0,0)-- (0,3);
+%\draw (3.6,0.25) node {$\nu$};
+%\draw (0,3.5) node {$|H(\nu)|$};
+%
+%\draw (3,-0.3) node {$\nu_e/2$};
+%
+%
+%\draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
+%\draw[dashed,blue](0,2.3)--(1,2.3)--(1,3);
+%\draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
+%
+%	\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
+%	\draw (1.5,-0.3) node {$\nu_e/4$};
 
 \end{tikzpicture}
 \end{center}
@@ -295,11 +470,11 @@ Pour comprendre les défis de la synthèse de filtre : Passe-bas idéal\\
 Réponse impulsionnelle continue + échantillonnage ? \\
 \vspace{0.1cm}
 \begin{itemize}
-\item<2-> Spectre jusqu'à $f_e/2$ $\rightarrow$ Spectre jusqu'à $+ \infty$
+\item<2-> Spectre jusqu'à $\nu_e/2$ $\rightarrow$ Spectre jusqu'à $+ \infty$
 \vspace{0.1cm}
 \item<3-> TF inverse sur spectre $\rightarrow$ Signal temporel continu 
 \vspace{0.1cm}
-\item<4-> Signal temporel continu  $\rightarrow$ Signal échantillonné à $f_e$
+\item<4-> Signal temporel continu  $\rightarrow$ Signal échantillonné à $\nu_e$
 \vspace{0.1cm}
 \end{itemize}
 
@@ -308,7 +483,7 @@ Réponse impulsionnelle continue + échantillonnage ? \\
 
 \begin{frame}
 \frametitle{Premier exemple :  Filtre passe-bas idéal}
-\underline{Résultat des 3 méthodes}:\\
+\underline{Résultat des 2 méthodes}:\\
 \vspace{0.3cm}
 \begin{columns}
 
@@ -321,10 +496,10 @@ Réponse en fréquence :\\
 	\draw[->] (-0.5,0)-- (3.5,0);
 \draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3);
-\draw (3.6,0.25) node {$f$};
-\draw (0,3.5) node {$|H(f)|$};
+\draw (3.6,0.25) node {$\nu$};
+\draw (0,3.5) node {$|H(\nu)|$};
 
-\draw (3,-0.3) node {$f_e/2$};
+\draw (3,-0.3) node {$\nu_e/2$};
 
 
 \draw[dashed,blue](0,1.7)--(1,1.7)--(1,0);
@@ -332,7 +507,7 @@ Réponse en fréquence :\\
 \draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
 
 	\draw[thick,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
-	\draw (1.5,-0.3) node {$f_e/4$};
+	\draw (1.5,-0.3) node {$\nu_e/4$};
 	
 	\draw[->] (3.5,2)--(6.5,2);
 
@@ -458,8 +633,8 @@ Effet de l'application de la fenêtre sur la réponse en fréquence ?\\
 \vspace{0.5cm}
 \[ h^*[n] = \frac{\sin(\pi nT_e)}{\pi n T_e}\cdot \Pi_M[n]  \]\\
 \vspace{0.5cm}
-\only<1>{\[ H^*(f) = ?  \]}
-\only<2->{\[\boxed{ H^*(f) = TF(\frac{\sin(\pi nT_e)}{\pi n T_e}) \star TF(\Pi_M[n])}  \]}
+\only<1>{\[ H^*(\nu) = ?  \]}
+\only<2->{\[\boxed{ H^*(\nu) = TF(\frac{\sin(\pi nT_e)}{\pi n T_e}) \star TF(\Pi_M[n])}  \]}
 
 
 
@@ -475,9 +650,9 @@ Effet de l'application de la fenêtre sur la réponse en fréquence ?\\
 \vspace{0.5cm}
 \begin{center}
 \begin{tikzpicture}
-\draw[->] (-2.5,0)-- (2.5,0) node[right]{$n$};
+\draw[->] (-2.5,0)-- (2.5,0) node[right]{\footnotesize{$n$}};
 \draw (0,-0.3) node {0};
-\draw[->] (0,0)-- (0,3)node[right]{$h^*[n]$};
+\draw[->] (0,0)-- (0,3)node[right]{\footnotesize{$h^*[n]$}};
 
 \draw[dotted,thick, domain=-1.45:1.45,color=red,samples=21] plot (\x,{120*sin(5*3.14*\x r  )/(5*3.14*\x r)});
 \draw[thick, domain=-1.45:1.45,color=red,samples=21] plot [ycomb] (\x,{120*sin(5*3.14*\x r  )/(5*3.14*\x r)});
@@ -488,14 +663,14 @@ Effet de l'application de la fenêtre sur la réponse en fréquence ?\\
 \end{center}
 
 \column{60mm}
-\[ H^*(f) = TF(\frac{\sin(\pi nT_e)}{\pi n T_e}) \star TF(\Pi_M[n]) \]\\
+\[ H^*(\nu) = TF(\frac{\sin(\pi nT_e)}{\pi n T_e}) \star TF(\Pi_M[n]) \]\\
 \vspace{0.3cm}
 \begin{center}
 \begin{tikzpicture}
 
-	\draw[->] (-0.5,0)-- (3,0)node[right] {$f$};
+	\draw[->] (-0.5,0)-- (3,0)node[right] {\footnotesize{$_nu$}};
 \draw (0,-0.3) node {0};
-\draw[->] (0,0)-- (0,3) node[right] {$H^*(f)$};
+\draw[->] (0,0)-- (0,3) node[right] {\footnotesize{$H^*(\nu)$}};
 
 
 \draw[dashed,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
@@ -536,9 +711,9 @@ Limitation du nombre de termes $\rightarrow$  Ondulations dans la fonction de tr
 \begin{center}
 \begin{tikzpicture}
 
-	\draw[->] (-0.5,0)-- (3,0)node[right] {$f$};
+	\draw[->] (-0.5,0)-- (3,0)node[right] {\footnotesize{$\nu$}};
 \draw (0,-0.3) node {0};
-\draw[->] (0,0)-- (0,3) node[right] {$H^*(f)$};
+\draw[->] (0,0)-- (0,3) node[right] {\footnotesize{$H^*(\nu)$}};
 
 
 \draw[dashed,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
@@ -597,9 +772,9 @@ Reprenons le gabarit...
 \begin{center}
 \begin{tikzpicture}
 
-	\draw[->] (-0.5,0)-- (3,0)node[right] {$f$};
+	\draw[->] (-0.5,0)-- (3,0)node[right] {\footnotesize{$\nu$}};
 \draw (0,-0.5) node {0};
-\draw[->] (0,0)-- (0,3) node[right] {$H^*(f)$};
+\draw[->] (0,0)-- (0,3) node[right] {\footnotesize{$H^*(\nu)$}};
 
 
 \draw[dashed,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
@@ -631,8 +806,8 @@ Reprenons le gabarit...
 \draw[dashed,blue](2,3)--(2,0.3)--(3,0.3);
 }    
 \only<4->{
-\draw (1,-0.5) node {$f_1$};
-\draw (2,-0.5) node {$f_2$};
+\draw (1,-0.5) node {$\nu_1$};
+\draw (2,-0.5) node {$\nu_2$};
 \draw (-0.6,1.7) node {$1 - \delta_1$};
 \draw (-0.6,2.3) node {$1 + \delta_1$};
 \draw (-0.3,0.4) node {$\delta_2$};
@@ -644,7 +819,7 @@ Reprenons le gabarit...
 \column{75mm}
 Commentaires:
 \begin{itemize}
-\item<2-> filtre réel (nombre fini de termes) = \textbf{Oscillations rép. en fréq.}
+\item<2-> Filtre réel (nombre fini de termes) = \textbf{Oscillations rép. en fréq.}
 \vspace{0.3cm}
 \item<3-> Oscillations = tolérance en amplitude + largeur de transition
 \vspace{0.3cm}
@@ -663,9 +838,9 @@ Commentaires:
 
 \begin{tikzpicture}
 \begin{scope}[scale=0.3]
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
-\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $|H(f)|$};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $|H(\nu)|$};
 
 
 %\draw (3,-0.3) node {$f_e/2$};
@@ -713,9 +888,9 @@ Commentaires:
 		%\draw[->,thick] (26,1)--(31,1);
 		
 		\begin{scope}[scale=0.3,xshift=32.5cm]
-	\draw[->] (-0.5,0)-- (3,0)node[right] {\scriptsize $f$};
+	\draw[->] (-0.5,0)-- (3,0)node[right] {\scriptsize $\nu$};
 %\draw (0,-0.5) node {0};
-\draw[->] (0,0)-- (0,3) node[right] {\scriptsize $H^*(f)$};
+\draw[->] (0,0)-- (0,3) node[right] {\scriptsize $H^*(\nu)$};
 
 
 \draw[dashed,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
@@ -766,9 +941,9 @@ Commentaires:
 
 \begin{tikzpicture}
 \begin{scope}[scale=0.3]
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
-\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $|H(f)|$};
+\draw[->] (0,0)-- (0,3)node[above] {\scriptsize $|H(\nu)|$};
 
 
 %\draw (3,-0.3) node {$f_e/2$};
@@ -819,9 +994,9 @@ Commentaires:
 		%\draw[->,thick] (26,1)--(31,1);
 		
 		\begin{scope}[scale=0.3,xshift=32.5cm]
-	\draw[->] (-0.5,0)-- (3,0)node[right] {\scriptsize $f$};
+	\draw[->] (-0.5,0)-- (3,0)node[right] {\scriptsize $\nu$};
 %\draw (0,-0.5) node {0};
-\draw[->] (0,0)-- (0,3) node[right] {\scriptsize $H^*(f)$};
+\draw[->] (0,0)-- (0,3.5) node[right] {\scriptsize $H^*(\nu)$};
 
 
 \draw[dashed,red]   (0,2)--(1.5,2)--(1.5,0)--(3,0);
@@ -854,7 +1029,7 @@ Commentaires:
 \textbf{Remarques} :\\
 \vspace{0.2cm}
 \begin{itemize}
-\item Plusieurs fenêtres sont possibles (Hamming, Dolf Tchebycheff,...)
+\item Plusieurs fenêtres sont possibles (Hamming, Dolph-Tchebycheff,...)
 \vspace{0.2cm}
 \item<2-> Fenêtre $\rightarrow$ Compromis ondulations/largeur bande de transition
 \vspace{0.2cm}
@@ -878,7 +1053,7 @@ Les méthodes suivent toute le même principe général :
 		\draw (4,-1) node[text centered] {\scriptsize Rep. imp. interm.};
 		\node[rectangle,draw,align=center] (N) at (7,0) {$h_i^*$};
 				\draw (7,-1) node[text centered] {\scriptsize Rep. imp. corr.};
-		\node[rectangle,draw,align=center] (B) at (10,0) {$H^*(f)$};	
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H^*(\nu)$};	
 		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. réelle.};
 		
 		\draw[->] (I)--(D);
@@ -958,7 +1133,7 @@ Application de la transformée de Fourier inverse aux $H_k$
 \column{60mm}
 \begin{center}
 \begin{tikzpicture}
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
 
@@ -1059,13 +1234,13 @@ De la réponse impulsionnelle on peut tirer une réponse en fréquence \textbf{c
 \column{60mm}
 \begin{center}
 \begin{tikzpicture}
-\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_freq_samp.txt};
 
 \begin{scope}[yshift=-2.5cm]
-\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize $\textrm{arg}(H(f))$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize $\textrm{arg}(H(\nu))$};
 \draw[thick,blue] plot file {arg_freq_samp.txt};
 \end{scope}
 \end{tikzpicture}
@@ -1084,7 +1259,7 @@ Si on reprend les échantillons initiaux...\\
 \column{60mm}
 \begin{center}
 \begin{tikzpicture}
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
 
@@ -1111,13 +1286,13 @@ Si on reprend les échantillons initiaux...\\
 \column{60mm}
 \begin{center}
 \begin{tikzpicture}
-\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_freq_samp.txt};
 
 \begin{scope}[yshift=-2.5cm]
-\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize $\textrm{arg}(H(f))$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0,0)-- (0,1.5)node[above] {\scriptsize $\textrm{arg}(H(\nu))$};
 \draw[thick,blue] plot file {arg_freq_samp.txt};
 \end{scope}
 \end{tikzpicture}
@@ -1132,8 +1307,8 @@ Dans les faits, on a \textbf{interpolé} la réponse en fréquence du filtre à 
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale=2]
-\draw[->] (-2.1,0)-- (2.1,0)node[right] { $f$} ;
-\draw[->] (0.02,0)-- (0.02,1.5)node[above] {  $|H(f)|$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\footnotesize{ $\nu$}} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] { \footnotesize{ $|H(\nu)|$}};
 \draw[thick,blue] plot file {module_freq_samp.txt};
 
 \only<2>{
@@ -1165,7 +1340,7 @@ Pour bien comprendre l'impact du choix des points on peut modifier la valeur dan
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale=0.7]
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
 
@@ -1196,8 +1371,8 @@ Pour bien comprendre l'impact du choix des points on peut modifier la valeur dan
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[scale=1.5]
-\draw[->] (-2.1,0)-- (2.1,0)node[right] { $f$} ;
-\draw[->] (0.02,0)-- (0.02,1.5)node[above] {  $|H(f)|$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] { \footnotesize{$\nu$}} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] { \footnotesize{ $|H(\nu)|$}};
 \draw[thick,blue] plot file {module_freq_samp2.txt};
 
 \draw[dotted,blue] plot file {module_freq_samp.txt};
@@ -1227,7 +1402,7 @@ Observations:
 \begin{center}
 \begin{tikzpicture}
 	\begin{scope}[scale=0.5]
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
 
@@ -1269,8 +1444,8 @@ Observations:
 \end{scope}
 	
 	\begin{scope}[scale=1,xshift=9cm]
-\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0.02,0)-- (0.02,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_freq_samp.txt};
 
 
@@ -1305,7 +1480,7 @@ Observations:
 \begin{center}
 \begin{tikzpicture}
 	\begin{scope}[scale=0.5]
-	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $f$} ;
+	\draw[->] (-0.5,0)-- (3.5,0)node[right] {\scriptsize $\nu$} ;
 %\draw (-0.3,-0.3) node {0};
 \draw[->] (0,0)-- (0,3)node[above] {\scriptsize $H_k$};
 
@@ -1347,8 +1522,8 @@ Observations:
 \end{scope}
 	
 	\begin{scope}[scale=1,xshift=9cm]
-\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $f$} ;
-\draw[->] (0.02,0)-- (0.02,1.5)node[above] {\scriptsize  $|H(f)|$};
+\draw[->] (-2.1,0)-- (2.1,0)node[right] {\scriptsize $\nu$} ;
+\draw[->] (0.02,0)-- (0.02,1.5)node[above] {\scriptsize  $|H(\nu)|$};
 \draw[thick,blue] plot file {module_freq_samp.txt};
 
 
@@ -1391,7 +1566,7 @@ Les méthodes suivent toute le même principe général :
 		\draw (4,-1) node[text centered] {\scriptsize Rep. imp. interm.};
 		\node[rectangle,draw,align=center] (N) at (7,0) {$h_i^*$};
 				\draw (7,-1) node[text centered] {\scriptsize Rep. imp. corr.};
-		\node[rectangle,draw,align=center] (B) at (10,0) {$H^*(f)$};	
+		\node[rectangle,draw,align=center] (B) at (10,0) {$H^*(\nu)$};	
 		\draw (10,-1) node[text centered]{\scriptsize Rep. fréq. réelle.};
 		
 		\draw[->] (I)--(D);
@@ -1884,7 +2059,7 @@ Réponse en fréquence du filtre en $z$\\
 
 \draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
 \draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
-\draw[dashed] (1,0)node[below] {\scriptsize $f_e/2$}--(1,0.5);
+\draw[dashed] (1,0)node[below] {\scriptsize $\nu_e/2$}--(1,0.5);
 \end{scope}
 
 
@@ -1914,7 +2089,7 @@ Réponse en fréquence du filtre en $z$\\
 
 \draw[color=blue!50!cyan] (1.2,-1.25)--(1.4,-1.25) node[right,color=black] {\scriptsize $a<<1$};
 \draw[color=blue] (1.2,-1)--(1.4,-1) node[right,color=black] {\scriptsize $a>>1$};
-\draw[dashed] (1,-0.5)node[below] {\scriptsize $f_e/2$}--(1,0);
+\draw[dashed] (1,-0.5)node[below] {\scriptsize $\nu_e/2$}--(1,0);
 \end{scope}
 \end{tikzpicture}
 \end{center}
@@ -2039,7 +2214,7 @@ Resumé:
 
 \draw[color=blue!50!cyan] (0.6,1.25)--(0.8,1.25) node[right,color=black] {\scriptsize $a<<T_e$};
 \draw[color=blue] (0.6,1)--(0.8,1) node[right,color=black] {\scriptsize $a>>T_e$};
-\draw[dashed] (1,0)node[below] {\scriptsize $f_e/2$}--(1,0.5);
+\draw[dashed] (1,0)node[below] {\scriptsize $\nu_e/2$}--(1,0.5);
 \end{scope}
 
 
