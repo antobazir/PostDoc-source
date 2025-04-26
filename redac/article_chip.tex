@@ -1,0 +1,80 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{epsfig}
+\usepackage{multicol}
+\usepackage[margin=0.7in]{geometry}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\usepackage{pict2e}
+\usepackage{tikz}
+
+\begin{document}
+\section{Introduction}
+%cancer
+Cancer is now well established as a family of diseases generally involving three main aspects: 
+\begin{itemize}
+\item Mechanics 
+\item Immune system
+\item Metabolism 
+\end{itemize}
+Analysis of physiological parameters on live subjects, or adapted \textit{in vitro} models have consistently demonstrated that cancer initiation and progression can be be robustly correlated to notable change in at least one of these aspects. The mechanical properties of cells and tissues will evolve, with a general trend being that cell become more deformable while tissue become more rigid due to excessive matrix production. In terms of the immune system, many complex responses where cancer deregulate immune response have been observed. Moreover, there are instances where immune cells will be recruited and effectively promote tumor growth. Metabolic changes during cancer progression generally involve increased resistance to harsh conditions along with a increased ability to rely on different substrates for growth and survival. In several types of cancer, experiments have suggested that metabolic adaptation is linked to hypoxia.
+
+%hypoxia
+The physiological impacts of hypoxia have long been studied in various cancer cell lines. From a regulatory point of view the involvement of Hypoxia-inducible factors (HIF) is now well established. However, the dynamics of different isoforms and their link with other physiological markers are more difficult to establish. One of the reasons for this is the variability of response observed. Some cell lines have demonstrated constitutive hypoxic response even when well oxygenated. Several cancer cell lines exhibit resistance to hypoxic conditions, some surviving for weeks at oxygen level below 1\% \cite{McKeown2014}. This state of facts calls for more qualitative and quantitative data on hypoxia response in different cell lines.
+
+%Why studying hypoxia is difficult
+Relevant study of hypoxia on in vitro models can be difficult. As suggested in many studies oxygen levels in normal incubators tend to be higher than even normal physioxic levels near capillaries and blood vessels. If one wants to account for the possible organ geometries, variations in tissue diffusion and the possible impact of tumor development on all the previous parameters, reproducing tissue structure at least to a degree is a promising pathway to relevance and reproduction of biophysical parameters.
+
+%Pediatric glioma and the chip
+Pediatric glioma are among the type of tumors whose development as been linked to hypoxia most notably through the H3K27M histone and the impact of hypoxia on its dynamics. The aim to reproduce a relevant metabolic environment for tumor growth has led to the development of a tumor-on-chip model with scales large enough to allow the formation of oxygen gradients and recreating hypoxic growth conditions.
+
+%why use modelling 
+The complex geometry of the system as well as the number or unknown or open parameters in terms of cell metabolic behavior, in general and in the specific context of hypoxic growth would require a high number of experiments to gain insights about the system. In this case, the benefit of integrating in silico modelling into this type of studies is two-fold. It can confirm or infirm simple hypothesis about the system and potential allow the exploration of different parameters and their impact of growth. This study thus focuses on the development of a computational model mimicking the behavior of the tumor-in-chip in order the main features of growth and oxygen dynamics.
+
+\section{The model}
+The chip geometry is as follows: a 10mm-diameter cylindrical well is molded into PolyDiMethylSiloxane (PDMS). The well also has two side inlets that feed directly the circular part. The inlet are the 3mm-wide and have rectangular geometry. The PDMS mold is placed on a lower cover slip and is 750 \textmu m-thick. A pellet of a mixture of cell and an extracellular matrix scaffold in the poured to form a circular pellet near the center of the circular well. As it reticulates to form an assembly of cells embedded in 3D cellular matrix. Medium is also poured in the remaining spaces of the mold to supply the 3D culture with nutrients. This way, the nutrients and oxygen in the medium is supplied radially to the tissue. Once the pellet and medium are in place a upper coverslip is placed on top of the system. The ensured that oxygen renewal occurs only at the end of each inlet and that the supply is indeed radial. Once everything is in place, the system is placed in culture conditions and monitored for the next 24 to 48 hours.
+
+The model used to capture the feature of the chip is a hybrid agent-based model.  The cell response is modelled through the agent-based part of the model. This type of model has been used by cancer studies in the past. However, this geometry being new requires some adaptations of existing solutions.
+
+\subsection{Cell dynamics}
+
+\subsection{Oxygen dynamics}
+The oxygen dynamics were modelled with the following reaction diffusion equation which is commonly used to model nutrient dynamics in hybrid agent-based models. \cite{Mao2018}\cite{Kempf2005}\cite{Bull2020}
+
+\begin{align}
+\label{eqn:O} \frac{d [O]}{d t} = \overrightarrow{\nabla} (D_O \cdot \overrightarrow{\nabla} [O]) - k_O \frac{[O]}{[O] + O_0}  
+\end{align}
+
+With $[O]$, the concentration of the species, $D$ the diffusion coefficient of the molecule and $k_O$ the consumption of the species by cells. The equation as written here holds for a given phase.  The configuration of the system leads to questions on the structure of the system and how to describe the different part.
+
+The medium is generally treated as 37°C water in modelling studies on that subject.\cite{Mao2018}\cite{Bull2020}\cite{Jagiella2016}\cite{Kempf2005} However, due to the amount of dissolved species in standard culture medium formulations has led some researchers to question that assumption. However, literature and experiments on this subject remain scarce at the time of this writing. But one study on the subject did demonstrate potentially significant effect of the dissolve species on the measurable diffusion coefficient of oxygen.\cite{Jamongwong2010} Glucose mass concentration generally ranges between 0 and 4.5 g/L in culture media. In this range, the study demonstrate that in this range, glucose does not in oxygen diffusion coefficient. In terms of salt the concentration of NaCl is varied and is shown to have a significant effect on oxygen diffusion coefficient. A typical culture medium formulation include roughly 11 g/L of inorganic salts including 6.4 g/L of NaCl. According to the measurement of Jamongwong et al., this should results in a 25 \% drop of the diffusion coefficient compared to pure water. It would therefore be reasonable to apply this corrective factor to the 37°C value for water. Moreover, the presence of anionic surfactant even in low amount, impact the diffusion coefficient as well, but none of the vitamin present in Thermofischer formulation used as reference that might be an anionic surfactant is present in sufficient amount to be within the range shown to impact diffusion coefficient.Therefore, the retained diffusion value for oxygen is that of 37°C reduced by  25\% due to salt which results in the value used being 135000 \textmu m$^2$/min.
+
+The pellet consisting of a mix of matrigel and hyaluronic acid filled medium and containing cells also needs to be modelled. A study by Colom et al. contains experimental data on oxygen diffusion in cellular and acellular gels compared to water.\cite{Colom2014} One of the tested gel was composed of matrigel. The value found for matrigel was a 40\% reduction compared to the value found in water. The value retained for water in our case being 135000 \textmu m$^2$/min, a realistic value for the matrix would 80000 \textmu m$^2$/min.
+
+Reticulated PDMS is permeable to oxygen. This means that in order to fully model the oxygen dynamics, it is necessary to include the PDMS mold in the model. reticualted PDMS can be described as a tortuous gas phase. A survey of the available literature on diffusion oxygen coefficient in oxygen yielded values ranging from 100000 \textmu m$^2$/min to 540000 \textmu m$^2$/min in various measurement and molecular dynamics studies.\cite{Ullal2014}\cite{Sudibjo2011}\cite{Park2006}\cite{Ziomek1991}\cite{KimM2013}
+
+Since PDMS is described as a gas phase and medium is described as a liquid phase, the transfer between the PDMS gas phase and the adjacent medium liquid phase needs to be modelled and calculated. To achieve that, the two film theory is used.\cite{Doran2012} Since we work with oxygen in aqueous solution , the following formula can be applied at the interface :
+
+\begin{align}
+\label{eqn:2FT} J_{O2} =  k_L a([O]_{eq}-[O]) 
+\end{align}
+with $J_{O2}$ the volumetric mass transfer in mol/m$^3$/s, $k_L$ the liquid mass transfer coefficient in m/s, $a$ the area of the interface and $[O]$ the oxygen concentration in the liquid. $[O]_{eq}$ is given by the following equation:
+
+\begin{align}
+\label{eqn:HO} [O]_{eq} =  [O]_{PDMS}H_{cc} 
+\end{align}
+with $H_{cc}$ the Henry coefficient for oxygen in water and $[O]_{PDMS}$ the concentration in the adjacent PDMS. This expression for the flux is used directly in the diffusion equation. According to the studies of Jamongwong et al, the mass transfer coefficient is also impacted by the salt concentration and temperature. The value at 20°C given by Jamongwong, considering the amount of inorganic salts dissolved in ordinary culture medium is 3.8 $\cdot$ 10$^{-4}$ m/s. Vogelaar and colleagues have studied the impact of temperature on mass transfer coefficient on oxygen.\cite{Vogelaar2000} The value of the mass transfer coefficient increases by 33 \% when temperature increases from 20°C to 40°C. Therefore, a 33 \% increase to the value given by Jamongwong and colleagues is applied to account for temperature influence. The retained value for $k_L$ is 2.5 $\cdot$ 10$^{-4}$ m/s. 
+
+The value of the Henry coefficient for oxygen is taken to be 4 $\cdot$ 10 $^{-2}$ after application of Van't Hoff's law to account for the influence of temperature.
+
+
+
+\section{Discussion}
+
+\bibliographystyle{unsrt}
+\bibliography{/home/antonybazir/Documents/Post-doc/Redac/biblio_synthese}
+\end{document}
