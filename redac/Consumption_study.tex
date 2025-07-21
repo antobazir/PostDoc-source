@@ -1,0 +1,76 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage{epsfig}
+\usepackage{multicol}
+\usepackage[margin=0.7in]{geometry}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{tcolorbox}
+\usepackage{pict2e}
+\usepackage{tikz}
+
+
+\begin{document}
+
+\section{Introduction}
+%cancer metabolism 
+As explained earlier one of the fundamental aspects of cancer is metabolism. Among the features of cancer tissue, its ability to survive and even proliferate in environments where at least one important nutrients (usually glucose or oxygen) is scarce is notable. Metabolism is the study of energy fluxes in a given system. This involves the study of the nature and amount of "inputs" and "outputs" as well as the intermediate states they may find themselves in.
+
+
+The link between cancer and metabolism being well established, metabolic measurements on various cancer cell lines have been performed, either as the primary subject of study, or as complementary measurements in order to establish the impact of drugs or other factors.
+
+In this chapter methods sued in order to obtain quantitative data on diffusion and consumption will be presented and reviewed
+
+\section{Quantitative consumption}
+\subsection{Glucose}
+Glucose (C$_6$H$_{12}$O$_6$) is one the main energy sources in mammal cells. Once dissolved glucose finds itself in the vicinity of a cell, it can be internalized by the action of proteins of the GLUT family. These membrane proteins, specifically GLUT1 and GLUT3 in the case of most cells mediates the crossing of the cell membrane by glucose.\cite{Berg2006} It is specifically stated that the GLUT transporters help glucose crossing the membrane following the concentration gradient.\cite{Macheda2005}  The more GLUT transporters are expresssed at the membrane, the higher the glucose uptake.
+
+After that step, glucose can undergo several fates. It is generally transformed into glucose-6-phosphate which cannot leave the cells. From that point, in most cells, glucose is consumed either by glycolysis or through the pentose phosphate pathway. Glycolysis is the pathway that ultimately leads to the formation of pyruvate which can oxidized into lactate. Pyruvate serves as the entry point of the oxidative phosphorylation process. The pentose phosphate pathway leads to formation of pentoses and of precursor molecules for the synthesis of nucleotides. In liver cells glucose can also be polymerized into glycogen. or used to synthetise fatty acids. In any case, glucose in considered to be consumed when it is converted into glucose-6-phosphate. %In the scope of our studies, glucose uptake is defined as the number of moles or mass of glucose entering a cell during a given time period.
+
+ 
+\subsection{Quantitative study of glucose uptake and consumption}
+%uptake and consumption
+It is important to note that studies refer to either glucose uptake or glucose consumption. Glucose uptake generally refers to the specific process of crossing the plasma membrane through GLUT transporters. Consumption  generally refers to the transformation of glucose into other molecules as a result of cellular metabolism. As is explained below, these two quantities are measured differently.\cite{WangK2023}
+
+Methods to measure glucose consumption in cells usually follow this pattern: A known number of cells are cultivated for a given time in a medium with an initially known concentration of glucose. After a set duration, the supernatant is collected and its glucose concentration is measured in order to assess the amount of consumed glucose\cite{Mazurek1997}\cite{Bayar2021} Glucose quantification in the collected supernatant usually involves glucose oxidase.\cite{Prado-Garcia2020}
+
+This method, while straightforward is subject to biases. Indeed, in order to derive a cellular consumption rate, the total consumption needs to be divided by the cell number. If the elapsed time is comparable to the cell cycle duration, then the cell number varies significantly over the duration of the measurement which may lead to overestimation of the cell number and therefore underestimation of the actual consumption rate. 
+
+The use of labeled radioactive hexose is a well-documented method to quantify glucose uptake. Examples include fluoro-deoxyglucose (FDG), 2-deoxy- D-glucose (2DG), and 3-O-methylglucose (3MG).\cite{Yamamoto2011} The principle is to cultivate the cells with labeled glucose, to wash the cells after a given time of incubation and to lyse them in order to quantify the amount of labeled glucose in the mixture which yields a glucose consumption value. Alternative version also use flow cytometer to measure the amount labeled hexose internalized by the cell.\cite{Jiao2019} An alternative with non-radioactive 2DG also exist where resorufin which is an endpoint of the 2DG conversion chain is used as a proxy to evalutate 2DG glucose uptake.\cite{Yamamoto2011} Other methods that forego the used of radioactive labels have been developed in the last decade.\cite{Yan2016}
+
+To summarize, glucose uptake concerns the glucose that crosses the membrane while glucose concerns the glucose turned into G6P. By this logic when both are measured, consumption should be slightly higher as some the glucose being uptake is not yet consumed. However consumption must nonetheless be quick in order to maintain the concentration gradient between extracellular and intracellular compartiment. This is supported by findings that suggest that uptake, and not consumption, is the rate-limiting step of the process.\cite{Waki1998}\cite{Burgman2001}
+
+It must also be noted that the MCF-7 cell lines also expresses the GLUT12 transporter on its membrane which may also impact glucose uptake patterns and dynamics. \cite{Burgos2024}
+
+%lookup Hexokinase (response to glucose level hypoxia etc)
+%lookup AMPK (energy sensor apparently)
+
+\subsection{Reporting on glucose consumption and uptake}
+Depending on whether uptake or consumption is measured the final physical variable being measured is different. For glucose consumption, the measured value is a concentration. Said concentration difference can then be normalized with a time duration and a cell number yielding a consumption rate per cell number. For glucose uptake the measured quantity is either radioactive signal or a concentration.
+
+Due to the general principles of "control vs condition" used in biological studies, no standardized unit for glucose consumption exists. Some studies report only relative value while other report only concentration changes or convert it to cell consumption rate. Since our goal is to investigate cellular consumption rates, studies where the published value are normalized by the control value are not useful. Studies where the duration or cell numbers are not given are also not useful to extract consumption rate.
+
+Ideally, complete knowledge of the culture condition, especially medium formulation is also needed. While in most studies, medium formulation can be readily retrieved from the supplier's documentation, some studies used medium from supplier whose precise formulation was not given. In other studies, the precise reference of medium is not necessarily given leading to ambiguity in the concentration values for some compound such as glutamine, pyruvate or lactate.
+
+\subsection{Glucose uptake and consumption for the MCF-7 cell line}
+Even though consumption and uptake are different things, a large majority of studies study glucose metabolism with only one of those two quantities with a majority studies reporting glucose uptake rather than consumption 
+
+%meadows2008 reports 310 pm 30 pg/cell for MCF7
+\subsection{Glucose uptake and consumption variations}
+As could be seen in the previous section there is variety of culture conditions in which glucose consumption was measured on MCF-7. In order to model tissue growth in a variety of condition, it is important to know how glucose uptake and consumption can be influenced by environmental conditions. Ideally, knowing about the underlying molecular process would also help in knowing whether said knowledge can be applied in different situations or not.
+
+Burgman and colleagues studies the impact of hypoxia on glucose uptake in MCF-7 cells cultured as monolayers. What they observed is on average a 2.5-fold increase in glucose uptake in severa hypoxia (0.0002\% O$_2$). They also suggested that said increase may from a change in conformation due to a shift in redox balance or from activation of incativated GLUT transporters already on the membrane.\cite{Burgman2001}
+
+Interestingly, a study from Smith suggest that serum deprivation did not impact glucose uptake significantly.\cite{Smith1998} 
+
+\subsection{Oxygen consumption rate for the MCF-7 cell line} 
+\section{Quantitative diffusion}
+\newpage
+\bibliographystyle{unsrt}
+
+\bibliography{/home/antonybazir/Documents/Post-doc/Redac/biblio_synthese}
+
+\end{document}
