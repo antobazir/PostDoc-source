@@ -15,54 +15,52 @@
 \begin{document}
 \section{Introduction}
 %cancer
-Cancer is now well established as a family of diseases whose development is considered to be determined by three main factors: Mechanics, Immune system and Metabolism. Analysis of physiological parameters on live subjects, or adapted \textit{in vitro} models have consistently demonstrated that cancer initiation and progression can be be robustly correlated to notable change in at least one of these aspects. The mechanical properties of cells and tissues evolve, with a general trend being that cells become more deformable while tissues become more rigid due to increased extracellular matrix production.\cite{Chin2016} In terms of the immune system, many complex responses invovling deregulation of immune response have been observed.\cite{Pardoll2015} Moreover, there are instances where immune cells can be recruited by adjacent cancer cells and effectively promote tumor growth by affecting the surrounding healthy tissue.\cite{Gonzalez2018} Metabolic reprogramming during cancer progression generally involves increased resistance to nutrient scarcity along with a increased ability to rely on multiple substrates for growth and survival. In several cancer types, experiments have suggested that metabolic adaptation is linked to hypoxia, notably through the action of Hypoxia-Inducible-Factors (HIF).\cite{Rakotomalala2021}
+Cancer is now well established as a family of diseases whose development is considered to be determined by three main factors: Mechanics, Immune system and Metabolism. Analysis of physiological parameters on live subjects, or adapted \textit{in vitro} models have consistently demonstrated that cancer initiation and progression can be be robustly correlated to notable change in at least one of these aspects. The mechanical properties of cells and tissues evolve, with a general trend being that cells become more deformable while tissues become more rigid due to increased extracellular matrix production.\cite{Chin2016} In terms of the immune system, many complex responses invovling deregulation of immune response have been observed.\cite{Pardoll2015} Moreover, there are instances where immune cells can be recruited by adjacent cancer cells and effectively promote tumor growth by affecting the surrounding healthy tissue.\cite{Gonzalez2018} Metabolic reprogramming during cancer progression generally involves increased resistance to nutrient scarcity along with a increased ability to rely on multiple substrates for growth and survival. In several cancer types, experiments have suggested that metabolic adaptation is linked to hypoxia, notably through the action of hypoxia-inducible Factors (HIF).\cite{Rakotomalala2021}
 
 %hypoxia
-The physiological impacts of hypoxia have long been studied in various cancer cell lines. From a regulatory point of view, the involvement of Hypoxia-inducible factors (HIF), proteins regulating transcription and responding to low oxygen levels is now well established.\cite{Strickland2017}\cite{Chen2021} However, the dynamics of different isoforms and their link with other physiological markers are difficult to decipher and are actively studied to this day. One of the reasons for this is the variability of observed responses. Some cell lines have demonstrated constitutive hypoxic response even when well oxygenated.\cite{Aebersold2001} Several cancer cell lines exhibit resistance to hypoxic conditions, some surviving for weeks at oxygen level below 1\% \cite{McKeown2014}. This state of facts calls for more qualitative and quantitative data on the variety and details of hypoxia responses in different cell lines.
+The physiological impacts of hypoxia have long been studied in various cancer cell lines. From a regulatory point of view, the involvement of HIFs, proteins regulating transcription and responding to low oxygen levels is now well established.\cite{Strickland2017}\cite{Chen2021} However, the dynamics of different isoforms and their link with other physiological markers are difficult to decipher and are actively studied to this day. One of the reasons for this is the variability of observed responses. Some cell lines have demonstrated constitutive hypoxic response even when well oxygenated.\cite{Aebersold2001} Several cancer cell lines exhibit resistance to hypoxic conditions, some surviving for weeks at oxygen level below 1\% \cite{McKeown2014}. This state of facts calls for more qualitative and quantitative data on the variety and details of hypoxia responses in different cell lines.
 
 %Why studying hypoxia is difficult
-Relevant study of hypoxia on \textit{in vitro} models can be difficult. As suggested in several studies, oxygen levels in normal incubators tend to be higher than even" physoxic" levels near capillaries and blood vessels in healthy tissue, which are reportedly ranging from  3 to 7.4 \%.\cite{McKeown2014} If one wants to account for the possible organ geometries, variations in tissue diffusion and the possible impact of tumor development on all the previous parameters, reproducing tissue structure, at least to a degree, is a promising pathway to relevance and reproduction of biophysical parameters.
+Relevant study of hypoxia on \textit{in vitro} models can be difficult. As suggested in several studies, oxygen levels in normal incubators tend to be higher than even" physioxic" levels near capillaries and blood vessels in healthy tissue, which are reportedly ranging from  3 to 7.4 \%.\cite{McKeown2014} If one wants to account for the possible organ geometries, variations in tissue diffusion and the possible impact of tumor development on all the previous parameters, reproducing tissue structure, at least to a degree, is a promising pathway to relevance and reproduction of biophysical parameters.
 
 %Pediatric glioma and the chip
-Pediatric gliomae are among the type of tumors whose development has been linked to hypoxia most notably through the H3K27M histone and the impact of hypoxia on its dynamics.\cite{Rakotomalala2021} The aim to reproduce a relevant metabolic environment for tumor growth has led to the development of a tumor-on-chip model with dimensions compatible with the formation of oxygen gradients and recreating hypoxic growth conditions found \textit{in vivo}.
+Pediatric gliomae are among the type of tumors whose development has been linked to hypoxia most notably through the H3-K27M histone mutation and the impact of hypoxia on its dynamics.\cite{Rakotomalala2021} The aim of reproducing a relevant metabolic environment for tumor growth has led to the development of a tumor-on-chip model with dimensions compatible with the formation of oxygen gradients and recreating hypoxic growth conditions found \textit{in vivo}.
 
 %why use modelling 
-The complex geometry of the system as well as the number or unknown or open parameters in terms of cell metabolic behavior, in general and in the specific context of hypoxic growth would require a high number of experiments to gain insights about the system. In this case, the benefit of integrating \textit{in silico} modelling into this type of studies is two-fold. It can confirm or infirm simple hypotheses about the system and potentially allow the exploration of different parameters and their impact of growth. This study thus focuses on the development of a computational model capturing the main features of growth and oxygen dynamics within the tissue in DMG-on-chip experiments.
+The complex geometry of the system as well as the number or unknown or open parameters in terms of cell metabolic behavior, in general and in the specific context of hypoxic growth would require a high number of experiments to gain insights about the system. In this case, the benefit of integrating \textit{in silico} modelling into this type of studies is two-fold: it can confirm or infirm simple hypotheses about the system and potentially allow the exploration of different parameters and their impact of growth. This study thus focuses on the development of a computational model capturing the main features of growth and oxygen dynamics within the tissue in DMG-on-chip experiments.
 
 \section{The model}
 \subsection{Agent-based modelling for cancer studies}
 %Cancer and tumor growth
-Modelling of tumor growth  and other cancer tissue properties is a research field more than 50 years old and various types of model have been used to capture the main feature of various living systems and their interactions with their surroundings. Different types of models are used to describe processes on different spatial and temporal scales. Systems biology, for example, has used modelling to describe regulatory network and mean-field models have been used to describe tissue-scale growth and response to environment.Use of computational tools to solve the model has progressed along with the available computational power in the last decades, and two great types of model have emerged over the years to capture both cell-level response mechanisms and tissue-scale growth and geometry: continuous model and agent-based models. 
+Modelling of tumor growth  and other cancer tissue properties has been an active research field for the last 50 years various types of model have been used to capture the main feature of various living systems and their interactions with their surroundings. Different types of models are used to describe processes on different spatial and temporal scales. Systems biology, for example, resorted to modelling to describe and understand regulatory network and mean-field models have been used to describe tissue-scale growth and response to environment.\cite{Koch2017}\cite{Watanabe2016}\cite{Jin2021} Use of computational tools to solve the model has progressed along with the available computational power in the last decades, and two types of model have emerged over the years to capture both cell-level response mechanisms and tissue-scale growth and geometry: continuous model and agent-based models.
 
 %Continuous models 
-Continuous models represent most variables as densities or concentrations which are linked by ordinary differential equations and/or partial differential equations. Cell or tissue response to their environment is then generally encompassed in mathematical functions. Continuous models with few variables do not require the use of computational tools and some of them can even be solved analytically. However, finer modelling and inclusion of coupled can make computational tools necessary to solve the equations. Applications in terms of cancer range from description of bacterial movements to the complex regulatory response of a tissue coupled to growth to spheroid growth or cell migration.\cite{Casciari1992}\cite{Villa2021}\cite{Katsaounis2023}
+In continuous models most variables are represented as densities or concentrations which are linked by ordinary differential equations and/or partial differential equations. Cell or tissue response to the surrounding environment is then generally described by mathematical functions. Continuous models with few variables do not require the use of computational tools and some of them can even be solved analytically. However, finer modelling and inclusion of coupled can make computational tools necessary to solve the equations. Applications in terms of cancer range from description of bacterial movements to the complex regulatory response of a tissue coupled to growth to spheroid growth or cell migration.\cite{Casciari1992}\cite{Villa2021}\cite{Katsaounis2023}
 
 %Agent-based models
-Agent-based models represent cells (or sometimes groups of cells) as individual agents and use algorithmic rules instead of mathematical functions to encode cell behavior and interactions with their environment and one another. In most cancer modelling studies, agent-based models are generally coupled to a set of partial differential equation to describe nutrients of cytokines/chemokines or the evolution of surrounding environment. Agent-based models can be classified into "off-lattice" and "on-lattice" models.\cite{Osborne2017} In "off-lattice" models, the three-dimensional space is represented as triplet of real numbers and cell movement and deformations are calculated by solving Newton's 3rd law. "On-lattice" models represent cells as points on a fixed grid. In general off-lattice model are better at describing phenomenon where stress or any mechanical quantity needs to known quantitatively. On-lattice are simpler and remain useful as long as a coarse discrete description of space does not impact results too negatively.
-
-In this study the characteristics of the system made it possible to use an hybrid on-lattice agent based model which is described herefater.
+In agent-based models cells (or sometimes groups of cells) are represented as individual agents and algorithmic rules are used instead of mathematical functions to encode cell behavior and interactions with the surrounding environment and one another. In most cancer modelling studies, agent-based models are generally coupled to a set of partial differential equation to describe nutrients of cytokines/chemokines or the evolution of surrounding environment. Agent-based models can be classified into "off-lattice" and "on-lattice" models.\cite{Osborne2017} In "off-lattice" models, the three-dimensional space is represented as triplet of real numbers and cell movement and deformations are calculated by solving Newton's 3rd law. "On-lattice" models represent cells as points on a fixed grid. In general, off-lattice model are favored for phenomenon where stress or any mechanical quantity needs to be known quantitatively. On-lattice models, on the other hand, are simpler and remain useful as long as a coarse discrete description of space does not impact results too negatively. In this study, the characteristics of the system led to the choice of an hybrid on-lattice agent based model which is described herefater.
 
 \subsection{Agent-based modelling for the DMG-on-chip}
 %the model
-The model used in this study is a hybrid on-lattice agent-based model. This model can be broadly understood as a collection of links and interactions between three main grids : The cellular grid, the nutrient grid and the consumption grid. 
+As stated above, the model used in this study is a hybrid on-lattice agent-based model. This model can be broadly understood as a collection of links and interactions between three main grids : The cellular grid, the nutrient grid and the consumption grid.
 
 %The cellular grid 
-The cellular grid keeps tracks of whether a vertex in the lattice is occupied or not. If it is, then the grid value is set to the index of the cell occupying it. Cells are attributed a unique index when they appear in the model either at initialisation or through mitosis.
+The cellular grid keeps tracks of whether a vertex in the lattice is occupied or not. If it is, then the grid value is set to the index of the cell occupying it. Cells are attributed a unique index when they appear in the model either at initialisation or through mitosis. 
 
 %The nutrient grid
-The nutrient grid is handled by a finite difference algorithm which update the concentration at every timestep. This grid is also checked whenever cell response to the environment is set to occur. In this case, only oxygen dynamics is modelled as no data on glucose was collected. But addition of glucose would be straightforward if needed.
+The nutrient grid contains the concentration of nutrient at each vertex. A finite difference algorithm updated the concentration at every timestep. This grid is also checked whenever cell response to the environment is set to occur. In this case, only oxygen dynamics is modelled as no data on glucose was collected. But addition of glucose would be straightforward if needed, as it would operate identically, only with differences in values of concentrations and parameters.
 
 %The consumption grid
-This grid is updated regularly to reflect the evolution of cellular nutrient consumptions rates and the impact of their position on the spatial distribution of nutrients.
+This grid is updated regularly to reflect the evolution of cellular nutrient consumptions rates and the impact of their position on the spatial distribution of nutrients. Due to the fact that its evolution needs to be gradual and consistent, the consumption grid is also updated at every step with information from other grid but also the cell table which will be detailed in the next paragraph.
 
 %Other data structures
-This grid are linked together but also to other important data structures in the model such the cell table, which contains the information of all cells in the model sorted by index. 
+The aforementioned grids are linked together, but they are also linked to other important data structures in the model such the cell table, which contains the information of all cells in the model sorted by index. This allows to keep track of a cell position and state in straightforward fashion without needing complex scripts to retrieve the needed data in the various grids. It is also the structure that retains the information about dead cells, as it table entry is updated to reflect its state but not deleted. It is also in the cell table that the max consumption rate and its potential evolution are computed before being fed back to the consumption grid. The general data structure of the model is schematically represented in figure \ref{structure_model}
 
 %The evolution 
-The model is ran minute-by-minute. Every minute, the model checks whether any modification is necessary on the cellular grid. For example, some cells migrate, divide or commit to death, then the three grids are updated to reflect that change. Once the cellular checks are run, the nutrient grid is updated by running the finite difference algorithm for a minute.
+The model is ran minute-by-minute. Every minute, the model checks whether any modification is necessary on the cellular grid. For example, some cells migrate, divide or commit to death, then the three grids are updated to reflect that change. Once the cellular checks are run, the nutrient grid is updated by running the finite difference algorithm in order to simulate the evolution of the system during a minute.
 
 %Grid structure 
-The chosen model structure has the advantage of providing vertex-to-vertex match between all three grids. This avoids any interpolation or calculation of spatial coordinates which reduces computational work and is conducive to parallelization.\\
+The chosen model structure has the advantage of providing vertex-to-vertex match between all three grids. This avoids any interpolation or calculation of spatial coordinates which reduces computational work compared to on-lattice models and makes the model conducive to parallelization.\\
 
 \begin{figure}[ht]
 \begin{center}
@@ -73,7 +71,7 @@ The chosen model structure has the advantage of providing vertex-to-vertex match
     \draw[fill=blue!60!white] (0.5,0.5) grid[step=0.1] (1.0,1.0) rectangle (0.5,0.5);
     \draw[fill=blue!60!white] (0.4,0.6) grid[step=0.1] (1.1,0.9) rectangle (0.4,0.6);
  	\draw[fill=blue!60!white] (0.6,0.4) grid[step=0.1] (0.9,1.1) rectangle (0.6,0.4);
- 	%\draw[->]
+ 	\draw(0.75,-0.25) node{Cellular grid};
  	
  	\begin{scope}[yshift=-2cm]
  		\draw[fill=red!90!white] (0,0) grid[step=0.1] (1.5,1.5) rectangle (0,0);
@@ -83,6 +81,7 @@ The chosen model structure has the advantage of providing vertex-to-vertex match
  		\draw[fill=red!50!white] (0.6,0.4) grid[step=0.1] (0.9,1.1) rectangle (0.6,0.4);
  		\draw[fill=red!20!white] (0.6,0.6) grid[step=0.1] (0.9,0.9) rectangle (0.6,0.6);
  		\draw[fill=red!5!white] (0.7,0.7) grid[step=0.1] (0.8,0.8) rectangle (0.7,0.7);
+ 		\draw(0.75,-0.25) node{Nutrient grid};
  	\end{scope}
  	
  	\begin{scope}[yshift=-4cm]
@@ -93,14 +92,59 @@ The chosen model structure has the advantage of providing vertex-to-vertex match
  		\draw[fill=green!70!black] (0.6,0.4) grid[step=0.1] (0.9,1.1) rectangle (0.6,0.4);
  		\draw[fill=green!90!black] (0.6,0.6) grid[step=0.1] (0.9,0.9) rectangle (0.6,0.6);
  		\draw[fill=green!15!white] (0.7,0.7) grid[step=0.1] (0.8,0.8) rectangle (0.7,0.7);
+ 		\draw(0.75,-0.25) node{Consumption grid};
  	\end{scope}
+ 	
+ 	\draw(3.25,-1.5) circle(0.5) node{Model};
+
+	\draw[->] (1.65,0.65) to (3,-1.0);
+	\draw[<-] (1.65,0.25) to (2.8,-1.2);
+	
+	\draw[->] (1.65,-1.65) to (2.7,-1.65);
+	\draw[<-] (1.65,-1.45) to (2.7,-1.45);
+	
+	\draw[->] (1.65,-3.05) to (2.8,-1.85);
+	\draw[<-] (1.65,-3.45) to (3.0,-2.05);
+	
+	\draw[->] (3.8,-1.65) to (4.8,-1.65);
+	\draw[<-] (3.8,-1.45) to (4.8,-1.45);
+	%\draw[<-] (-0.25,0.65) to[bend right] (-0.25,0.75-2); 
+	%\draw[<-] (-0.25,0.65) to[bend right] (-0.25,0.75-4); 	
+ 	
+ 	\begin{scope}
+ 		\begin{scope}[yshift=-2.2cm,xshift=5cm]
+ 	 		\draw (0,0) node [above right] {...} (3,0.15) rectangle (0,0) ;
+ 	 		\draw (0,0.15) node [above right] {...} (3,0.3) rectangle (0,0.15);
+ 	 		\draw (0,0.3) node [above right] {...} (3,0.45) rectangle (0,0.15);
+ 	 		\draw (0,0.45) node [above right] {...} (3,0.6) rectangle (0,0.15);
+ 	 		\draw (0,0.6) node [above right] {...} (3,0.75) rectangle (0,0.15);
+ 	 		\draw (0,0.75) node [above right] {...} (3,0.9) rectangle (0,0.15);
+ 	 		\draw (0,0.75) node [above right] {...} (3,0.9) rectangle (0,0.15);
+ 	 		\draw (0,0.9) node [above right] {...} (3,1.05) rectangle (0,0.15);
+ 	 		\draw (0,1.05) node [above right] {...} (3,1.20) rectangle (0,0.15);
+ 	 		\draw (0,1.20) node [above right] {...} (3,1.35) rectangle (0,0.15);
+ 		\end{scope}
+ 		\begin{scope}[yshift=-2.2cm,xshift=6.35cm]
+ 	 		\draw (0,0) node [above right] {...} (3,0.15) rectangle (0,0) ;
+ 	 		\draw (0,0.15) node [above right] {...} (3,0.3) rectangle (0,0.15);
+ 	 		\draw (0,0.3) node [above right] {...} (3,0.45) rectangle (0,0.15);
+ 	 		\draw (0,0.45) node [above right] {...} (3,0.6) rectangle (0,0.15);
+ 	 		\draw (0,0.6) node [above right] {...} (3,0.75) rectangle (0,0.15);
+ 	 		\draw (0,0.75) node [above right] {...} (3,0.9) rectangle (0,0.15);
+ 	 		\draw (0,0.75) node [above right] {...} (3,0.9) rectangle (0,0.15);
+ 	 		\draw (0,0.9) node [above right] {...} (3,1.05) rectangle (0,0.15);
+ 	 		\draw (0,1.05) node [above right] {...} (3,1.20) rectangle (0,0.15);
+ 	 		\draw (0,1.20) node [above right] {...} (3,1.35) rectangle (0,0.15);
+ 		\end{scope}
+ 	\end{scope}	
+ 	\draw(7,-2.4) node{Cell table};
+ 	
 \end{scope}
 \end{tikzpicture}
 \caption{Schematic representation of the data structure of the simulation\label{structure_model}}
 \end{center}
 \end{figure}
 
-In the following the model is presented in more detail.
 
 \subsection{DMG-on-chip build-up geometry}
 The DMG-on-Chip (DoC) geometry is as follows: a 13mm-diameter cylindrical well is cut into a PolyDiMethylSiloxane (PDMS) mold. Two side inlets that are directly connected to the circular part. The inlet are the 3 mm-wide and have rectangular geometry. The PDMS mold is placed on a lower glass cover slip and is 750 \textmu m-thick. The PDMS mold lateral dimensions are 4 $\times$ 2 mm². The overall layout is shown in figure \ref{drawing}
@@ -139,7 +183,7 @@ The cell pellet, made of a mixture of cell, matrigel, hyaluronan and reticulant 
 Fresh culture medium is then poured in the remaining spaces of the PDMS mold to supply the 3D culture with nutrients. This way, the nutrients and oxygen in the medium are supplied radially to the cells through the matrix. Once the pellet and medium are in place, an upper coverslip is placed on top of the system. The upper coverslip is placed in a perpendicular arrangement comapred to the first one in order to keep part of the inlets uncovered. This ensures that oxygen renewal occurs only at the end of each inlet and that the nutrient and oxygen supply is indeed radial. Once everything is in place, the system is placed in culture conditions and monitored for the next 24 to 48 hours.
 
 
-\subsection{Oxygen dynamics}
+\subsection{Modelling oxygen dynamics}
 The oxygen dynamics is modelled with the following reaction diffusion equation which is commonly used to model nutrient dynamics in hybrid agent-based models.\cite{Mao2018}\cite{Kempf2005}\cite{Bull2020}. In our case, the reaction-diffusion equation is written as:
 
 \begin{align}
@@ -149,13 +193,14 @@ The oxygen dynamics is modelled with the following reaction diffusion equation w
 With $[O]$ the oxygen concentration, $D_O$ the diffusion coefficient of oxygen and $k_O$ the maximum oxygen consumption rate (OCR). The equation as written above holds for a given phase. Physically speaking, the model comprises three areas which are delineated and color-coded in figure \ref{drawing}, in the following the physical description of each phase in the model and its relation to oxygen dynamics will be detailed.
 
 %culture medium
-Culture medium is generally modelled as 37°C water in modelling studies focused on cancer.\cite{Mao2018}\cite{Kempf2005}\cite{Bull2020}\cite{Jagiella2016} However, the amount of dissolved species in standard culture medium formulations has led some researchers to questioning that assumption. However, literature and experiments on this subject remain scarce at the time of this writing. But one study on the subject did demonstrate potentially significant effect of dissolved species such as glucose, sodium chloride and anionic surfactants on the measurable oxygen diffusion coefficient.\cite{Jamongwong2010} In standard culture medium, glucose mass concentration generally ranges between 0 and 4.5 g/L. In this concentration range, the study demonstrates that dissolved glucose does not signficantly impact oxygen diffusion coefficient. In terms of salts, the concentration of NaCl is varied between 0 and 100  g/L and is shown to have a significant effect on oxygen diffusion coefficient. A typical culture medium formulation includes roughly 11 g/L of inorganic salts including 6.4 g/L of NaCl. According to the measurement of Jamongwong et al., this may result in a 25 \% decrease of the diffusion coefficient compared to pure water. It would therefore be reasonable to apply a corrective factor to the 37°C value for water. Moreover, the presence of anionic surfactants even in low amount, impacts the diffusion coefficient as well, but none of the vitamins present in studied formulations used as reference that might be an anionic surfactant is present in sufficient amount to be within the range shown to impact diffusion coefficient. Interestingly, a study by Figueieredo and colleagues measured almost identical values for the oxygen diffusion coefficient of water and DMEM.\cite{Figueiredo2018} Therefore, the retained diffusion value for oxygen is that of 37°C reduced by 25\% due to salt which results in the value range used in the model being 135000-180000 \textmu m$^2$/min.
+Culture medium is generally modelled as 37°C water in modelling studies focused on cancer.\cite{Mao2018}\cite{Kempf2005}\cite{Bull2020}\cite{Jagiella2016} However, the amount of dissolved species in standard culture medium formulations has led some researchers to questioning that assumption. literature and experiments on this subject remain scarce at the time of this writing. But one study on the subject did demonstrate potentially significant effect of dissolved species such as glucose, sodium chloride and anionic surfactants on the measurable oxygen diffusion coefficient.\cite{Jamongwong2010} In standard culture medium, glucose mass concentration generally ranges between 0 and 4.5 g/L. In this concentration range, the study demonstrates that dissolved glucose does not signficantly impact oxygen diffusion coefficient. In terms of salts, the concentration of NaCl is varied between 0 and 100  g/L and is shown to have a significant effect on oxygen diffusion coefficient. A typical culture medium formulation includes roughly 11 g/L of inorganic salts including 6.4 g/L of NaCl. According to the measurement of Jamongwong et al., this may result in a 25 \% decrease of the diffusion coefficient compared to pure water. It would therefore be reasonable to apply a corrective factor to the 37°C value for water. Moreover, the presence of anionic surfactants even in low amount, impacts the diffusion coefficient as well, but none of the vitamins present in studied formulations used as reference that might be an anionic surfactant is present in sufficient amount to be within the range shown to impact diffusion coefficient. Interestingly, a study by Figueiredo and colleagues measured almost identical values for the oxygen diffusion coefficient of water and DMEM.\cite{Figueiredo2018} Taking all this information into account, the retained diffusion value for oxygen is that of 37°C reduced by 25\% due to salt which results in the value range used in the model being 135000-180000 \textmu m$^2$/min.
 
 %The pellet
 The pellet, consists of a mixture of matrigel and hyaluronic acid saturated with culture medium and containing cells. A study by Colom and colleagues contains experimental data on oxygen diffusion in cellular and acellular gels compared to water.\cite{Colom2014} One of the tested gels was partially composed of matrigel. The oxygen diffusion coefficient measured on matrigel was a 40\% reduction compared to the value found in water. Another study by Figueiredo and colleagues also provides diffusion oxygen coefficient for hydrogels and several biological scaffolds, and some are as low as 15 \% of the value found in water.\cite{Figueiredo2018} The range of value retained for culture medium in this modelling case being between 135000-180000 \textmu m$^2$/min, a realistic range for acellular matrix would be 20000-110000 \textmu m$^2$/min. It also mentioned that cellularized matrix exhibit a diffusion value 40 \% lower than the cellularized matrix, meaning a convincing range for cellularized matrix would be between 10000 and 66000 \textmu m$^2$/min.
 
 %PDMS
-Reticulated PDMS is permeable to oxygen. This means that in order to fully model the oxygen dynamics, it is necessary to include the PDMS mold in the model. Reticulated PDMS can be described as a tortuous gas phase. A survey of the available literature on diffusion oxygen coefficient in oxygen yielded values ranging from 100000 \textmu m$^2$/min to 540000 \textmu m$^2$/min in various measurement and molecular dynamics studies.\cite{Ullal2014}\cite{Sudibjo2011}\cite{Park2006}\cite{Ziomek1991}\cite{KimM2013}.[improve with information on PDMS]
+Reticulated PDMS is permeable to oxygen. This means that in order to fully model the oxygen dynamics, it is necessary to include the PDMS mold in the model. Reticulated PDMS can be described as a tortuous gas phase. A survey of the available literature on diffusion oxygen coefficient in oxygen yielded values ranging from 100000 \textmu m$^2$/min to 540000 \textmu m$^2$/min in various measurement and molecular dynamics studies.\cite{Ullal2014}\cite{Sudibjo2011}\cite{Park2006}\cite{Ziomek1991}\cite{KimM2013}.
+%[improve with information on PDMS]
 
 Since PDMS is described as a gas phase and the medium is described as a liquid phase, the transfer between the PDMS gas phase and the adjacent medium liquid phase needs to be modelled as well. To achieve that, the two-film theory is used.\cite{Doran2012} Since the model focuses on oxygen in aqueous solution , the following formula can be applied at the interface :
 \begin{align}
@@ -170,21 +215,21 @@ with $H_{cc}$ the Henry coefficient for oxygen in water and $[O]_{PDMS}$ the con
 The value of the Henry coefficient for oxygen is taken to be 4 $\cdot$ 10 $^{-2}$ after application of Van't Hoff's law to account for the influence of temperature.
 
 \subsubsection{Oxygen Consumption Rate}
-Before engaging with quantitative aspects, the definition of oxygen consumption rate is briefly reminded. Cell oxygen consumption is a complex process whose characteristics can vary in time as a function of physical and physiological parameters. In models this process is generally divided into two parts. The physical part and the biological part. The physical part correspond to the quotient of concentration in the Hill function and follows a ligand-receptor model. The maximum value, which occurs for "high" concentrations, can change with environmental conditions, cell cycle phase or if a drug such as Oligomycin-A is administered. What is normally as oxygen consumption rate in studies is the maximum value in normal conditions, often referred to as "basal" OCR. \textbf{[commenter plus précisément]}
+Before engaging with quantitative aspects, the definition of oxygen consumption rate is briefly reminded. Cell oxygen consumption is a complex process whose characteristics can vary in time as a function of physical and physiological parameters. In computational models, this process is generally divided into two parts. The physical part and the biological part. The physical part correspond to the quotient of concentration in the Hill function and follows a ligand-receptor model. The maximum value, which occurs for "high" concentrations, can change with environmental conditions, cell cycle phase or if a drug such as Oligomycin-A is administered. What is normally referred to as oxygen consumption rate in studies is the maximum value in normal conditions, often referred to as "basal" OCR. 
 
 %broad view by Wagner and colleagues
 A good starting point to discuss oxygen consumption quantitatively is the study of Wagner and colleagues in which they reported on a range of measured oxygen consumption rates on various cell types.\cite{Wagner2011} The reported values for maximum consumption rate range between 10 and 50 amol/cell/s, which corresponds to a range between 0.6 3.0 fmol/min/cell which will be the unit in which other values are ultimately converted
 
-For DIPG cells, in most cases, the average oxygen consumption rate in normal conditions has been measured in monolayers through the use of the Seahorse XF$^{TM}$ kit.\cite{RomeroAgilent} The value reported by Shen and collaborators is 4000 pmol/min/$10^6$ cells. This value is reported for HSJD-DIPG-007 cell line cultured as neurospheres.\cite{Shen2019} In another study by Mbah and collaborators, two models from the HSJD-DIPG-007 and SU-DIPG-XIII cell lines were used: one grown as neurospheres and another cultured as adherent monolayer with serum. The OCR was measured in both cases. For the HSJD-DIPG-007 cell line, the OCR value reported for gliospheres-cultured cells reported is 50 pmol/min/cell.\cite{Mbah2022}
+For DIPG cells, in most cases, the average oxygen consumption rate in normal conditions has been measured in monolayers through the use of the Seahorse XF{\texttrademark} kit.\cite{RomeroAgilent} The value reported by Shen and collaborators is 4000 pmol/min/$10^6$ cells. This value is reported for HSJD-DIPG-007 cell line cultured as neurospheres.\cite{Shen2019} In another study by Mbah and collaborators, two models from the HSJD-DIPG-007 and SU-DIPG-XIII cell lines were used: one grown as neurospheres and another cultured as adherent monolayer with serum. The OCR was measured in both cases. For the HSJD-DIPG-007 cell line, the OCR value reported for gliospheres-cultured cells reported is 50 pmol/min/cell.\cite{Mbah2022}
 
 The first comparison that can be made is to the value reported by Shen and collaborators, which is 0.004 pmol/min/cell, and to the range reported by Wagner and colleagues, which converts to a range between 0.0006 and 0.003 pmol/min/cell. This means that a similar method in similar conditions on the same cell line yielded results larger by 4 orders of magnitude. Other values reported for brain tumor cells by Ruas and collaborators are in the range of  to 4800 pmol/min/$10^6$ cells measured in suspension on U87 glioma cells.\cite{Ruas2018} This is much closer to the value of Shen and collaborators. A possible explanation is a conversion error by Mbah and collaborators. If the value reported by Mbah and collaborators is taken not to be 50 pmol/min/cell but 50 pmol/sec/$10^6$ cells then it becomes much closer to the other values. And to further support this point, the results on extracellular acidifcation rate (ECAR) are subject to the same discrepancy and can be corrected in the same way. Now, if the correction is applied to the gliosphere values for HSDJ-DIPG-007, the measured OCR is 50 pmol/s/$10^6$ cells, which corresponds to 0.003 pmol/min/cell, which is much closer to other reported values. 
 %, and therefore 0.375 mM/min/cell (assuming a 8 pL cell volume). The same operation for SU-DIPG-XIII yields 0.5 mM/min/cell. So the retained range for the cellular oxygen consumption in normal conditions for proliferating cell is chosen to be between 0.375 and 0.5 mM/min/cell. 
 
-It is however interesting to note that a later study on DIPG cell lines reported an OCR between 200 and 600 pmol/min/cells for SU-DIPG17, which does not seem to match any of the previously reported values.\cite{Shen2024} However, it is reported that they used the Seahorse XF protocol with 24-well plates. According to the supplier, cell number in a plate should be approximately 10$^5$ cells. \textbf{[repréciser le raisonnement ici] }Therefore, reporting 200-600 pmol/min for SU-DIPG17 would correspond to 2000-6000 pmol/min/10$^6$ cells. Comparison data between SU-DIPG17 showed that HSJD-DIPG-007 consume 2.5 times less oxygen in basal respiration compared to the SU-DIPG17, which would lead to approximately 800-2400 pmol/min/10$^6$ cells for HSJD-DIPG007 and 500-1500 pmol/min/10$^6$ cells for HSJD-DIPG0012. Even though it has been possible to reconcile apparently incompatible values with reasonable assumptions, the variablity of values and their reporting by different authors means that maximum basal OCR, like matrix oxygen diffusion coefficient, has a relatively large range on realistic values.
+It is however interesting to note that a later study on DIPG cell lines reported an OCR between 200 and 600 pmol/min/cells for SU-DIPG17, which does not seem to match any of the previously reported values.\cite{Shen2024} It seems once again to be a case of poor conversion. It is reported that they used the Seahorse XF protocol with 24-well plates. According to the supplier, cell number in a plate should be approximately 10$^5$ cells. Now if we consider the reported value to be 200-600 pmol/min/1e5 cells instead,  the oxygen consumption rate for SU-DIPG17 celles would correspond to 2000-6000 pmol/min/10$^6$ cells. Comparison data between SU-DIPG17 and HSJD-DIPG-007 showed that HSJD-DIPG-007 consume 2.5 times less oxygen in basal respiration compared to the SU-DIPG17, which would lead to approximately 800-2400 pmol/min/10$^6$ cells for HSJD-DIPG007 and 500-1500 pmol/min/10$^6$ cells for HSJD-DIPG0012. Even though it has been possible to reconcile apparently incompatible values with reasonable assumptions, the variablity of values and their reporting by different authors means that maximum basal OCR, like matrix oxygen diffusion coefficient, has a relatively large range on realistic values. To summarize the various values will be converted into fmol/min/cells and compiled into table \ref{tab:ocr}
 
 %200 pmol/min -> 600 pmol/min/
 %0.24 Mcells at confluence for  24-well plate according to thermofischer 
-To summarize the various values will be converted into fmol/min/cells and compiled into  table 
+
 \begin{table}
 \begin{center}
 \begin{tabular}{ |p{50mm}|p{50mm}|p{15mm} |}
@@ -196,16 +241,17 @@ To summarize the various values will be converted into fmol/min/cells and compil
  \hline 
   HSJD-DIPG-007 gliospheres w/ Seahorse XF & 3.0 fmol/min/cell & \cite{Mbah2022}\\
  \hline 
+    U87 2D cultures w/ respirometer & 4.8 fmol/min/cell & \cite{Ruas2018}\\
+ \hline
   HSJD-DIPG-007 monolayers w/ Seahorse XF & 0.8-2.4 fmol/min/cell & \cite{Shen2024}\\
  \hline 
-   U87 2D cultures XF & 4.8 fmol/min/cell & \cite{Ruas2018}\\
- \hline 
+ 
 \end{tabular}
 \caption{Values of basal oxygen consumption rate for diffrent cell lines and culture methods\label{tab:ocr}}
 \end{center}
 \end{table}
 
-An important thing to note is that in the model concentrations are given in millimolars. This means concentration cannot be directly injected into the model and must first  be converted from fmol/min/cell into mM/min. This conversion requires a volume to convert the moles into a concentration. This volume is taken to be to the lattice site volume which is 8000 µm$^3$. Therefore, a basal oxygen consumption rate of 1 fmol/min/cell corresponds to $k_{max}$ of  0.125 mM/min.
+An important point is that in the model concentrations are given in millimolars. This means concentration cannot be directly injected into the model and must first be converted from fmol/min/cell into mM/min. This conversion requires a volume to convert the moles into a concentration. This volume is taken to be to the lattice site volume which is 8000 µm$^3$. Therefore, a basal oxygen consumption rate of 1 fmol/min/cell corresponds to $k_{max}$ of  0.125 mM/min.
 
 The external value for oxygen concentration is taken to correspond an 18.6\% partial pressure in order to mimic the gas mixture in the culture environment. This translate into an external concentration of 7.33 mM in gas phase. This translates into a concentration of 0.2923 mM in liquid phase. The lateral faces of the chip as well as the  inlets are considered open and maintained at the previous concentration.
 
@@ -216,9 +262,9 @@ As explained above in the section detailing the overall structure of the agent-b
 %Cell response to environment
 In this study, the only environmental parameter the cells respond to is the oxygen concentration. Two approaches can be used to model the response of cells to oxygen concentration: a "continuous" approach where the cell cycle duration and the consumption are both determined as continuous functions of the oxygen level, or a threshold-based approach where thresholds are defined to delimit states that correspond to a consumption level and a proliferation state or cell cycle duration. 
 
-To summarize our approach, let us assume a cell crosses the hypoxia threshold a $t_0$. The model then runs for a duration comprises between 0 and 60 minutes before running the "behavior" function. The behavior cycles through all cell including our cell of interest in this example. The function checks that the cells is below the hypoxia threshold and that it was not up until that point. If that is the case, then the behavior function sets a new target value for maximum oxygen consumption value and sets the cell internal "state change"-timer to value  $t_{reac}$ and calculates the consumption increment or decrement for each time step so that the consumption value reaches its target after a time $t_{reac}$.  Once that is done for this cells and all other cells in the model. The program exits the "behavior" function and resumes overall model execution. From this point onward, at each timestep, the "state change"-timer is decremented and consumption value is incremented/decremented according to the encoded cell response.
+To summarize our approach, let us assume a cell crosses the hypoxia threshold a $t_0$. The model then runs for a duration comprises between 0 and 60 minutes before running the "behavior" function. The behavior cycles through all cell including our cell of interest in this example. The function checks that the cell is below the hypoxia threshold and that it was not up until that point. If that is the case, then the behavior function sets a new target value for maximum oxygen consumption value and sets the cell internal "state change"-timer to value  $t_{reac}$ and calculates the consumption increment or decrement for each time step so that the consumption value reaches its target after a time $t_{reac}$.  Once that is done for this cells and all other cells in the model. The program exits the "behavior" function and resumes overall model execution. From this point onward, at each timestep, the "state change"-timer is decremented and consumption value is incremented/decremented according to the encoded cell response.
 
-It is possible that the next time the behavior function is run an hour later our example cells finds itself above the hypoxia threshold again due to tissue-wide response to changing conditions. In this case the behavior function will set a new target value consumption for the cell, once again taking $t_{reac}$ to make the complete change in the consumption value. 
+It is possible that the next time the behavior function is run an hour later our example cells finds itself above the hypoxia threshold again due to tissue-wide response to changing conditions. In this case, the behavior function will set a new target value consumption for the cell, once again taking $t_{reac}$ to make the complete change in the consumption value. 
 
 %Gradual changes 
 The states and threshold are discrete in nature, but the changes between states and consumption values are made gradually. The argument is that the nature of the molecular processes underlying a change in consumption makes it very unlikely for them to unfold in less than an hour. Therefore, each time a state change occurs, the associated changes in consumptions take $t_{reac}$ hours to complete. It should also be noted that even if the cell does not respond on a molecular level, physical consumption is still constrained by the Hill function, meaning consumption is zero if oxygen is completely depleted.
@@ -237,31 +283,30 @@ Cell migration is modelled as random and the migration velocity was taken to be 
 
 Drawing from experimental data and the previous modelled features an anoxia threshold $p_{O_2,death}$. If a cell detects a level of oxygen below the anoxia threshold, they become starved. In that case, their cell consumption takes $t_{reac}$ hours to decrease to zero if oxygen concentration has not reincreased beyond the starvation threshold beforehand. Indeed, as will be shown further, the concentration near the center of the pellet for HSJD-DIPG-007 cells stabilizes almost completely around  concentration equivalent to 4 \% $p_{O_2}$ after 24 hours which cannot be captured without that second threshold as the maintained consumption at the core results in complete depletion in all tested configurations otherwise.  
 
-\textbf{[réorganiser en section cell cycle consumption migration]
-}
+%\textbf{[réorganiser en section cell cycle consumption migration]}
 
 \subsubsection{Cell death} 
-The only way cell undergo cell death in these model is through oxygen starvation. The condition itself is simple but the process needs to be detailed. A given cell has been in stable hypoxia and detects that anoxic conditions in its environment. In that case the new cell state will have a consumption of zero. The cell then takes $t_{reac}$ minutes to see its consumption effectively go to zero. But at this stage, the cell can be rescued. Indeed if the cell detects that oxygen concentration in the surrounding medium has reincreased beyond starvation levels it changes state again and starts reincreasing consumption. In summary, a cell dies if it detects a concentration below the starvation level for a duration equal or longer than $t_{reac}$.
+The only way cell undergo cell death in the model is through oxygen starvation. The condition itself is simple but the process needs to be detailed. A given cell has been in stable hypoxia and detects that anoxic conditions in its environment. In that case the new cell state will have a consumption of zero. The cell then takes $t_{reac}$ minutes to see its consumption effectively go to zero. But at this stage, the cell can be rescued. Indeed if the cell detects that oxygen concentration in the surrounding medium has reincreased beyond starvation levels it changes state again and starts reincreasing consumption. In summary, a cell dies if it detects a concentration below the starvation level for a duration equal or longer than $t_{reac}$.
 
 Modelling the possibility of cells being rescued from cell death due to nutrient level recovery is in accordance with experimental observation. On top of this the hypothesis was made that the speed at which cells can react to an environmental also conditions how long they can be rescued. These two timescales could in principle be different but in this study they were kept equal.
 
 \section{Numerics}
-The solve the reaction diffusion equation, a finite difference model is used. This allows a straightforward representation of cells on a square grid with an easily parallelizable alogrithm. The model has 4 important square grids. The cell grid which locates each cell in space through their index. The concentration grid which is coupled to the diffusion and consumption grids and those three are used as inputs in order to solve the equation.
+The solve the reaction diffusion equation, a finite difference model is used. This allows a straightforward representation of cells on a square grid with an easily parallelizable alogrithm. As said before, the model has 4 important square grids. The cell grid which locates each cell in space through their index. The concentration grid which is coupled to the diffusion and consumption grids and those three are used as inputs in order to solve the equation.
 
 The computational model only treats the part of the DoC between the two coverslips. The modelled area is thus a 2 $\times$ 2.2 mm² rectangle. The gas-liquid interface in the inlets are placed on the boundaries for the sake of simplicity. 
 
-The model uses a cell table which keeps tracks of the state of each cell. Each cell is represented by its index, its cell cycle timer and duration, its consumption and  diffusion coefficient value, a state change time,r and a consumption increment value that is used in order to keep track of consumption and diffusion value changes when state changes occur.
+%The model uses a cell table which keeps tracks of the state of each cell. Each cell is represented by its index, its cell cycle timer and duration, its consumption and  diffusion coefficient value, a state change time,r and a consumption increment value that is used in order to keep track of consumption and diffusion value changes when state changes occur.
 
 The model focuses on the median 2D layer in order to save calculation time. Considering the cylindrical geometry of the pellet, the approximation of the 3D system by the central 2D layer is satisfactory. The 2D slice is represented by a 1000$\times$1100 rectangular grid. The vertices are 20x20 \textmu m. This choice was made in order for the site area to be slightly larger than a round cell area. This also means that a site either contains exactly one cell or none.
 
-The cell model is ran minute by minute. The diffusion reaction equation was solved with an explicit algorithm ran on 24 cores i9 intel processor through the use of OpenMP directives. The timestep has been chosen in order respect the stability condition given by the Courant-Friedrichs-Lewy condition. Implicit algorithm, such as alternate-direction implicit (ADI) and locally one dimension (LOD) used in the literature were tested.\cite{Kempf2005}\cite{Ghaffarizadeh2015}\cite{Ghaffarizadeh2017}\cite{Mao2018} However, the explicit method was ultimately kept as the matrix building and inversion required by implicit methods proved to be difficult to parallelize as efficiently as the explicit method. It should however be mentioned that the benefit with single thread computation was noted.
+The diffusion reaction equation was solved with an explicit algorithm ran on 24 cores i9 intel processor through the use of OpenMP directives. The timestep has been chosen in order respect the stability condition given by the Courant-Friedrichs-Lewy condition. Implicit algorithm, such as alternate-direction implicit (ADI) and locally one dimension (LOD) used in the literature were tested.\cite{Kempf2005}\cite{Ghaffarizadeh2015}\cite{Ghaffarizadeh2017}\cite{Mao2018} However, the explicit method was ultimately kept as the matrix building and inversion required by implicit methods proved to be difficult to parallelize as efficiently as the explicit method. It should however be mentioned that the benefit with single thread computation was noted.
 
 
 \section{Results}
 In order to compare the simulations results to experimental data, the main results obtained in terms of cell population density and the measurements of oxygen distribution obtained on the HSJD-DIPG007 cell line are reproduced with the simulations data. Considering the number of open parameters in the model, results will be presented in two parts. First, a reference set of parameters drawn from the literature or from experimental data observation, and the corresponding results are presented. Then, parameters are varied in order to understand their impact on proliferation and oxygen dynamics. In each case, the impact of those parameters is assessed quantitatively and commented on.
 
 \subsection{The reference configuration}
-The reference configuration is a set of parameters obtained by taking the median value of the different ranges presented previously. All these relevant parameters are presented in \ref{tab:1}.
+The reference configuration is a set of parameters obtained by taking the median value of the different ranges presented previously. All these relevant parameters are presented in table \ref{tab:1}.
 
 \begin{table}
 \begin{center}
@@ -295,99 +340,123 @@ The reference configuration is a set of parameters obtained by taking the median
 \end{center}
 \end{table}
 
-The experimental data for oxygen concentration has been obtained through the use of foils sensitive to oxygen saturation. The foil developed by Presens uses two fluorescent molecules : PtTFPP and N-(5-carboxypentyl)-4-piperidino-1,8-naphthalimide. The fluorescence of PtTFPP is quenched by oxygen which leads to a decrease in fluorescence intensity when the oxygen saturation increases with the second molecule being used as reference for fluorescence intensity. The foil is positioned between the lower coverslip and the medium, PDMS and the cell-containing pellet. The oxygen concentration is measured by acquiring fluorescence images of the sensitive foil overtime and averaging the fluorescence value on the width of the sensitive foil. Therefore, the error bars in the experiment value correponds to the standard deviation of the fluorescence intensity converted into oxygen concentration value. %It is also noted that on available images, the sensitive foil is difficult to properly center relative to the pellet and channel. This is will be accounted for when reproducing the data with simulation.
+The experimental data for oxygen concentration has been obtained through the use of foils sensitive to oxygen saturation. The foil technology developed by Presense uses two fluorescent molecules : PtTFPP and N-(5-carboxypentyl)-4-piperidino-1,8-naphthalimide. The fluorescence of PtTFPP is quenched by oxygen which leads to a decrease in fluorescence intensity when the oxygen saturation increases with the second molecule being used as reference for fluorescence intensity. The foil is positioned between the lower coverslip and the medium, PDMS and the cell-containing pellet. The oxygen concentration is measured by acquiring fluorescence images of the sensitive foil overtime and averaging the fluorescence value on the width of the sensitive foil. Therefore, the error bars in the experiment value correponds to the standard deviation of the fluorescence intensity converted into oxygen concentration value. %It is also noted that on available images, the sensitive foil is difficult to properly center relative to the pellet and channel. This is will be accounted for when reproducing the data with simulation.
 
-In order to better understand results, the oxygen dynamics results are presented as colormaps, as can be seen in figure \ref{ref_map}. [faire un schéma] In those maps,
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.55]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/construction_oxymap.png}\\
+
+\caption{Construction and explanation of the figures for oxygen results \label{oxymap_build}}
+\end{figure}
+
+In order to better understand results, the oxygen dynamics results are presented as colormaps. The construction of the colormap is schematically presented in figure \ref{oxymap_build}.  In those maps,
  every oxygen concentration profile on the center line is extracted and turned into a row of map with the color coding the oxygen concentration. This leads to a condensed representation of the spatial evolution of oxygen concentration in the pellet and the channel. In order to help with understanding the map, the points corresponding to the $p_{O_2,prol}$ and $p_{O_2,death}$ are outlined by white lines with triangles for  $p_{O_2,prol}$ and with crosses for $p_{O_2,death}$. A red dashed line is also used to delineate the channel and pellet zones.  It is important to note that the color code and the white lines give two linked, but different, pieces informations. The color code allows the monitoring of the oxygen level while the white line are here to delineate "proliferation", "quiescent" and "cell death" areas evolution with time. 
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/ref_conf/results/c_OS_hypox_tol/lines_O.png}
-\caption{ Map of the oxygen concentration on the center line of the pellet and channel  \label{ref_map}}
+\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/ref_conf/results/c_OS_hypox_tol/lines_O.png}\\
+
+\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/ref_conf/results/c_OS_hypox_tol/cell_population.png}
+\caption{ Map of the oxygen concentration on the center line of the pellet and channel (top) and live cell population (bottom) \label{ref_map}}
 \end{figure}
 
-The results of oxygen dynamics are presented in figure \ref{ref_map}. The first observation is the oscillation of the oxygen concentration in the system with that set of parameters. After a first transient phase of depletion leaving the entire pellet depleted of oxygen after 2 hours, cell response leads to a general decrease in consumption, which results in recovery of oxygen concentration in a couple of hours as well. The concentration then gradually shifts to an oscillatory pattern with a period of 4 hours. The amplitude of oscillations is more pronounced in the pellet than in the channel which can be seen in both the color code and the position of the aforementioned limits over time.
+The results on oxygen dynamics live cell population are presented in figure \ref{ref_map}. The first observation is the oscillation of the oxygen concentration in the system with that set of parameters. After a first transient phase of depletion leaving the entire pellet depleted of oxygen after 2 hours, cell response leads to a general decrease in consumption, which results in recovery of oxygen concentration in a couple of hours as well. Cell population sees a corresponding large decrease due to the lack of oxygen in the center region. The oxygen concentration then gradually shifts to an oscillatory pattern with a period of 4 hours over the entire line. After a large decrease in the the first four hours, live cell population decreases slightly again as the system settles into a stationary state. The amplitude of oxygen concentration oscillations is more pronounced in the pellet than in the channel which can be seen in both the color code and the position of the aforementioned limits over time.
 
-The oscillatory concentration occurs due to cells at the rim of the pellet being periodically rescued from starvation. Indeed,with time a large portion of cells in the model are subjected to anoxia ($p_{O_2}>p_{O_2,death}$). As a result, their consumption starts decreasing. The large number of cells having lowered consumption leads to oxygen concentration gradually recovering thanks to the maintained diffusive flux. The oxygen concentration eventually recovers to high enough levels to prevent cell death in the area. As cells are rescued from starvation, consumption recovers, and therefore oxygen levels decrease again until anoxic level is reached, and so on. If cells committed to cell death permanently as soon as they detected a starvation-level oxygen concentrationn the oscillations would not occur and a large proportion of cells would starve in a matter of hours. A direct consequence of the depletion of oxygen in the pellet is that no cell remains able to proliferate due to the low oxygen concentration therefore leading to cell density being constant over the whole pellet and very close to the initial value for the entire duration of the simulation. 
+The oscillatory concentration occurs due to cells at the rim of the pellet being periodically rescued from starvation. Indeed, with time a large portion of cells in the model are subjected to anoxia ($p_{O_2}>p_{O_2,death}$). As a result, their consumption starts decreasing. After some time, the large number of cells having decreased consumption leads to oxygen concentration in the pellet gradually recovering thanks to the maintained diffusive flux. The oxygen concentration eventually recovers to high enough levels to prevent cell death in a circular patch. As cells are rescued from starvation, consumption recovers, and therefore oxygen levels decrease again until anoxic level is reached, and so on. It is important to keep in mind that cells can be rescued from cell death as long as their consumption does not fall to zero. If cells committed to cell death permanently as soon as they detected a starvation-level oxygen concentrationn the oscillations would not occur and a large proportion of cells would starve in a matter of hours. A direct consequence of the depletion of oxygen in the pellet is that no cell remains able to proliferate due to the oxygen concentration over the entire pellet remaining under the proliferation threshold of  0.1232 mM. This is observable as the live cell population, and therefore cell density are constant after the first 6 hours of simulation. 
 
-The reference configuration is not adapted for reprodution of the experimental dataset but provides a good example of the complex response involving several relaxation times and possible oscillations in terms of oxygen concentration. These somewhat unrealistic results come from the fact that some parameters were estimated rather than directly measured. In order to understand the complex oxygen dynamics and their link to cell population, model parameters must be varied in order to study the corresponding response in the hopes of being able to reproduce, or at least get closer to experimental data.
+The reference configuration is not adapted for reprodution of the experimental dataset but provides a good example of the complex response involving several relaxation times and possible oscillations in terms of oxygen concentration. For instance, it provides a first example of how diffusion and consumption lead to a maximum sustainable population in the pellet and how the cell response time to nutrient availability changes can lead to oscillations in nutrient concentration. These somewhat unrealistic results come from the fact that some parameters were estimated rather than directly measured. In order to understand the complex oxygen dynamics and their link to cell population, model parameters must be varied in order to study the corresponding response in the hopes of being able to reproduce, or at least get closer to experimental data.
 
 \subsection{Impact of cell basal oxygen consumption rate} 
-A first parameter studied in order to better understand the system is the impact of cell basal oxygen consumption rate on the oxygen dynamics. The basal OCR values tested were 0.2 mM/min and 0.6 mM/min, lower and higher than the reference value of 0.4 mM/min.
+A first parameter studied in order to better understand the role of various parameters in the system is the impact of cell basal oxygen consumption rate on the oxygen dynamics. The basal OCR values tested were 0.2 mM/min and 0.6 mM/min, lower and higher than the reference value of 0.4 mM/min.
 
 \begin{figure}[ht!]
 \begin{subfigure}{0.44\textwidth}
 	\centering
-	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/k02/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/k02/results/c_OS_hypox_tol/lines_O.png}\\
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/k02/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
 \begin{subfigure}{0.44\textwidth}
 	\centering
-	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/k06/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/k06/results/c_OS_hypox_tol/lines_O.png}\\
+	\centering
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/k06/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
-\caption{oxygen concentration on the center line of the pellet in simulations with $k_{O,max}$ = 0.2 mM/min (left) and $k_{O,max}$ = 0.6 mM/min (right) \label{kcons_map}}
+\caption{Oxygen concentration on the center line of the pellet (top) and live cell population (bottom) in simulations with $k_{O,max}$ = 0.2 mM/min (left) and $k_{O,max}$ = 0.6 mM/min (right) \label{kcons_map}}
 \end{figure}
 
-As can be seen in figure \ref{kcons_map}, the consumption impacts the oxygen dynamics in several ways. It still takes twelve hours for the system to settle into the oscillatory regime and said oscillations still have a 4-hour period. However, when maximum oxygen consumption rate is lowered, the amplitude of the concentration oscillations decreases in both the pellet and medium as shown in by the color variation is less marked than in the reference configuration.
+As can be seen in figure \ref{kcons_map}, the consumption impacts the population and the oxygen dynamics in several ways. As observed in the reference configuration, takes twelve hours for the system to settle into the oscillatory regime and said oscillations still have a 4-hour period. The cell population still follows the same qualitative trend with a short increase, stagnation for a couple of hours as oxygen gets scarce, a firt sharp decrease and then another less pronounced decrease until the stationary level is reached. 
 
-The limits between the proliferating, quiescent and starved zones respond differently. The limit between the proliferating and quiescent zones (white line with triangles in figure \ref{kcons_map}) is outside the pellet (marked by the dashed red line) and oscillates around a final value of -1.5 mm by  -0.5 mm relative to the delimitation between the pellet and medium. The limit between the quiescent and dead zones (white line with crosses in figure \ref{kcons_map}) varies in space with its position oscillating between 0 and 2 mm from the rim of the pellet. The difference of amplitude between the oscillation comes from the difference in consumption rate and and oxygen diffusion coefficient between the two zones. In the channel, diffusion coefficient is high relative to the pellet and consumption is acting indirectly leading to lower amplitudes of the oscillation
+When basal maximum oxygen consumption rate is decreased, the amplitude of the oxygen concentration oscillations decreases in both the pellet and medium as shown in by the color variation is less marked than in the reference configuration. In terms of live cell population, the first decrease is less pronounced than in the reference configuration as more cells survive the first depeletion phase due to the lower overall oxygen consumption. Due to the higher number of cell able to recover to proliferation state, the second decrease is more pronounced than in the reference configuration. After 12 hours the cell population stabilizes to $\approx 6000$ which is higher than the reference configuration ($\approx 5000$). 
 
-In the high consumption case, the oxygen concentration oscillations are more pronounced as expected. and the spatial oscillations are also more pronounced  with this time even less cells still in the survival zone during the low oxygen periods.
+Logically, increasing basal oxygen consumption rate reverts all the aforementioned trends compared to the reference configuration. The first decrease is more pronounced, the second decrease is less pronounced and the stable live cell popoulation is lower than in the reference configuration ($\approx 5000$ vs $\approx 4000$).
+
+The delimitation lines between the proliferating, quiescent and starved zones move in a different way. The delimitation line between the proliferating and quiescent zones (white line with triangles in figure \ref{kcons_map} corresponding to $p_{O_2}$= 0.1232mM) is outside the pellet (marked by the dashed red line) and oscillates around a final value of -1.5 mm by  -0.5 mm relative to the delimitation between the pellet and medium. The delimitation line between the quiescent and dead zones (white line with crosses in figure \ref{kcons_map} corresponding to $p_{O_2}$= 0.0704 mM) varies in space with its position oscillating between 0 and 2 mm from the rim of the pellet. The difference of amplitude between the oscillation comes from the difference in consumption rate and and oxygen diffusion coefficient between the two zones. In the channel, diffusion coefficient is high relative to the pellet and consumption is acting indirectly leading to lower amplitudes of the oscillation
+
+In the high consumption case, the oxygen concentration oscillations are more pronounced, as could be expected. The spatial oscillations of the delimiting lines of quiescent and cell death zones are also more pronounced  with this time even less cells remaining in the survival zone when the oxygen concentration is minimal.
 
 \subsection{Impact of oxygen diffusion}
-The diffusion coefficients of oxygen in the medium, matrix and tissue are also open parameters in the model. Although these parameters could be varied independently, they will, at first, be changed concomitently to lead to two configurations called $D_{1}$ ($D_{tissue}$ = 48000 µm$^2$/min, $D_{matrix}$ = 80000 µm$^2$/min and $D_{medium}$ = 135000 µm$^2$/min) and $D_{2}$ ($D_{tissue}$ = 65000 µm$^2$/min, $D_{matrix}$ = 110000 µm$^2$/min and $D_{matrix}$ = 180000 µm$^2$/min).
+The diffusion coefficients of oxygen in the medium, matrix and tissue are also open parameters in the model. Although these parameters could be varied independently, they will, be changed concomitently to lead to two configurations called $D_{1}$ ($D_{tissue}$ = 48000 µm$^2$/min, $D_{matrix}$ = 80000 µm$^2$/min and $D_{medium}$ = 135000 µm$^2$/min) and $D_{2}$ ($D_{tissue}$ = 65000 µm$^2$/min, $D_{matrix}$ = 110000 µm$^2$/min and $D_{matrix}$ = 180000 µm$^2$/min).
 
 \begin{figure}[ht!]
 \begin{subfigure}{0.44\textwidth}
 	\centering
-	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/Dmin/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/Dmin/results/c_OS_hypox_tol/lines_O.png}\\
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/Dmin/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
 \begin{subfigure}{0.44\textwidth}
 	\centering
-	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/Dmax/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/Dmax/results/c_OS_hypox_tol/lines_O.png}\\
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/Dmax/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
-\caption{oxygen concentration on the center line of the pellet in simulations for the $D_{1}$ configuration (left) and the $D_{2}$ configuration (right)  \label{Dminmax_map}}
+\caption{Oxygen concentration on the center line of the pellet (top) and live cell population (bottom) in simulations for the $D_{min}$ configuration (left) and the $D_{max}$ configuration (right)  \label{Dminmax_map}}
 \end{figure}
 
-The D1 configuration corresponds to a lower oxygen mobility than the referrence configuration. The amplitude of oscillation of oxygen is more pronounced than in the reference configuration which is expected. Lowering the diffusive flux while keeping consumption at the same level will result in slower recovery and therefore larger oscillations. The limits also logically vary more in position than in the reference configuration.
+The $D_{min}$ configuration corresponds to a lower oxygen mobility than the reference configuration. The amplitude of oscillations of the oxygen concentration is more pronounced than in the reference configuration which is expected. Lowering the diffusive flux while keeping consumption at the same level will result in slower recovery and therefore larger oscillations. The delimitation lines for proliferation and starvation also logically vary more in position than in the reference configuration. In terms of live cell population, the first sharp decrease is more pronounced than in the reference configuration and the second decrease is negligible. This means the consumption never reincreases enough to durably put more cells in the starvation zone. The stable live cell population is slightly below that of the reference configuration ($\approx 4000$ vs $\approx 5000$).
 
-Conversely, if the  overall oxygen mobility is higher than in the reference configuration (D2 configuration), the amplitude of the oscillations is lower, which is visible in the color code in figure \ref{Dminmax_map}. The limit between proliferation and quiescent zones is still outside the pellet but stabilises to a constant position after 12 hours. The behavior of the limit between quiescent and necrotic zone is less intuitive. It can vary in position by almost 4mm in an hour. Due to the higher oxygen mobility any gradient in value is quickly reduced. So when consumption decreases or increases, the tissue wide response is quicker, leading to correspondingly large variation in position of the limit between quiescent and necrotic zones.  
+Conversely, if the  overall oxygen mobility is higher than in the reference configuration ($D_{max}$ configuration), the amplitude of the oxygen concentration oscillations is lower, which is visible in the color code in figure \ref{Dminmax_map}. The delimitation line between proliferation and quiescent zones is still outside the pellet but stabilises to a constant position after 12 hours. The behavior of the delimitation line between quiescent and necrotic zone is less intuitive. It can vary in position by almost 4mm in an hour. Due to the higher oxygen mobility concentration gradient decrease more rapidly than in the reference configuration. So when consumption decreases or increases, the tissue-wide response is quicker overall, leading to correspondingly large variations in position of the delimitation lines between quiescent and necrotic zones. In terms of live cell population, the first drop population is less pronounced as the diffusive flux is increased by the larger diffusion coefficient. Similarly to the "low consumption" case, the larger oxygen availabilty after the first drop in population results in more cells being able to resume growth and therefore "maximum" consumption, which in turn results in more cell at the core being starved of oxygen in the second consumption phase compared to the $D_{min}$ and reference configurations.
+
+It is interesting to note that while consumption significantly changed the final stable live cell population level, the difference here is much less noticeable with both configurations having a final live cell population that are both similar and very close to the reference configuration. This underlines that consumption and diffusion do not have exactly the same impact on the response of the system. 
 
 \subsection{Impact of response time}
-As a reminder, the cell response time is the time needed for cell to completely transition between two consumption levels ($k_{max}$ in the Hill function), with the consumption changing gradually over time. The response time of the reference confgiuration was set to three hours since it was observed that the oxygen concentration was stable over the whole line in the  experiments after 4 hours. A "short response time"-configuration was tested with $t_{reac}$ set at 1 hour. For the "long response time"- configuration, $t_{reac}$ was increased to 8 hours.
-
+As a reminder, the cell response time is the time needed for cell to completely transition between two consumption levels ($k_{max}$ in the Hill function), with said max consumption value changing gradually over time. The response time of the reference confgiuration was set to three hours since it was observed that the oxygen concentration was stable over the whole line in the  experiments after 4 hours. A "short response time"-configuration was tested with $t_{reac}$ set at 1 hour. For the "long response time"- configuration, $t_{reac}$ was increased to 8 hours.
 
 \begin{figure}[ht!]
 \begin{subfigure}{0.44\textwidth}
 	\centering
 	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/reac1/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/reac1/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
 \begin{subfigure}{0.44\textwidth}
 	\centering
 	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/reac8/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/reac8/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
-\caption{oxygen concentration on the center line of the pellet in simulations for the a "short cell response time" configuration (left) and "long cell response time" configuration (right)  \label{reac_map}}
+\caption{Oxygen concentration on the center line of the pellet (top) and live cell population (bottom) in simulations for the a "short cell response time" configuration (left) and "long cell response time" configuration (right)  \label{reac_map}}
 \end{figure}
 
-In the short response time configuration, the cells deplete the matrix of oxygen. Oxygen concentration decreases to starvation level very quickly.  Cellular oxygen consumption decreases to zero in an hour, leading to a vast majority of cells dying as diffusion flux alone is not high enough to restore oxyen levels in the matrix before they commit to cell death.
+In the short response time configuration, cells deplete the system of oxygen as rapidly as before. The main difference with the reference configuration being that the consumption level falls to zero in an hour. It should be reminded here that he model is coded so that when a cell detects starvation levels of oxygen, it starst decreasing its consumption rate $k_{max}$ gradually (in  $t_{reac}$ minutes), and dies if that level reaches zero before the oxygen concentration reincreases above the starvation level, the cell dies. This means that if $t_{reac}$ is 60 minutes, cells can only survive for 60 minutes. This is what happens in the "short response time"-configuration and why a majority of cells end up dying compared to the reference configuration. In the reference configuration, the recovery of oxygen concentration is sufficient in the 4 hours-window to prevent cell death in 4000 cells. Here, almost all cells die with only less than 1500 cells remaining. Due to the low remaining live cell population, the overall oxygen concentration reincreases. Even though the population seems constant it is actually increasing slightly between 24 and 48 hours. This is due to the a small portion of the pellet having enough oxyen to proliferate between 10 and 30 hours.
+%hwoever cellular oxygen consumption decreases to zero in an hour, leading to a vast majority of cells dying as diffusion flux alone is not high enough to restore oxyen levels in the matrix before they commit to cell death.
 
-In the long response time configuration, it is interesting to note that while the first response indeed clearly takes 8 hours, the other feature in the oxygen dynamics are not on the same time scale. In fact the oscillations visible in the concentration after 24 hours have a period that is closer to 3 hours at the center and in the channel, suggesting that as for other parameters response time has a complex impact on oxygen dynamics that depends a lot on other parameters
+In the 'long response time"-configuration, it is interesting to note that while the first response indeed clearly takes 8 hours, the other feature in the oxygen dynamics are not on the same time scale. In fact, the oscillations visible in the concentration after 24 hours have a period that is closer to 3 hours at the center and in the channel, suggesting that as for other parameters response time has a complex impact on oxygen dynamics that depends a lot on other parameters. In terms of live cell population, the first large popultion decreases corresponds to the consequence of the oxygen concentration being below the starvation on the entire and pellet. As before the subsequent decrease in consumption results in recovery. This happens a second time at a lower scale until the concentration reaches an oscillatory stable regime where no cell proliferate but an area where survival is possible is formed between 0 and 0.5 mm from the rim. This leads to a stable population of $\approx 4000$ cells in the pellet at 48 hours.
 
 \subsection{Proliferation and cell death threshold}
-So far, no analysis was done on proliferation data has been done due to the $p_{O_2,prol}$ and $p_{O_2,death}$ values being too high for any proliferation to take place. Lowering those thresholds in order to restore proliferation seems straightforward. However, restoring proliferation will double consumption which makes the impact of those parameters hard to predict.   
+So far, no analysis was done on proliferation data has been done due to the $p_{O_2,prol}$ and $p_{O_2,death}$ threshold values being too high for any proliferation to take place. Lowering those thresholds in order to restore proliferation seems straightforward. However, lowering both threshold means that consumption will then be maintained potentially not yielding the expected effect of restoring proliferation in the pellet.
 
 \begin{figure}[ht!]
 \begin{subfigure}{0.44\textwidth}
 	\centering
-	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/plim5_panox2/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/plim5_panox2/results/c_OS_hypox_tol/lines_O_2.png}
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/plim5_panox2/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
 \begin{subfigure}{0.44\textwidth}
 	\centering
 	\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/ref_conf/results/c_OS_hypox_tol/lines_O.png}
+	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/ref_conf/results/c_OS_hypox_tol/cell_population.png}
 \end{subfigure}
-\caption{oxygen concentration on the center line of the pellet in simulations for the a "short cell response time" configuration (left) and "long cell response time" configuration (right)  \label{thres_map}}
+\caption{Oxygen concentration on the center line of the pellet (top) and live cell population (bottom) in simulations for the a "short cell response time" configuration (left) and "long cell response time" configuration (right)  \label{thres_map}}
 \end{figure}
 
-As can be seen in figure \ref{thres_map} lowering the threshold does not result in the proliferation threshold moving to end up in the matrix so proliferation is still very low.
+In figure \ref{thres_map} the results for the lower threshold configuration are compared to the reference configuration. The Lowering $p_{O_2,prol}$ and $p_{O_2,death}$ does not result in the proliferation threshold moving to end up in the matrix so proliferation is still very low.
 
 \subsection{First conclusions}
 After this first set of tests of various parameters, it appears that consumption is too high and that no set of parameters compatible with the  ranges found in the literature would restore proliferation over at least 24 hours. Therefore, in the next section sets of parameters with lower consumption values will be explored.
@@ -468,12 +537,13 @@ In figure \ref{Ox_best}, the experimental data and simulated oxygen concentratio
 \caption{Relative cell density in simulations (blue) and experiments (orange) \label{density_best}}
 \end{figure}
 
-Now that agreement with experimental data has been shown, the oxygen dynamics can be analyzed in more detail in order to understand how the different parameters play a role in the results.
+Now that agreement with experimental data has been shown, the oxygen dynamics and population data can be analyzed in more details in order to understand how the different parameters play a role in the results. It can be seen that the population grows overall but cells at the core are dying as the rim population increases. The increasing cell density at the rim leads to a shrinkage of the proliferation zone. The oxygen concentration at the core undergoes oscillations over time due which are most visible between 0 and 10 hours.
 
 \begin{figure}[ht!]
 \centering
 \includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best/results/c_OS_hypox_tol/lines_O.png}
-\caption{ Map of the oxygen concentration on the center line of the pellet and channel for the optimal set of parameters \label{best_map}}
+\includegraphics[scale=0.33]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best/results/c_OS_hypox_tol/cell_population.png}
+\caption{ Map of the oxygen concentration on the center line of the pellet (top) and live cell population (bottom) and channel for the optimal set of parameters \label{best_map}}
 \end{figure}
 
 First, it should be noted that to reproduce experimental data at 4 hours, a feature not initially coded in the model has been added. Initially, cells would start consuming at the highest rate immediately, leading to a consumption that was too high only in the early phases of the experiments. It was therefore considered that cells initially placed in the matrix have zero consumption  when the simulation starts and gradually recover to max consumption value over a time of $t_{reac}$. This modification led to much better agreement when $t_{reac}$ was set to 6 hours.
@@ -485,7 +555,9 @@ As can be seen in figure \ref{best_map}, the oxygen concentration in the matrix 
 In terms of physical parameters the most striking feature of the optimal set of parameters is the overall diffusion within the cell matrix. In order to obtain an oxygen concentration gradient between the medium and the matrix that matches the experiments, the oxygen diffusion coefficients for tissue and matrix had to be lowered to  $D_{O_2,matrix}$  = 50000 µm$^2$/min and $D_{O_2,tissue}$ = 30000 µm$^2$/min. These values are lower than the previously identified ranges, which may be due to the specific composition of the matrix and the preparation method. It should be noted that attempts to increase oxygen consumption rate and matrix/tissue oxgyen diffusion coefficients concomittently in order to recreate the previous gradient did not yield satisfactory results. Consumption was also slightly below the expected range with the consumption being equivalent to a value of 0.24 fmol/min/cell which is less than half the lowest value presented in table \ref{tab:ocr}
 
 \subsection{Comparison at lower cell densities}
-The previous developments were all conducted on data obtained with the HSJD-DIPG007 cell line initially seeded at a density of 10 000 cells/µL. Oxygen data is also available for experiments with initial cell densities of 1000 cell/µL and 5000 cell/µL. Proliferation data at 48 hours is however not available for those experiments. This is why this data was not included in the first part of the results. However oxygen dynamics at those lower densities can still be studied at those lower densities in order to evaluate the predictive power of the model with the optimal set of parameters. In the following the oxygen concentration results are presented for initial cell densities of 5000 cell/µL and 1000 cell/µL. All other parameters of the model are kept the same as the optimal configuration presented in table \ref{tab:2}
+The previous developments were all conducted on data obtained with the HSJD-DIPG007 cell line initially seeded at a density of 10 000 cells/µL. Oxygen data is also available for experiments with initial cell densities of 5000 cell/µL. Proliferation data at 48 hours is however not available for those experiments. This is why this data was not included in the first part of the results. However oxygen dynamics at those lower densities can still be studied at that lower density in order to evaluate the predictive power of the model with the optimal set of parameters. All other parameters of the model are kept the same as the optimal configuration presented in table \ref{tab:2}
+
+%The previous developments were all conducted on data obtained with the HSJD-DIPG007 cell line initially seeded at a density of 10 000 cells/µL. Oxygen data is also available for experiments with initial cell densities of 1000 cell/µL and 5000 cell/µL. Proliferation data at 48 hours is however not available for those experiments. This is why this data was not included in the first part of the results. However oxygen dynamics at those lower densities can still be studied at those lower densities in order to evaluate the predictive power of the model with the optimal set of parameters. In the following the oxygen concentration results are presented for initial cell densities of 5000 cell/µL and 1000 cell/µL. All other parameters of the model are kept the same as the optimal configuration presented in table \ref{tab:2}
 
 \subsubsection{Oxygen dynamics at 5000 cell/ \textmu L}
 \begin{figure}[ht!]
@@ -511,27 +583,27 @@ As can be seen in figure \ref{Ox_best_5000}, the agreement is not as good as it 
 
 The cause of the increase of concentration over the second day suggests a decrease in oxygen consumption of a majority of cells which is not explained with our set of parameters and cell responses.
 
-\subsubsection{Oxygen dynamics at 1000 cell/ \textmu L}
-\begin{figure}[ht!]
-\begin{subfigure}{0.33\textwidth}
-	\centering
-	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best_1000/results/c_OS_hypox_tol/4h_ox.png}
-	\caption{ \label{4h_ox_best_1000}}
-\end{subfigure}
-\begin{subfigure}{0.33\textwidth}
-	\centering
-	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best_1000/results/c_OS_hypox_tol/24h_ox.png}
-	\caption{ \label{24h_ox_best_1000}}
-\end{subfigure}
-\begin{subfigure}{0.33\textwidth}
-	\centering
-	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best_1000/results/c_OS_hypox_tol/48h_ox.png}
-	\caption{ \label{48h_ox_best_1000}}
-\end{subfigure}
-\caption{Oxygen concentration as a function of position at 4 hours (a), 24 hours(b) and 48 hours (c) for the optimal set of parameters with an initial seeding density of 1000 cells/µL \label{Ox_best_1000}}
-\end{figure}
-
-At 1000 cells/µL, it appears in figure \ref{Ox_best_1000} that overall consumption is too high. At this low cell density, it also appears that the profile does not display the marked gradient that could be seen at 5000 and 10000 cells/µL. These results suggests that there could be a complex relationship between matrix/tissue diffusion and and cell density.
+%\subsubsection{Oxygen dynamics at 1000 cell/ \textmu L}
+%\begin{figure}[ht!]
+%\begin{subfigure}{0.33\textwidth}
+%	\centering
+%	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best_1000/results/c_OS_hypox_tol/4h_ox.png}
+%	\caption{ \label{4h_ox_best_1000}}
+%\end{subfigure}
+%\begin{subfigure}{0.33\textwidth}
+%	\centering
+%	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best_1000/results/c_OS_hypox_tol/24h_ox.png}
+%	\caption{ \label{24h_ox_best_1000}}
+%\end{subfigure}
+%\begin{subfigure}{0.33\textwidth}
+%	\centering
+%	\includegraphics[scale=0.3]{/home/antonybazir/Documents/Post-doc/chip_article_Aless/metvar_2D/cons_ko/best_1000/results/c_OS_hypox_tol/48h_ox.png}
+%	\caption{ \label{48h_ox_best_1000}}
+%\end{subfigure}
+%\caption{Oxygen concentration as a function of position at 4 hours (a), 24 hours(b) and 48 hours (c) for the optimal set of parameters with an initial seeding density of 1000 cells/µL \label{Ox_best_1000}}
+%\end{figure}
+%
+%At 1000 cells/µL, it appears in figure \ref{Ox_best_1000} that overall consumption is too high. At this low cell density, it also appears that the profile does not display the marked gradient that could be seen at 5000 and 10000 cells/µL. These results suggests that there could be a complex relationship between matrix/tissue diffusion and and cell density.
 
 \section{Discussion}
 %summary of important parameters
@@ -548,7 +620,7 @@ The $p_{O_2,death}$ needs to be discussed in more detail. Studies on various cel
 
 Similar to the case of the death threshold, $p_{O_2,prol}$ is set at approximately 0.15 mM in the simulations, which corresponds to  partial pressure of 8-9\%. This is once again a large value compared to what is usually found in the literature. Most hypoxia experiments found during the literature survey were conducted at 5 \% or below.\cite{Chen2015}\cite{Cunha2019}\cite{Liu2022}\cite{Nisar2023} However, the experiments of Zhu and colleagues on isolated mice mitochondria show a response as soon as the oxygen level reaches 12 \%.\cite{Zhu2020} This suggests that lowered consumption may occur at this level while proliferation, if it is affected at all, may stop at a lower level, suggesting that proliferation status and oxygen consumption are not necessarily evolving concomittently as was assumed.
 
-The difficulties in reproducing the agreement obtained at 10000 cells/µL at lower cell densities are also interesting. The discrepancies that appear at lower cell densities suggest that the model in its current state cannot capture the complexity of cellular responses to the environment. It is possible that the oxygen consumption rate and general cellular behavior has a complexe relation to cell density or even matrix density. Such relation would need to be further studied in different experiments. 
+%The difficulties in reproducing the agreement obtained at 10000 cells/µL at A lower cell density are also interesting. The discrepancies that appear at lower cell densities suggest that the model in its current state cannot capture the complexity of cellular responses to the environment. It is possible that the oxygen consumption rate and general cellular behavior has a complexe relation to cell density or even matrix density. Such relation would need to be further studied in different experiments. 
 
 It is also interesting to note that if the model parameters are considered relevant, the results show that cellular oxygen consumption rate does not decrease until cell death.  While data on that specific aspect of the value of the OCR in normoxia and hypoxia is scarce. It has been shown that in some cell lines, hypoxia does result in reduced OCR.\cite{Papandreou2006} This may indicate that the nature and magnitude of this response is part of the variables in metabolic variety and plasticity.
 
